@@ -1,0 +1,497 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | مؤسسة قارة الحلويات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <style>
+        :root {
+            --choc-dark: #2B170D;
+            --choc-medium: #4A2E1B;
+            --gold: #C5A059;
+            --gold-light: #E5C383;
+            --cream: #FAF6F0;
+            --white: #FFFFFF;
+            --border: #EBDDCF;
+            --danger: #e11d48;
+            --success: #16a34a;
+            --shadow: 0 4px 14px rgba(43, 23, 13, 0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--cream); color: #222; min-height: 100vh; display: flex; }
+
+        .sidebar { width: 280px; background: var(--choc-dark); color: #fff; min-height: 100vh; display: flex; flex-direction: column; border-left: 3px solid var(--gold); position: fixed; right: 0; top: 0; bottom: 0; z-index: 100; }
+        .sidebar-brand { padding: 1.5rem; text-align: center; border-bottom: 1px solid rgba(197, 160, 89, 0.2); }
+        .sidebar-brand h2 { font-size: 1.25rem; color: var(--gold-light); font-weight: 900; }
+        .sidebar-brand span { font-size: 0.8rem; color: #aaa; }
+
+        .sidebar-menu { padding: 1rem 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .menu-item { padding: 14px 20px; color: #ddd; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.2s; border-right: 4px solid transparent; text-decoration: none; }
+        .menu-item:hover, .menu-item.active { background: var(--choc-medium); color: var(--gold-light); border-right-color: var(--gold); }
+        .menu-item i { width: 22px; font-size: 1.1rem; color: var(--gold); }
+
+        .sidebar-footer { padding: 1.2rem; border-top: 1px solid rgba(197, 160, 89, 0.2); display: flex; flex-direction: column; gap: 10px; }
+        .btn-visit-store { width: 100%; background: #16a34a; color: #fff; border: none; padding: 11px; border-radius: 10px; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; text-decoration: none; }
+        .btn-visit-store:hover { background: #15803d; }
+        .btn-sync-file { width: 100%; background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: var(--choc-dark); border: none; padding: 11px; border-radius: 10px; font-weight: 900; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.95rem; }
+
+        .main-content { margin-right: 280px; flex: 1; padding: 2rem; width: calc(100% - 280px); }
+        
+        .top-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+        .stat-box { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.2rem; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); }
+        .stat-icon { width: 50px; height: 50px; border-radius: 12px; background: var(--choc-dark); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        .stat-details h4 { font-size: 0.85rem; color: #777; font-weight: 700; }
+        .stat-details span { font-size: 1.4rem; font-weight: 900; color: var(--choc-dark); }
+
+        .content-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); margin-bottom: 2rem; }
+        .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem; }
+        .card-header-flex h3 { font-size: 1.2rem; font-weight: 900; color: var(--choc-dark); display: flex; align-items: center; gap: 10px; }
+
+        .table-search-input { padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 25px; outline: none; width: 320px; font-size: 0.95rem; background: var(--cream); }
+        .table-search-input:focus { border-color: var(--gold); background: #fff; }
+
+        .table-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; max-height: 700px; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; text-align: right; }
+        th { background: #f6ede3; color: var(--choc-dark); padding: 14px 12px; font-weight: 800; font-size: 0.9rem; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 10; }
+        td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: middle; }
+        tr:hover { background: #fdfbf7; }
+
+        .p-thumb { width: 50px; height: 50px; border-radius: 8px; border: 1px solid var(--border); object-fit: contain; background: #fff; }
+        .p-name-bold { font-weight: 800; color: var(--choc-dark); font-size: 0.95rem; }
+        .p-price-val { font-weight: 900; color: var(--choc-dark); }
+
+        .btn-card-edit { background: var(--choc-dark); color: var(--gold-light); border: none; padding: 7px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-card-edit:hover { background: var(--choc-medium); }
+
+        .import-step-box { background: #fdfbf7; border: 2px dashed var(--gold); border-radius: 16px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; }
+        .btn-step { background: var(--choc-dark); color: var(--gold); border: none; padding: 14px 28px; border-radius: 10px; font-size: 1.05rem; font-weight: 900; cursor: pointer; margin-top: 1rem; display: inline-flex; align-items: center; gap: 10px; }
+        .btn-step:hover { background: var(--choc-medium); }
+
+        .progress-bar { width: 100%; height: 14px; background: #eee; border-radius: 10px; overflow: hidden; margin-top: 15px; display: none; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), #16a34a); width: 0%; transition: width 0.1s; }
+
+        dialog#nativeCardModal {
+            border: 2px solid var(--gold);
+            border-radius: 18px;
+            padding: 0;
+            width: 95%;
+            max-width: 750px;
+            max-height: 90vh;
+            background: #fff;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+            margin: auto;
+        }
+
+        dialog#nativeCardModal::backdrop {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-inner-container { display: flex; flex-direction: column; height: 100%; max-height: 90vh; }
+        .modal-head { background: var(--choc-dark); color: #fff; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .modal-head h3 { font-size: 1.15rem; color: var(--gold-light); font-weight: 900; }
+        .modal-close { background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; line-height: 1; }
+        .modal-body { padding: 1.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.2rem; }
+
+        .image-edit-section { display: flex; align-items: center; gap: 20px; background: #fdfbf7; padding: 1rem; border-radius: 12px; border: 1.5px dashed var(--gold); }
+        .modal-preview-img { width: 90px; height: 90px; border-radius: 10px; border: 1.5px solid var(--border); object-fit: contain; background: #fff; }
+        .image-actions { display: flex; flex-direction: column; gap: 8px; flex: 1; }
+        .image-path-input { width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 6px; outline: none; font-size: 0.9rem; }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .form-grp { display: flex; flex-direction: column; gap: 6px; }
+        .form-grp label { font-size: 0.85rem; font-weight: 800; color: var(--choc-dark); }
+        .form-grp input, .form-grp select { padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; font-size: 0.95rem; }
+
+        .modal-foot { padding: 1.2rem 1.5rem; background: #fdfbf7; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-save-modal { background: var(--choc-dark); color: var(--gold); border: none; padding: 12px 28px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 0.95rem; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <h2><i class="fa-solid fa-cookie-bite"></i> قارة الحلويات</h2>
+            <span>لوحة التحكم الإدارية</span>
+        </div>
+
+        <div class="sidebar-menu">
+            <a class="menu-item active" onclick="switchSection('sec_products', this)">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>كافة الأصناف والأسعار</span>
+            </a>
+            <a class="menu-item" onclick="switchSection('sec_import', this)">
+                <i class="fa-solid fa-file-import"></i>
+                <span>استيراد الأصناف والصور</span>
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="index.html" target="_blank" class="btn-visit-store">
+                <i class="fa-solid fa-store"></i>
+                <span>عرض المتجر أونلاين</span>
+            </a>
+            <button class="btn-sync-file" onclick="exportDataJS()">
+                <i class="fa-solid fa-cloud-arrow-down"></i>
+                <span>حفظ وتنزيل products_data.js</span>
+            </button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-stats-row">
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fa-solid fa-box"></i></div>
+                <div class="stat-details">
+                    <h4>إجمالي الأصناف بالمحل</h4>
+                    <span id="statTotalProds">0</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon"><i class="fa-solid fa-images"></i></div>
+                <div class="stat-details">
+                    <h4>الأصناف المجهزة</h4>
+                    <span id="statTotalOffers">0</span>
+                </div>
+            </div>
+        </div>
+
+        <section id="sec_products" class="content-card">
+            <div class="card-header-flex">
+                <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> قائمة أصناف المتجر</h3>
+                <input type="text" id="adminSearchInput" class="table-search-input" placeholder="ابحث باسم الصنف أو الباركود..." oninput="handleTableSearch()">
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>صورة الصنف</th>
+                            <th>اسم الصنف</th>
+                            <th>المجموعة</th>
+                            <th>الحجم</th>
+                            <th>الشد</th>
+                            <th>السعر شامل الضريبة</th>
+                            <th>الباركود</th>
+                            <th>كارت الصنف</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- قسم الاستيراد -->
+        <section id="sec_import" class="content-card" style="display:none;">
+            <div class="import-step-box">
+                <i class="fa-solid fa-file-excel" style="font-size:3.5rem; color:var(--success);"></i>
+                <h3 style="margin-top:10px;">الخطوة 1: استيراد شيت الإكسيل</h3>
+                <p style="color:#666; margin-top:6px;">قم برفع ملف الأصناف والأسعار (.xlsx)</p>
+                <input type="file" id="excelFile" accept=".xlsx, .xls" style="display:none;" onchange="handleExcel(event)">
+                <button class="btn-step" onclick="document.getElementById('excelFile').click()">
+                    <i class="fa-solid fa-upload"></i> اختيار ملف الإكسيل
+                </button>
+                <div id="step1_status" style="margin-top:10px; font-weight:bold; color:var(--success);"></div>
+            </div>
+
+            <div class="import-step-box">
+                <i class="fa-solid fa-images" style="font-size:3.5rem; color:var(--gold);"></i>
+                <h3 style="margin-top:10px;">الخطوة 2: ربط أسماء الصور تلقائياً بمجلد images</h3>
+                <p style="color:#666; margin-top:6px;">اختر مجلد الصور لربط مساراتها مباشرة بالترتيب بدون تحميل ثقيل على المتصفح</p>
+                <input type="file" id="imagesFolder" webkitdirectory directory multiple style="display:none;" onchange="handleFolderImages(event)">
+                <button class="btn-step" onclick="document.getElementById('imagesFolder').click()">
+                    <i class="fa-solid fa-folder-open"></i> اختيار مجلد الصور (images)
+                </button>
+                
+                <div class="progress-bar" id="pBar">
+                    <div class="progress-fill" id="pFill"></div>
+                </div>
+                <div id="step2_status" style="margin-top:12px; font-weight:bold; color:var(--choc-dark);"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Dialog كارت الصنف -->
+    <dialog id="nativeCardModal">
+        <div class="modal-inner-container">
+            <div class="modal-head">
+                <h3><i class="fa-solid fa-pen-to-square"></i> كارت الصنف - التحكم الشامل</h3>
+                <button class="modal-close" onclick="closeCardModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit_index">
+                
+                <div class="image-edit-section">
+                    <img id="modal_preview" class="modal-preview-img" src="" onerror="tryNextFormat(this);">
+                    <div class="image-actions">
+                        <label style="font-size: 0.85rem; font-weight: 800; color: var(--choc-dark);">مسار الصورة داخل مجلد images:</label>
+                        <input type="text" id="edit_image_path" class="image-path-input" placeholder="images/image1.jpg" oninput="previewModalImg(this.value)">
+                    </div>
+                </div>
+
+                <div class="form-grp">
+                    <label>اسم الصنف:</label>
+                    <input type="text" id="edit_name">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-grp">
+                        <label>المجموعة / القسم:</label>
+                        <input type="text" id="edit_group">
+                    </div>
+                    <div class="form-grp">
+                        <label>الحجم / الوزن:</label>
+                        <input type="text" id="edit_weight">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-grp">
+                        <label>الشد بالكرتون:</label>
+                        <input type="text" id="edit_pack">
+                    </div>
+                    <div class="form-grp">
+                        <label>حالة المخزون (الكمية):</label>
+                        <input type="number" id="edit_stock" placeholder="10">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-grp">
+                        <label>السعر شامل الضريبة (ر.س):</label>
+                        <input type="number" step="0.01" id="edit_price">
+                    </div>
+                    <div class="form-grp">
+                        <label>الباركود:</label>
+                        <input type="text" id="edit_barcode">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn-save-modal" onclick="saveItemChanges()"><i class="fa-solid fa-check"></i> حفظ تعديلات الصنف</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script src="products_data.js"></script>
+
+    <script>
+        let storeProducts = [];
+
+        function tryNextFormat(imgElement) {
+            const currentSrc = imgElement.src;
+            if (currentSrc.endsWith('.jpeg')) {
+                imgElement.src = currentSrc.replace('.jpeg', '.jpg');
+            } else if (currentSrc.endsWith('.jpg')) {
+                imgElement.src = currentSrc.replace('.jpg', '.png');
+            } else {
+                imgElement.onerror = null;
+                imgElement.src = 'https://placehold.co/100x100/4A2E1B/ffffff?text=قارة';
+            }
+        }
+
+        window.onload = function() {
+            loadData();
+        };
+
+        function switchSection(secId, btn) {
+            document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.getElementById(secId).style.display = 'block';
+            btn.classList.add('active');
+        }
+
+        function loadData() {
+            if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS) && window.STORE_PRODUCTS.length > 0) {
+                storeProducts = window.STORE_PRODUCTS;
+            } else if (typeof products_data !== 'undefined' && Array.isArray(products_data) && products_data.length > 0) {
+                storeProducts = products_data;
+            } else if (typeof products !== 'undefined' && Array.isArray(products) && products.length > 0) {
+                storeProducts = products;
+            } else {
+                try {
+                    const local = localStorage.getItem('qarat_main_prods');
+                    if (local) storeProducts = JSON.parse(local);
+                } catch(e) {}
+            }
+
+            document.getElementById('statTotalProds').textContent = storeProducts.length;
+            document.getElementById('statTotalOffers').textContent = storeProducts.length;
+            renderAdminTable(storeProducts);
+        }
+
+        function renderAdminTable(list) {
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+
+            list.forEach((p, idx) => {
+                const pName = p.name || 'صنف بدون اسم';
+                const pGroup = p.group || 'عام';
+                const pWeight = p.weight || '-';
+                const pPack = p.pack ? p.pack + ' حبة' : '-';
+                const pPrice = parseFloat(p.price) || 0;
+                const pBarcode = p.barcode || '-';
+                
+                let imgSrc = p.image || `images/image${idx + 1}.jpeg`;
+                if (!imgSrc.startsWith('http') && !imgSrc.startsWith('images/') && !imgSrc.startsWith('./images/')) {
+                    imgSrc = 'images/' + imgSrc;
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b>${idx + 1}</b></td>
+                    <td><img class="p-thumb" src="${imgSrc}" onerror="tryNextFormat(this);"></td>
+                    <td class="p-name-bold">${pName}</td>
+                    <td>${pGroup}</td>
+                    <td>${pWeight}</td>
+                    <td>${pPack}</td>
+                    <td class="p-price-val">${pPrice.toFixed(2)} ر.س</td>
+                    <td><code>${pBarcode}</code></td>
+                    <td>
+                        <button type="button" class="btn-card-edit" onclick="openCardModal(${idx})">
+                            <i class="fa-solid fa-pen"></i> كارت الصنف
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleTableSearch() {
+            const q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+            const filtered = storeProducts.filter(p => (p.name && p.name.toLowerCase().includes(q)) || (p.barcode && String(p.barcode).includes(q)));
+            renderAdminTable(filtered);
+        }
+
+        function handleExcel(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
+                const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                storeProducts = [];
+                rows.forEach((r, idx) => {
+                    const name = r['اسم الصنف'] || r['Name'] || r['الاسم'] || r['الصنف'] || '';
+                    if (name) {
+                        storeProducts.push({
+                            name: String(name).trim(),
+                            group: String(r['المجموعة'] || r['Group'] || 'عام').trim(),
+                            weight: String(r['الحجم'] || r['الوزن'] || r['Weight'] || '').trim(),
+                            pack: String(r['الشد'] || r['Pack'] || '1').trim(),
+                            price: parseFloat(r['السعر شامل الضريبة'] || r['Price'] || r['السعر'] || 0),
+                            barcode: String(r['الباركود'] || r['Barcode'] || '').trim(),
+                            stock: 10,
+                            image: `images/image${idx + 1}.jpeg`
+                        });
+                    }
+                });
+                document.getElementById('step1_status').textContent = `✅ تم استيراد ${storeProducts.length} صنف بنجاح!`;
+                renderAdminTable(storeProducts);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function handleFolderImages(e) {
+            const files = Array.from(e.target.files);
+            if (!files || files.length === 0) return;
+
+            const pBar = document.getElementById('pBar');
+            const pFill = document.getElementById('pFill');
+            const status = document.getElementById('step2_status');
+
+            pBar.style.display = 'block';
+            let count = 0;
+            const total = files.length;
+
+            for (const file of files) {
+                const fileName = file.name;
+                const baseName = fileName.split('.')[0].trim().toLowerCase();
+                const numMatch = baseName.match(/\d+/);
+                
+                if (numMatch) {
+                    const targetIdx = parseInt(numMatch[0]) - 1;
+                    if (storeProducts[targetIdx]) {
+                        storeProducts[targetIdx].image = `images/${fileName}`;
+                    }
+                }
+                count++;
+                const pct = Math.round((count / total) * 100);
+                pFill.style.width = pct + '%';
+            }
+
+            status.textContent = `🎉 تم ربط مسارات جميع الصور بنجاح! اضغط الآن على (حفظ وتنزيل products_data.js) بالأسفل.`;
+            setTimeout(() => { 
+                pBar.style.display = 'none'; 
+                renderAdminTable(storeProducts); 
+            }, 600);
+        }
+
+        function previewModalImg(path) {
+            document.getElementById('modal_preview').src = path || 'https://placehold.co/100x100/4A2E1B/ffffff?text=قارة';
+        }
+
+        function openCardModal(idx) {
+            const p = storeProducts[idx];
+            if (!p) return;
+
+            document.getElementById('edit_index').value = idx;
+            document.getElementById('edit_name').value = p.name || '';
+            document.getElementById('edit_group').value = p.group || '';
+            document.getElementById('edit_weight').value = p.weight || '';
+            document.getElementById('edit_pack').value = p.pack || '';
+            document.getElementById('edit_stock').value = p.stock !== undefined ? p.stock : 10;
+            document.getElementById('edit_price').value = p.price || 0;
+            document.getElementById('edit_barcode').value = p.barcode || '';
+            
+            const currentImg = p.image || `images/image${idx + 1}.jpeg`;
+            document.getElementById('edit_image_path').value = currentImg;
+            previewModalImg(currentImg);
+
+            const modal = document.getElementById('nativeCardModal');
+            if (modal.showModal) modal.showModal();
+            else modal.style.display = 'block';
+        }
+
+        function closeCardModal() { 
+            const modal = document.getElementById('nativeCardModal');
+            if (modal.close) modal.close();
+            else modal.style.display = 'none';
+        }
+
+        function saveItemChanges() {
+            const idx = document.getElementById('edit_index').value;
+            const p = storeProducts[idx];
+            if (!p) return;
+
+            p.name = document.getElementById('edit_name').value.trim();
+            p.group = document.getElementById('edit_group').value.trim();
+            p.weight = document.getElementById('edit_weight').value.trim();
+            p.pack = document.getElementById('edit_pack').value.trim();
+            p.stock = parseInt(document.getElementById('edit_stock').value) || 0;
+            p.price = parseFloat(document.getElementById('edit_price').value) || 0;
+            p.barcode = document.getElementById('edit_barcode').value.trim();
+            p.image = document.getElementById('edit_image_path').value.trim();
+
+            renderAdminTable(storeProducts);
+            closeCardModal();
+            alert('تم حفظ التعديل! اضغط على (حفظ وتنزيل products_data.js) لتثبيت التحديث.');
+        }
+
+        function exportDataJS() {
+            const content = "window.STORE_PRODUCTS = " + JSON.stringify(storeProducts, null, 2) + ";";
+            const blob = new Blob([content], { type: "text/javascript;charset=utf-8" });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = "products_data.js";
+            a.click();
+            alert('تم تنزيل ملف التحديث (products_data.js) بنجاح! استبدل الملف القديم به ثم ارفعه لمستودع GitHub.');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مؤسسة قارة الحلويات للتجارة | المتجر الإلكتروني</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --chocolate-dark: #2B170D;
+            --chocolate-medium: #4A2E1B;
+            --chocolate-light: #7A5230;
+            --gold-primary: #C5A059;
+            --gold-light: #E5C383;
+            --cream-bg: #FAF6F0;
+            --white: #FFFFFF;
+            --text-dark: #1E1E1E;
+            --text-muted: #6B625B;
+            --border-color: #EBDDCF;
+            --whatsapp-green: #25D366;
+            --danger-red: #e11d48;
+            --shadow-sm: 0 4px 12px rgba(43, 23, 13, 0.06);
+            --shadow-md: 0 8px 24px rgba(43, 23, 13, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--cream-bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+
+        .top-bar { background-color: var(--chocolate-dark); color: var(--gold-light); padding: 8px 16px; font-size: 0.85rem; text-align: center; font-weight: 500; }
+        header { background-color: var(--white); border-bottom: 2px solid var(--border-color); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+        .header-content { max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { width: 46px; height: 46px; background: linear-gradient(135deg, var(--chocolate-dark), var(--chocolate-medium)); color: var(--gold-primary); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+        .logo-text h1 { font-size: 1.3rem; font-weight: 900; color: var(--chocolate-dark); }
+        .logo-text span { font-size: 0.8rem; color: var(--gold-primary); font-weight: 700; }
+
+        .search-wrapper { flex: 1; max-width: 500px; position: relative; }
+        .search-wrapper input { width: 100%; padding: 12px 45px 12px 16px; border: 2px solid var(--border-color); border-radius: 30px; font-size: 0.95rem; outline: none; background: var(--cream-bg); }
+        .search-wrapper input:focus { border-color: var(--gold-primary); background: #fff; }
+        .search-wrapper i { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: var(--chocolate-medium); }
+
+        .cart-trigger { background: var(--chocolate-dark); color: var(--white); border: none; padding: 10px 20px; border-radius: 30px; display: flex; align-items: center; gap: 10px; cursor: pointer; font-weight: 700; }
+        .cart-badge { background: var(--gold-primary); color: var(--chocolate-dark); padding: 2px 8px; border-radius: 20px; font-size: 0.85rem; font-weight: 900; }
+
+        .nav-bar-container { background: var(--white); border-bottom: 1.5px solid var(--border-color); padding: 0.8rem 1.5rem; }
+        .nav-bar-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .main-nav-btn { background: var(--cream-bg); border: 1.5px solid var(--border-color); padding: 9px 20px; border-radius: 25px; font-size: 0.92rem; font-weight: 800; color: var(--chocolate-dark); cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+        .main-nav-btn.active { background: var(--chocolate-dark); color: var(--gold-light); border-color: var(--chocolate-dark); }
+
+        .main-container { max-width: 1280px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.5rem; }
+        .product-card { background: var(--white); border-radius: 16px; border: 1px solid var(--border-color); padding: 1.2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative; }
+        .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--gold-primary); }
+
+        .img-container { width: 100%; height: 180px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; overflow: hidden; border: 1px solid #f0e6dc; }
+        .img-container img { max-width: 95%; max-height: 95%; object-fit: contain; }
+
+        .p-group { font-size: 0.75rem; color: var(--gold-primary); font-weight: 800; margin-bottom: 4px; }
+        .p-title { font-size: 1.05rem; font-weight: 800; color: var(--chocolate-dark); margin-bottom: 6px; line-height: 1.4; }
+        .p-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; }
+        .p-stock-info { font-size: 0.78rem; font-weight: 800; padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 10px; background: #dcfce7; color: #166534; }
+
+        .p-price-box { margin-top: auto; border-top: 1px dashed var(--border-color); padding-top: 10px; margin-bottom: 12px; }
+        .p-price-final { font-size: 1.25rem; font-weight: 900; color: var(--chocolate-dark); }
+        .p-price-final span { font-size: 0.85rem; font-weight: 700; color: var(--chocolate-light); }
+
+        .card-buy-action { display: flex; align-items: center; gap: 8px; }
+        .card-qty-box { display: flex; align-items: center; border: 1.5px solid var(--border-color); border-radius: 8px; background: #fff; overflow: hidden; }
+        .card-qty-btn { background: #fdfbf7; border: none; width: 32px; height: 38px; font-size: 1.1rem; font-weight: 900; color: var(--chocolate-dark); cursor: pointer; }
+        .card-qty-input { width: 40px; text-align: center; border: none; font-weight: 800; font-size: 0.95rem; outline: none; }
+        .btn-add-cart-direct { flex: 1; background: var(--chocolate-dark); color: var(--white); border: none; height: 38px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <span>✨ مؤسسة قارة الحلويات للتجارة - عروض حصرية على أسعار الجملة للكرتون</span>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-area">
+                <div class="logo-icon"><i class="fa-solid fa-cookie-bite"></i></div>
+                <div class="logo-text">
+                    <h1>قارة الحلويات</h1>
+                    <span>QARAT AL-HALAWIYAT</span>
+                </div>
+            </div>
+
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="ابحث باسم الصنف أو الباركود..." oninput="handleSearch()">
+            </div>
+
+            <button class="cart-trigger">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span>الطلبات</span>
+                <span class="cart-badge" id="cartBadgeCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="nav-bar-container">
+        <div class="nav-bar-inner">
+            <button class="main-nav-btn active">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <span>جميع الأصناف</span>
+                <span style="background:rgba(0,0,0,0.08); padding:2px 8px; border-radius:12px;" id="total_count">0</span>
+            </button>
+        </div>
+    </div>
+
+    <main class="main-container">
+        <div class="products-grid" id="productsContainer"></div>
+    </main>
+
+    <!-- استدعاء ملف البيانات الفعلي -->
+    <script src="products_data.js"></script>
+
+    <script>
+        let allProducts = [];
+
+        function tryNextFormat(imgElement) {
+            const currentSrc = imgElement.src;
+            if (currentSrc.endsWith('.jpeg')) {
+                imgElement.src = currentSrc.replace('.jpeg', '.jpg');
+            } else if (currentSrc.endsWith('.jpg')) {
+                imgElement.src = currentSrc.replace('.jpg', '.png');
+            } else if (currentSrc.endsWith('.png')) {
+                imgElement.src = currentSrc.replace('.png', '.webp');
+            } else {
+                imgElement.onerror = null;
+                imgElement.src = 'https://placehold.co/200x200/4A2E1B/ffffff?text=قارة+الحلويات';
+            }
+        }
+
+        window.onload = function() {
+            // قراءة المنتجات من أي متغير موجود في products_data.js
+            if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS) && window.STORE_PRODUCTS.length > 0) {
+                allProducts = window.STORE_PRODUCTS;
+            } else if (typeof products_data !== 'undefined' && Array.isArray(products_data) && products_data.length > 0) {
+                allProducts = products_data;
+            } else if (typeof products !== 'undefined' && Array.isArray(products) && products.length > 0) {
+                allProducts = products;
+            } else if (typeof initialProducts !== 'undefined' && Array.isArray(initialProducts) && initialProducts.length > 0) {
+                allProducts = initialProducts;
+            } else {
+                try {
+                    const local = localStorage.getItem('qarat_main_prods');
+                    if (local) allProducts = JSON.parse(local);
+                } catch(e) {}
+            }
+
+            document.getElementById('total_count').textContent = allProducts.length;
+            renderProducts(allProducts);
+        };
+
+        function renderProducts(list) {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+
+            if (!list || list.length === 0) {
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; font-size: 1.2rem; color: var(--text-muted);">لا توجد أصناف مطابقة للبحث</div>';
+                return;
+            }
+
+            list.forEach((p, index) => {
+                const pName = p.name || p.title || 'صنف بدون اسم';
+                const pGroup = p.group || p.category || 'عام';
+                const pWeight = p.weight ? `الحجم: ${p.weight}` : '';
+                const pPack = p.pack ? ` | الشد: ${p.pack}` : '';
+                
+                // تحديد مسار الصورة المناسب
+                let imgSrc = p.image || p.img || `images/image${index + 1}.jpeg`;
+                if (!imgSrc.startsWith('http') && !imgSrc.startsWith('images/') && !imgSrc.startsWith('./images/')) {
+                    imgSrc = 'images/' + imgSrc;
+                }
+
+                const pPrice = parseFloat(p.price) || 0;
+
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="img-container">
+                            <img src="${imgSrc}" onerror="tryNextFormat(this);" alt="${pName}">
+                        </div>
+                        <div class="p-group">${pGroup}</div>
+                        <div class="p-title">${pName}</div>
+                        <div class="p-meta">${pWeight}${pPack}</div>
+                        <div><span class="p-stock-info"><i class="fa-solid fa-circle-check"></i> متوفر في المخزون</span></div>
+                    </div>
+                    <div>
+                        <div class="p-price-box">
+                            <div class="p-price-final">${pPrice.toFixed(2)} <span>ر.س</span></div>
+                        </div>
+                        <div class="card-buy-action">
+                            <div class="card-qty-box">
+                                <button class="card-qty-btn" onclick="updateQty(this, -1)">-</button>
+                                <input type="number" class="card-qty-input" value="1" readonly>
+                                <button class="card-qty-btn" onclick="updateQty(this, 1)">+</button>
+                            </div>
+                            <button class="btn-add-cart-direct"><i class="fa-solid fa-cart-plus"></i> إضافة</button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function updateQty(btn, delta) {
+            const input = btn.parentElement.querySelector('input');
+            let val = parseInt(input.value) || 1;
+            val = Math.max(1, val + delta);
+            input.value = val;
+        }
+
+        function handleSearch() {
+            const q = document.getElementById('searchInput').value.trim().toLowerCase();
+            const filtered = allProducts.filter(p => {
+                const nameMatch = (p.name || p.title || '').toLowerCase().includes(q);
+                const barcodeMatch = p.barcode ? String(p.barcode).includes(q) : false;
+                const groupMatch = (p.group || p.category || '').toLowerCase().includes(q);
+                return nameMatch || barcodeMatch || groupMatch;
+            });
+            renderProducts(filtered);
+        }
+    </script>
+</body>
+</html>
