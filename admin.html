@@ -135,7 +135,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   <div class="sidebar-menu">
     <a class="menu-item active" onclick="switchSec('sec_products',this)"><i class="fa-solid fa-boxes-stacked"></i><span>الأصناف والمخزون</span></a>
     <a class="menu-item" id="nav_orders" onclick="switchSec('sec_orders',this)"><i class="fa-solid fa-truck-ramp-box"></i><span>الطلبيات والتتبع</span> <span id="newOrdersBadge" style="background:var(--danger);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;display:none;">جديد</span></a>
-    <a class="menu-item" id="nav_crm" onclick="switchSec('sec_crm',this)"><i class="fa-solid fa-address-book"></i><span>سجل العملاء (CRM)</span></a>
+    <a class="menu-item" id="nav_crm" onclick="switchSec('sec_crm',this)"><i class="fa-solid fa-address-book"></i><span>إدارة العملاء (CRM)</span></a>
     <a class="menu-item" id="nav_analytics" onclick="switchSec('sec_analytics',this)"><i class="fa-solid fa-chart-line"></i><span>مؤشرات الأداء والتقارير</span></a>
     <a class="menu-item" id="nav_offers" onclick="switchSec('sec_offers',this)"><i class="fa-solid fa-tags"></i><span>العروض والخصومات</span></a>
     <a class="menu-item" id="nav_import" onclick="switchSec('sec_import',this)"><i class="fa-solid fa-file-import"></i><span>استيراد وتصدير Excel</span></a>
@@ -189,21 +189,21 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
-  <!-- Section 3: CRM (إدارة العملاء) - ميزة جديدة -->
+  <!-- Section 3: CRM (إدارة العملاء وكروت العملاء وإرسال الإشعارات التشويقية) -->
   <section id="sec_crm" class="content-card" style="display:none;">
     <div class="card-header">
-      <h3><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> سجل العملاء والمؤسسات (CRM Lite)</h3>
-      <span style="font-size:12px; color:#666;">يتم جمعها تلقائياً من طلبات العملاء</span>
+      <h3><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> إدارة العملاء والكروت والإشعارات (CRM Pro)</h3>
+      <button class="btn-green" onclick="openNewCustomerModal()"><i class="fa-solid fa-user-plus"></i> إضافة عميل جديد</button>
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>#</th><th>اسم العميل / المؤسسة</th><th>رقم الجوال</th><th>المدينة / العنوان</th><th>عدد الطلبات</th><th>إجمالي المشتريات</th></tr></thead>
+        <thead><tr><th>#</th><th>اسم المؤسسة / المتجر</th><th>اسم المسؤول</th><th>رقم الجوال</th><th>مكان العمل</th><th>إرسال إشعار تشويقي عبر الواتساب</th><th>إجراء</th></tr></thead>
         <tbody id="tbodyCRM"></tbody>
       </table>
     </div>
   </section>
 
-  <!-- Section 4: Analytics & Reports (مؤشرات الأداء والتقارير) - ميزة جديدة -->
+  <!-- Section 4: Analytics & Reports -->
   <section id="sec_analytics" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-chart-line" style="color:var(--gold);"></i> تقارير الأداء المالي والمخزون</h3>
@@ -245,7 +245,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <div id="offersList" style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);"></div>
   </section>
 
-  <!-- Section 6: Import & Export Excel (تحديث لدعم التحديث الفوري للأصناف والأسعار) -->
+  <!-- Section 6: Import & Export Excel -->
   <section id="sec_import" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> استيراد وتحديث المخزون عبر Excel</h3>
@@ -390,6 +390,20 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
+<!-- Dialog New Customer (CRM Pro) -->
+<dialog id="dlgNewCustomer">
+  <div class="modal-head"><h3>إضافة عميل جديد (كارت العميل)</h3><button onclick="document.getElementById('dlgNewCustomer').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
+  <div class="modal-body">
+    <div class="form-grp"><label>اسم المؤسسة / المتجر:</label><input type="text" id="c_org" placeholder="مثال: مؤسسة أطياب الحلويات"></div>
+    <div class="form-grp"><label>اسم الشخص المسؤول:</label><input type="text" id="c_name" placeholder="مثال: الأستاذ محمد"></div>
+    <div class="form-row">
+      <div class="form-grp"><label>رقم الجوال (الواتساب):</label><input type="tel" id="c_phone" placeholder="9665xxxxxxxx"></div>
+      <div class="form-grp"><label>مكان العمل / المدينة:</label><input type="text" id="c_city" placeholder="الرياض - حي الملز"></div>
+    </div>
+    <button class="btn-gold" style="margin-top:10px;" onclick="saveNewCustomer()"><i class="fa-solid fa-check"></i> حفظ كارت العميل</button>
+  </div>
+</dialog>
+
 <dialog id="dlgNewU">
   <div class="modal-head"><h3>إضافة مستخدم جديد</h3><button onclick="document.getElementById('dlgNewU').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -465,13 +479,11 @@ window.onload=function(){
   startLiveOrderListener();
 };
 
-// الميزة 3: مراقبة الطلبات الحية مع تنبيه مرئي وسمعي
 let lastOrdersCount = 0;
 function startLiveOrderListener() {
   setInterval(function(){
     var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
     if(lastOrdersCount > 0 && ords.length > lastOrdersCount) {
-      // تشغيل تنبيه تنبيه صوتي خفيف (نبضة صوتية) وتنبيه بصري
       document.getElementById('newOrdersBadge').style.display = 'inline-block';
       if(document.getElementById('sec_orders').style.display !== 'none') {
         renderOrders();
@@ -567,7 +579,6 @@ function saveNewP(){
   saveLocal();renderTable(prods);updateStats();renderAnalytics();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة!');
 }
 
-// توليد باركود ZATCA QR Code بصيغة TLV
 function generateZatcaQRCode(sellerName, vatNumber, timestamp, totalWithVat, vatTotal) {
   function toTLV(tag, val) {
     const vBytes = new TextEncoder().encode(val);
@@ -658,34 +669,75 @@ function delOrd(id){
 }
 function clearOrders(){if(confirm('مسح جميع الطلبيات؟')){localStorage.removeItem('qarat_store_orders');renderOrders();updateStats();renderCRM();renderAnalytics();}}
 
-// الميزة 4: سجل العملاء والمؤسسات (CRM Lite)
+// إدارة العملاء وكروت العملاء (CRM Pro) والإرسال التشويقي عبر الواتساب
 function renderCRM(){
   var tb=document.getElementById('tbodyCRM');if(!tb)return;tb.innerHTML='';
-  var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
-  var cMap={};
-  ords.forEach(function(o){
-    var key = o.customerName.trim().toLowerCase();
-    if(!cMap[key]){
-      cMap[key] = { name: o.customerName, phone: o.phone, city: o.city || 'الرياض', count: 0, totalSpent: 0 };
-    }
-    cMap[key].count += 1;
-    cMap[key].totalSpent += parseFloat(o.total || 0);
-  });
+  var cList = JSON.parse(localStorage.getItem('qarat_crm_customers') || '[]');
 
-  var customers = Object.values(cMap);
-  if(!customers.length){
-    tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">لا توجد بيانات عملاء مسجلة بعد.</td></tr>';
+  if(!cList.length){
+    tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#888;">لا توجد كروت عملاء مسجلة حالياً. اضغط على (إضافة عميل جديد).</td></tr>';
     return;
   }
 
-  customers.forEach(function(c, i){
+  cList.forEach(function(c, i){
+    var cleanPhone = c.phone.replace(/[^0-9]/g, '');
+    var teaserMsg = `✨ مرحباً بك يا أستاذ ${c.name} في *شركة قارة الحلويات التجارية* 🍬\n\nبصفتكم من عملائنا المميزين في (${c.org})، يسعدنا إبلاغكم بنزول تشكيلة واسعة من المنتجات الجديدة وتوفير كميات الكراتين السابقة بأسعار جملة تنافسية! 🔥\n\nتفضل بزيارة متجرنا للاطلاع على العروض وتحديث طلبياتكم. يسعدنا دائماً خدمتكم! 📦`;
+    var waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(teaserMsg)}`;
+
     var tr=document.createElement('tr');
-    tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+c.name+'</b></td><td>'+c.phone+'</td><td>'+c.city+'</td><td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;font-weight:bold;">'+c.count+' طلبات</span></td><td><b>'+c.totalSpent.toFixed(2)+' ر.س</b></td>';
+    tr.innerHTML=`
+      <td>${i + 1}</td>
+      <td><b>${c.org}</b></td>
+      <td>${c.name}</td>
+      <td><a href="tel:${c.phone}" style="color:var(--dark); font-weight:bold;">${c.phone}</a></td>
+      <td>${c.city}</td>
+      <td>
+        <a href="${waUrl}" target="_blank" class="btn-green" style="padding:6px 10px; font-size:0.75rem; text-decoration:none;">
+          <i class="fa-brands fa-whatsapp"></i> إرسال إشعار تشويقي
+        </a>
+      </td>
+      <td>
+        <button class="btn-danger" style="padding:4px 8px;" onclick="deleteCustomer('${c.id}')"><i class="fa-solid fa-trash"></i></button>
+      </td>
+    `;
     tb.appendChild(tr);
   });
 }
 
-// الميزة 1: مؤشرات الأداء والتقارير (Analytics)
+function openNewCustomerModal(){ document.getElementById('dlgNewCustomer').showModal(); }
+
+function saveNewCustomer(){
+  var org = document.getElementById('c_org').value.trim();
+  var name = document.getElementById('c_name').value.trim();
+  var phone = document.getElementById('c_phone').value.trim();
+  var city = document.getElementById('c_city').value.trim();
+
+  if(!org || !name || !phone) return alert('يرجى كتابة اسم المؤسسة، اسم المسؤول، ورقم الجوال.');
+
+  var cList = JSON.parse(localStorage.getItem('qarat_crm_customers') || '[]');
+  cList.push({ id: 'cust_' + Date.now(), org: org, name: name, phone: phone, city: city || 'الرياض' });
+  localStorage.setItem('qarat_crm_customers', JSON.stringify(cList));
+
+  document.getElementById('c_org').value = '';
+  document.getElementById('c_name').value = '';
+  document.getElementById('c_phone').value = '';
+  document.getElementById('c_city').value = '';
+
+  document.getElementById('dlgNewCustomer').close();
+  renderCRM();
+  alert('تم حفظ كارت العميل بنجاح!');
+}
+
+function deleteCustomer(id){
+  if(confirm('هل أنت متأكد من حذف كارت هذا العميل؟')){
+    var cList = JSON.parse(localStorage.getItem('qarat_crm_customers') || '[]');
+    cList = cList.filter(function(x){ return String(x.id) !== String(id); });
+    localStorage.setItem('qarat_crm_customers', JSON.stringify(cList));
+    renderCRM();
+  }
+}
+
+// تقارير الأداء
 function renderAnalytics(){
   var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
   var totalSales = ords.reduce(function(sum, o){ return sum + parseFloat(o.total || 0); }, 0);
@@ -780,7 +832,6 @@ function renderOffers(){
   d.innerHTML=offers.length?offers.map(function(o){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;"><span>🎁 '+o.label+'</span><button class="btn-danger" style="padding:2px 6px;" onclick="offers=offers.filter(x=>x.id!='+o.id+');renderOffers();">إلغاء</button></div>'}).join(''):'<p style="color:#888;font-size:.85rem;">لا توجد عروض مضافة.</p>';
 }
 
-// الميزة 2: استيراد وتحديث المخزون والأسعار الذكي عبر Excel
 function importXLSX(e){
   if(!hasP('xl'))return alert('ليس لديك صلاحية.');
   var file=e.target.files[0];if(!file)return;
