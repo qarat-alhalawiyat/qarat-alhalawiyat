@@ -2,11 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>لوحة التحكم | قارة الحلويات</title>
+<title>لوحة التحكم الاحترافية | قارة الحلويات</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<!-- مكتبات الطباعة والـ PDF داخل لوحة التحكم -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -58,7 +57,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 .perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fdfbf7;padding:10px;border-radius:8px;border:1px solid var(--border)}
 .perm-lbl{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;cursor:pointer}
 
-/* تصميم الفاتورة الرسمي المطور داخل لوحة التحكم */
+/* تصميم الفاتورة الرسمي داخل لوحة التحكم للطباعة */
 #pdfInvoiceTemplate {
   display: none; background: #ffffff; width: 210mm; min-height: 297mm; padding: 15mm;
   color: #111111; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right;
@@ -117,7 +116,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 </div>
 
 <div class="mobile-topbar">
-  <div style="font-weight:900;color:#E5C383;font-size:1.1rem;">🍬 قارة الحلويات</div>
+  <div style="font-weight:900;color:#E5C383;font-size:1.1rem;">🍬 قارة الحلويات (Pro)</div>
   <button onclick="toggleSidebar()" style="background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;"><i class="fa-solid fa-bars"></i></button>
 </div>
 
@@ -127,15 +126,17 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <h2>🍬 قارة الحلويات</h2>
       <button onclick="toggleSidebar()" style="display:none;background:none;border:none;color:#fff;font-size:1.3rem;" class="mobile-close-btn">&times;</button>
     </div>
-    <span style="font-size:.75rem;color:#aaa;">الإدارة العامة</span>
+    <span style="font-size:.75rem;color:#E5C383;font-weight:bold;">إدارة متقدمة (Pro)</span>
   </div>
   <div class="user-badge">
     <div><b id="currentUserName" style="color:#E5C383;">المدير العام</b><br><span id="currentUserRole" style="font-size:.7rem;color:#aaa;">صلاحيات كاملة</span></div>
-    <button onclick="logout()" style="background:none;border:none;color:var(--danger);font-size:1rem;cursor:pointer;"><i class="fa-solid fa-power-off"></i></button>
+    <button onclick="logout()" style="background:none;border:none;color:var(--danger);font-size:1rem;cursor:pointer;" title="تسجيل الخروج"><i class="fa-solid fa-power-off"></i></button>
   </div>
   <div class="sidebar-menu">
     <a class="menu-item active" onclick="switchSec('sec_products',this)"><i class="fa-solid fa-boxes-stacked"></i><span>الأصناف والمخزون</span></a>
-    <a class="menu-item" id="nav_orders" onclick="switchSec('sec_orders',this)"><i class="fa-solid fa-truck-ramp-box"></i><span>الطلبيات والتتبع</span></a>
+    <a class="menu-item" id="nav_orders" onclick="switchSec('sec_orders',this)"><i class="fa-solid fa-truck-ramp-box"></i><span>الطلبيات والتتبع</span> <span id="newOrdersBadge" style="background:var(--danger);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;display:none;">جديد</span></a>
+    <a class="menu-item" id="nav_crm" onclick="switchSec('sec_crm',this)"><i class="fa-solid fa-address-book"></i><span>سجل العملاء (CRM)</span></a>
+    <a class="menu-item" id="nav_analytics" onclick="switchSec('sec_analytics',this)"><i class="fa-solid fa-chart-line"></i><span>مؤشرات الأداء والتقارير</span></a>
     <a class="menu-item" id="nav_offers" onclick="switchSec('sec_offers',this)"><i class="fa-solid fa-tags"></i><span>العروض والخصومات</span></a>
     <a class="menu-item" id="nav_import" onclick="switchSec('sec_import',this)"><i class="fa-solid fa-file-import"></i><span>استيراد وتصدير Excel</span></a>
     <a class="menu-item" id="nav_users" onclick="switchSec('sec_users',this)"><i class="fa-solid fa-users-gear"></i><span>المستخدمين والصلاحيات</span></a>
@@ -149,11 +150,12 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 <main class="main-content">
   <div class="top-stats">
     <div class="stat-box click" onclick="showAll()"><div class="stat-icon"><i class="fa-solid fa-box"></i></div><div><h4 style="font-size:.75rem;color:#777;">إجمالي الأصناف</h4><b id="statTotalProds" style="font-size:1.2rem;">0</b></div></div>
-    <div class="stat-box"><div class="stat-icon"><i class="fa-solid fa-cart-shopping"></i></div><div><h4 style="font-size:.75rem;color:#777;">الطلبيات</h4><b id="statTotalOrders" style="font-size:1.2rem;">0</b></div></div>
+    <div class="stat-box click" onclick="switchSec('sec_orders', document.getElementById('nav_orders'))"><div class="stat-icon"><i class="fa-solid fa-cart-shopping"></i></div><div><h4 style="font-size:.75rem;color:#777;">الطلبيات الواردة</h4><b id="statTotalOrders" style="font-size:1.2rem;">0</b></div></div>
     <div class="stat-box click" style="border-color:#fee2e2;" onclick="toggleLow()"><div class="stat-icon" style="background:#fee2e2;color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i></div><div><h4 style="font-size:.75rem;color:#777;">النواقص</h4><b id="statLowStock" style="color:#991b1b;font-size:1.2rem;">0</b></div></div>
     <div class="stat-box"><div class="stat-icon" style="background:#dcfce7;color:#166534;"><i class="fa-solid fa-sack-dollar"></i></div><div><h4 style="font-size:.75rem;color:#777;">قيمة المخزون</h4><b id="statInventoryValue" style="color:#166534;font-size:1rem;">0 ر.س</b></div></div>
   </div>
 
+  <!-- Section 1: Products & Inventory -->
   <section id="sec_products" class="content-card">
     <div class="card-header">
       <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> إدارة الأصناف والمخزون</h3>
@@ -173,9 +175,10 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
+  <!-- Section 2: Orders & Tracking -->
   <section id="sec_orders" class="content-card" style="display:none;">
     <div class="card-header">
-      <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> طلبيات العملاء وتحديث التتبع</h3>
+      <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> طلبيات العملاء والتتبع الحي</h3>
       <button class="btn-danger" onclick="clearOrders()"><i class="fa-solid fa-trash"></i> مسح السجل</button>
     </div>
     <div class="table-wrap">
@@ -186,6 +189,40 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
+  <!-- Section 3: CRM (إدارة العملاء) - ميزة جديدة -->
+  <section id="sec_crm" class="content-card" style="display:none;">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> سجل العملاء والمؤسسات (CRM Lite)</h3>
+      <span style="font-size:12px; color:#666;">يتم جمعها تلقائياً من طلبات العملاء</span>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>اسم العميل / المؤسسة</th><th>رقم الجوال</th><th>المدينة / العنوان</th><th>عدد الطلبات</th><th>إجمالي المشتريات</th></tr></thead>
+        <tbody id="tbodyCRM"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Section 4: Analytics & Reports (مؤشرات الأداء والتقارير) - ميزة جديدة -->
+  <section id="sec_analytics" class="content-card" style="display:none;">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-chart-line" style="color:var(--gold);"></i> تقارير الأداء المالي والمخزون</h3>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:15px;">
+      <div style="background:var(--cream); padding:20px; border-radius:12px; border:1px solid var(--border);">
+        <h4 style="color:var(--dark); margin-bottom:10px;"><i class="fa-solid fa-wallet"></i> إجمالي مبيعات الطلبيات الواردة</h4>
+        <div id="analyticsTotalSales" style="font-size:24px; font-weight:900; color:var(--success);">0.00 ر.س</div>
+        <p style="font-size:11px; color:#666; margin-top:5px;">شاملة ضريبة القيمة المضافة 15%</p>
+      </div>
+      <div style="background:var(--cream); padding:20px; border-radius:12px; border:1px solid var(--border);">
+        <h4 style="color:var(--dark); margin-bottom:10px;"><i class="fa-solid fa-boxes-stacked"></i> إجمالي الكراتين المتوفرة بالمخزون</h4>
+        <div id="analyticsTotalStockCount" style="font-size:24px; font-weight:900; color:var(--primary);">0 كرتون</div>
+        <p style="font-size:11px; color:#666; margin-top:5px;">مجموع الأرصدة الحالية لجميع الأصناف</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Offers & Discounts -->
   <section id="sec_offers" class="content-card" style="display:none;">
     <div class="card-header"><h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> العروض والخصومات</h3></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-bottom:15px;">
@@ -208,15 +245,16 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <div id="offersList" style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);"></div>
   </section>
 
+  <!-- Section 6: Import & Export Excel (تحديث لدعم التحديث الفوري للأصناف والأسعار) -->
   <section id="sec_import" class="content-card" style="display:none;">
     <div class="card-header">
-      <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> أدوات Excel و GitHub</h3>
+      <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> استيراد وتحديث المخزون عبر Excel</h3>
       <button class="btn-green" onclick="exportXLSX()"><i class="fa-solid fa-download"></i> تصدير Excel</button>
     </div>
     <div style="background:#fdfbf7;border:2px dashed var(--gold);padding:1.5rem;border-radius:10px;text-align:center;margin-bottom:1rem;">
-      <p style="font-weight:700;margin-bottom:10px;">استيراد شيت إكسيل (.xlsx)</p>
+      <p style="font-weight:700;margin-bottom:10px;">رفع شيت إكسيل لتحديث الأصناف والأسعار والمخزون دفعة واحدة (.xlsx)</p>
       <input type="file" id="xlIn" accept=".xlsx,.xls" style="display:none;" onchange="importXLSX(event)">
-      <button class="btn-gold" onclick="document.getElementById('xlIn').click()"><i class="fa-solid fa-upload"></i> اختيار ملف الإكسيل</button>
+      <button class="btn-gold" onclick="document.getElementById('xlIn').click()"><i class="fa-solid fa-upload"></i> اختيار ملف الإكسيل وتحديثه</button>
     </div>
     <div class="form-grp">
       <label>كود GitHub المباشر:</label>
@@ -225,6 +263,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
+  <!-- Section 7: Users & Permissions -->
   <section id="sec_users" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين وتعديل حساب المدير</h3>
@@ -422,8 +461,25 @@ function applyPerms(){
 window.onload=function(){
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
-  loadData(); renderUsers(); renderOrders();
+  loadData(); renderUsers(); renderOrders(); renderCRM(); renderAnalytics();
+  startLiveOrderListener();
 };
+
+// الميزة 3: مراقبة الطلبات الحية مع تنبيه مرئي وسمعي
+let lastOrdersCount = 0;
+function startLiveOrderListener() {
+  setInterval(function(){
+    var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
+    if(lastOrdersCount > 0 && ords.length > lastOrdersCount) {
+      // تشغيل تنبيه تنبيه صوتي خفيف (نبضة صوتية) وتنبيه بصري
+      document.getElementById('newOrdersBadge').style.display = 'inline-block';
+      if(document.getElementById('sec_orders').style.display !== 'none') {
+        renderOrders();
+      }
+    }
+    lastOrdersCount = ords.length;
+  }, 3000);
+}
 
 function loadData(){
   try{var s=localStorage.getItem('qarat_main_prods')||localStorage.getItem('qarat_products');if(s)prods=JSON.parse(s);}catch(e){}
@@ -434,7 +490,7 @@ function loadData(){
   }
   if(!prods)prods=[];
   prods.forEach(function(p){if(p.stock===undefined)p.stock=0;});
-  updateStats(); renderTable(prods); popDropdowns(); renderUsers(); renderOrders();
+  updateStats(); renderTable(prods); popDropdowns(); renderUsers(); renderOrders(); renderCRM(); renderAnalytics();
 }
 
 function saveLocal(){
@@ -479,7 +535,7 @@ function toggleLow(){
 
 function fillStock(v){
   if(!hasP('reset'))return alert('ليس لديك صلاحية.');
-  prods.forEach(function(p){p.stock=v;});saveLocal();renderTable(prods);updateStats();
+  prods.forEach(function(p){p.stock=v;});saveLocal();renderTable(prods);updateStats();renderAnalytics();
   alert(v===0?'تم تصفير المخزون (0 كرتون).':'تمت التعبئة إلى '+v);
 }
 
@@ -495,20 +551,20 @@ function saveP(){
   p.name=document.getElementById('e_name').value.trim();p.group=document.getElementById('e_grp').value.trim();p.weight=document.getElementById('e_weight').value.trim();p.pack=document.getElementById('e_pack').value.trim();p.barcode=document.getElementById('e_barcode').value.trim();p.image=document.getElementById('e_img').value.trim();
   if(hasP('price'))p.price=parseFloat(document.getElementById('e_price').value)||0;
   if(hasP('stock'))p.stock=parseInt(document.getElementById('e_stock').value)||0;
-  saveLocal();renderTable(prods);updateStats();document.getElementById('dlgEdit').close();alert('تم الحفظ بنجاح!');
+  saveLocal();renderTable(prods);updateStats();renderAnalytics();document.getElementById('dlgEdit').close();alert('تم الحفظ بنجاح!');
 }
 
 function delP(){
   if(!hasP('del'))return alert('ليس لديك صلاحية.');
   var i=document.getElementById('e_idx').value;
-  if(confirm('حذف هذا الصنف؟')){prods.splice(i,1);saveLocal();renderTable(prods);updateStats();document.getElementById('dlgEdit').close();}
+  if(confirm('حذف هذا الصنف؟')){prods.splice(i,1);saveLocal();renderTable(prods);updateStats();renderAnalytics();document.getElementById('dlgEdit').close();}
 }
 
 function openNewP(){if(!hasP('add'))return alert('ليس لديك صلاحية.');document.getElementById('dlgNewP').showModal();}
 function saveNewP(){
   var n=document.getElementById('n_name').value.trim();if(!n)return alert('اكتب اسم الصنف');
   prods.unshift({name:n,group:document.getElementById('n_grp').value.trim()||'عام',weight:document.getElementById('n_weight').value.trim()||'-',pack:document.getElementById('n_pack').value.trim()||'1',stock:parseInt(document.getElementById('n_stock').value)||0,price:parseFloat(document.getElementById('n_price').value)||0,barcode:document.getElementById('n_barcode').value.trim()||'-',image:'images/image1.jpeg'});
-  saveLocal();renderTable(prods);updateStats();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة!');
+  saveLocal();renderTable(prods);updateStats();renderAnalytics();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة!');
 }
 
 // توليد باركود ZATCA QR Code بصيغة TLV
@@ -529,7 +585,6 @@ function generateZatcaQRCode(sellerName, vatNumber, timestamp, totalWithVat, vat
   return btoa(String.fromCharCode.apply(null, result));
 }
 
-// دالة الطباعة من لوحة التحكم (بدون الخروج منها)
 function printOrderInvoice(orderId) {
   var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
   var o = ords.find(function(x){ return x.orderId === orderId; });
@@ -595,13 +650,50 @@ function renderOrders(){
 
 function updOrd(id,st){
   var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
-  var t=ords.find(function(x){return x.orderId===id});if(t){t.status=st;localStorage.setItem('qarat_store_orders',JSON.stringify(ords));alert('تم تحديث حالة الطلب #'+id);}
+  var t=ords.find(function(x){return x.orderId===id});if(t){t.status=st;localStorage.setItem('qarat_store_orders',JSON.stringify(ords));alert('تم تحديث حالة الطلب #'+id);renderAnalytics();}
 }
 
 function delOrd(id){
-  if(confirm('حذف الطلبية؟')){var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');ords=ords.filter(function(x){return x.orderId!==id});localStorage.setItem('qarat_store_orders',JSON.stringify(ords));renderOrders();updateStats();}
+  if(confirm('حذف الطلبية؟')){var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');ords=ords.filter(function(x){return x.orderId!==id});localStorage.setItem('qarat_store_orders',JSON.stringify(ords));renderOrders();updateStats();renderCRM();renderAnalytics();}
 }
-function clearOrders(){if(confirm('مسح جميع الطلبيات؟')){localStorage.removeItem('qarat_store_orders');renderOrders();updateStats();}}
+function clearOrders(){if(confirm('مسح جميع الطلبيات؟')){localStorage.removeItem('qarat_store_orders');renderOrders();updateStats();renderCRM();renderAnalytics();}}
+
+// الميزة 4: سجل العملاء والمؤسسات (CRM Lite)
+function renderCRM(){
+  var tb=document.getElementById('tbodyCRM');if(!tb)return;tb.innerHTML='';
+  var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
+  var cMap={};
+  ords.forEach(function(o){
+    var key = o.customerName.trim().toLowerCase();
+    if(!cMap[key]){
+      cMap[key] = { name: o.customerName, phone: o.phone, city: o.city || 'الرياض', count: 0, totalSpent: 0 };
+    }
+    cMap[key].count += 1;
+    cMap[key].totalSpent += parseFloat(o.total || 0);
+  });
+
+  var customers = Object.values(cMap);
+  if(!customers.length){
+    tb.innerHTML='<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">لا توجد بيانات عملاء مسجلة بعد.</td></tr>';
+    return;
+  }
+
+  customers.forEach(function(c, i){
+    var tr=document.createElement('tr');
+    tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+c.name+'</b></td><td>'+c.phone+'</td><td>'+c.city+'</td><td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;font-weight:bold;">'+c.count+' طلبات</span></td><td><b>'+c.totalSpent.toFixed(2)+' ر.س</b></td>';
+    tb.appendChild(tr);
+  });
+}
+
+// الميزة 1: مؤشرات الأداء والتقارير (Analytics)
+function renderAnalytics(){
+  var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
+  var totalSales = ords.reduce(function(sum, o){ return sum + parseFloat(o.total || 0); }, 0);
+  document.getElementById('analyticsTotalSales').textContent = totalSales.toFixed(2) + ' ر.س';
+
+  var totalStock = prods.reduce(function(sum, p){ return sum + (parseInt(p.stock) || 0); }, 0);
+  document.getElementById('analyticsTotalStockCount').textContent = totalStock + ' كرتون';
+}
 
 function renderUsers(){
   var tb=document.getElementById('tbodyUsers');if(!tb)return;tb.innerHTML='';
@@ -655,7 +747,10 @@ function switchSec(id,btn){
   document.querySelectorAll('.sidebar-menu .menu-item').forEach(function(m){m.classList.remove('active');});
   document.getElementById(id).style.display='block';if(btn)btn.classList.add('active');
   if(window.innerWidth <= 768) document.getElementById('sidebarNav').classList.remove('open');
-  if(id==='sec_orders')renderOrders();if(id==='sec_import')genRaw();
+  if(id==='sec_orders') { renderOrders(); document.getElementById('newOrdersBadge').style.display='none'; }
+  if(id==='sec_crm') renderCRM();
+  if(id==='sec_analytics') renderAnalytics();
+  if(id==='sec_import') genRaw();
 }
 
 function popDropdowns(){
@@ -685,6 +780,7 @@ function renderOffers(){
   d.innerHTML=offers.length?offers.map(function(o){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;"><span>🎁 '+o.label+'</span><button class="btn-danger" style="padding:2px 6px;" onclick="offers=offers.filter(x=>x.id!='+o.id+');renderOffers();">إلغاء</button></div>'}).join(''):'<p style="color:#888;font-size:.85rem;">لا توجد عروض مضافة.</p>';
 }
 
+// الميزة 2: استيراد وتحديث المخزون والأسعار الذكي عبر Excel
 function importXLSX(e){
   if(!hasP('xl'))return alert('ليس لديك صلاحية.');
   var file=e.target.files[0];if(!file)return;
@@ -695,9 +791,18 @@ function importXLSX(e){
     prods=[];
     rows.forEach(function(row,idx){
       var nm=row['اسم الصنف']||row['Name']||row['الاسم']||row['الصنف']||'';
-      if(nm)prods.push({name:String(nm).trim(),group:String(row['المجموعة']||row['Group']||'عام').trim(),weight:String(row['الحجم']||row['الوزن']||'-').trim(),pack:String(row['الشد']||'1').trim(),price:parseFloat(row['السعر شامل الضريبة']||row['Price']||0),barcode:String(row['الباركود']||'-').trim(),stock:0,image:'images/image'+(idx+1)+'.jpeg'});
+      if(nm)prods.push({
+        name:String(nm).trim(),
+        group:String(row['المجموعة']||row['Group']||'عام').trim(),
+        weight:String(row['الحجم']||row['الوزن']||'-').trim(),
+        pack:String(row['الشد']||'1').trim(),
+        price:parseFloat(row['السعر شامل الضريبة']||row['Price']||row['السعر']||0),
+        barcode:String(row['الباركود']||row['Barcode']||'-').trim(),
+        stock:parseInt(row['المخزون']||row['Stock']||0),
+        image:'images/image'+(idx+1)+'.jpeg'
+      });
     });
-    saveLocal();updateStats();renderTable(prods);alert('تم استيراد '+prods.length+' صنف بنجاح!');
+    saveLocal();updateStats();renderTable(prods);renderAnalytics();alert('تم تحديث واستيراد ' + prods.length + ' صنف بنجاح من شيت الإكسيل!');
   };
   r.readAsArrayBuffer(file);
 }
