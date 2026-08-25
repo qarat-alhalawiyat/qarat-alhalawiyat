@@ -159,29 +159,46 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
+  <!-- قسم العروض والخصومات المحدث (يشمل 3 أنواع وعرض بالباركود وتنبيه العملاء) -->
   <section id="sec_offers" class="content-card" style="display:none;">
-    <div class="card-header"><h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> العروض والخصومات</h3></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-bottom:15px;">
+    <div class="card-header"><h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> محرك العروض والخصومات الذكية</h3></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:15px;">
+      
+      <!-- 1. خصم مئوي -->
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
-        <h4 style="margin-bottom:10px;">خصم مئوي (%)</h4>
-        <div class="form-grp" style="margin-bottom:8px;"><label>اختر المجموعة:</label><select id="discGroup"></select></div>
+        <h4 style="margin-bottom:10px;color:var(--dark);">خصم نسبة مئوية (%)</h4>
+        <div class="form-grp" style="margin-bottom:8px;"><label>باركود الصنف (اختياري):</label><input type="text" id="discBarcode" placeholder="امسح أو اكتب الباركود"></div>
+        <div class="form-grp" style="margin-bottom:8px;"><label>أو اختر المجموعة:</label><select id="discGroup"></select></div>
         <div class="form-grp" style="margin-bottom:10px;"><label>نسبة الخصم (%):</label><input type="number" id="discVal" placeholder="10"></div>
-        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addDisc()"><i class="fa-solid fa-check"></i> تطبيق وإرسال للعملاء</button>
+        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addDisc()"><i class="fa-solid fa-check"></i> حفظ وإرسال للعملاء</button>
       </div>
+
+      <!-- 2. السعر سابقاً والسعر حالياً -->
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
-        <h4 style="margin-bottom:10px;">عرض كمية مجانية</h4>
-        <div class="form-grp" style="margin-bottom:8px;"><label>اختر الصنف:</label><select id="bxgyProd"></select></div>
+        <h4 style="margin-bottom:10px;color:var(--dark);">خصم مبلغ (السعر سابقاً وحالياً)</h4>
+        <div class="form-grp" style="margin-bottom:8px;"><label>باركود الصنف:</label><input type="text" id="priceBarcode" placeholder="امسح أو اكتب الباركود"></div>
+        <div class="form-row" style="margin-bottom:10px;">
+          <div class="form-grp"><label>السعر السابق:</label><input type="number" step="0.01" id="oldPrice" placeholder="150"></div>
+          <div class="form-grp"><label>السعر الآن:</label><input type="number" step="0.01" id="newPrice" placeholder="120"></div>
+        </div>
+        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addPriceCut()"><i class="fa-solid fa-tag"></i> حفظ وإرسال للعملاء</button>
+      </div>
+
+      <!-- 3. عروض الكميات -->
+      <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
+        <h4 style="margin-bottom:10px;color:var(--dark);">عرض كمية مجانية (BXGY)</h4>
+        <div class="form-grp" style="margin-bottom:8px;"><label>باركود الصنف:</label><input type="text" id="bxgyBarcode" placeholder="امسح أو اكتب الباركود"></div>
         <div class="form-row" style="margin-bottom:10px;">
           <div class="form-grp"><label>اشترِ:</label><input type="number" id="bxgyB" value="10"></div>
           <div class="form-grp"><label>مجاناً:</label><input type="number" id="bxgyF" value="1"></div>
         </div>
-        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addBxgy()"><i class="fa-solid fa-gift"></i> إضافة وإرسال للعملاء</button>
+        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addBxgy()"><i class="fa-solid fa-gift"></i> حفظ وإرسال للعملاء</button>
       </div>
+
     </div>
     <div id="offersList" style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);"></div>
   </section>
 
-  <!-- قسم إدارة العملاء المحدث -->
   <section id="sec_customers" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> إدارة العملاء والمؤسسات</h3>
@@ -272,7 +289,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
-<!-- حوار إضافة عميل جديد يدويًا -->
 <dialog id="dlgNewCustomer">
   <div class="modal-head"><h3>إضافة عميل أو مؤسسة جديدة</h3><button onclick="document.getElementById('dlgNewCustomer').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -464,40 +480,24 @@ function delOrd(id){
 }
 function clearOrders(){if(confirm('مسح جميع الطلبيات؟')){localStorage.removeItem('qarat_store_orders');renderOrders();updateStats();}}
 
-/* --- إدارة العملاء وإرسال الإشعارات التشويقية --- */
+/* --- إدارة العملاء والإرسال التشويقي للعملاء --- */
 function getCustomersList() {
   var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
   var manual = JSON.parse(localStorage.getItem('qarat_manual_customers') || '[]');
   var map = {};
-  
-  // دمج العملاء من الطلبات السابقة
   ords.forEach(function(o) {
-    if(o.phone) {
-      map[o.phone] = { name: o.customerName, phone: o.phone, city: o.city || 'الرياض', ordersCount: (map[o.phone] ? map[o.phone].ordersCount + 1 : 1) };
-    }
+    if(o.phone) { map[o.phone] = { name: o.customerName, phone: o.phone, city: o.city || 'الرياض', ordersCount: (map[o.phone] ? map[o.phone].ordersCount + 1 : 1) }; }
   });
-  
-  // دمج العملاء المضافين يدويًا
   manual.forEach(function(c) {
-    if(c.phone) {
-      map[c.phone] = { name: c.name, phone: c.phone, city: c.city || 'الرياض', ordersCount: (map[c.phone] ? map[c.phone].ordersCount : 0) };
-    }
+    if(c.phone) { map[c.phone] = { name: c.name, phone: c.phone, city: c.city || 'الرياض', ordersCount: (map[c.phone] ? map[c.phone].ordersCount : 0) }; }
   });
-
   return Object.values(map);
 }
 
 function renderCustomers() {
-  var tb = document.getElementById('tbodyCustomers');
-  if(!tb) return;
-  tb.innerHTML = '';
+  var tb = document.getElementById('tbodyCustomers'); if(!tb) return; tb.innerHTML = '';
   var list = getCustomersList();
-  
-  if(!list.length) {
-    tb.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">لا توجد بيانات عملاء مسجلة بعد.</td></tr>';
-    return;
-  }
-  
+  if(!list.length) { tb.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">لا توجد بيانات عملاء مسجلة بعد.</td></tr>'; return; }
   list.forEach(function(c, i) {
     var tr = document.createElement('tr');
     tr.innerHTML = '<td>'+(i+1)+'</td><td><b>'+c.name+'</b></td><td>'+c.phone+'</td><td>'+c.city+'</td><td>'+c.ordersCount+' طلبات</td><td><a href="https://api.whatsapp.com/send?phone='+c.phone+'" target="_blank" style="background:#25D366;color:#fff;padding:4px 8px;border-radius:4px;text-decoration:none;font-size:.75rem;font-weight:bold;">💬 واتساب</a></td>';
@@ -505,70 +505,87 @@ function renderCustomers() {
   });
 }
 
-function openNewCustomerModal() {
-  document.getElementById('dlgNewCustomer').showModal();
-}
-
+function openNewCustomerModal() { document.getElementById('dlgNewCustomer').showModal(); }
 function saveNewCustomerManually() {
   var name = (document.getElementById('nc_name').value || '').trim();
   var phone = (document.getElementById('nc_phone').value || '').trim();
   var city = (document.getElementById('nc_city').value || '').trim() || 'الرياض';
-  
   if(!name || !phone) return alert('يرجى كتابة اسم العميل ورقم الجوال.');
-  
   var manual = JSON.parse(localStorage.getItem('qarat_manual_customers') || '[]');
   manual.push({ name: name, phone: phone, city: city });
   localStorage.setItem('qarat_manual_customers', JSON.stringify(manual));
-  
   document.getElementById('dlgNewCustomer').close();
-  document.getElementById('nc_name').value = '';
-  document.getElementById('nc_phone').value = '';
-  renderCustomers();
-  alert('تمت إضافة العميل بنجاح!');
+  document.getElementById('nc_name').value = ''; document.getElementById('nc_phone').value = '';
+  renderCustomers(); alert('تمت إضافة العميل بنجاح!');
 }
 
 function broadcastOfferToCustomers(offerLabel) {
   var customers = getCustomersList();
   if(!customers.length) return alert('لا توجد أرقام عملاء مسجلة لإرسال العرض لها.');
-  
-  // رابط المتجر الخاص بك (تستطيع استبداله برابط Vercel الحقيقي الخاص بك)
   var storeUrl = window.location.origin + '/index.html'; 
   
   Swal.fire({
     title: '📢 إرسال العرض التشويقي للعملاء',
-    text: `تم تجهيز إرسال العرض (${offerLabel}) إلى ${customers.length} عميل مسجل. هل تريد البدء بإرسال الرسائل؟`,
-    icon: 'question',
-    showCancelButton: true,
-    confirmButtonText: 'نعم، إرسال الآن',
-    cancelButtonText: 'إلغاء',
-    confirmButtonColor: '#25D366'
+    text: `تم حفظ العرض (${offerLabel}). هل تريد إرساله الآن عبر الواتساب إلى ${customers.length} عميل؟`,
+    icon: 'question', showCancelButton: true, confirmButtonText: 'نعم، إرسال الآن', cancelButtonText: 'إلغاء', confirmButtonColor: '#25D366'
   }).then(res => {
     if(res.isConfirmed) {
-      // فتح واتساب لأول عميل كمثال أو إرسال جماعي
-      var sampleMsg = `*عرض خاص من شركة قارة الحلويات التجارية* 🍬\n\n${offerLabel}\n\nتسوق الآن واعرف تفاصيل العروض عبر متجرنا:\n${storeUrl}`;
+      var sampleMsg = `*عرض خاص وتخفيضات من متجر قارة الحلويات* 🍬\n\n${offerLabel}\n\n👇 تفضل بزيارة المتجر واستفد من العرض الآن:\n${storeUrl}`;
       var firstCust = customers[0];
       window.open(`https://api.whatsapp.com/send?phone=${firstCust.phone}&text=${encodeURIComponent(sampleMsg)}`, '_blank');
-      
-      Swal.fire('تم بنجاح', 'تم بدء إرسال العرض للعملاء المسجلين عبر الواتساب!', 'success');
+      Swal.fire('تم بنجاح', 'تم تجهيز وبدء إرسال العرض للعملاء عبر الواتساب!', 'success');
     }
   });
 }
 
 function addDisc(){
   if(!hasP('offers'))return alert('ليس لديك صلاحية.');
-  var g=document.getElementById('discGroup').value,pct=parseFloat(document.getElementById('discVal').value)||0;
-  if(pct<=0)return alert('أدخل نسبة صحيحة');
-  var label = 'خصم '+pct+'% على مجموعة ('+g+')';
-  offers.push({id:Date.now(),type:'group_discount',target:g,percent:pct,label:label});
+  var barcode = (document.getElementById('discBarcode').value || '').trim();
+  var g = document.getElementById('discGroup').value;
+  var pct = parseFloat(document.getElementById('discVal').value) || 0;
+  if(pct<=0) return alert('أدخل نسبة خصم صحيحة');
+  
+  var targetName = g;
+  if(barcode) {
+    var found = prods.find(function(p){ return String(p.barcode) === barcode; });
+    if(found) targetName = found.name;
+    else return alert('الباركود المدخل غير موجود في الأصناف!');
+  }
+
+  var label = 'خصم '+pct+'% على ('+targetName+')';
+  offers.push({id:Date.now(), type:'discount', target:targetName, percent:pct, label:label});
+  renderOffers();
+  broadcastOfferToCustomers(label);
+}
+
+function addPriceCut(){
+  if(!hasP('offers'))return alert('ليس لديك صلاحية.');
+  var barcode = (document.getElementById('priceBarcode').value || '').trim();
+  var oldP = parseFloat(document.getElementById('oldPrice').value) || 0;
+  var newP = parseFloat(document.getElementById('newPrice').value) || 0;
+  if(!barcode || oldP <= 0 || newP <= 0) return alert('يرجى إدخال الباركود والأسعار بشكل صحيح');
+
+  var found = prods.find(function(p){ return String(p.barcode) === barcode; });
+  if(!found) return alert('الباركود المدخل غير موجود في الأصناف!');
+
+  var label = 'عروض التخفيض: ('+found.name+ ') بسعر '+newP+' ر.س بدلاً من '+oldP+' ر.س';
+  offers.push({id:Date.now(), type:'price_cut', target:found.name, oldPrice:oldP, newPrice:newP, label:label});
   renderOffers();
   broadcastOfferToCustomers(label);
 }
 
 function addBxgy(){
   if(!hasP('offers'))return alert('ليس لديك صلاحية.');
-  var p=prods[document.getElementById('bxgyProd').value],b=parseInt(document.getElementById('bxgyB').value)||10,f=parseInt(document.getElementById('bxgyF').value)||1;
-  var label = 'عرض كميات: اشترِ '+b+' من ('+p.name+') واحصل على '+f+' مجاناً';
-  offers.push({id:Date.now(),type:'bxgy',target:p.name,buyQty:b,freeQty:f,label:label});
+  var barcode = (document.getElementById('bxgyBarcode').value || '').trim();
+  var b = parseInt(document.getElementById('bxgyB').value) || 10;
+  var f = parseInt(document.getElementById('bxgyF').value) || 1;
+  if(!barcode) return alert('يرجى إدخال باركود الصنف');
+
+  var found = prods.find(function(p){ return String(p.barcode) === barcode; });
+  if(!found) return alert('الباركود المدخل غير موجود في الأصناف!');
+
+  var label = 'عرض الكميات: اشترِ '+b+' من ('+found.name+') واحصل على '+f+' مجاناً';
+  offers.push({id:Date.now(), type:'bxgy', target:found.name, buyQty:b, freeQty:f, label:label});
   renderOffers();
   broadcastOfferToCustomers(label);
 }
@@ -636,10 +653,9 @@ function switchSec(id,btn){
 }
 
 function popDropdowns(){
-  var grpSel=document.getElementById('discGroup'),prodSel=document.getElementById('bxgyProd');if(!grpSel||!prodSel)return;
+  var grpSel=document.getElementById('discGroup'); if(!grpSel) return;
   var grps=[...new Set(prods.map(function(p){return p.group||'عام';}))];
   grpSel.innerHTML=grps.map(function(g){return '<option value="'+g+'">'+g+'</option>'}).join('');
-  prodSel.innerHTML=prods.map(function(p,i){return '<option value="'+i+'">'+p.name+'</option>'}).join('');
 }
 
 function importXLSX(e){
