@@ -189,11 +189,11 @@
             <p>لوحة تحكم شركة قارة الحلويات</p>
             <div class="form-grp" style="text-align:right; margin-bottom:12px;">
                 <label>اسم المستخدم:</label>
-                <input type="text" id="loginUser" placeholder="admin" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
+                <input type="text" id="loginUser" value="admin" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
             </div>
             <div class="form-grp" style="text-align:right; margin-bottom:20px;">
                 <label>كلمة المرور:</label>
-                <input type="password" id="loginPass" placeholder="••••••" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
+                <input type="password" id="loginPass" placeholder="••••••" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;" onkeypress="if(event.key === 'Enter') attemptLogin()">
             </div>
             <button class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="attemptLogin()">
                 <i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم
@@ -210,7 +210,7 @@
         <div class="user-badge">
             <div>
                 <span style="color:var(--gold-light); font-weight:900;" id="currentUserName">المدير العام</span><br>
-                <span style="font-size:0.75rem; color:#aaa;" id="currentUserRole">صلاحيات مخصصة</span>
+                <span style="font-size:0.75rem; color:#aaa;" id="currentUserRole">صلاحيات كاملة</span>
             </div>
             <button onclick="logout()" title="تسجيل الخروج" style="background:none; border:none; color:var(--danger); font-size:1.1rem; cursor:pointer;"><i class="fa-solid fa-power-off"></i></button>
         </div>
@@ -678,25 +678,30 @@
         let storeOffers = JSON.parse(localStorage.getItem('qarat_offers')) || [];
         let currentUser = null;
 
-        // المستخدمين الافتراضيين بصلاحيات كاملة للمدير
-        let systemUsers = JSON.parse(localStorage.getItem('qarat_users_list')) || [
-            {
-                id: 1,
-                user: 'admin',
-                pass: '123456',
-                perms: {
-                    add_prod: true,
-                    edit_price: true,
-                    edit_stock: true,
-                    reset_stock: true,
-                    delete_prod: true,
-                    offers: true,
-                    invoices: true,
-                    excel: true,
-                    manage_users: true
-                }
+        const defaultAdmin = {
+            id: 1,
+            user: 'admin',
+            pass: '123456',
+            perms: {
+                add_prod: true,
+                edit_price: true,
+                edit_stock: true,
+                reset_stock: true,
+                delete_prod: true,
+                offers: true,
+                invoices: true,
+                excel: true,
+                manage_users: true
             }
-        ];
+        };
+
+        let systemUsers = JSON.parse(localStorage.getItem('qarat_users_list')) || [defaultAdmin];
+
+        // التأكد من وجود حساب admin دائماً
+        if (!systemUsers.some(u => u.user.toLowerCase() === 'admin')) {
+            systemUsers.unshift(defaultAdmin);
+            localStorage.setItem('qarat_users_list', JSON.stringify(systemUsers));
+        }
 
         function tryNextFormat(imgElement) {
             const currentSrc = imgElement.src;
@@ -719,7 +724,7 @@
             renderUsersTable();
         };
 
-        /* --- Auth & Dynamic Custom Permissions --- */
+        /* --- Auth & Permissions System --- */
         function checkAuth() {
             const session = sessionStorage.getItem('qarat_logged_user');
             if (session) {
@@ -735,15 +740,28 @@
             const u = document.getElementById('loginUser').value.trim();
             const p = document.getElementById('loginPass').value.trim();
 
+            if (!u || !p) {
+                return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
+            }
+
+            // فحص مباشر لحساب المدير الرئيسي
+            if (u.toLowerCase() === 'admin' && p === '123456') {
+                currentUser = defaultAdmin;
+                sessionStorage.setItem('qarat_logged_user', JSON.stringify(currentUser));
+                document.getElementById('loginOverlay').style.display = 'none';
+                applyUserPermissions();
+                return;
+            }
+
+            // فحص بقية المستخدمين المضافين
             const match = systemUsers.find(user => user.user.toLowerCase() === u.toLowerCase() && user.pass === p);
             if (match) {
                 currentUser = match;
                 sessionStorage.setItem('qarat_logged_user', JSON.stringify(currentUser));
                 document.getElementById('loginOverlay').style.display = 'none';
                 applyUserPermissions();
-                alert(`مرحباً بك يا ${currentUser.user}! تم تسجيل الدخول بنجاح.`);
             } else {
-                alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة! تأكد من كتابة: admin وكلمة المرور: 123456');
             }
         }
 
@@ -762,7 +780,6 @@
             document.getElementById('currentUserName').textContent = currentUser.user;
             document.getElementById('currentUserRole').textContent = currentUser.user === 'admin' ? 'المدير العام' : 'صلاحيات مخصصة';
 
-            // إخفاء أو إظهار الأزرار والقوائم بحسب الصلاحيات المحددة
             document.getElementById('btnHeaderAddProd').style.display = hasPerm('add_prod') ? '' : 'none';
             document.getElementById('btnHeaderResetStock').style.display = hasPerm('reset_stock') ? '' : 'none';
             document.getElementById('btnHeaderFillStock').style.display = hasPerm('reset_stock') ? '' : 'none';
@@ -897,7 +914,7 @@
         }
 
         function fillAllStock(val) {
-            if (!hasPerm('reset_stock')) return alert('عذراً، ليس لديك صلاحية تعديل أو تصفير المخزون الجماعي.');
+            if (!hasPerm('reset_stock')) return alert('عذراً، ليس لديك صلاحية تعديل أو تصفير المخزون.');
             storeProducts.forEach(p => p.stock = val);
             saveToStorage();
             if(isLowStockFiltered) {
@@ -910,7 +927,7 @@
             alert(val === 0 ? 'تم تصفير مخزون كافة الأصناف بنجاح (0 كرتون).' : `تم تعبئة مخزون كافة الأصناف إلى ${val} كرتون.`);
         }
 
-        /* --- Modals Management with Exact Permissions --- */
+        /* --- Modals Management & Custom Permissions --- */
         function openCardModal(idx) {
             const p = storeProducts[idx];
             if (!p) return;
@@ -928,7 +945,6 @@
             document.getElementById('edit_image_path').value = currentImg;
             previewModalImg(currentImg);
 
-            // تفعيل / تعطيل الحقول طبقاً لصلاحيات المستخدم المسجل
             document.getElementById('edit_price').disabled = !hasPerm('edit_price');
             document.getElementById('edit_stock').disabled = !hasPerm('edit_stock');
             document.getElementById('btnModalDeleteProd').style.display = hasPerm('delete_prod') ? '' : 'none';
@@ -1013,7 +1029,7 @@
             alert('تمت إضافة الصنف الجديد بنجاح!');
         }
 
-        /* --- Users & Custom Permissions List Management --- */
+        /* --- Users & Custom Permissions Management --- */
         function renderUsersTable() {
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
@@ -1229,13 +1245,4 @@
             const reader = new FileReader();
             reader.onload = function(evt) {
                 const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
-                const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-                storeProducts = [];
-                rows.forEach((r, idx) => {
-                    const name = r['اسم الصنف'] || r['Name'] || r['الاسم'] || r['الصنف'] || '';
-                    if (name) {
-                        storeProducts.push({
-                            name: String(name).trim(),
-                            group: String(r['المجموعة'] || r['Group'] || 'عام').trim(),
-                            weight: String(r['الحجم'] || r['الوزن'] || r['Weight'] || '').trim(),
-           
+                
