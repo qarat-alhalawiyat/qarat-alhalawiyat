@@ -30,7 +30,7 @@
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(135deg, var(--choc-dark), #150a04);
-            z-index: 9999;
+            z-index: 99999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -182,7 +182,7 @@
 </head>
 <body>
 
-    <!-- Login Screen -->
+    <!-- Login Overlay Screen -->
     <div id="loginOverlay">
         <div class="login-box">
             <h2><i class="fa-solid fa-lock" style="color:var(--gold);"></i> تسجيل الدخول</h2>
@@ -193,9 +193,9 @@
             </div>
             <div class="form-grp" style="text-align:right; margin-bottom:20px;">
                 <label>كلمة المرور:</label>
-                <input type="password" id="loginPass" placeholder="••••••" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;" onkeypress="if(event.key === 'Enter') attemptLogin()">
+                <input type="password" id="loginPass" placeholder="123456" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
             </div>
-            <button class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="attemptLogin()">
+            <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="attemptLogin()">
                 <i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم
             </button>
         </div>
@@ -584,7 +584,7 @@
         </div>
     </dialog>
 
-    <!-- Dialog 3: إضافة مستخدم جديد بصلاحيات مخصصة Checkboxes -->
+    <!-- Dialog 3: إضافة مستخدم جديد بصلاحيات Checkboxes -->
     <dialog id="newUserModal">
         <div class="modal-inner-container">
             <div class="modal-head">
@@ -695,14 +695,6 @@
             }
         };
 
-        let systemUsers = JSON.parse(localStorage.getItem('qarat_users_list')) || [defaultAdmin];
-
-        // التأكد من وجود حساب admin دائماً
-        if (!systemUsers.some(u => u.user.toLowerCase() === 'admin')) {
-            systemUsers.unshift(defaultAdmin);
-            localStorage.setItem('qarat_users_list', JSON.stringify(systemUsers));
-        }
-
         function tryNextFormat(imgElement) {
             const currentSrc = imgElement.src;
             if (currentSrc.endsWith('.jpeg')) {
@@ -724,9 +716,9 @@
             renderUsersTable();
         };
 
-        /* --- Auth & Permissions System --- */
+        /* --- Auth System --- */
         function checkAuth() {
-            const session = sessionStorage.getItem('qarat_logged_user');
+            const session = sessionStorage.getItem('qarat_auth_user');
             if (session) {
                 currentUser = JSON.parse(session);
                 document.getElementById('loginOverlay').style.display = 'none';
@@ -737,36 +729,34 @@
         }
 
         function attemptLogin() {
-            const u = document.getElementById('loginUser').value.trim();
-            const p = document.getElementById('loginPass').value.trim();
+            const u = (document.getElementById('loginUser').value || '').trim();
+            const p = (document.getElementById('loginPass').value || '').trim();
 
-            if (!u || !p) {
-                return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
-            }
-
-            // فحص مباشر لحساب المدير الرئيسي
+            // فحص مباشر للحساب الافتراضي
             if (u.toLowerCase() === 'admin' && p === '123456') {
                 currentUser = defaultAdmin;
-                sessionStorage.setItem('qarat_logged_user', JSON.stringify(currentUser));
+                sessionStorage.setItem('qarat_auth_user', JSON.stringify(currentUser));
                 document.getElementById('loginOverlay').style.display = 'none';
                 applyUserPermissions();
                 return;
             }
 
-            // فحص بقية المستخدمين المضافين
-            const match = systemUsers.find(user => user.user.toLowerCase() === u.toLowerCase() && user.pass === p);
+            // فحص المستخدمين الإضافيين
+            let customUsers = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
+            const match = customUsers.find(user => user.user.toLowerCase() === u.toLowerCase() && user.pass === p);
+            
             if (match) {
                 currentUser = match;
-                sessionStorage.setItem('qarat_logged_user', JSON.stringify(currentUser));
+                sessionStorage.setItem('qarat_auth_user', JSON.stringify(currentUser));
                 document.getElementById('loginOverlay').style.display = 'none';
                 applyUserPermissions();
             } else {
-                alert('اسم المستخدم أو كلمة المرور غير صحيحة! تأكد من كتابة: admin وكلمة المرور: 123456');
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!\nالمستخدم: admin\nكلمة المرور: 123456');
             }
         }
 
         function logout() {
-            sessionStorage.removeItem('qarat_logged_user');
+            sessionStorage.removeItem('qarat_auth_user');
             location.reload();
         }
 
@@ -927,7 +917,7 @@
             alert(val === 0 ? 'تم تصفير مخزون كافة الأصناف بنجاح (0 كرتون).' : `تم تعبئة مخزون كافة الأصناف إلى ${val} كرتون.`);
         }
 
-        /* --- Modals Management & Custom Permissions --- */
+        /* --- Modals & Permissions --- */
         function openCardModal(idx) {
             const p = storeProducts[idx];
             if (!p) return;
@@ -1029,7 +1019,7 @@
             alert('تمت إضافة الصنف الجديد بنجاح!');
         }
 
-        /* --- Users & Custom Permissions Management --- */
+        /* --- Users & Custom Permissions --- */
         function renderUsersTable() {
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
@@ -1046,7 +1036,10 @@
                 manage_users: 'إدارة المستخدمين'
             };
 
-            systemUsers.forEach((u, idx) => {
+            let usersList = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
+            let all = [defaultAdmin, ...usersList];
+
+            all.forEach((u, idx) => {
                 let permsHtml = '';
                 if (u.perms) {
                     permsHtml = Object.keys(u.perms)
@@ -1090,14 +1083,15 @@
                 manage_users: document.getElementById('perm_manage_users').checked
             };
 
-            systemUsers.push({
+            let usersList = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
+            usersList.push({
                 id: Date.now(),
                 user: uName,
                 pass: uPass,
                 perms: perms
             });
 
-            localStorage.setItem('qarat_users_list', JSON.stringify(systemUsers));
+            localStorage.setItem('qarat_users_list', JSON.stringify(usersList));
             renderUsersTable();
             closeNewUserModal();
             alert('تم إنشاء المستخدم وتخصيص صلاحياته بنجاح!');
@@ -1105,8 +1099,9 @@
 
         function deleteUser(id) {
             if(confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-                systemUsers = systemUsers.filter(u => u.id !== id);
-                localStorage.setItem('qarat_users_list', JSON.stringify(systemUsers));
+                let usersList = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
+                usersList = usersList.filter(u => u.id !== id);
+                localStorage.setItem('qarat_users_list', JSON.stringify(usersList));
                 renderUsersTable();
             }
         }
@@ -1245,4 +1240,7 @@
             const reader = new FileReader();
             reader.onload = function(evt) {
                 const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
-                
+                const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                storeProducts = [];
+                rows.forEach((r, idx) => {
+ 
