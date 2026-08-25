@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مؤسسة قارة الحلويات للتجارة</title>
+  <title>شركة قارة الحلويات التجارية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
@@ -418,7 +418,7 @@
 <body>
 
   <div class="top-announcement">
-    ✨ مؤسسة قارة الحلويات للتجارة - عروض حصرية على أسعار الجملة للكرتون
+    ✨ شركة قارة الحلويات التجارية - عروض حصرية على أسعار الجملة للكرتون
   </div>
 
   <header>
@@ -482,12 +482,12 @@
       
       <!-- Col 1: About -->
       <div class="footer-col">
-        <h4>🍬 مؤسسة قارة الحلويات</h4>
+        <h4>🍬 شركة قارة الحلويات التجارية</h4>
         <p>
           وجهتك الأولى لتوريد أجود أنواع الحلويات والشوكولاتة ومنتجات البروتين المستوردة بأسعار الجملة التنافسية للكرتون، ملتزمون بالجودة وسرعة التوصيل لكافة المنشآت والأفراد.
         </p>
         <div class="vat-badge">
-          <span>🧾 الرقم الضريبي: <b>300000000000003</b></span>
+          <span>🧾 الرقم الضريبي: <b>312473488800003</b></span>
         </div>
       </div>
 
@@ -522,7 +522,7 @@
         </div>
         <div class="footer-contact-item">
           <span>📱</span>
-          <span>واتساب المبيعات: 0500000000</span>
+          <span>واتساب المبيعات: 0578384009</span>
         </div>
         <div class="footer-contact-item">
           <span>✉️</span>
@@ -534,7 +534,7 @@
 
     <!-- Footer Copyright -->
     <div class="footer-bottom">
-      <div>جميع الحقوق محفوظة © 2026 مؤسسة قارة الحلويات للتجارة</div>
+      <div>جميع الحقوق محفوظة © 2026 شركة قارة الحلويات التجارية</div>
       <div style="display: flex; gap: 8px; align-items: center;">
         <span>جميع الأسعار تشمل ضريبة القيمة المضافة</span>
         <span style="background: #fff; color: #1f0b35; padding: 2px 6px; border-radius: 4px; font-weight: 800; font-size: 10px;">15% VAT</span>
@@ -789,13 +789,13 @@
     }
 
     function sendWhatsAppOrder(total) {
-      let msg = `*طلب جديد من متجر قارة الحلويات:*\n--------------------------\n`;
+      let msg = `*طلب جديد من شركة قارة الحلويات التجارية:*\n--------------------------\n`;
       cart.forEach((i, idx) => {
         msg += `${idx+1}. ${i.name} | الكمية: ${i.qty} كرتون | السعر: ${(i.qty * i.unitPrice).toFixed(2)} ر.س\n`;
       });
       msg += `--------------------------\n*المجموع الكلي:* ${total.toFixed(2)} ر.س`;
       
-      const url = `https://api.whatsapp.com/send?phone=966500000000&text=${encodeURIComponent(msg)}`;
+      const url = `https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
     }
 
