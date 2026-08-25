@@ -6,7 +6,6 @@
   <title>شركة قارة الحلويات التجارية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- مكتبة إنشاء وتحميل ملفات الـ PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
@@ -589,7 +588,7 @@
       <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff7a00; padding-bottom: 15px; margin-bottom: 20px;">
         <div>
           <h2 style="color: #4a1d75; font-weight: 900; margin-bottom: 4px;">شركة قارة الحلويات التجارية</h2>
-          <p style="font-size: 13px; color: #555;">الرياض - المملكة العربية السعودية</p>
+          <p style="font-size: 13px; color: #555;">المملكة العربية السعودية - الرياض - العزيزية - حي المصانع - مستودع رقم 72</p>
           <p style="font-size: 13px; color: #555;">الرقم الضريبي: <b>312473488800003</b></p>
         </div>
         <div style="text-align: left;">
@@ -673,11 +672,13 @@
         <h4>📞 تواصل معنا</h4>
         <div class="footer-contact-item">
           <span>📍</span>
-          <span>المملكة العربية السعودية - الرياض</span>
+          <span>المملكة العربية السعودية - الرياض - العزيزية - حي المصانع - مستودع رقم 72</span>
         </div>
         <div class="footer-contact-item">
           <span>📱</span>
-          <span>واتساب المبيعات: 0578384009</span>
+          <button onclick="openContactOptions()" style="color:#ffd166; font-weight:bold; cursor:pointer; text-decoration:underline; background:none; border:none; padding:0; font-family:inherit; font-size:12.5px;">
+            واتساب / اتصال المبيعات: 0578384009
+          </button>
         </div>
         <div class="footer-contact-item">
           <span>✉️</span>
@@ -1143,7 +1144,6 @@
       const orderId = 'QAR-' + Math.floor(1000 + Math.random() * 9000);
       const orderDate = new Date().toLocaleDateString('ar-SA');
 
-      // 1. حفظ الطلب للتتبع
       const newOrder = {
         orderId: orderId,
         customerName: cName,
@@ -1159,7 +1159,6 @@
       existingOrders.unshift(newOrder);
       localStorage.setItem('qarat_store_orders', JSON.stringify(existingOrders));
 
-      // 2. تجهيز قالب الفاتورة PDF وتنزيله للعميل
       document.getElementById('pdf_inv_id').textContent = '#' + orderId;
       document.getElementById('pdf_inv_date').textContent = orderDate;
       document.getElementById('pdf_cust_name').textContent = cName;
@@ -1183,7 +1182,6 @@
         `;
       });
 
-      // تنزيل ملف الـ PDF تلقائياً
       const pdfElement = document.getElementById('pdfInvoiceTemplate');
       pdfElement.style.display = 'block';
       const opt = {
@@ -1198,7 +1196,6 @@
         pdfElement.style.display = 'none';
       });
 
-      // 3. تجهيز نص رسالة الواتساب الاحترافية المجدولة
       let msg = `*🧾 فاتورة طلب جديدة - شركة قارة الحلويات التجارية* 🍬\n`;
       msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
       msg += `📄 *رقم الفاتورة:* #${orderId}\n`;
@@ -1222,12 +1219,10 @@
       msg += `📎 *تم تنزيل نسخة الفاتورة الرسمية (PDF) وإرفاقها للطلب.*\n`;
       msg += `🔍 *تتبع حالة الشحنة بالمتجر برقم:* #${orderId}`;
 
-      // تفريغ السلة
       cart = [];
       localStorage.removeItem('qarat_cart');
       updateCartBadge();
 
-      // فتح الواتساب
       const url = `https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
 
@@ -1242,6 +1237,27 @@
           </div>
         `,
         confirmButtonColor: 'var(--primary)'
+      });
+    }
+
+    /* --- Smart Contact Options Popup --- */
+    function openContactOptions() {
+      Swal.fire({
+        title: '📞 تواصل مع مبيعات قارة الحلويات',
+        html: `
+          <p style="font-size:13px; color:#666; margin-bottom:15px;">اختر وسيلة التواصل المناسبة لك مع فريق المبيعات:</p>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <a href="https://api.whatsapp.com/send?phone=966578384009&text=السلام%20عليكم،%20أرغب%20في%20الاستفسار%20عن%20منتجات%20قارة%20الحلويات" target="_blank" style="background:#25D366; color:#fff; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; font-size:14px; display:flex; align-items:center; justify-content:center; gap:8px;">
+              💬 مراسلة فورية عبر الواتساب (0578384009)
+            </a>
+            <a href="tel:0578384009" style="background:#4a1d75; color:#fff; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold; font-size:14px; display:flex; align-items:center; justify-content:center; gap:8px;">
+              📞 اتصال هاتفي مباشر (0578384009)
+            </a>
+          </div>
+        `,
+        showConfirmButton: false,
+        showCloseButton: true,
+        width: '450px'
       });
     }
 
