@@ -194,9 +194,9 @@
             </div>
             <div class="form-grp" style="text-align:right; margin-bottom:20px;">
                 <label>كلمة المرور:</label>
-                <input type="password" id="loginPass" value="123456" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;" onkeypress="if(event.key === 'Enter') handleLoginSubmit()">
+                <input type="password" id="loginPass" value="123456" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;" onkeydown="if(event.key==='Enter') doLogin()">
             </div>
-            <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="handleLoginSubmit()">
+            <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="doLogin()">
                 <i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم
             </button>
         </div>
@@ -624,63 +624,47 @@
         </div>
     </dialog>
 
-    <!-- تضمين ملف البيانات بأمان تام -->
     <script src="products_data.js"></script>
 
-    <!-- سكربت لوحة التحكم الرئيسي المقاوم للأخطاء -->
     <script>
         var storeProducts = [];
         var isLowStockFiltered = false;
         var storeOffers = [];
-        var currentUser = null;
-
-        var defaultAdmin = {
+        var currentUser = {
             id: 'admin_root',
             user: 'admin',
             pass: '123456',
             perms: { add_prod: true, edit_price: true, edit_stock: true, reset_stock: true, delete_prod: true, offers: true, excel: true, manage_users: true }
         };
 
-        function getStoredUsers() {
-            try {
-                var raw = localStorage.getItem('qarat_users_list');
-                if (raw) return JSON.parse(raw);
-            } catch(e) {}
-            return [];
-        }
-
-        function saveUsersToStorage(arr) {
-            localStorage.setItem('qarat_users_list', JSON.stringify(arr));
-        }
-
-        // دالة تسجيل الدخول المباشرة والمضمونة 100%
-        function handleLoginSubmit() {
-            var uInput = document.getElementById('loginUser');
-            var pInput = document.getElementById('loginPass');
-            var u = (uInput ? uInput.value : '').trim();
-            var p = (pInput ? pInput.value : '').trim();
+        // دالة تسجيل الدخول المباشرة والفورية
+        function doLogin() {
+            var u = (document.getElementById('loginUser').value || '').trim();
+            var p = (document.getElementById('loginPass').value || '').trim();
 
             if (u.toLowerCase() === 'admin' && (p === '123456' || p === '')) {
-                currentUser = defaultAdmin;
-                sessionStorage.setItem('qarat_logged_in_user', JSON.stringify(currentUser));
                 document.getElementById('loginOverlay').style.display = 'none';
                 applyUserPermissions();
                 loadData();
                 return;
             }
 
-            var customUsers = getStoredUsers();
-            var match = null;
+            var customUsers = [];
+            try {
+                var raw = localStorage.getItem('qarat_users_list');
+                if (raw) customUsers = JSON.parse(raw);
+            } catch(e) {}
+
+            var found = null;
             for (var i = 0; i < customUsers.length; i++) {
                 if (customUsers[i].user.toLowerCase() === u.toLowerCase() && customUsers[i].pass === p) {
-                    match = customUsers[i];
+                    found = customUsers[i];
                     break;
                 }
             }
 
-            if (match) {
-                currentUser = match;
-                sessionStorage.setItem('qarat_logged_in_user', JSON.stringify(currentUser));
+            if (found) {
+                currentUser = found;
                 document.getElementById('loginOverlay').style.display = 'none';
                 applyUserPermissions();
                 loadData();
@@ -689,23 +673,7 @@
             }
         }
 
-        function checkAuth() {
-            try {
-                var session = sessionStorage.getItem('qarat_logged_in_user');
-                if (session) {
-                    currentUser = JSON.parse(session);
-                    document.getElementById('loginOverlay').style.display = 'none';
-                    applyUserPermissions();
-                    return true;
-                }
-            } catch(e) {}
-            document.getElementById('loginOverlay').style.display = 'flex';
-            return false;
-        }
-
         function logout() {
-            sessionStorage.removeItem('qarat_logged_in_user');
-            currentUser = null;
             document.getElementById('loginOverlay').style.display = 'flex';
         }
 
@@ -715,7 +683,6 @@
         }
 
         function applyUserPermissions() {
-            if (!currentUser) return;
             document.getElementById('currentUserName').textContent = currentUser.user;
             document.getElementById('currentUserRole').textContent = currentUser.user === 'admin' ? 'المدير العام' : 'مستخدم مخصص';
 
@@ -730,9 +697,7 @@
         }
 
         window.onload = function() {
-            if (checkAuth()) {
-                loadData();
-            }
+            loadData();
             renderUsersTable();
             renderOrdersTable();
         };
@@ -846,7 +811,7 @@
                 }
             }
             localStorage.setItem('qarat_store_orders', JSON.stringify(orders));
-            alert('تم تحديث حالة الطلب #' + orderId + ' بنجاح! سيراها العميل فوراً عند تتبع الطلبية.');
+            alert('تم تحديث حالة الطلب #' + orderId + ' بنجاح!');
         }
 
         function deleteOrder(orderId) {
@@ -1077,8 +1042,13 @@
                 manage_users: 'إدارة المستخدمين'
             };
 
-            var usersList = getStoredUsers();
-            var all = [defaultAdmin].concat(usersList);
+            var usersList = [];
+            try {
+                var raw = localStorage.getItem('qarat_users_list');
+                if (raw) usersList = JSON.parse(raw);
+            } catch(e) {}
+
+            var all = [currentUser].concat(usersList);
 
             for (var idx = 0; idx < all.length; idx++) {
                 var u = all[idx];
@@ -1126,13 +1096,14 @@
                 manage_users: document.getElementById('perm_manage_users').checked
             };
 
-            var usersList = getStoredUsers();
-            if (uName.toLowerCase() === 'admin' || usersList.some(function(x){ return x.user.toLowerCase() === uName.toLowerCase(); })) {
-                return alert('اسم المستخدم موجود مسبقاً!');
-            }
+            var usersList = [];
+            try {
+                var raw = localStorage.getItem('qarat_users_list');
+                if (raw) usersList = JSON.parse(raw);
+            } catch(e) {}
 
             usersList.push({ id: 'u_' + Date.now(), user: uName, pass: uPass, perms: perms });
-            saveUsersToStorage(usersList);
+            localStorage.setItem('qarat_users_list', JSON.stringify(usersList));
             renderUsersTable();
             closeNewUserModal();
             alert('تم إنشاء المستخدم وتخصيص صلاحياته بنجاح!');
@@ -1140,9 +1111,13 @@
 
         function deleteUser(id) {
             if(confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-                var usersList = getStoredUsers();
+                var usersList = [];
+                try {
+                    var raw = localStorage.getItem('qarat_users_list');
+                    if (raw) usersList = JSON.parse(raw);
+                } catch(e) {}
                 usersList = usersList.filter(function(u){ return String(u.id) !== String(id); });
-                saveUsersToStorage(usersList);
+                localStorage.setItem('qarat_users_list', JSON.stringify(usersList));
                 renderUsersTable();
             }
         }
@@ -1245,4 +1220,24 @@
             if (!hasPerm('offers')) return alert('ليس لديك صلاحية إلغاء العروض.');
             storeOffers = storeOffers.filter(function(o){ return o.id !== id; });
             renderActiveOffers();
-        
+        }
+
+        function handleExcel(e) {
+            if (!hasPerm('excel')) return alert('ليس لديك صلاحية رفع شيت Excel.');
+            var file = e.target.files[0];
+            if (!file) return;
+            var reader = new FileReader();
+            reader.onload = function(evt) {
+                var wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
+                var rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                storeProducts = [];
+                for (var idx = 0; idx < rows.length; idx++) {
+                    var r = rows[idx];
+                    var name = r['اسم الصنف'] || r['Name'] || r['الاسم'] || r['الصنف'] || '';
+                    if (name) {
+                        storeProducts.push({
+                            name: String(name).trim(),
+                            group: String(r['المجموعة'] || r['Group'] || 'عام').trim(),
+                            weight: String(r['الحجم'] || r['الوزن'] || r['Weight'] || '').trim(),
+                            pack: String(r['الشد'] || r['Pack'] || '1').trim(),
+                     
