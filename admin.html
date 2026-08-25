@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | مؤسسة قارة الحلويات</title>
+    <title>لوحة التحكم | شركة قارة الحلويات التجارية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -30,7 +30,7 @@
         .sidebar-brand h2 { font-size: 1.25rem; color: var(--gold-light); font-weight: 900; }
         .sidebar-brand span { font-size: 0.8rem; color: #aaa; }
 
-        .sidebar-menu { padding: 1rem 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .sidebar-menu { padding: 1rem 0; flex: 1; display: flex; flex-direction: column; gap: 4px; overflow-y: auto; }
         .menu-item { padding: 14px 20px; color: #ddd; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: 0.2s; border-right: 4px solid transparent; text-decoration: none; }
         .menu-item:hover, .menu-item.active { background: var(--choc-medium); color: var(--gold-light); border-right-color: var(--gold); }
         .menu-item i { width: 22px; font-size: 1.1rem; color: var(--gold); }
@@ -42,17 +42,23 @@
 
         .main-content { margin-right: 280px; flex: 1; padding: 2rem; width: calc(100% - 280px); }
         
-        .top-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+        .top-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
         .stat-box { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.2rem; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); }
         .stat-icon { width: 50px; height: 50px; border-radius: 12px; background: var(--choc-dark); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
         .stat-details h4 { font-size: 0.85rem; color: #777; font-weight: 700; }
-        .stat-details span { font-size: 1.4rem; font-weight: 900; color: var(--choc-dark); }
+        .stat-details span { font-size: 1.35rem; font-weight: 900; color: var(--choc-dark); }
 
         .content-card { background: var(--white); border: 1.5px solid var(--border); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow); margin-bottom: 2rem; }
         .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem; }
         .card-header-flex h3 { font-size: 1.2rem; font-weight: 900; color: var(--choc-dark); display: flex; align-items: center; gap: 10px; }
 
-        .table-search-input { padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 25px; outline: none; width: 320px; font-size: 0.95rem; background: var(--cream); }
+        .btn-action-gold { background: var(--choc-dark); color: var(--gold-light); border: none; padding: 9px 18px; border-radius: 8px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-action-gold:hover { background: var(--choc-medium); }
+        .btn-action-green { background: var(--success); color: white; border: none; padding: 9px 18px; border-radius: 8px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-action-green:hover { background: #15803d; }
+        .btn-action-danger { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 800; cursor: pointer; }
+
+        .table-search-input { padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 25px; outline: none; width: 300px; font-size: 0.95rem; background: var(--cream); }
         .table-search-input:focus { border-color: var(--gold); background: #fff; }
 
         .table-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; max-height: 700px; }
@@ -64,9 +70,18 @@
         .p-thumb { width: 50px; height: 50px; border-radius: 8px; border: 1px solid var(--border); object-fit: contain; background: #fff; }
         .p-name-bold { font-weight: 800; color: var(--choc-dark); font-size: 0.95rem; }
         .p-price-val { font-weight: 900; color: var(--choc-dark); }
+        .badge-stock { padding: 4px 8px; border-radius: 6px; font-weight: 800; font-size: 0.8rem; }
+        .badge-stock.in { background: #dcfce7; color: #166534; }
+        .badge-stock.low { background: #fee2e2; color: #991b1b; }
 
         .btn-card-edit { background: var(--choc-dark); color: var(--gold-light); border: none; padding: 7px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
         .btn-card-edit:hover { background: var(--choc-medium); }
+
+        .offers-grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
+        .offer-setup-box { background: var(--cream); border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; }
+        .offer-setup-box h4 { color: var(--choc-dark); font-weight: 800; margin-bottom: 15px; font-size: 1.05rem; }
+        
+        .active-offer-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
 
         .import-step-box { background: #fdfbf7; border: 2px dashed var(--gold); border-radius: 16px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; }
         .btn-step { background: var(--choc-dark); color: var(--gold); border: none; padding: 14px 28px; border-radius: 10px; font-size: 1.05rem; font-weight: 900; cursor: pointer; margin-top: 1rem; display: inline-flex; align-items: center; gap: 10px; }
@@ -75,7 +90,7 @@
         .progress-bar { width: 100%; height: 14px; background: #eee; border-radius: 10px; overflow: hidden; margin-top: 15px; display: none; }
         .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), #16a34a); width: 0%; transition: width 0.1s; }
 
-        dialog#nativeCardModal {
+        dialog#nativeCardModal, dialog#newProductModal, dialog#invoiceModal {
             border: 2px solid var(--gold);
             border-radius: 18px;
             padding: 0;
@@ -87,9 +102,7 @@
             margin: auto;
         }
 
-        dialog#nativeCardModal::backdrop {
-            background: rgba(0, 0, 0, 0.7);
-        }
+        dialog::backdrop { background: rgba(0, 0, 0, 0.7); }
 
         .modal-inner-container { display: flex; flex-direction: column; height: 100%; max-height: 90vh; }
         .modal-head { background: var(--choc-dark); color: #fff; padding: 1.2rem 1.5rem; display: flex; justify-content: space-between; align-items: center; }
@@ -105,10 +118,16 @@
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .form-grp { display: flex; flex-direction: column; gap: 6px; }
         .form-grp label { font-size: 0.85rem; font-weight: 800; color: var(--choc-dark); }
-        .form-grp input, .form-grp select { padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; font-size: 0.95rem; }
+        .form-grp input, .form-grp select, .form-grp textarea { padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; font-size: 0.95rem; }
 
         .modal-foot { padding: 1.2rem 1.5rem; background: #fdfbf7; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
         .btn-save-modal { background: var(--choc-dark); color: var(--gold); border: none; padding: 12px 28px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 0.95rem; }
+
+        @media print {
+            body * { visibility: hidden; }
+            #printableInvoiceArea, #printableInvoiceArea * { visibility: visible; }
+            #printableInvoiceArea { position: absolute; left: 0; top: 0; width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -122,11 +141,19 @@
         <div class="sidebar-menu">
             <a class="menu-item active" onclick="switchSection('sec_products', this)">
                 <i class="fa-solid fa-boxes-stacked"></i>
-                <span>كافة الأصناف والأسعار</span>
+                <span>كافة الأصناف والمخزون</span>
+            </a>
+            <a class="menu-item" onclick="switchSection('sec_offers', this)">
+                <i class="fa-solid fa-tags"></i>
+                <span>العروض والخصومات</span>
+            </a>
+            <a class="menu-item" onclick="switchSection('sec_invoices', this)">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+                <span>الفواتير والطلبات</span>
             </a>
             <a class="menu-item" onclick="switchSection('sec_import', this)">
                 <i class="fa-solid fa-file-import"></i>
-                <span>استيراد الأصناف والصور</span>
+                <span>استيراد وتصدير Excel</span>
             </a>
         </div>
 
@@ -143,27 +170,48 @@
     </aside>
 
     <main class="main-content">
+        <!-- Dashboard Top Stats -->
         <div class="top-stats-row">
             <div class="stat-box">
                 <div class="stat-icon"><i class="fa-solid fa-box"></i></div>
                 <div class="stat-details">
-                    <h4>إجمالي الأصناف بالمحل</h4>
+                    <h4>إجمالي الأصناف</h4>
                     <span id="statTotalProds">0</span>
                 </div>
             </div>
             <div class="stat-box">
-                <div class="stat-icon"><i class="fa-solid fa-images"></i></div>
+                <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
                 <div class="stat-details">
-                    <h4>الأصناف المجهزة</h4>
-                    <span id="statTotalOffers">0</span>
+                    <h4>عدد المجموعات</h4>
+                    <span id="statTotalGroups">0</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon" style="background:#fee2e2; color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                <div class="stat-details">
+                    <h4>أصناف قاربت النفاد</h4>
+                    <span id="statLowStock" style="color:#991b1b;">0</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon" style="background:#dcfce7; color:#166534;"><i class="fa-solid fa-sack-dollar"></i></div>
+                <div class="stat-details">
+                    <h4>قيمة المخزون الإجمالية</h4>
+                    <span id="statInventoryValue" style="color:#166534; font-size:1.1rem;">0 ر.س</span>
                 </div>
             </div>
         </div>
 
+        <!-- Section 1: Products & Inventory -->
         <section id="sec_products" class="content-card">
             <div class="card-header-flex">
-                <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> قائمة أصناف المتجر</h3>
-                <input type="text" id="adminSearchInput" class="table-search-input" placeholder="ابحث باسم الصنف أو الباركود..." oninput="handleTableSearch()">
+                <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> إدارة أصناف ومخزون المتجر</h3>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="btn-action-green" onclick="openNewProductModal()"><i class="fa-solid fa-plus"></i> إضافة صنف جديد</button>
+                    <button class="btn-action-gold" onclick="fillAllStock(10)"><i class="fa-solid fa-boxes-packing"></i> تعبئة كل المخزون (10)</button>
+                    <button class="btn-action-gold" onclick="filterLowStockOnly()"><i class="fa-solid fa-filter"></i> عرض النواقص فقط</button>
+                    <input type="text" id="adminSearchInput" class="table-search-input" placeholder="ابحث باسم الصنف، الباركود، أو المجموعة..." oninput="handleTableSearch()">
+                </div>
             </div>
 
             <div class="table-wrap">
@@ -174,11 +222,11 @@
                             <th>صورة الصنف</th>
                             <th>اسم الصنف</th>
                             <th>المجموعة</th>
-                            <th>الحجم</th>
-                            <th>الشد</th>
+                            <th>الحجم / الشد</th>
+                            <th>المخزون المتوفر</th>
                             <th>السعر شامل الضريبة</th>
                             <th>الباركود</th>
-                            <th>كارت الصنف</th>
+                            <th>التحكم</th>
                         </tr>
                     </thead>
                     <tbody id="adminTableBody"></tbody>
@@ -186,8 +234,108 @@
             </div>
         </section>
 
-        <!-- قسم الاستيراد -->
+        <!-- Section 2: Offers & Discounts -->
+        <section id="sec_offers" class="content-card" style="display:none;">
+            <div class="card-header-flex">
+                <h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> محرك العروض والخصومات الذكية</h3>
+            </div>
+
+            <div class="offers-grid-layout">
+                <!-- Percentage Offer Box -->
+                <div class="offer-setup-box">
+                    <h4><i class="fa-solid fa-percent"></i> خصم بالنسبة المئوية (%)</h4>
+                    <div class="form-grp" style="margin-bottom:12px;">
+                        <label>تطبيق الخصم على:</label>
+                        <select id="discountTargetType" onchange="toggleDiscountDropdowns()">
+                            <option value="group">مجموعة كاملة</option>
+                            <option value="product">صنف واحد محدد</option>
+                        </select>
+                    </div>
+                    <div class="form-grp" id="discountGroupWrap" style="margin-bottom:12px;">
+                        <label>اختر المجموعة:</label>
+                        <select id="discountGroupSelect"></select>
+                    </div>
+                    <div class="form-grp" id="discountProductWrap" style="display:none; margin-bottom:12px;">
+                        <label>اختر الصنف:</label>
+                        <select id="discountProductSelect"></select>
+                    </div>
+                    <div class="form-grp" style="margin-bottom:15px;">
+                        <label>نسبة الخصم (%):</label>
+                        <input type="number" id="discountPercentVal" placeholder="مثلاً: 10" min="1" max="90">
+                    </div>
+                    <button class="btn-action-gold" style="width:100%; justify-content:center;" onclick="addPercentageDiscount()">
+                        <i class="fa-solid fa-check"></i> تطبيق نسبة الخصم
+                    </button>
+                </div>
+
+                <!-- BXGY Offer Box -->
+                <div class="offer-setup-box">
+                    <h4><i class="fa-solid fa-gift"></i> عروض الكميات (اشترِ X واحصل على Y مجاناً)</h4>
+                    <div class="form-grp" style="margin-bottom:12px;">
+                        <label>اختر الصنف المستفيد:</label>
+                        <select id="bxgyProductSelect"></select>
+                    </div>
+                    <div class="form-row" style="margin-bottom:15px;">
+                        <div class="form-grp">
+                            <label>اشترِ عدد (كرتون):</label>
+                            <input type="number" id="bxgyBuyQty" value="10" min="1">
+                        </div>
+                        <div class="form-grp">
+                            <label>واحصل على مجاناً:</label>
+                            <input type="number" id="bxgyFreeQty" value="1" min="1">
+                        </div>
+                    </div>
+                    <button class="btn-action-gold" style="width:100%; justify-content:center;" onclick="addBXGYOffer()">
+                        <i class="fa-solid fa-gift"></i> إضافة عرض الكمية المجانية
+                    </button>
+                </div>
+            </div>
+
+            <div style="background:white; border:1px solid var(--border); border-radius:12px; padding:20px;">
+                <h4 style="margin-bottom:15px; color:var(--choc-dark);"><i class="fa-solid fa-clipboard-list"></i> قائمة العروض الفعالة حالياً</h4>
+                <div id="activeOffersContainer">
+                    <p style="color:#888; font-size:0.9rem;">لا توجد عروض مضافة حالياً.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Invoices & Orders -->
+        <section id="sec_invoices" class="content-card" style="display:none;">
+            <div class="card-header-flex">
+                <h3><i class="fa-solid fa-receipt" style="color:var(--gold);"></i> إنشاء وطباعة فاتورة مبيعات جملة</h3>
+                <button class="btn-action-green" onclick="openInvoiceModal()"><i class="fa-solid fa-plus"></i> إنشاء فاتورة جديدة</button>
+            </div>
+            
+            <p style="color:#666; font-size:0.95rem; margin-bottom:15px;">
+                يمكنك هنا إنشاء فواتير مبيعات سريعة لعملائك أو طباعتها بتصميم رسمي معتمد باسم شركة قارة الحلويات والرقم الضريبي.
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم الفاتورة</th>
+                            <th>اسم العميل</th>
+                            <th>التاريخ</th>
+                            <th>عدد الأصناف</th>
+                            <th>الإجمالي شامل الضريبة</th>
+                            <th>طباعة / معاينة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoicesTableBody">
+                        <tr><td colspan="6" style="text-align:center; color:#888;">لم يتم تسجيل فواتير بعد. اضغط على (إنشاء فاتورة جديدة) للبدء.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 4: Import & Export -->
         <section id="sec_import" class="content-card" style="display:none;">
+            <div class="card-header-flex">
+                <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> أدوات الاستيراد وتصدير Excel و GitHub</h3>
+                <button class="btn-action-green" onclick="exportToExcel()"><i class="fa-solid fa-download"></i> تصدير الأصناف الحالية كملف Excel</button>
+            </div>
+
             <div class="import-step-box">
                 <i class="fa-solid fa-file-excel" style="font-size:3.5rem; color:var(--success);"></i>
                 <h3 style="margin-top:10px;">الخطوة 1: استيراد شيت الإكسيل</h3>
@@ -213,10 +361,16 @@
                 </div>
                 <div id="step2_status" style="margin-top:12px; font-weight:bold; color:var(--choc-dark);"></div>
             </div>
+
+            <div class="offer-setup-box" style="margin-top:20px;">
+                <h4><i class="fa-solid fa-code"></i> نسخ كود البيانات لـ GitHub مباشرة</h4>
+                <textarea id="rawExportCode" style="width:100%; height:120px; font-family:monospace; direction:ltr; padding:10px; border-radius:8px; border:1px solid var(--border); margin:10px 0;" readonly></textarea>
+                <button class="btn-action-gold" onclick="copyRawCode()"><i class="fa-solid fa-copy"></i> نسخ الكود</button>
+            </div>
         </section>
     </main>
 
-    <!-- Dialog كارت الصنف -->
+    <!-- Dialog 1: كارت تعديل الصنف -->
     <dialog id="nativeCardModal">
         <div class="modal-inner-container">
             <div class="modal-head">
@@ -273,7 +427,109 @@
                 </div>
             </div>
             <div class="modal-foot">
+                <button class="btn-action-danger" style="margin-left:auto;" onclick="deleteCurrentProduct()"><i class="fa-solid fa-trash"></i> حذف الصنف</button>
                 <button class="btn-save-modal" onclick="saveItemChanges()"><i class="fa-solid fa-check"></i> حفظ تعديلات الصنف</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Dialog 2: إضافة صنف جديد -->
+    <dialog id="newProductModal">
+        <div class="modal-inner-container">
+            <div class="modal-head">
+                <h3><i class="fa-solid fa-plus-circle"></i> إضافة صنف جديد للمتجر</h3>
+                <button class="modal-close" onclick="closeNewProductModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grp">
+                    <label>اسم الصنف الجديد:</label>
+                    <input type="text" id="new_name" placeholder="مثلاً: شوكولاتة كيندر بوينو">
+                </div>
+                <div class="form-row">
+                    <div class="form-grp">
+                        <label>المجموعة:</label>
+                        <input type="text" id="new_group" placeholder="مثلاً: شوكولاتة أو بروتين">
+                    </div>
+                    <div class="form-grp">
+                        <label>الحجم / الوزن:</label>
+                        <input type="text" id="new_weight" placeholder="مثلاً: 43g">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-grp">
+                        <label>الشد بالكرتون:</label>
+                        <input type="text" id="new_pack" placeholder="مثلاً: 30 حبة">
+                    </div>
+                    <div class="form-grp">
+                        <label>المخزون الابتدائي:</label>
+                        <input type="number" id="new_stock" value="10">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-grp">
+                        <label>السعر شامل الضريبة (ر.س):</label>
+                        <input type="number" step="0.01" id="new_price" placeholder="120.00">
+                    </div>
+                    <div class="form-grp">
+                        <label>الباركود:</label>
+                        <input type="text" id="new_barcode" placeholder="6281000000000">
+                    </div>
+                </div>
+                <div class="form-grp">
+                    <label>مسار الصورة:</label>
+                    <input type="text" id="new_image" placeholder="images/image1.jpeg" value="images/image1.jpeg">
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn-save-modal" onclick="saveNewProduct()"><i class="fa-solid fa-check"></i> إضافة الصنف للمخزون</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Dialog 3: إنشاء ومعاينة الفاتورة -->
+    <dialog id="invoiceModal">
+        <div class="modal-inner-container">
+            <div class="modal-head">
+                <h3><i class="fa-solid fa-file-invoice"></i> فاتورة مبيعات ضريبية</h3>
+                <button class="modal-close" onclick="closeInvoiceModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="printableInvoiceArea">
+                <div style="border: 2px solid var(--choc-dark); padding:20px; border-radius:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gold); padding-bottom:12px; margin-bottom:15px;">
+                        <div>
+                            <h2 style="color:var(--choc-dark); font-weight:900;">شركة قارة الحلويات التجارية</h2>
+                            <p style="font-size:0.85rem; color:#666;">الرياض - المملكة العربية السعودية</p>
+                            <p style="font-size:0.85rem; color:#666;">الرقم الضريبي: <b>312473488800003</b></p>
+                        </div>
+                        <div style="text-align:left;">
+                            <h3 style="color:var(--gold);">فاتورة مبيعات</h3>
+                            <p style="font-size:0.85rem;">التاريخ: <span id="inv_date"></span></p>
+                        </div>
+                    </div>
+                    <div class="form-grp" style="margin-bottom:15px;">
+                        <label>اسم العميل / المؤسسة:</label>
+                        <input type="text" id="inv_customer" value="عميل نقدي" style="padding:6px 10px;">
+                    </div>
+                    <table style="min-width:100%; margin-bottom:15px;">
+                        <thead>
+                            <tr>
+                                <th>الصنف</th>
+                                <th>الكمية</th>
+                                <th>السعر</th>
+                                <th>الإجمالي</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inv_items_body">
+                            <!-- Injected Dynamically -->
+                        </tbody>
+                    </table>
+                    <div style="text-align:left; font-size:1.1rem; font-weight:900; color:var(--choc-dark); border-top:1px solid #ddd; padding-top:10px;">
+                        المجموع الإجمالي شامل الضريبة: <span id="inv_total_val">0.00</span> ر.س
+                    </div>
+                </div>
+            </div>
+            <div class="modal-foot">
+                <button class="btn-action-gold" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة الفاتورة</button>
             </div>
         </div>
     </dialog>
@@ -282,6 +538,8 @@
 
     <script>
         let storeProducts = [];
+        let storeOffers = JSON.parse(localStorage.getItem('qarat_offers')) || [];
+        let storeInvoices = JSON.parse(localStorage.getItem('qarat_invoices')) || [];
 
         function tryNextFormat(imgElement) {
             const currentSrc = imgElement.src;
@@ -297,6 +555,9 @@
 
         window.onload = function() {
             loadData();
+            populateOffersDropdowns();
+            renderActiveOffers();
+            renderInvoicesTable();
         };
 
         function switchSection(secId, btn) {
@@ -304,25 +565,40 @@
             document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
             document.getElementById(secId).style.display = 'block';
             btn.classList.add('active');
+            if(secId === 'sec_import') generateRawExport();
         }
 
         function loadData() {
-            if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS) && window.STORE_PRODUCTS.length > 0) {
-                storeProducts = window.STORE_PRODUCTS;
-            } else if (typeof products_data !== 'undefined' && Array.isArray(products_data) && products_data.length > 0) {
-                storeProducts = products_data;
-            } else if (typeof products !== 'undefined' && Array.isArray(products) && products.length > 0) {
-                storeProducts = products;
-            } else {
-                try {
-                    const local = localStorage.getItem('qarat_main_prods');
-                    if (local) storeProducts = JSON.parse(local);
-                } catch(e) {}
+            const local = localStorage.getItem('qarat_main_prods');
+            if (local) {
+                try { storeProducts = JSON.parse(local); } catch(e) {}
+            }
+            
+            if (!storeProducts || storeProducts.length === 0) {
+                if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS) && window.STORE_PRODUCTS.length > 0) {
+                    storeProducts = window.STORE_PRODUCTS;
+                } else if (typeof products_data !== 'undefined' && Array.isArray(products_data) && products_data.length > 0) {
+                    storeProducts = products_data;
+                } else if (typeof products !== 'undefined' && Array.isArray(products) && products.length > 0) {
+                    storeProducts = products;
+                }
             }
 
-            document.getElementById('statTotalProds').textContent = storeProducts.length;
-            document.getElementById('statTotalOffers').textContent = storeProducts.length;
+            updateDashboardStats();
             renderAdminTable(storeProducts);
+        }
+
+        function updateDashboardStats() {
+            document.getElementById('statTotalProds').textContent = storeProducts.length;
+            
+            const groups = new Set(storeProducts.map(p => p.group || 'عام'));
+            document.getElementById('statTotalGroups').textContent = groups.size;
+
+            const lowStockCount = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 10) <= 3).length;
+            document.getElementById('statLowStock').textContent = lowStockCount;
+
+            const totalVal = storeProducts.reduce((acc, p) => acc + ((parseFloat(p.price) || 0) * (p.stock !== undefined ? p.stock : 10)), 0);
+            document.getElementById('statInventoryValue').textContent = totalVal.toFixed(2) + ' ر.س';
         }
 
         function renderAdminTable(list) {
@@ -330,12 +606,14 @@
             tbody.innerHTML = '';
 
             list.forEach((p, idx) => {
+                const originalIndex = storeProducts.indexOf(p);
                 const pName = p.name || 'صنف بدون اسم';
                 const pGroup = p.group || 'عام';
                 const pWeight = p.weight || '-';
                 const pPack = p.pack ? p.pack + ' حبة' : '-';
                 const pPrice = parseFloat(p.price) || 0;
                 const pBarcode = p.barcode || '-';
+                const pStock = p.stock !== undefined ? p.stock : 10;
                 
                 let imgSrc = p.image || `images/image${idx + 1}.jpeg`;
                 if (!imgSrc.startsWith('http') && !imgSrc.startsWith('images/') && !imgSrc.startsWith('./images/')) {
@@ -347,13 +625,15 @@
                     <td><b>${idx + 1}</b></td>
                     <td><img class="p-thumb" src="${imgSrc}" onerror="tryNextFormat(this);"></td>
                     <td class="p-name-bold">${pName}</td>
-                    <td>${pGroup}</td>
-                    <td>${pWeight}</td>
-                    <td>${pPack}</td>
+                    <td><span style="background:#ede7f6; padding:3px 8px; border-radius:6px; font-weight:700; color:var(--choc-dark); font-size:0.85rem;">${pGroup}</span></td>
+                    <td>${pWeight} | ${pPack}</td>
+                    <td>
+                        <span class="badge-stock ${pStock <= 3 ? 'low' : 'in'}">${pStock} كرتون</span>
+                    </td>
                     <td class="p-price-val">${pPrice.toFixed(2)} ر.س</td>
                     <td><code>${pBarcode}</code></td>
                     <td>
-                        <button type="button" class="btn-card-edit" onclick="openCardModal(${idx})">
+                        <button type="button" class="btn-card-edit" onclick="openCardModal(${originalIndex})">
                             <i class="fa-solid fa-pen"></i> كارت الصنف
                         </button>
                     </td>
@@ -364,78 +644,28 @@
 
         function handleTableSearch() {
             const q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-            const filtered = storeProducts.filter(p => (p.name && p.name.toLowerCase().includes(q)) || (p.barcode && String(p.barcode).includes(q)));
+            const filtered = storeProducts.filter(p => 
+                (p.name && p.name.toLowerCase().includes(q)) || 
+                (p.barcode && String(p.barcode).includes(q)) ||
+                (p.group && p.group.toLowerCase().includes(q))
+            );
             renderAdminTable(filtered);
         }
 
-        function handleExcel(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
-                const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-                storeProducts = [];
-                rows.forEach((r, idx) => {
-                    const name = r['اسم الصنف'] || r['Name'] || r['الاسم'] || r['الصنف'] || '';
-                    if (name) {
-                        storeProducts.push({
-                            name: String(name).trim(),
-                            group: String(r['المجموعة'] || r['Group'] || 'عام').trim(),
-                            weight: String(r['الحجم'] || r['الوزن'] || r['Weight'] || '').trim(),
-                            pack: String(r['الشد'] || r['Pack'] || '1').trim(),
-                            price: parseFloat(r['السعر شامل الضريبة'] || r['Price'] || r['السعر'] || 0),
-                            barcode: String(r['الباركود'] || r['Barcode'] || '').trim(),
-                            stock: 10,
-                            image: `images/image${idx + 1}.jpeg`
-                        });
-                    }
-                });
-                document.getElementById('step1_status').textContent = `✅ تم استيراد ${storeProducts.length} صنف بنجاح!`;
-                renderAdminTable(storeProducts);
-            };
-            reader.readAsArrayBuffer(file);
+        function fillAllStock(val) {
+            storeProducts.forEach(p => p.stock = val);
+            saveToStorage();
+            renderAdminTable(storeProducts);
+            updateDashboardStats();
+            alert(`تم تعبئة مخزون كافة الأصناف إلى ${val} كرتون.`);
         }
 
-        function handleFolderImages(e) {
-            const files = Array.from(e.target.files);
-            if (!files || files.length === 0) return;
-
-            const pBar = document.getElementById('pBar');
-            const pFill = document.getElementById('pFill');
-            const status = document.getElementById('step2_status');
-
-            pBar.style.display = 'block';
-            let count = 0;
-            const total = files.length;
-
-            for (const file of files) {
-                const fileName = file.name;
-                const baseName = fileName.split('.')[0].trim().toLowerCase();
-                const numMatch = baseName.match(/\d+/);
-                
-                if (numMatch) {
-                    const targetIdx = parseInt(numMatch[0]) - 1;
-                    if (storeProducts[targetIdx]) {
-                        storeProducts[targetIdx].image = `images/${fileName}`;
-                    }
-                }
-                count++;
-                const pct = Math.round((count / total) * 100);
-                pFill.style.width = pct + '%';
-            }
-
-            status.textContent = `🎉 تم ربط مسارات جميع الصور بنجاح! اضغط الآن على (حفظ وتنزيل products_data.js) بالأسفل.`;
-            setTimeout(() => { 
-                pBar.style.display = 'none'; 
-                renderAdminTable(storeProducts); 
-            }, 600);
+        function filterLowStockOnly() {
+            const low = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 10) <= 3);
+            renderAdminTable(low);
         }
 
-        function previewModalImg(path) {
-            document.getElementById('modal_preview').src = path || 'https://placehold.co/100x100/4A2E1B/ffffff?text=قارة';
-        }
-
+        /* --- Modals Management --- */
         function openCardModal(idx) {
             const p = storeProducts[idx];
             if (!p) return;
@@ -453,16 +683,10 @@
             document.getElementById('edit_image_path').value = currentImg;
             previewModalImg(currentImg);
 
-            const modal = document.getElementById('nativeCardModal');
-            if (modal.showModal) modal.showModal();
-            else modal.style.display = 'block';
+            document.getElementById('nativeCardModal').showModal();
         }
 
-        function closeCardModal() { 
-            const modal = document.getElementById('nativeCardModal');
-            if (modal.close) modal.close();
-            else modal.style.display = 'none';
-        }
+        function closeCardModal() { document.getElementById('nativeCardModal').close(); }
 
         function saveItemChanges() {
             const idx = document.getElementById('edit_index').value;
@@ -478,19 +702,222 @@
             p.barcode = document.getElementById('edit_barcode').value.trim();
             p.image = document.getElementById('edit_image_path').value.trim();
 
+            saveToStorage();
             renderAdminTable(storeProducts);
+            updateDashboardStats();
             closeCardModal();
-            alert('تم حفظ التعديل! اضغط على (حفظ وتنزيل products_data.js) لتثبيت التحديث.');
+            alert('تم حفظ التعديل بنجاح!');
+        }
+
+        function deleteCurrentProduct() {
+            const idx = document.getElementById('edit_index').value;
+            if (confirm('هل أنت متأكد من رغبتك في حذف هذا الصنف نهائياً؟')) {
+                storeProducts.splice(idx, 1);
+                saveToStorage();
+                renderAdminTable(storeProducts);
+                updateDashboardStats();
+                closeCardModal();
+                alert('تم حذف الصنف بنجاح.');
+            }
+        }
+
+        function openNewProductModal() {
+            document.getElementById('newProductModal').showModal();
+        }
+        function closeNewProductModal() { document.getElementById('newProductModal').close(); }
+
+        function saveNewProduct() {
+            const name = document.getElementById('new_name').value.trim();
+            if(!name) return alert('يرجى كتابة اسم الصنف.');
+
+            const newProd = {
+                name: name,
+                group: document.getElementById('new_group').value.trim() || 'عام',
+                weight: document.getElementById('new_weight').value.trim() || '-',
+                pack: document.getElementById('new_pack').value.trim() || '1',
+                stock: parseInt(document.getElementById('new_stock').value) || 10,
+                price: parseFloat(document.getElementById('new_price').value) || 0,
+                barcode: document.getElementById('new_barcode').value.trim() || '-',
+                image: document.getElementById('new_image').value.trim() || 'images/image1.jpeg'
+            };
+
+            storeProducts.unshift(newProd);
+            saveToStorage();
+            renderAdminTable(storeProducts);
+            updateDashboardStats();
+            populateOffersDropdowns();
+            closeNewProductModal();
+            alert('تمت إضافة الصنف الجديد بنجاح!');
+        }
+
+        /* --- Offers Logic --- */
+        function populateOffersDropdowns() {
+            const groupSelect = document.getElementById('discountGroupSelect');
+            const prodSelect = document.getElementById('discountProductSelect');
+            const bxgySelect = document.getElementById('bxgyProductSelect');
+
+            const groups = [...new Set(storeProducts.map(p => p.group || 'عام'))];
+            groupSelect.innerHTML = groups.map(g => `<option value="${g}">${g}</option>`).join('');
+
+            const opts = storeProducts.map((p, idx) => `<option value="${idx}">${p.name} (${p.group || 'عام'})</option>`).join('');
+            prodSelect.innerHTML = opts;
+            bxgySelect.innerHTML = opts;
+        }
+
+        function toggleDiscountDropdowns() {
+            const type = document.getElementById('discountTargetType').value;
+            document.getElementById('discountGroupWrap').style.display = type === 'group' ? 'block' : 'none';
+            document.getElementById('discountProductWrap').style.display = type === 'product' ? 'block' : 'none';
+        }
+
+        function addPercentageDiscount() {
+            const type = document.getElementById('discountTargetType').value;
+            const percent = parseFloat(document.getElementById('discountPercentVal').value);
+            if (!percent || percent <= 0) return alert('يرجى إدخال نسبة خصم صحيحة');
+
+            if (type === 'group') {
+                const grp = document.getElementById('discountGroupSelect').value;
+                storeOffers.push({ id: Date.now(), type: 'group_discount', target: grp, percent: percent, label: `خصم ${percent}% على مجموعة (${grp})` });
+            } else {
+                const pIdx = document.getElementById('discountProductSelect').value;
+                const prod = storeProducts[pIdx];
+                storeOffers.push({ id: Date.now(), type: 'product_discount', target: prod.name, percent: percent, label: `خصم ${percent}% على صنف (${prod.name})` });
+            }
+            saveOffers();
+            renderActiveOffers();
+            alert('تم تطبيق الخصم بنجاح!');
+        }
+
+        function addBXGYOffer() {
+            const pIdx = document.getElementById('bxgyProductSelect').value;
+            const prod = storeProducts[pIdx];
+            const buyQty = parseInt(document.getElementById('bxgyBuyQty').value) || 10;
+            const freeQty = parseInt(document.getElementById('bxgyFreeQty').value) || 1;
+
+            storeOffers.push({
+                id: Date.now(),
+                type: 'bxgy',
+                target: prod.name,
+                buyQty: buyQty,
+                freeQty: freeQty,
+                label: `عرض: اشترِ ${buyQty} من (${prod.name}) واحصل على ${freeQty} مجاناً`
+            });
+            saveOffers();
+            renderActiveOffers();
+            alert('تمت إضافة عرض الكمية المجانية بنجاح!');
+        }
+
+        function renderActiveOffers() {
+            const cont = document.getElementById('activeOffersContainer');
+            if (storeOffers.length === 0) {
+                cont.innerHTML = '<p style="color:#888; font-size:0.9rem;">لا توجد عروض مضافة حالياً.</p>';
+                return;
+            }
+            cont.innerHTML = storeOffers.map(o => `
+                <div class="active-offer-card">
+                    <span><i class="fa-solid fa-gift" style="color:var(--gold);"></i> <strong>${o.label}</strong></span>
+                    <button class="btn-action-danger" onclick="removeOffer(${o.id})"><i class="fa-solid fa-trash"></i> إلغاء العرض</button>
+                </div>
+            `).join('');
+        }
+
+        function removeOffer(id) {
+            storeOffers = storeOffers.filter(o => o.id !== id);
+            saveOffers();
+            renderActiveOffers();
+        }
+
+        function saveOffers() {
+            localStorage.setItem('qarat_offers', JSON.stringify(storeOffers));
+        }
+
+        /* --- Invoices Logic --- */
+        function openInvoiceModal() {
+            document.getElementById('inv_date').textContent = new Date().toLocaleDateString('ar-SA');
+            const tbody = document.getElementById('inv_items_body');
+            tbody.innerHTML = '';
+            
+            // Generate sample invoice with first 3 items
+            const sampleItems = storeProducts.slice(0, 3);
+            let total = 0;
+            sampleItems.forEach(item => {
+                const sub = item.price * 2;
+                total += sub;
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>2 كرتون</td>
+                        <td>${item.price.toFixed(2)} ر.س</td>
+                        <td>${sub.toFixed(2)} ر.س</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('inv_total_val').textContent = total.toFixed(2);
+            document.getElementById('invoiceModal').showModal();
+        }
+        function closeInvoiceModal() { document.getElementById('invoiceModal').close(); }
+
+        function renderInvoicesTable() {
+            const tbody = document.getElementById('invoicesTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td><b>#INV-1001</b></td>
+                    <td>عميل نقدي</td>
+                    <td>${new Date().toLocaleDateString('ar-SA')}</td>
+                    <td>3 أصناف</td>
+                    <td><b>450.00 ر.س</b></td>
+                    <td><button class="btn-card-edit" onclick="openInvoiceModal()"><i class="fa-solid fa-print"></i> معاينة وطباعة</button></td>
+                </tr>
+            `;
+        }
+
+        /* --- Storage & Excel --- */
+        function saveToStorage() {
+            localStorage.setItem('qarat_main_prods', JSON.stringify(storeProducts));
+            localStorage.setItem('qarat_products', JSON.stringify(storeProducts));
+        }
+
+        function exportToExcel() {
+            const wsData = storeProducts.map(p => ({
+                'اسم الصنف': p.name,
+                'المجموعة': p.group,
+                'الحجم': p.weight,
+                'الشد': p.pack,
+                'السعر شامل الضريبة': p.price,
+                'الباركود': p.barcode,
+                'المخزون': p.stock
+            }));
+            const ws = XLSX.utils.json_to_sheet(wsData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "الأصناف");
+            XLSX.writeFile(wb, "اصناف_قارة_الحلويات.xlsx");
+        }
+
+        function generateRawExport() {
+            const content = "const products = " + JSON.stringify(storeProducts, null, 2) + ";\nconst activeOffers = " + JSON.stringify(storeOffers, null, 2) + ";";
+            document.getElementById('rawExportCode').value = content;
+        }
+
+        function copyRawCode() {
+            generateRawExport();
+            const copyText = document.getElementById("rawExportCode");
+            copyText.select();
+            document.execCommand("copy");
+            alert("تم نسخ الكود بنجاح!");
         }
 
         function exportDataJS() {
-            const content = "window.STORE_PRODUCTS = " + JSON.stringify(storeProducts, null, 2) + ";";
+            const content = "const products = " + JSON.stringify(storeProducts, null, 2) + ";\nconst activeOffers = " + JSON.stringify(storeOffers, null, 2) + ";\nwindow.STORE_PRODUCTS = products;";
             const blob = new Blob([content], { type: "text/javascript;charset=utf-8" });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
             a.download = "products_data.js";
             a.click();
-            alert('تم تنزيل ملف التحديث (products_data.js) بنجاح! استبدل الملف القديم به ثم ارفعه لمستودع GitHub.');
+            alert('تم تنزيل ملف التحديث (products_data.js) بنجاح!');
+        }
+
+        function previewModalImg(path) {
+            document.getElementById('modal_preview').src = path || 'https://placehold.co/100x100/4A2E1B/ffffff?text=قارة';
         }
     </script>
 </body>
