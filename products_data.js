@@ -6,7 +6,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811383834",
-    "stock": 10,
+    "stock": 5,
     "image": "images/image1.jpeg"
   },
   {
@@ -16,7 +16,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811383513",
-    "stock": 10,
+    "stock": 5,
     "image": "images/image2.jpeg"
   },
   {
@@ -26,9 +26,9 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811383810",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image3.jpeg"
-   },   
+  },
   {
     "name": "بروتين جراند كراميل محلا",
     "group": "بروتين",
@@ -36,7 +36,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811384275",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image4.jpeg"
   },
   {
@@ -46,7 +46,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060221208147",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image5.jpeg"
   },
   {
@@ -56,7 +56,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811384268",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image6.jpeg"
   },
   {
@@ -66,7 +66,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811384794",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image7.jpeg"
   },
   {
@@ -76,7 +76,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811383780",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image8.jpeg"
   },
   {
@@ -86,7 +86,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "888849000029",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image9.jpeg"
   },
   {
@@ -96,7 +96,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "888849000425",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image10.jpeg"
   },
   {
@@ -106,7 +106,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "888849000036",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image11.jpeg"
   },
   {
@@ -116,7 +116,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "888849001231",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image12.jpeg"
   },
   {
@@ -126,7 +126,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "888849011797",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image13.jpeg"
   },
   {
@@ -136,7 +136,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "888849015856",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image14.jpeg"
   },
   {
@@ -146,7 +146,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "888849000241",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image15.jpeg"
   },
   {
@@ -156,7 +156,7 @@ const products = [
     "pack": "8",
     "price": 141.45,
     "barcode": "888849013371",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image16.jpeg"
   },
   {
@@ -166,7 +166,7 @@ const products = [
     "pack": "8",
     "price": 141.45,
     "barcode": "888849013340",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image17.jpeg"
   },
   {
@@ -176,7 +176,7 @@ const products = [
     "pack": "8",
     "price": 141.45,
     "barcode": "888849012183",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image18.jpeg"
   },
   {
@@ -186,7 +186,7 @@ const products = [
     "pack": "8",
     "price": 141.45,
     "barcode": "888849012220",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image19.jpeg"
   },
   {
@@ -196,7 +196,7 @@ const products = [
     "pack": "12",
     "price": 126.49999999999999,
     "barcode": "05056357909553",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image20.jpeg"
   },
   {
@@ -206,7 +206,7 @@ const products = [
     "pack": "12",
     "price": 125.35,
     "barcode": "05056357999547",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image21.jpeg"
   },
   {
@@ -216,7 +216,7 @@ const products = [
     "pack": "12",
     "price": 126.49999999999999,
     "barcode": "5056357999516",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image22.jpeg"
   },
   {
@@ -226,7 +226,7 @@ const products = [
     "pack": "12",
     "price": 126.49999999999999,
     "barcode": "05056357999417",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image23.jpeg"
   },
   {
@@ -236,7 +236,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001805561",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image24.jpeg"
   },
   {
@@ -246,7 +246,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001807367",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image25.jpeg"
   },
   {
@@ -256,7 +256,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001806018",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image26.jpeg"
   },
   {
@@ -266,7 +266,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001805639",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image27.jpeg"
   },
   {
@@ -276,7 +276,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001805622",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image28.jpeg"
   },
   {
@@ -286,7 +286,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001805646",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image29.jpeg"
   },
   {
@@ -296,7 +296,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001806612",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image30.jpeg"
   },
   {
@@ -306,7 +306,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001806605",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image31.jpeg"
   },
   {
@@ -316,7 +316,7 @@ const products = [
     "pack": "12",
     "price": 141.45,
     "barcode": "27340001807350",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image32.jpeg"
   },
   {
@@ -326,7 +326,7 @@ const products = [
     "pack": "12",
     "price": 105.8,
     "barcode": "8702860346114",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image33.jpeg"
   },
   {
@@ -336,7 +336,7 @@ const products = [
     "pack": "25",
     "price": 105.8,
     "barcode": "5412860344838",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image34.jpeg"
   },
   {
@@ -346,7 +346,7 @@ const products = [
     "pack": "12",
     "price": 105.8,
     "barcode": "8702860346268",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image35.jpeg"
   },
   {
@@ -356,7 +356,7 @@ const products = [
     "pack": "20",
     "price": 80.5,
     "barcode": "4640103526401",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image36.jpeg"
   },
   {
@@ -366,7 +366,7 @@ const products = [
     "pack": "20",
     "price": 80.5,
     "barcode": "4640103526913",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image37.jpeg"
   },
   {
@@ -376,7 +376,7 @@ const products = [
     "pack": "20",
     "price": 80.5,
     "barcode": "4640103526418",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image38.jpeg"
   },
   {
@@ -386,7 +386,7 @@ const products = [
     "pack": "10",
     "price": 81.64999999999999,
     "barcode": "8410376010701",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image39.jpeg"
   },
   {
@@ -396,7 +396,7 @@ const products = [
     "pack": "8",
     "price": 67.85,
     "barcode": "8410376042498",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image40.jpeg"
   },
   {
@@ -406,7 +406,7 @@ const products = [
     "pack": "10",
     "price": 81.64999999999999,
     "barcode": "8410376078268",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image41.jpeg"
   },
   {
@@ -416,7 +416,7 @@ const products = [
     "pack": "15",
     "price": 181.7,
     "barcode": "8410376024326",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image42.jpeg"
   },
   {
@@ -426,7 +426,7 @@ const products = [
     "pack": "8",
     "price": 93.14999999999999,
     "barcode": "8410376064353",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image43.jpeg"
   },
   {
@@ -436,7 +436,7 @@ const products = [
     "pack": "4*12",
     "price": 120.74999999999999,
     "barcode": "8410376073447",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image44.jpeg"
   },
   {
@@ -446,7 +446,7 @@ const products = [
     "pack": "4*12",
     "price": 120.74999999999999,
     "barcode": "6410376073454",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image45.jpeg"
   },
   {
@@ -456,7 +456,7 @@ const products = [
     "pack": "12",
     "price": 139.14999999999998,
     "barcode": "8410376057270",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image46.jpeg"
   },
   {
@@ -466,7 +466,7 @@ const products = [
     "pack": "16",
     "price": 170.77499999999998,
     "barcode": "8410376029079",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image47.jpeg"
   },
   {
@@ -476,7 +476,7 @@ const products = [
     "pack": "12",
     "price": 139.14999999999998,
     "barcode": "8410376057270",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image48.jpeg"
   },
   {
@@ -486,7 +486,7 @@ const products = [
     "pack": "10",
     "price": 88.55,
     "barcode": "8410376078251",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image49.jpeg"
   },
   {
@@ -496,7 +496,7 @@ const products = [
     "pack": "12",
     "price": 92,
     "barcode": "8410376017359",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image50.jpeg"
   },
   {
@@ -506,7 +506,7 @@ const products = [
     "pack": "12",
     "price": 135.7,
     "barcode": "8410376017342",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image51.jpeg"
   },
   {
@@ -516,7 +516,7 @@ const products = [
     "pack": "12",
     "price": 125.35,
     "barcode": "8410376049060",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image52.jpeg"
   },
   {
@@ -526,7 +526,7 @@ const products = [
     "pack": "15",
     "price": 128.79999999999998,
     "barcode": "8410376009408",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image53.jpeg"
   },
   {
@@ -536,7 +536,7 @@ const products = [
     "pack": "10",
     "price": 87.39999999999999,
     "barcode": "8410376044393",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image54.jpeg"
   },
   {
@@ -546,7 +546,7 @@ const products = [
     "pack": "15",
     "price": 128.79999999999998,
     "barcode": "8410376033267",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image55.jpeg"
   },
   {
@@ -556,7 +556,7 @@ const products = [
     "pack": "15",
     "price": 185.14999999999998,
     "barcode": "8410376057805",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image56.jpeg"
   },
   {
@@ -566,7 +566,7 @@ const products = [
     "pack": "15",
     "price": 127.07499999999999,
     "barcode": "8410376023831",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image57.jpeg"
   },
   {
@@ -576,7 +576,7 @@ const products = [
     "pack": "8",
     "price": 79.35,
     "barcode": "8410376056792",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image58.jpeg"
   },
   {
@@ -586,7 +586,7 @@ const products = [
     "pack": "8",
     "price": 79.35,
     "barcode": "8410376048162",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image59.jpeg"
   },
   {
@@ -596,7 +596,7 @@ const products = [
     "pack": "8",
     "price": 69,
     "barcode": "8410376058260",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image60.jpeg"
   },
   {
@@ -606,7 +606,7 @@ const products = [
     "pack": "8",
     "price": 75.89999999999999,
     "barcode": "8410376042894",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image61.jpeg"
   },
   {
@@ -616,7 +616,7 @@ const products = [
     "pack": "16",
     "price": 162.14999999999998,
     "barcode": "8410376064469",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image62.jpeg"
   },
   {
@@ -626,7 +626,7 @@ const products = [
     "pack": "7",
     "price": 87.39999999999999,
     "barcode": "8410376053425",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image63.jpeg"
   },
   {
@@ -636,7 +636,7 @@ const products = [
     "pack": "4*15",
     "price": 96.6,
     "barcode": "18410376050414",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image64.jpeg"
   },
   {
@@ -646,7 +646,7 @@ const products = [
     "pack": "12",
     "price": 131.1,
     "barcode": "8410376064438",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image65.jpeg"
   },
   {
@@ -656,7 +656,7 @@ const products = [
     "pack": "12",
     "price": 131.1,
     "barcode": "8410376064445",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image66.jpeg"
   },
   {
@@ -666,7 +666,7 @@ const products = [
     "pack": "12",
     "price": 127.07499999999999,
     "barcode": "8410376057430",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image67.jpeg"
   },
   {
@@ -676,7 +676,7 @@ const products = [
     "pack": "16",
     "price": 93.725,
     "barcode": "8410376050837",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image68.jpeg"
   },
   {
@@ -686,7 +686,7 @@ const products = [
     "pack": "18",
     "price": 135.125,
     "barcode": "8410376037784",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image69.jpeg"
   },
   {
@@ -696,7 +696,7 @@ const products = [
     "pack": "12",
     "price": 78.19999999999999,
     "barcode": "8410376051216",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image70.jpeg"
   },
   {
@@ -706,7 +706,7 @@ const products = [
     "pack": "12",
     "price": 123.05,
     "barcode": "8000350000585",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image71.jpeg"
   },
   {
@@ -716,7 +716,7 @@ const products = [
     "pack": "12",
     "price": 114.99999999999999,
     "barcode": "3387390335859",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image72.jpeg"
   },
   {
@@ -726,7 +726,7 @@ const products = [
     "pack": "12",
     "price": 80.5,
     "barcode": "6975863306450",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image73.jpeg"
   },
   {
@@ -736,7 +736,7 @@ const products = [
     "pack": "12",
     "price": 80.5,
     "barcode": "6975863306146",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image74.jpeg"
   },
   {
@@ -746,7 +746,7 @@ const products = [
     "pack": "12",
     "price": 81.64999999999999,
     "barcode": "6975863306153",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image75.jpeg"
   },
   {
@@ -756,7 +756,7 @@ const products = [
     "pack": "18",
     "price": 353.04999999999995,
     "barcode": "5391501303758",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image76.jpeg"
   },
   {
@@ -766,7 +766,7 @@ const products = [
     "pack": "15",
     "price": 353.04999999999995,
     "barcode": "5391501303772",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image77.jpeg"
   },
   {
@@ -776,7 +776,7 @@ const products = [
     "pack": "خ",
     "price": 0,
     "barcode": "8606015857220",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image78.jpeg"
   },
   {
@@ -786,7 +786,7 @@ const products = [
     "pack": "12",
     "price": 86.25,
     "barcode": "9556439890817",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image79.jpeg"
   },
   {
@@ -796,7 +796,7 @@ const products = [
     "pack": "12*20",
     "price": 63.24999999999999,
     "barcode": "8998389621676",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image80.jpeg"
   },
   {
@@ -806,7 +806,7 @@ const products = [
     "pack": "18",
     "price": 109.24999999999999,
     "barcode": "8682549778170",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image81.jpeg"
   },
   {
@@ -816,7 +816,7 @@ const products = [
     "pack": "18",
     "price": 109.24999999999999,
     "barcode": "8682549778187",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image82.jpeg"
   },
   {
@@ -826,7 +826,7 @@ const products = [
     "pack": "18",
     "price": 109.24999999999999,
     "barcode": "",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image83.jpeg"
   },
   {
@@ -836,7 +836,7 @@ const products = [
     "pack": "12",
     "price": 57.49999999999999,
     "barcode": "5902609000557",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image84.jpeg"
   },
   {
@@ -846,7 +846,7 @@ const products = [
     "pack": "12",
     "price": 57.49999999999999,
     "barcode": "5902609001882",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image85.jpeg"
   },
   {
@@ -856,7 +856,7 @@ const products = [
     "pack": "12",
     "price": 80.5,
     "barcode": "5902609001035",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image86.jpeg"
   },
   {
@@ -866,7 +866,7 @@ const products = [
     "pack": "2",
     "price": 224.24999999999997,
     "barcode": "8000500131329",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image87.jpeg"
   },
   {
@@ -876,7 +876,7 @@ const products = [
     "pack": "12",
     "price": 299,
     "barcode": "80176800",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image88.jpeg"
   },
   {
@@ -886,7 +886,7 @@ const products = [
     "pack": "15",
     "price": 195.49999999999997,
     "barcode": "80177173",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image89.jpeg"
   },
   {
@@ -896,7 +896,7 @@ const products = [
     "pack": "15",
     "price": 186.29999999999998,
     "barcode": "80135463",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image90.jpeg"
   },
   {
@@ -906,7 +906,7 @@ const products = [
     "pack": "6",
     "price": 92,
     "barcode": "6132500711644",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image91.jpeg"
   },
   {
@@ -916,7 +916,7 @@ const products = [
     "pack": "6",
     "price": 92,
     "barcode": "5410126116953",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image92.jpeg"
   },
   {
@@ -926,7 +926,7 @@ const products = [
     "pack": "12",
     "price": 127.64999999999999,
     "barcode": "8682549778286",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image93.jpeg"
   },
   {
@@ -936,7 +936,7 @@ const products = [
     "pack": "12",
     "price": 127.64999999999999,
     "barcode": "8682549778446",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image94.jpeg"
   },
   {
@@ -946,7 +946,7 @@ const products = [
     "pack": "12",
     "price": 229.99999999999997,
     "barcode": "851087000069",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image95.jpeg"
   },
   {
@@ -956,7 +956,7 @@ const products = [
     "pack": "12",
     "price": 299,
     "barcode": "856996006072",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image96.jpeg"
   },
   {
@@ -966,7 +966,7 @@ const products = [
     "pack": "12",
     "price": 345,
     "barcode": "851087000052",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image97.jpeg"
   },
   {
@@ -976,7 +976,7 @@ const products = [
     "pack": "12",
     "price": 342.7,
     "barcode": "851087000250",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image98.jpeg"
   },
   {
@@ -986,7 +986,7 @@ const products = [
     "pack": "12",
     "price": 281.75,
     "barcode": "851087000014",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image99.jpeg"
   },
   {
@@ -996,7 +996,7 @@ const products = [
     "pack": "12",
     "price": 299,
     "barcode": "856996006065",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image100.jpeg"
   },
   {
@@ -1006,7 +1006,7 @@ const products = [
     "pack": "12",
     "price": 264.5,
     "barcode": "851087000021",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image101.jpeg"
   },
   {
@@ -1016,7 +1016,7 @@ const products = [
     "pack": "12",
     "price": 166.75,
     "barcode": "051500721780",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image102.jpeg"
   },
   {
@@ -1026,7 +1026,7 @@ const products = [
     "pack": "12",
     "price": 166.75,
     "barcode": "051500369043",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image103.jpeg"
   },
   {
@@ -1036,7 +1036,7 @@ const products = [
     "pack": "12",
     "price": 62.099999999999994,
     "barcode": "8696521014330",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image104.jpeg"
   },
   {
@@ -1046,7 +1046,7 @@ const products = [
     "pack": "12",
     "price": 62.099999999999994,
     "barcode": "8696521014347",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image105.jpeg"
   },
   {
@@ -1056,7 +1056,7 @@ const products = [
     "pack": "12",
     "price": 59.8,
     "barcode": "8684779489994",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image106.jpeg"
   },
   {
@@ -1066,7 +1066,7 @@ const products = [
     "pack": "12",
     "price": 143.75,
     "barcode": "8684779489956",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image107.jpeg"
   },
   {
@@ -1076,7 +1076,7 @@ const products = [
     "pack": "12",
     "price": 97.74999999999999,
     "barcode": "8684779489949",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image108.jpeg"
   },
   {
@@ -1086,7 +1086,7 @@ const products = [
     "pack": "12",
     "price": 109.24999999999999,
     "barcode": "8684779489024",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image109.jpeg"
   },
   {
@@ -1096,7 +1096,7 @@ const products = [
     "pack": "12",
     "price": 313.95,
     "barcode": "028400055987",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image110.jpeg"
   },
   {
@@ -1106,7 +1106,7 @@ const products = [
     "pack": "12",
     "price": 332.34999999999997,
     "barcode": "028400070980",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image111.jpeg"
   },
   {
@@ -1116,7 +1116,7 @@ const products = [
     "pack": "24",
     "price": 442.74999999999994,
     "barcode": "028400000222",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image112.jpeg"
   },
   {
@@ -1126,7 +1126,7 @@ const products = [
     "pack": "4",
     "price": 134.54999999999998,
     "barcode": "8000500009673",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image113.jpeg"
   },
   {
@@ -1136,7 +1136,7 @@ const products = [
     "pack": "30",
     "price": 138,
     "barcode": "6934290104435",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image114.jpeg"
   },
   {
@@ -1146,7 +1146,7 @@ const products = [
     "pack": "36",
     "price": 164.45,
     "barcode": "6934290104114",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image115.jpeg"
   },
   {
@@ -1156,7 +1156,7 @@ const products = [
     "pack": "36",
     "price": 164.45,
     "barcode": "6934290104060",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image116.jpeg"
   },
   {
@@ -1166,7 +1166,7 @@ const products = [
     "pack": "36",
     "price": 167.89999999999998,
     "barcode": "6934290103018",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image117.jpeg"
   },
   {
@@ -1176,7 +1176,7 @@ const products = [
     "pack": "36",
     "price": 167.89999999999998,
     "barcode": "6934290103933",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image118.jpeg"
   },
   {
@@ -1186,7 +1186,7 @@ const products = [
     "pack": "8*36",
     "price": 379.49999999999994,
     "barcode": "8000500447246",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image119.jpeg"
   },
   {
@@ -1196,7 +1196,7 @@ const products = [
     "pack": "8*36",
     "price": 390.99999999999994,
     "barcode": "8000500447246",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image120.jpeg"
   },
   {
@@ -1206,7 +1206,7 @@ const products = [
     "pack": "2*28",
     "price": 776.2499999999999,
     "barcode": "4008400828022",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image121.jpeg"
   },
   {
@@ -1216,7 +1216,7 @@ const products = [
     "pack": "8*24",
     "price": 482.99999999999994,
     "barcode": "8000500202081",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image122.jpeg"
   },
   {
@@ -1226,7 +1226,7 @@ const products = [
     "pack": "192",
     "price": 2.5875,
     "barcode": "8000500202104",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image123.jpeg"
   },
   {
@@ -1236,7 +1236,7 @@ const products = [
     "pack": "4*30",
     "price": 320.84999999999997,
     "barcode": "08000500121467",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image124.jpeg"
   },
   {
@@ -1246,7 +1246,7 @@ const products = [
     "pack": "14*10",
     "price": 304.75,
     "barcode": "8000500267103",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image125.jpeg"
   },
   {
@@ -1256,7 +1256,7 @@ const products = [
     "pack": "2*20",
     "price": 94.3,
     "barcode": "8000500267042",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image126.jpeg"
   },
   {
@@ -1266,7 +1266,7 @@ const products = [
     "pack": "6*28",
     "price": 356.5,
     "barcode": "8000500024577",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image127.jpeg"
   },
   {
@@ -1276,7 +1276,7 @@ const products = [
     "pack": "4*30",
     "price": 261.04999999999995,
     "barcode": "08000500290897",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image128.jpeg"
   },
   {
@@ -1286,7 +1286,7 @@ const products = [
     "pack": "8*20",
     "price": 512.9,
     "barcode": "8000500033784",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image129.jpeg"
   },
   {
@@ -1296,7 +1296,7 @@ const products = [
     "pack": "8*48",
     "price": 534.75,
     "barcode": "08000500384770",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image130.jpeg"
   },
   {
@@ -1306,7 +1306,7 @@ const products = [
     "pack": "20*5",
     "price": 151.79999999999998,
     "barcode": "8000500384794",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image131.jpeg"
   },
   {
@@ -1316,7 +1316,7 @@ const products = [
     "pack": "16",
     "price": 114.99999999999999,
     "barcode": "8000500447130",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image132.jpeg"
   },
   {
@@ -1326,7 +1326,7 @@ const products = [
     "pack": "24",
     "price": 255.29999999999998,
     "barcode": "8000500253687",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image133.jpeg"
   },
   {
@@ -1336,7 +1336,7 @@ const products = [
     "pack": "22",
     "price": 235.74999999999997,
     "barcode": "8000500346273",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image134.jpeg"
   },
   {
@@ -1346,7 +1346,7 @@ const products = [
     "pack": "4*12",
     "price": 402.49999999999994,
     "barcode": "8000500418482",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image135.jpeg"
   },
   {
@@ -1356,7 +1356,7 @@ const products = [
     "pack": "5*16",
     "price": 833.7499999999999,
     "barcode": "8000500024041",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image136.jpeg"
   },
   {
@@ -1366,7 +1366,7 @@ const products = [
     "pack": "6*40",
     "price": 413.99999999999994,
     "barcode": "8000500447239",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image137.jpeg"
   },
   {
@@ -1376,7 +1376,7 @@ const products = [
     "pack": "4*24",
     "price": 174.79999999999998,
     "barcode": "08000500453445",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image138.jpeg"
   },
   {
@@ -1386,7 +1386,7 @@ const products = [
     "pack": "4*10",
     "price": 416.29999999999995,
     "barcode": "08000500024898",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image139.jpeg"
   },
   {
@@ -1396,7 +1396,7 @@ const products = [
     "pack": "12",
     "price": 193.2,
     "barcode": "8000500310427",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image140.jpeg"
   },
   {
@@ -1406,7 +1406,7 @@ const products = [
     "pack": "4*28",
     "price": 135.7,
     "barcode": "08000500393512",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image141.jpeg"
   },
   {
@@ -1416,7 +1416,7 @@ const products = [
     "pack": "4*36",
     "price": 255.29999999999998,
     "barcode": "08000500224403",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image142.jpeg"
   },
   {
@@ -1426,7 +1426,7 @@ const products = [
     "pack": "2*12",
     "price": 419.74999999999994,
     "barcode": "8000500310397",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image143.jpeg"
   },
   {
@@ -1436,7 +1436,7 @@ const products = [
     "pack": "16",
     "price": 165.6,
     "barcode": "8000500227848",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image144.jpeg"
   },
   {
@@ -1446,7 +1446,7 @@ const products = [
     "pack": "24",
     "price": 120.74999999999999,
     "barcode": "009800800056",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image145.jpeg"
   },
   {
@@ -1456,7 +1456,7 @@ const products = [
     "pack": "6*28",
     "price": 255.29999999999998,
     "barcode": "8000380215348",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image146.jpeg"
   },
   {
@@ -1466,7 +1466,7 @@ const products = [
     "pack": "6*28",
     "price": 255.29999999999998,
     "barcode": "8000380215324",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image147.jpeg"
   },
   {
@@ -1476,7 +1476,7 @@ const products = [
     "pack": "6*24",
     "price": 109.24999999999999,
     "barcode": "7622202377419",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image148.jpeg"
   },
   {
@@ -1486,7 +1486,7 @@ const products = [
     "pack": "12*12",
     "price": 120.74999999999999,
     "barcode": "7622201765279",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image149.jpeg"
   },
   {
@@ -1496,7 +1496,7 @@ const products = [
     "pack": "8*12",
     "price": 66.69999999999999,
     "barcode": "7622202831768",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image150.jpeg"
   },
   {
@@ -1506,7 +1506,7 @@ const products = [
     "pack": "24",
     "price": 224.24999999999997,
     "barcode": "6901668934840",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image151.jpeg"
   },
   {
@@ -1516,7 +1516,7 @@ const products = [
     "pack": "24",
     "price": 224.24999999999997,
     "barcode": "6901668934826",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image152.jpeg"
   },
   {
@@ -1526,7 +1526,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668005939",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image153.jpeg"
   },
   {
@@ -1536,7 +1536,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668935748",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image154.jpeg"
   },
   {
@@ -1546,7 +1546,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668934901",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image155.jpeg"
   },
   {
@@ -1556,7 +1556,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668934888",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image156.jpeg"
   },
   {
@@ -1566,7 +1566,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668934925",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image157.jpeg"
   },
   {
@@ -1576,7 +1576,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668005892",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image158.jpeg"
   },
   {
@@ -1586,7 +1586,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668935724",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image159.jpeg"
   },
   {
@@ -1596,7 +1596,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668005946",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image160.jpeg"
   },
   {
@@ -1606,7 +1606,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "6901668005915",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image161.jpeg"
   },
   {
@@ -1616,7 +1616,7 @@ const products = [
     "pack": "24",
     "price": 97.74999999999999,
     "barcode": "6901668054715",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image162.jpeg"
   },
   {
@@ -1626,7 +1626,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "3800020496848",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image163.jpeg"
   },
   {
@@ -1636,7 +1636,7 @@ const products = [
     "pack": "12",
     "price": 575,
     "barcode": "6294003539061",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image164.jpeg"
   },
   {
@@ -1646,7 +1646,7 @@ const products = [
     "pack": "12",
     "price": 459.99999999999994,
     "barcode": "6221134012934",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image165.jpeg"
   },
   {
@@ -1656,7 +1656,7 @@ const products = [
     "pack": "12",
     "price": 500.24999999999994,
     "barcode": "8902433000225",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image166.jpeg"
   },
   {
@@ -1666,7 +1666,7 @@ const products = [
     "pack": "6",
     "price": 343.84999999999997,
     "barcode": "6221134030860",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image167.jpeg"
   },
   {
@@ -1676,7 +1676,7 @@ const products = [
     "pack": "1",
     "price": 0,
     "barcode": "6221134030259",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image168.jpeg"
   },
   {
@@ -1686,7 +1686,7 @@ const products = [
     "pack": "12",
     "price": 632.5,
     "barcode": "5000159558303",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image169.jpeg"
   },
   {
@@ -1696,7 +1696,7 @@ const products = [
     "pack": "6",
     "price": 255.29999999999998,
     "barcode": "8699270016952",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image170.jpeg"
   },
   {
@@ -1706,7 +1706,7 @@ const products = [
     "pack": "25",
     "price": 74.75,
     "barcode": "5000159555722",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image171.jpeg"
   },
   {
@@ -1716,7 +1716,7 @@ const products = [
     "pack": "24",
     "price": 51.175,
     "barcode": "5000159460293",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image172.jpeg"
   },
   {
@@ -1726,7 +1726,7 @@ const products = [
     "pack": "12",
     "price": 827.9999999999999,
     "barcode": "040000155188",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image173.jpeg"
   },
   {
@@ -1736,7 +1736,7 @@ const products = [
     "pack": "4",
     "price": 166.75,
     "barcode": "7622201719845",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image174.jpeg"
   },
   {
@@ -1746,7 +1746,7 @@ const products = [
     "pack": "8*24",
     "price": 431.24999999999994,
     "barcode": "19300617047527",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image175.jpeg"
   },
   {
@@ -1756,7 +1756,7 @@ const products = [
     "pack": "1",
     "price": 0,
     "barcode": "7622200249060",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image176.jpeg"
   },
   {
@@ -1766,7 +1766,7 @@ const products = [
     "pack": "6*32",
     "price": 419.74999999999994,
     "barcode": "07622400001710",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image177.jpeg"
   },
   {
@@ -1776,7 +1776,7 @@ const products = [
     "pack": "12*12",
     "price": 264.5,
     "barcode": "7622202297182",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image178.jpeg"
   },
   {
@@ -1786,7 +1786,7 @@ const products = [
     "pack": "12*24",
     "price": 149.5,
     "barcode": "7622201720537",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image179.jpeg"
   },
   {
@@ -1796,7 +1796,7 @@ const products = [
     "pack": "12*12",
     "price": 132.25,
     "barcode": "6291003081675",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image180.jpeg"
   },
   {
@@ -1806,7 +1806,7 @@ const products = [
     "pack": "4*16",
     "price": 212.74999999999997,
     "barcode": "8000500041338",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image181.jpeg"
   },
   {
@@ -1816,7 +1816,7 @@ const products = [
     "pack": "6",
     "price": 276,
     "barcode": "8690504964001",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image182.jpeg"
   },
   {
@@ -1826,7 +1826,7 @@ const products = [
     "pack": "30",
     "price": 195.49999999999997,
     "barcode": "6977766991115",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image183.jpeg"
   },
   {
@@ -1836,7 +1836,7 @@ const products = [
     "pack": "20",
     "price": 196.64999999999998,
     "barcode": "6977766990934",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image184.jpeg"
   },
   {
@@ -1846,7 +1846,7 @@ const products = [
     "pack": "8*10",
     "price": 248.39999999999998,
     "barcode": "8710898312698",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image185.jpeg"
   },
   {
@@ -1856,7 +1856,7 @@ const products = [
     "pack": "12*12",
     "price": 179.39999999999998,
     "barcode": "8682549778606",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image186.jpeg"
   },
   {
@@ -1866,7 +1866,7 @@ const products = [
     "pack": "6*24",
     "price": 184,
     "barcode": "8682549778095",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image187.jpeg"
   },
   {
@@ -1876,7 +1876,7 @@ const products = [
     "pack": "6*18",
     "price": 126.49999999999999,
     "barcode": "8682549778569",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image188.jpeg"
   },
   {
@@ -1886,7 +1886,7 @@ const products = [
     "pack": "6*24",
     "price": 112.69999999999999,
     "barcode": "8682054122420",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image189.jpeg"
   },
   {
@@ -1896,7 +1896,7 @@ const products = [
     "pack": "6*24",
     "price": 112.69999999999999,
     "barcode": "8682054122451",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image190.jpeg"
   },
   {
@@ -1906,7 +1906,7 @@ const products = [
     "pack": "6*24",
     "price": 112.69999999999999,
     "barcode": "8682054123090",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image191.jpeg"
   },
   {
@@ -1916,7 +1916,7 @@ const products = [
     "pack": "6*24",
     "price": 112.69999999999999,
     "barcode": "8682054122413",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image192.jpeg"
   },
   {
@@ -1926,7 +1926,7 @@ const products = [
     "pack": "6*24",
     "price": 112.69999999999999,
     "barcode": "8682054123120",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image193.jpeg"
   },
   {
@@ -1936,7 +1936,7 @@ const products = [
     "pack": "12*24",
     "price": 120.74999999999999,
     "barcode": "9780201379990",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image194.jpeg"
   },
   {
@@ -1946,7 +1946,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6211112226521",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image195.jpeg"
   },
   {
@@ -1956,7 +1956,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6241848523854",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image196.jpeg"
   },
   {
@@ -1966,7 +1966,7 @@ const products = [
     "pack": "36*8",
     "price": 166.75,
     "barcode": "6216216216218",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image197.jpeg"
   },
   {
@@ -1976,7 +1976,7 @@ const products = [
     "pack": "12*24",
     "price": 120.74999999999999,
     "barcode": "6215589521561",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image198.jpeg"
   },
   {
@@ -1986,7 +1986,7 @@ const products = [
     "pack": "24*12",
     "price": 120.74999999999999,
     "barcode": "9780201379990",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image199.jpeg"
   },
   {
@@ -1996,7 +1996,7 @@ const products = [
     "pack": "8*30",
     "price": 281.75,
     "barcode": "3850102717378",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image200.jpeg"
   },
   {
@@ -2006,7 +2006,7 @@ const products = [
     "pack": "10",
     "price": 540.5,
     "barcode": "5010975050035",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image201.jpeg"
   },
   {
@@ -2016,7 +2016,7 @@ const products = [
     "pack": "12*24",
     "price": 120.74999999999999,
     "barcode": "6214564366678",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image202.jpeg"
   },
   {
@@ -2026,7 +2026,7 @@ const products = [
     "pack": "6*24",
     "price": 65.55,
     "barcode": "6224001923128",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image203.jpeg"
   },
   {
@@ -2036,7 +2036,7 @@ const products = [
     "pack": "12*24",
     "price": 120.74999999999999,
     "barcode": "6281100720164",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image204.jpeg"
   },
   {
@@ -2046,7 +2046,7 @@ const products = [
     "pack": "24",
     "price": 121.89999999999999,
     "barcode": "6921101253642",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image205.jpeg"
   },
   {
@@ -2056,7 +2056,7 @@ const products = [
     "pack": "6*24",
     "price": 163.29999999999998,
     "barcode": "4823105818198",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image206.jpeg"
   },
   {
@@ -2066,7 +2066,7 @@ const products = [
     "pack": "12*24",
     "price": 332.34999999999997,
     "barcode": "5902978042165",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image207.jpeg"
   },
   {
@@ -2076,7 +2076,7 @@ const products = [
     "pack": "20*40",
     "price": 632.5,
     "barcode": "5902978004217",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image208.jpeg"
   },
   {
@@ -2086,7 +2086,7 @@ const products = [
     "pack": "8*12",
     "price": 72.44999999999999,
     "barcode": "6281016310220",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image209.jpeg"
   },
   {
@@ -2096,7 +2096,7 @@ const products = [
     "pack": "12*36",
     "price": 123.05,
     "barcode": "6219990190705",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image210.jpeg"
   },
   {
@@ -2106,7 +2106,7 @@ const products = [
     "pack": "6",
     "price": 54.05,
     "barcode": "4823105817221",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image211.jpeg"
   },
   {
@@ -2116,7 +2116,7 @@ const products = [
     "pack": "30*6",
     "price": 121.89999999999999,
     "barcode": "6977308560311",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image212.jpeg"
   },
   {
@@ -2126,7 +2126,7 @@ const products = [
     "pack": "4*16",
     "price": 296.7,
     "barcode": "5902431568423",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image213.jpeg"
   },
   {
@@ -2136,7 +2136,7 @@ const products = [
     "pack": "4*16",
     "price": 296.7,
     "barcode": "5902431567556",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image214.jpeg"
   },
   {
@@ -2146,7 +2146,7 @@ const products = [
     "pack": "4*16",
     "price": 296.7,
     "barcode": "5902431568447",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image215.jpeg"
   },
   {
@@ -2156,7 +2156,7 @@ const products = [
     "pack": "4*16",
     "price": 296.7,
     "barcode": "5902431597594",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image216.jpeg"
   },
   {
@@ -2166,7 +2166,7 @@ const products = [
     "pack": "24",
     "price": 88.55,
     "barcode": "8906064280094",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image217.jpeg"
   },
   {
@@ -2176,7 +2176,7 @@ const products = [
     "pack": "24",
     "price": 88.55,
     "barcode": "8906064281152",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image218.jpeg"
   },
   {
@@ -2186,7 +2186,7 @@ const products = [
     "pack": "24",
     "price": 88.55,
     "barcode": "8906064282753",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image219.jpeg"
   },
   {
@@ -2196,7 +2196,7 @@ const products = [
     "pack": "4*24",
     "price": 184,
     "barcode": "8682368963795",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image220.jpeg"
   },
   {
@@ -2206,7 +2206,7 @@ const products = [
     "pack": "4*24",
     "price": 184,
     "barcode": "8682368963801",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image221.jpeg"
   },
   {
@@ -2216,7 +2216,7 @@ const products = [
     "pack": "24",
     "price": 146.04999999999998,
     "barcode": "8906064285037",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image222.jpeg"
   },
   {
@@ -2226,7 +2226,7 @@ const products = [
     "pack": "6*24",
     "price": 155.25,
     "barcode": "8690120581675",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image223.jpeg"
   },
   {
@@ -2236,7 +2236,7 @@ const products = [
     "pack": "12*24",
     "price": 97.74999999999999,
     "barcode": "6287004930166",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image224.jpeg"
   },
   {
@@ -2246,7 +2246,7 @@ const products = [
     "pack": "40",
     "price": 144.89999999999998,
     "barcode": "6977766992754",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image225.jpeg"
   },
   {
@@ -2256,7 +2256,7 @@ const products = [
     "pack": "48",
     "price": 144.89999999999998,
     "barcode": "6977766993065",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image226.jpeg"
   },
   {
@@ -2266,7 +2266,7 @@ const products = [
     "pack": "12*16",
     "price": 284.04999999999995,
     "barcode": "4823105816767",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image227.jpeg"
   },
   {
@@ -2276,7 +2276,7 @@ const products = [
     "pack": "10*48",
     "price": 685.4,
     "barcode": "5010975010039",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image228.jpeg"
   },
   {
@@ -2286,7 +2286,7 @@ const products = [
     "pack": "6*24",
     "price": 113.85,
     "barcode": "10733",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image229.jpeg"
   },
   {
@@ -2296,7 +2296,7 @@ const products = [
     "pack": "36",
     "price": 248.39999999999998,
     "barcode": "5010975040029",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image230.jpeg"
   },
   {
@@ -2306,7 +2306,7 @@ const products = [
     "pack": "32",
     "price": 324.29999999999995,
     "barcode": "5010975030020",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image231.jpeg"
   },
   {
@@ -2316,7 +2316,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "9556439880825",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image232.jpeg"
   },
   {
@@ -2326,7 +2326,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "9556439880832",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image233.jpeg"
   },
   {
@@ -2336,7 +2336,7 @@ const products = [
     "pack": "8*10",
     "price": 195.49999999999997,
     "barcode": "8994504311514",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image234.jpeg"
   },
   {
@@ -2346,7 +2346,7 @@ const products = [
     "pack": "6*40",
     "price": 141.45,
     "barcode": "8994430938427",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image235.jpeg"
   },
   {
@@ -2356,7 +2356,7 @@ const products = [
     "pack": "24*12",
     "price": 236.89999999999998,
     "barcode": "9555319110939",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image236.jpeg"
   },
   {
@@ -2366,7 +2366,7 @@ const products = [
     "pack": "12",
     "price": 190.89999999999998,
     "barcode": "8994504120048",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image237.jpeg"
   },
   {
@@ -2376,7 +2376,7 @@ const products = [
     "pack": "8*10",
     "price": 276,
     "barcode": "8994504302314",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image238.jpeg"
   },
   {
@@ -2386,7 +2386,7 @@ const products = [
     "pack": "8*12",
     "price": 87.39999999999999,
     "barcode": "7622201747145",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image239.jpeg"
   },
   {
@@ -2396,7 +2396,7 @@ const products = [
     "pack": "4*12",
     "price": 44.849999999999994,
     "barcode": "6281016900926",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image240.jpeg"
   },
   {
@@ -2406,7 +2406,7 @@ const products = [
     "pack": "12*6",
     "price": 52.9,
     "barcode": "6224010528505",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image241.jpeg"
   },
   {
@@ -2416,7 +2416,7 @@ const products = [
     "pack": "46360",
     "price": 37.949999999999996,
     "barcode": "6281016100128",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image242.jpeg"
   },
   {
@@ -2426,7 +2426,7 @@ const products = [
     "pack": "24",
     "price": 24.15,
     "barcode": "6281016202129",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image243.jpeg"
   },
   {
@@ -2436,7 +2436,7 @@ const products = [
     "pack": "12*12",
     "price": 150.64999999999998,
     "barcode": "8699141113124",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image244.jpeg"
   },
   {
@@ -2446,7 +2446,7 @@ const products = [
     "pack": "12*24",
     "price": 121.89999999999999,
     "barcode": "6281100357520",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image245.jpeg"
   },
   {
@@ -2456,7 +2456,7 @@ const products = [
     "pack": "6*24",
     "price": 63.24999999999999,
     "barcode": "6291003023835",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image246.jpeg"
   },
   {
@@ -2466,7 +2466,7 @@ const products = [
     "pack": "6*24",
     "price": 63.24999999999999,
     "barcode": "6291003020179",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image247.jpeg"
   },
   {
@@ -2476,7 +2476,7 @@ const products = [
     "pack": "24",
     "price": 105.8,
     "barcode": "8938507039242",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image248.jpeg"
   },
   {
@@ -2486,7 +2486,7 @@ const products = [
     "pack": "24",
     "price": 125.35,
     "barcode": "072417116339",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image249.jpeg"
   },
   {
@@ -2496,7 +2496,7 @@ const products = [
     "pack": "48",
     "price": 225.39999999999998,
     "barcode": "6921101250160",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image250.jpeg"
   },
   {
@@ -2506,7 +2506,7 @@ const products = [
     "pack": "32",
     "price": 259.9,
     "barcode": "6281100356790",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image251.jpeg"
   },
   {
@@ -2516,7 +2516,7 @@ const products = [
     "pack": "6*24",
     "price": 63.24999999999999,
     "barcode": "6291003022838",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image252.jpeg"
   },
   {
@@ -2526,7 +2526,7 @@ const products = [
     "pack": "4*24",
     "price": 373.74999999999994,
     "barcode": "072417031687",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image253.jpeg"
   },
   {
@@ -2536,7 +2536,7 @@ const products = [
     "pack": "12*12",
     "price": 74.75,
     "barcode": "6210000252048",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image254.jpeg"
   },
   {
@@ -2546,7 +2546,7 @@ const products = [
     "pack": "12*12",
     "price": 74.75,
     "barcode": "6210000252048",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image255.jpeg"
   },
   {
@@ -2556,7 +2556,7 @@ const products = [
     "pack": "12*12",
     "price": 74.75,
     "barcode": "6210000252048",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image256.jpeg"
   },
   {
@@ -2566,7 +2566,7 @@ const products = [
     "pack": "20",
     "price": 109.24999999999999,
     "barcode": "6972885416600",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image257.jpeg"
   },
   {
@@ -2576,7 +2576,7 @@ const products = [
     "pack": "12*24",
     "price": 118.44999999999999,
     "barcode": "6216495382611",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image258.jpeg"
   },
   {
@@ -2586,7 +2586,7 @@ const products = [
     "pack": "12*12",
     "price": 103.49999999999999,
     "barcode": "6210014587969",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image259.jpeg"
   },
   {
@@ -2596,7 +2596,7 @@ const products = [
     "pack": "6",
     "price": 54.05,
     "barcode": "4823105817207",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image260.jpeg"
   },
   {
@@ -2606,7 +2606,7 @@ const products = [
     "pack": "10",
     "price": 59.8,
     "barcode": "4823105817030",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image261.jpeg"
   },
   {
@@ -2616,7 +2616,7 @@ const products = [
     "pack": "10",
     "price": 59.8,
     "barcode": "4823105816156",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image262.jpeg"
   },
   {
@@ -2626,7 +2626,7 @@ const products = [
     "pack": "10",
     "price": 59.8,
     "barcode": "4823105816811",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image263.jpeg"
   },
   {
@@ -2636,7 +2636,7 @@ const products = [
     "pack": "18",
     "price": 228.85,
     "barcode": "5902978005276",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image264.jpeg"
   },
   {
@@ -2646,7 +2646,7 @@ const products = [
     "pack": "12",
     "price": 86.25,
     "barcode": "9556439880979",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image265.jpeg"
   },
   {
@@ -2656,7 +2656,7 @@ const products = [
     "pack": "12",
     "price": 86.25,
     "barcode": "9556439887138",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image266.jpeg"
   },
   {
@@ -2666,7 +2666,7 @@ const products = [
     "pack": "12",
     "price": 86.25,
     "barcode": "9556439882270",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image267.jpeg"
   },
   {
@@ -2676,7 +2676,7 @@ const products = [
     "pack": "12",
     "price": 86.25,
     "barcode": "9556439890374",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image268.jpeg"
   },
   {
@@ -2686,7 +2686,7 @@ const products = [
     "pack": "6",
     "price": 82.8,
     "barcode": "5410126106282",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image269.jpeg"
   },
   {
@@ -2696,7 +2696,7 @@ const products = [
     "pack": "10",
     "price": 71.3,
     "barcode": "15410126716013",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image270.jpeg"
   },
   {
@@ -2706,7 +2706,7 @@ const products = [
     "pack": "8",
     "price": 172.5,
     "barcode": "6084012143072",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image271.jpeg"
   },
   {
@@ -2716,7 +2716,7 @@ const products = [
     "pack": "8",
     "price": 172.5,
     "barcode": "6084012143027",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image272.jpeg"
   },
   {
@@ -2726,7 +2726,7 @@ const products = [
     "pack": "8",
     "price": 172.5,
     "barcode": "6084012143010",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image273.jpeg"
   },
   {
@@ -2736,7 +2736,7 @@ const products = [
     "pack": "12",
     "price": 143.75,
     "barcode": "6084012143140",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image274.jpeg"
   },
   {
@@ -2746,7 +2746,7 @@ const products = [
     "pack": "16",
     "price": 143.75,
     "barcode": "6084012143041",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image275.jpeg"
   },
   {
@@ -2756,7 +2756,7 @@ const products = [
     "pack": "16",
     "price": 143.75,
     "barcode": "6084012143058",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image276.jpeg"
   },
   {
@@ -2766,7 +2766,7 @@ const products = [
     "pack": "16",
     "price": 143.75,
     "barcode": "6084012143133",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image277.jpeg"
   },
   {
@@ -2776,7 +2776,7 @@ const products = [
     "pack": "20",
     "price": 86.25,
     "barcode": "6287034340478",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image278.jpeg"
   },
   {
@@ -2786,7 +2786,7 @@ const products = [
     "pack": "20",
     "price": 86.25,
     "barcode": "6287034340324",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image279.jpeg"
   },
   {
@@ -2796,7 +2796,7 @@ const products = [
     "pack": "20",
     "price": 86.25,
     "barcode": "6287034340300",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image280.jpeg"
   },
   {
@@ -2806,7 +2806,7 @@ const products = [
     "pack": "20",
     "price": 86.25,
     "barcode": "6287034340461",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image281.jpeg"
   },
   {
@@ -2816,7 +2816,7 @@ const products = [
     "pack": "20",
     "price": 86.25,
     "barcode": "6287034340355",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image282.jpeg"
   },
   {
@@ -2826,7 +2826,7 @@ const products = [
     "pack": "12",
     "price": 123.05,
     "barcode": "6276231983779",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image283.jpeg"
   },
   {
@@ -2836,7 +2836,7 @@ const products = [
     "pack": "12*24",
     "price": 52.9,
     "barcode": "8690515008312",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image284.jpeg"
   },
   {
@@ -2846,7 +2846,7 @@ const products = [
     "pack": "40",
     "price": 147.2,
     "barcode": "5900951000270",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image285.jpeg"
   },
   {
@@ -2856,7 +2856,7 @@ const products = [
     "pack": "12",
     "price": 129.95,
     "barcode": "8699270017300",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image286.jpeg"
   },
   {
@@ -2866,7 +2866,7 @@ const products = [
     "pack": "24",
     "price": 462.29999999999995,
     "barcode": "5000159560979",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image287.jpeg"
   },
   {
@@ -2876,7 +2876,7 @@ const products = [
     "pack": "1",
     "price": 0,
     "barcode": "5000159567466",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image288.jpeg"
   },
   {
@@ -2886,7 +2886,7 @@ const products = [
     "pack": "15*4",
     "price": 158.7,
     "barcode": "5000159470315",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image289.jpeg"
   },
   {
@@ -2896,7 +2896,7 @@ const products = [
     "pack": "24",
     "price": 149.5,
     "barcode": "5000159558914",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image290.jpeg"
   },
   {
@@ -2906,7 +2906,7 @@ const products = [
     "pack": "8",
     "price": 88.55,
     "barcode": "7613036641432",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image291.jpeg"
   },
   {
@@ -2916,7 +2916,7 @@ const products = [
     "pack": "10",
     "price": 88.55,
     "barcode": "8445291861831",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image292.jpeg"
   },
   {
@@ -2926,7 +2926,7 @@ const products = [
     "pack": "12",
     "price": 152.95,
     "barcode": "8699413132044",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image293.jpeg"
   },
   {
@@ -2936,7 +2936,7 @@ const products = [
     "pack": "12",
     "price": 143.75,
     "barcode": "8683280730915",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image294.jpeg"
   },
   {
@@ -2946,7 +2946,7 @@ const products = [
     "pack": "12",
     "price": 119.6,
     "barcode": "5056357912089",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image295.jpeg"
   },
   {
@@ -2956,7 +2956,7 @@ const products = [
     "pack": "12",
     "price": 119.6,
     "barcode": "5056357915240",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image296.jpeg"
   },
   {
@@ -2966,7 +2966,7 @@ const products = [
     "pack": "24",
     "price": 201.24999999999997,
     "barcode": "8445290357304",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image297.jpeg"
   },
   {
@@ -2976,7 +2976,7 @@ const products = [
     "pack": "14",
     "price": 136.85,
     "barcode": "8445290357625",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image298.jpeg"
   },
   {
@@ -2986,7 +2986,7 @@ const products = [
     "pack": "20",
     "price": 178.25,
     "barcode": "7622210989192",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image299.jpeg"
   },
   {
@@ -2996,7 +2996,7 @@ const products = [
     "pack": "13",
     "price": 92,
     "barcode": "7622202224201",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image300.jpeg"
   },
   {
@@ -3006,7 +3006,7 @@ const products = [
     "pack": "10",
     "price": 103.49999999999999,
     "barcode": "7622210989505",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image301.jpeg"
   },
   {
@@ -3016,7 +3016,7 @@ const products = [
     "pack": "12",
     "price": 143.75,
     "barcode": "7613036080118",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image302.jpeg"
   },
   {
@@ -3026,7 +3026,7 @@ const products = [
     "pack": "10",
     "price": 77.05,
     "barcode": "7613287228703",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image303.jpeg"
   },
   {
@@ -3036,7 +3036,7 @@ const products = [
     "pack": "10",
     "price": 98.89999999999999,
     "barcode": "8445290019530",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image304.jpeg"
   },
   {
@@ -3046,7 +3046,7 @@ const products = [
     "pack": "10",
     "price": 77.05,
     "barcode": "8445290094148",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image305.jpeg"
   },
   {
@@ -3056,7 +3056,7 @@ const products = [
     "pack": "10",
     "price": 77.05,
     "barcode": "7613035419056",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image306.jpeg"
   },
   {
@@ -3066,7 +3066,7 @@ const products = [
     "pack": "10",
     "price": 77.05,
     "barcode": "7613287228338",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image307.jpeg"
   },
   {
@@ -3076,7 +3076,7 @@ const products = [
     "pack": "10",
     "price": 55.199999999999996,
     "barcode": "7622210796868",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image308.jpeg"
   },
   {
@@ -3086,7 +3086,7 @@ const products = [
     "pack": "10",
     "price": 55.199999999999996,
     "barcode": "7622202207174",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image309.jpeg"
   },
   {
@@ -3096,7 +3096,7 @@ const products = [
     "pack": "10",
     "price": 55.199999999999996,
     "barcode": "7622202207259",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image310.jpeg"
   },
   {
@@ -3106,7 +3106,7 @@ const products = [
     "pack": "24",
     "price": 63.24999999999999,
     "barcode": "7622202207143",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image311.jpeg"
   },
   {
@@ -3116,7 +3116,7 @@ const products = [
     "pack": "24",
     "price": 63.24999999999999,
     "barcode": "7622202207273",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image312.jpeg"
   },
   {
@@ -3126,7 +3126,7 @@ const products = [
     "pack": "24",
     "price": 63.24999999999999,
     "barcode": "7622210796844",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image313.jpeg"
   },
   {
@@ -3136,7 +3136,7 @@ const products = [
     "pack": "28",
     "price": 132.25,
     "barcode": "5907205014076",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image314.jpeg"
   },
   {
@@ -3146,7 +3146,7 @@ const products = [
     "pack": "28",
     "price": 132.25,
     "barcode": "5907205011402",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image315.jpeg"
   },
   {
@@ -3156,7 +3156,7 @@ const products = [
     "pack": "28",
     "price": 132.25,
     "barcode": "5907205012591",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image316.jpeg"
   },
   {
@@ -3166,7 +3166,7 @@ const products = [
     "pack": "28",
     "price": 132.25,
     "barcode": "5907205007597",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image317.jpeg"
   },
   {
@@ -3176,7 +3176,7 @@ const products = [
     "pack": "28",
     "price": 132.25,
     "barcode": "5907205011815",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image318.jpeg"
   },
   {
@@ -3186,7 +3186,7 @@ const products = [
     "pack": "12",
     "price": 157.54999999999998,
     "barcode": "041364086972",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image319.jpeg"
   },
   {
@@ -3196,7 +3196,7 @@ const products = [
     "pack": "12",
     "price": 172.5,
     "barcode": "041364881928",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image320.jpeg"
   },
   {
@@ -3206,7 +3206,7 @@ const products = [
     "pack": "12",
     "price": 172.5,
     "barcode": "041364881911",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image321.jpeg"
   },
   {
@@ -3216,7 +3216,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "041364080536",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image322.jpeg"
   },
   {
@@ -3226,7 +3226,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "041364087924",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image323.jpeg"
   },
   {
@@ -3236,7 +3236,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "041364080499",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image324.jpeg"
   },
   {
@@ -3246,7 +3246,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "041364080529",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image325.jpeg"
   },
   {
@@ -3256,7 +3256,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "041364089904",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image326.jpeg"
   },
   {
@@ -3266,7 +3266,7 @@ const products = [
     "pack": "1",
     "price": 23.575,
     "barcode": "079200701277",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image327.jpeg"
   },
   {
@@ -3276,7 +3276,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "041364084985",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image328.jpeg"
   },
   {
@@ -3286,7 +3286,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "041364089799",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image329.jpeg"
   },
   {
@@ -3296,7 +3296,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "041364881331",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image330.jpeg"
   },
   {
@@ -3306,7 +3306,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "041364086460",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image331.jpeg"
   },
   {
@@ -3316,7 +3316,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "041364880013",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image332.jpeg"
   },
   {
@@ -3326,7 +3326,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "041364881362",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image333.jpeg"
   },
   {
@@ -3336,7 +3336,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "041364881690",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image334.jpeg"
   },
   {
@@ -3346,7 +3346,7 @@ const products = [
     "pack": "30",
     "price": 128.225,
     "barcode": "8436556390739",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image335.jpeg"
   },
   {
@@ -3356,7 +3356,7 @@ const products = [
     "pack": "30",
     "price": 128.225,
     "barcode": "8436556390791",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image336.jpeg"
   },
   {
@@ -3366,7 +3366,7 @@ const products = [
     "pack": "30",
     "price": 128.225,
     "barcode": "8436556390821",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image337.jpeg"
   },
   {
@@ -3376,7 +3376,7 @@ const products = [
     "pack": "30",
     "price": 128.225,
     "barcode": "8436556390760",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image338.jpeg"
   },
   {
@@ -3386,7 +3386,7 @@ const products = [
     "pack": "24",
     "price": 123.05,
     "barcode": "4003084840117",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image339.jpeg"
   },
   {
@@ -3396,7 +3396,7 @@ const products = [
     "pack": "30",
     "price": 126.49999999999999,
     "barcode": "4003084840025",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image340.jpeg"
   },
   {
@@ -3406,7 +3406,7 @@ const products = [
     "pack": "12",
     "price": 109.24999999999999,
     "barcode": "032134212264",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image341.jpeg"
   },
   {
@@ -3416,7 +3416,7 @@ const products = [
     "pack": "12",
     "price": 109.24999999999999,
     "barcode": "032134235010",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image342.jpeg"
   },
   {
@@ -3426,7 +3426,7 @@ const products = [
     "pack": "1",
     "price": 0,
     "barcode": "3501276213035",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image343.jpeg"
   },
   {
@@ -3436,7 +3436,7 @@ const products = [
     "pack": "12",
     "price": 104.64999999999999,
     "barcode": "8410031979404",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image344.jpeg"
   },
   {
@@ -3446,7 +3446,7 @@ const products = [
     "pack": "12",
     "price": 104.64999999999999,
     "barcode": "8410031979428",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image345.jpeg"
   },
   {
@@ -3456,7 +3456,7 @@ const products = [
     "pack": "12",
     "price": 65.23949999999999,
     "barcode": "032134240212",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image346.jpeg"
   },
   {
@@ -3466,7 +3466,7 @@ const products = [
     "pack": "24",
     "price": 62.79,
     "barcode": "032134228104",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image347.jpeg"
   },
   {
@@ -3476,7 +3476,7 @@ const products = [
     "pack": "24",
     "price": 57.49999999999999,
     "barcode": "32134217122",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image348.jpeg"
   },
   {
@@ -3486,7 +3486,7 @@ const products = [
     "pack": "18",
     "price": 46,
     "barcode": "032134227107",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image349.jpeg"
   },
   {
@@ -3496,7 +3496,7 @@ const products = [
     "pack": "24",
     "price": 151.79999999999998,
     "barcode": "6298044151794",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image350.jpeg"
   },
   {
@@ -3506,7 +3506,7 @@ const products = [
     "pack": "24",
     "price": 63.24999999999999,
     "barcode": "8690515141149",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image351.jpeg"
   },
   {
@@ -3516,7 +3516,7 @@ const products = [
     "pack": "1",
     "price": 112.69999999999999,
     "barcode": "7790580414955",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image352.jpeg"
   },
   {
@@ -3526,7 +3526,7 @@ const products = [
     "pack": "36*10",
     "price": 362.25,
     "barcode": "6961696600612",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image353.jpeg"
   },
   {
@@ -3536,7 +3536,7 @@ const products = [
     "pack": "36*10",
     "price": 362.25,
     "barcode": "6961696600612",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image354.jpeg"
   },
   {
@@ -3546,7 +3546,7 @@ const products = [
     "pack": "20*20",
     "price": 218.49999999999997,
     "barcode": "6937310896259",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image355.jpeg"
   },
   {
@@ -3556,7 +3556,7 @@ const products = [
     "pack": "20*20",
     "price": 218.49999999999997,
     "barcode": "6937310896273",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image356.jpeg"
   },
   {
@@ -3566,7 +3566,7 @@ const products = [
     "pack": "20*20",
     "price": 218.49999999999997,
     "barcode": "6989011255866",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image357.jpeg"
   },
   {
@@ -3576,7 +3576,7 @@ const products = [
     "pack": "24",
     "price": 200.1,
     "barcode": "6926098798473",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image358.jpeg"
   },
   {
@@ -3586,7 +3586,7 @@ const products = [
     "pack": "12*48",
     "price": 146.04999999999998,
     "barcode": "8850632608806",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image359.jpeg"
   },
   {
@@ -3596,7 +3596,7 @@ const products = [
     "pack": "12*36",
     "price": 178.25,
     "barcode": "8850632606949",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image360.jpeg"
   },
   {
@@ -3606,7 +3606,7 @@ const products = [
     "pack": "12*36",
     "price": 195.49999999999997,
     "barcode": "8850632607946",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image361.jpeg"
   },
   {
@@ -3616,7 +3616,7 @@ const products = [
     "pack": "24",
     "price": 59.8,
     "barcode": "8690840967063",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image362.jpeg"
   },
   {
@@ -3626,7 +3626,7 @@ const products = [
     "pack": "24",
     "price": 59.8,
     "barcode": "8690840967056",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image363.jpeg"
   },
   {
@@ -3636,7 +3636,7 @@ const products = [
     "pack": "24",
     "price": 59.8,
     "barcode": "8690840967049",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image364.jpeg"
   },
   {
@@ -3646,7 +3646,7 @@ const products = [
     "pack": "24",
     "price": 59.8,
     "barcode": "8690840967070",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image365.jpeg"
   },
   {
@@ -3656,7 +3656,7 @@ const products = [
     "pack": "12*20",
     "price": 281.75,
     "barcode": "4002996105208",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image366.jpeg"
   },
   {
@@ -3666,7 +3666,7 @@ const products = [
     "pack": "6*45",
     "price": 281.75,
     "barcode": "4002996010557",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image367.jpeg"
   },
   {
@@ -3676,7 +3676,7 @@ const products = [
     "pack": "6*24",
     "price": 143.75,
     "barcode": "8996001375433",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image368.jpeg"
   },
   {
@@ -3686,7 +3686,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "7622201695392",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image369.jpeg"
   },
   {
@@ -3696,7 +3696,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "8850580200244",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image370.jpeg"
   },
   {
@@ -3706,7 +3706,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "8886001200197",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image371.jpeg"
   },
   {
@@ -3716,7 +3716,7 @@ const products = [
     "pack": "8*36",
     "price": 167.89999999999998,
     "barcode": "8850580200374",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image372.jpeg"
   },
   {
@@ -3726,7 +3726,7 @@ const products = [
     "pack": "8.36",
     "price": 167.89999999999998,
     "barcode": "8850580200398",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image373.jpeg"
   },
   {
@@ -3736,7 +3736,7 @@ const products = [
     "pack": "10",
     "price": 180.54999999999998,
     "barcode": "5902097000039",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image374.jpeg"
   },
   {
@@ -3746,7 +3746,7 @@ const products = [
     "pack": "10",
     "price": 235.74999999999997,
     "barcode": "5900223011478",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image375.jpeg"
   },
   {
@@ -3756,7 +3756,7 @@ const products = [
     "pack": "20",
     "price": 135.7,
     "barcode": "5902431566559",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image376.jpeg"
   },
   {
@@ -3766,7 +3766,7 @@ const products = [
     "pack": "6",
     "price": 100.05,
     "barcode": "8680052628814",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image377.jpeg"
   },
   {
@@ -3776,7 +3776,7 @@ const products = [
     "pack": "5",
     "price": 143.75,
     "barcode": "8690840183050",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image378.jpeg"
   },
   {
@@ -3786,7 +3786,7 @@ const products = [
     "pack": "5",
     "price": 143.75,
     "barcode": "8690840185719",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image379.jpeg"
   },
   {
@@ -3796,7 +3796,7 @@ const products = [
     "pack": "5",
     "price": 143.75,
     "barcode": "8690840183975",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image380.jpeg"
   },
   {
@@ -3806,7 +3806,7 @@ const products = [
     "pack": "5",
     "price": 143.75,
     "barcode": "8690840183951",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image381.jpeg"
   },
   {
@@ -3816,7 +3816,7 @@ const products = [
     "pack": "6",
     "price": 229.99999999999997,
     "barcode": "8029044004159",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image382.jpeg"
   },
   {
@@ -3826,7 +3826,7 @@ const products = [
     "pack": "6",
     "price": 229.99999999999997,
     "barcode": "8029044004135",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image383.jpeg"
   },
   {
@@ -3836,7 +3836,7 @@ const products = [
     "pack": "6",
     "price": 235.74999999999997,
     "barcode": "5904844610652",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image384.jpeg"
   },
   {
@@ -3846,7 +3846,7 @@ const products = [
     "pack": "6",
     "price": 235.74999999999997,
     "barcode": "5904844610164",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image385.jpeg"
   },
   {
@@ -3856,7 +3856,7 @@ const products = [
     "pack": "6",
     "price": 235.74999999999997,
     "barcode": "5904844611284",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image386.jpeg"
   },
   {
@@ -3866,7 +3866,7 @@ const products = [
     "pack": "6",
     "price": 235.74999999999997,
     "barcode": "5904844611277",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image387.jpeg"
   },
   {
@@ -3876,7 +3876,7 @@ const products = [
     "pack": "6",
     "price": 235.74999999999997,
     "barcode": "5901812629241",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image388.jpeg"
   },
   {
@@ -3886,7 +3886,7 @@ const products = [
     "pack": "6",
     "price": 235.74999999999997,
     "barcode": "5904844610782",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image389.jpeg"
   },
   {
@@ -3896,7 +3896,7 @@ const products = [
     "pack": "15",
     "price": 267.95,
     "barcode": "4014400904376",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image390.jpeg"
   },
   {
@@ -3906,7 +3906,7 @@ const products = [
     "pack": "5",
     "price": 134.54999999999998,
     "barcode": "4823077635656",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image391.jpeg"
   },
   {
@@ -3916,7 +3916,7 @@ const products = [
     "pack": "8",
     "price": 166.75,
     "barcode": "5206759021005",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image392.jpeg"
   },
   {
@@ -3926,7 +3926,7 @@ const products = [
     "pack": "10",
     "price": 206.99999999999997,
     "barcode": "5206759011006",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image393.jpeg"
   },
   {
@@ -3936,7 +3936,7 @@ const products = [
     "pack": "16",
     "price": 60.949999999999996,
     "barcode": "8690515124005",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image394.jpeg"
   },
   {
@@ -3946,7 +3946,7 @@ const products = [
     "pack": "16",
     "price": 60.949999999999996,
     "barcode": "8690515599766",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image395.jpeg"
   },
   {
@@ -3956,7 +3956,7 @@ const products = [
     "pack": "16",
     "price": 60.949999999999996,
     "barcode": "8690515124104",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image396.jpeg"
   },
   {
@@ -3966,7 +3966,7 @@ const products = [
     "pack": "4",
     "price": 149.5,
     "barcode": "6294139800318",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image397.jpeg"
   },
   {
@@ -3976,7 +3976,7 @@ const products = [
     "pack": "4",
     "price": 149.5,
     "barcode": "6294139800318",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image398.jpeg"
   },
   {
@@ -3986,7 +3986,7 @@ const products = [
     "pack": "4",
     "price": 149.5,
     "barcode": "6294139800318",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image399.jpeg"
   },
   {
@@ -3996,7 +3996,7 @@ const products = [
     "pack": "6",
     "price": 229.99999999999997,
     "barcode": "8029044004166",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image400.jpeg"
   },
   {
@@ -4006,7 +4006,7 @@ const products = [
     "pack": "6",
     "price": 229.99999999999997,
     "barcode": "8029044004142",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image401.jpeg"
   },
   {
@@ -4016,7 +4016,7 @@ const products = [
     "pack": "6",
     "price": 229.99999999999997,
     "barcode": "8029044005408",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image402.jpeg"
   },
   {
@@ -4026,7 +4026,7 @@ const products = [
     "pack": "6",
     "price": 229.99999999999997,
     "barcode": "8029044005873",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image403.jpeg"
   },
   {
@@ -4036,7 +4036,7 @@ const products = [
     "pack": "6",
     "price": 88.55,
     "barcode": "6223004962349",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image404.jpeg"
   },
   {
@@ -4046,7 +4046,7 @@ const products = [
     "pack": "5",
     "price": 103.49999999999999,
     "barcode": "8961103181961",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image405.jpeg"
   },
   {
@@ -4056,7 +4056,7 @@ const products = [
     "pack": "5",
     "price": 103.49999999999999,
     "barcode": "8961103182074",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image406.jpeg"
   },
   {
@@ -4066,7 +4066,7 @@ const products = [
     "pack": "5",
     "price": 224.24999999999997,
     "barcode": "6287011401215",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image407.jpeg"
   },
   {
@@ -4076,7 +4076,7 @@ const products = [
     "pack": "5",
     "price": 224.24999999999997,
     "barcode": "6287011401208",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image408.jpeg"
   },
   {
@@ -4086,7 +4086,7 @@ const products = [
     "pack": "36",
     "price": 339.25,
     "barcode": "8710559000476",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image409.jpeg"
   },
   {
@@ -4096,7 +4096,7 @@ const products = [
     "pack": "24",
     "price": 126.49999999999999,
     "barcode": "8680702822906",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image410.jpeg"
   },
   {
@@ -4106,7 +4106,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880555",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image411.jpeg"
   },
   {
@@ -4116,7 +4116,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880555",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image412.jpeg"
   },
   {
@@ -4126,7 +4126,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880418",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image413.jpeg"
   },
   {
@@ -4136,7 +4136,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880432",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image414.jpeg"
   },
   {
@@ -4146,7 +4146,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880432",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image415.jpeg"
   },
   {
@@ -4156,7 +4156,7 @@ const products = [
     "pack": "24",
     "price": 126.49999999999999,
     "barcode": "6974985000277",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image416.jpeg"
   },
   {
@@ -4166,7 +4166,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880388",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image417.jpeg"
   },
   {
@@ -4176,7 +4176,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880470",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image418.jpeg"
   },
   {
@@ -4186,7 +4186,7 @@ const products = [
     "pack": "6*24",
     "price": 184,
     "barcode": "8682134086062",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image419.jpeg"
   },
   {
@@ -4196,7 +4196,7 @@ const products = [
     "pack": "6*24",
     "price": 184,
     "barcode": "8682134086031",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image420.jpeg"
   },
   {
@@ -4206,7 +4206,7 @@ const products = [
     "pack": "6*24",
     "price": 184,
     "barcode": "8682134081890",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image421.jpeg"
   },
   {
@@ -4216,7 +4216,7 @@ const products = [
     "pack": "24*6",
     "price": 264.5,
     "barcode": "6928961212666",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image422.jpeg"
   },
   {
@@ -4226,7 +4226,7 @@ const products = [
     "pack": "24*6",
     "price": 264.5,
     "barcode": "6928961212697",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image423.jpeg"
   },
   {
@@ -4236,7 +4236,7 @@ const products = [
     "pack": "24*6",
     "price": 264.5,
     "barcode": "6928961212673",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image424.jpeg"
   },
   {
@@ -4246,7 +4246,7 @@ const products = [
     "pack": "24*6",
     "price": 264.5,
     "barcode": "6928961212703",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image425.jpeg"
   },
   {
@@ -4256,7 +4256,7 @@ const products = [
     "pack": "24",
     "price": 252.99999999999997,
     "barcode": "6937914880494",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image426.jpeg"
   },
   {
@@ -4266,7 +4266,7 @@ const products = [
     "pack": "12",
     "price": 204.7,
     "barcode": "8682134082170",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image427.jpeg"
   },
   {
@@ -4276,7 +4276,7 @@ const products = [
     "pack": "20",
     "price": 69,
     "barcode": "0712132671200",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image428.jpeg"
   },
   {
@@ -4286,7 +4286,7 @@ const products = [
     "pack": "20",
     "price": 69,
     "barcode": "0712132671194",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image429.jpeg"
   },
   {
@@ -4296,7 +4296,7 @@ const products = [
     "pack": "20",
     "price": 69,
     "barcode": "0712132671231",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image430.jpeg"
   },
   {
@@ -4306,7 +4306,7 @@ const products = [
     "pack": "20",
     "price": 69,
     "barcode": "0712132671224",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image431.jpeg"
   },
   {
@@ -4316,7 +4316,7 @@ const products = [
     "pack": "20",
     "price": 69,
     "barcode": "0712132671217",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image432.jpeg"
   },
   {
@@ -4326,7 +4326,7 @@ const products = [
     "pack": "12",
     "price": 396.74999999999994,
     "barcode": "810165014435",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image433.jpeg"
   },
   {
@@ -4336,7 +4336,7 @@ const products = [
     "pack": "24",
     "price": 313.95,
     "barcode": "810165010260",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image434.jpeg"
   },
   {
@@ -4346,7 +4346,7 @@ const products = [
     "pack": "24",
     "price": 313.95,
     "barcode": "810165011953",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image435.jpeg"
   },
   {
@@ -4356,7 +4356,7 @@ const products = [
     "pack": "12*30",
     "price": 119.6,
     "barcode": "6944516003640",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image436.jpeg"
   },
   {
@@ -4366,7 +4366,7 @@ const products = [
     "pack": "12*30",
     "price": 119.6,
     "barcode": "6944516003626",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image437.jpeg"
   },
   {
@@ -4376,7 +4376,7 @@ const products = [
     "pack": "6*24",
     "price": 448.49999999999994,
     "barcode": "3116740016502",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image438.jpeg"
   },
   {
@@ -4386,7 +4386,7 @@ const products = [
     "pack": "6*24",
     "price": 448.49999999999994,
     "barcode": "3116740015444",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image439.jpeg"
   },
   {
@@ -4396,7 +4396,7 @@ const products = [
     "pack": "595",
     "price": 0,
     "barcode": "8690840217885",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image440.jpeg"
   },
   {
@@ -4406,7 +4406,7 @@ const products = [
     "pack": "6*36",
     "price": 718.75,
     "barcode": "3116740013143",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image441.jpeg"
   },
   {
@@ -4416,7 +4416,7 @@ const products = [
     "pack": "6*36",
     "price": 718.75,
     "barcode": "3116740030935",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image442.jpeg"
   },
   {
@@ -4426,7 +4426,7 @@ const products = [
     "pack": "6*36",
     "price": 718.75,
     "barcode": "3116740017295",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image443.jpeg"
   },
   {
@@ -4436,7 +4436,7 @@ const products = [
     "pack": "24",
     "price": 98.89999999999999,
     "barcode": "7896306625640",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image444.jpeg"
   },
   {
@@ -4446,7 +4446,7 @@ const products = [
     "pack": "8*48",
     "price": 134.54999999999998,
     "barcode": "6976607502312",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image445.jpeg"
   },
   {
@@ -4456,7 +4456,7 @@ const products = [
     "pack": "16",
     "price": 78.19999999999999,
     "barcode": "6223005301932",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image446.jpeg"
   },
   {
@@ -4466,7 +4466,7 @@ const products = [
     "pack": "24*30",
     "price": 62.099999999999994,
     "barcode": "8906075173002",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image447.jpeg"
   },
   {
@@ -4476,7 +4476,7 @@ const products = [
     "pack": "10",
     "price": 140.29999999999998,
     "barcode": "8697480193173",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image448.jpeg"
   },
   {
@@ -4486,7 +4486,7 @@ const products = [
     "pack": "10",
     "price": 140.29999999999998,
     "barcode": "8697480193203",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image449.jpeg"
   },
   {
@@ -4496,7 +4496,7 @@ const products = [
     "pack": "36",
     "price": 172.5,
     "barcode": "8906164161309",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image450.jpeg"
   },
   {
@@ -4506,7 +4506,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "6925374518903",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image451.jpeg"
   },
   {
@@ -4516,7 +4516,7 @@ const products = [
     "pack": "36",
     "price": 172.5,
     "barcode": "8906164161323",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image452.jpeg"
   },
   {
@@ -4526,7 +4526,7 @@ const products = [
     "pack": "150",
     "price": 224.24999999999997,
     "barcode": "8680035274175",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image453.jpeg"
   },
   {
@@ -4536,7 +4536,7 @@ const products = [
     "pack": "12*30",
     "price": 114.99999999999999,
     "barcode": "6968254600794",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image454.jpeg"
   },
   {
@@ -4546,7 +4546,7 @@ const products = [
     "pack": "12*30",
     "price": 114.99999999999999,
     "barcode": "6968254600800",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image455.jpeg"
   },
   {
@@ -4556,7 +4556,7 @@ const products = [
     "pack": "6*24",
     "price": 96.6,
     "barcode": "6223005309709",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image456.jpeg"
   },
   {
@@ -4566,7 +4566,7 @@ const products = [
     "pack": "48",
     "price": 505.99999999999994,
     "barcode": "046572802086",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image457.jpeg"
   },
   {
@@ -4576,7 +4576,7 @@ const products = [
     "pack": "12*6",
     "price": 180.54999999999998,
     "barcode": "6926293437047",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image458.jpeg"
   },
   {
@@ -4586,7 +4586,7 @@ const products = [
     "pack": "12*6",
     "price": 180.54999999999998,
     "barcode": "6926293437016",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image459.jpeg"
   },
   {
@@ -4596,7 +4596,7 @@ const products = [
     "pack": "12*6",
     "price": 180.54999999999998,
     "barcode": "6926293437023",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image460.jpeg"
   },
   {
@@ -4606,7 +4606,7 @@ const products = [
     "pack": "12*20",
     "price": 83.94999999999999,
     "barcode": "6926293434749",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image461.jpeg"
   },
   {
@@ -4616,7 +4616,7 @@ const products = [
     "pack": "12*20",
     "price": 83.94999999999999,
     "barcode": "6926293434763",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image462.jpeg"
   },
   {
@@ -4626,7 +4626,7 @@ const products = [
     "pack": "12*20",
     "price": 83.94999999999999,
     "barcode": "6926293434725",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image463.jpeg"
   },
   {
@@ -4636,7 +4636,7 @@ const products = [
     "pack": "12*20",
     "price": 83.94999999999999,
     "barcode": "6926293434732",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image464.jpeg"
   },
   {
@@ -4646,7 +4646,7 @@ const products = [
     "pack": "12*20",
     "price": 83.94999999999999,
     "barcode": "6926293434718",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image465.jpeg"
   },
   {
@@ -4656,7 +4656,7 @@ const products = [
     "pack": "12*20",
     "price": 83.94999999999999,
     "barcode": "6926293434756",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image466.jpeg"
   },
   {
@@ -4666,7 +4666,7 @@ const products = [
     "pack": "2*10",
     "price": 261.04999999999995,
     "barcode": "8437025452712",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image467.jpeg"
   },
   {
@@ -4676,7 +4676,7 @@ const products = [
     "pack": "2*10",
     "price": 261.04999999999995,
     "barcode": "8437025452736",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image468.jpeg"
   },
   {
@@ -4686,7 +4686,7 @@ const products = [
     "pack": "2*10",
     "price": 261.04999999999995,
     "barcode": "8437025452750",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image469.jpeg"
   },
   {
@@ -4696,7 +4696,7 @@ const products = [
     "pack": "2*10",
     "price": 261.04999999999995,
     "barcode": "8437025452743",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image470.jpeg"
   },
   {
@@ -4706,7 +4706,7 @@ const products = [
     "pack": "2*10",
     "price": 261.04999999999995,
     "barcode": "8437025452705",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image471.jpeg"
   },
   {
@@ -4716,7 +4716,7 @@ const products = [
     "pack": "2*10",
     "price": 261.04999999999995,
     "barcode": "8437025452729",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image472.jpeg"
   },
   {
@@ -4726,7 +4726,7 @@ const products = [
     "pack": "12*12",
     "price": 238.04999999999998,
     "barcode": "8681259501078",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image473.jpeg"
   },
   {
@@ -4736,7 +4736,7 @@ const products = [
     "pack": "12*12",
     "price": 238.04999999999998,
     "barcode": "8681259501016",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image474.jpeg"
   },
   {
@@ -4746,7 +4746,7 @@ const products = [
     "pack": "12*12",
     "price": 238.04999999999998,
     "barcode": "8681259501108",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image475.jpeg"
   },
   {
@@ -4756,7 +4756,7 @@ const products = [
     "pack": "12*12",
     "price": 238.04999999999998,
     "barcode": "8681259501047",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image476.jpeg"
   },
   {
@@ -4766,7 +4766,7 @@ const products = [
     "pack": "12*12",
     "price": 238.04999999999998,
     "barcode": "8681259501191",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image477.jpeg"
   },
   {
@@ -4776,7 +4776,7 @@ const products = [
     "pack": "12*12",
     "price": 238.04999999999998,
     "barcode": "8681259501139",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image478.jpeg"
   },
   {
@@ -4786,7 +4786,7 @@ const products = [
     "pack": "6*12",
     "price": 339.25,
     "barcode": "8684207815920",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image479.jpeg"
   },
   {
@@ -4796,7 +4796,7 @@ const products = [
     "pack": "12*6",
     "price": 339.25,
     "barcode": "8684207815913",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image480.jpeg"
   },
   {
@@ -4806,7 +4806,7 @@ const products = [
     "pack": "12*6",
     "price": 339.25,
     "barcode": "8684207815951",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image481.jpeg"
   },
   {
@@ -4816,7 +4816,7 @@ const products = [
     "pack": "12*6",
     "price": 339.25,
     "barcode": "8684207816965",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image482.jpeg"
   },
   {
@@ -4826,7 +4826,7 @@ const products = [
     "pack": "12*6",
     "price": 339.25,
     "barcode": "8684207815937",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image483.jpeg"
   },
   {
@@ -4836,7 +4836,7 @@ const products = [
     "pack": "12*6",
     "price": 339.25,
     "barcode": "8684207815944",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image484.jpeg"
   },
   {
@@ -4846,7 +4846,7 @@ const products = [
     "pack": "12*24",
     "price": 180.54999999999998,
     "barcode": "8681259500354",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image485.jpeg"
   },
   {
@@ -4856,7 +4856,7 @@ const products = [
     "pack": "12*24",
     "price": 180.54999999999998,
     "barcode": "8681259500262",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image486.jpeg"
   },
   {
@@ -4866,7 +4866,7 @@ const products = [
     "pack": "12*24",
     "price": 180.54999999999998,
     "barcode": "8681259500170",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image487.jpeg"
   },
   {
@@ -4876,7 +4876,7 @@ const products = [
     "pack": "12*24",
     "price": 180.54999999999998,
     "barcode": "8681259501887",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image488.jpeg"
   },
   {
@@ -4886,7 +4886,7 @@ const products = [
     "pack": "12*24",
     "price": 180.54999999999998,
     "barcode": "8681259500323",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image489.jpeg"
   },
   {
@@ -4896,7 +4896,7 @@ const products = [
     "pack": "12*24",
     "price": 180.54999999999998,
     "barcode": "8681259500231",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image490.jpeg"
   },
   {
@@ -4906,7 +4906,7 @@ const products = [
     "pack": "4*24",
     "price": 339.25,
     "barcode": "8437025452781",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image491.jpeg"
   },
   {
@@ -4916,7 +4916,7 @@ const products = [
     "pack": "4*24",
     "price": 339.25,
     "barcode": "8437025452798",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image492.jpeg"
   },
   {
@@ -4926,7 +4926,7 @@ const products = [
     "pack": "4*24",
     "price": 339.25,
     "barcode": "8437025452804",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image493.jpeg"
   },
   {
@@ -4936,7 +4936,7 @@ const products = [
     "pack": "4*24",
     "price": 339.25,
     "barcode": "8437025452811",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image494.jpeg"
   },
   {
@@ -4946,7 +4946,7 @@ const products = [
     "pack": "4*24",
     "price": 339.25,
     "barcode": "8437025452774",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image495.jpeg"
   },
   {
@@ -4956,7 +4956,7 @@ const products = [
     "pack": "18",
     "price": 114.99999999999999,
     "barcode": "7891118013609",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image496.jpeg"
   },
   {
@@ -4966,7 +4966,7 @@ const products = [
     "pack": "18",
     "price": 114.99999999999999,
     "barcode": "7891118013593",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image497.jpeg"
   },
   {
@@ -4976,7 +4976,7 @@ const products = [
     "pack": "18",
     "price": 114.99999999999999,
     "barcode": "7891118013616",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image498.jpeg"
   },
   {
@@ -4986,7 +4986,7 @@ const products = [
     "pack": "18",
     "price": 114.99999999999999,
     "barcode": "7891118013586",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image499.jpeg"
   },
   {
@@ -4996,7 +4996,7 @@ const products = [
     "pack": "24",
     "price": 100.05,
     "barcode": "8682615585749",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image500.jpeg"
   },
   {
@@ -5006,7 +5006,7 @@ const products = [
     "pack": "24",
     "price": 100.05,
     "barcode": "8682615585725",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image501.jpeg"
   },
   {
@@ -5016,7 +5016,7 @@ const products = [
     "pack": "24",
     "price": 100.05,
     "barcode": "8682615585718",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image502.jpeg"
   },
   {
@@ -5026,7 +5026,7 @@ const products = [
     "pack": "24",
     "price": 100.05,
     "barcode": "8682615585800",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image503.jpeg"
   },
   {
@@ -5036,7 +5036,7 @@ const products = [
     "pack": "24",
     "price": 100.05,
     "barcode": "8682615585732",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image504.jpeg"
   },
   {
@@ -5046,7 +5046,7 @@ const products = [
     "pack": "6*12",
     "price": 161,
     "barcode": "6974985002325",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image505.jpeg"
   },
   {
@@ -5056,7 +5056,7 @@ const products = [
     "pack": "6*12",
     "price": 161,
     "barcode": "6974985002325",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image506.jpeg"
   },
   {
@@ -5066,7 +5066,7 @@ const products = [
     "pack": "6*12",
     "price": 161,
     "barcode": "6974985002325",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image507.jpeg"
   },
   {
@@ -5076,7 +5076,7 @@ const products = [
     "pack": "6*12",
     "price": 161,
     "barcode": "6974985002325",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image508.jpeg"
   },
   {
@@ -5086,7 +5086,7 @@ const products = [
     "pack": "6*12",
     "price": 161,
     "barcode": "6974985002325",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image509.jpeg"
   },
   {
@@ -5096,7 +5096,7 @@ const products = [
     "pack": "24*12",
     "price": 120.74999999999999,
     "barcode": "6925930000729",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image510.jpeg"
   },
   {
@@ -5106,7 +5106,7 @@ const products = [
     "pack": "12",
     "price": 66.69999999999999,
     "barcode": "6931722330752",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image511.jpeg"
   },
   {
@@ -5116,7 +5116,7 @@ const products = [
     "pack": "12",
     "price": 66.69999999999999,
     "barcode": "6931722330738",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image512.jpeg"
   },
   {
@@ -5126,7 +5126,7 @@ const products = [
     "pack": "12",
     "price": 66.69999999999999,
     "barcode": "6931722330776",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image513.jpeg"
   },
   {
@@ -5136,7 +5136,7 @@ const products = [
     "pack": "12",
     "price": 66.69999999999999,
     "barcode": "",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image514.jpeg"
   },
   {
@@ -5146,7 +5146,7 @@ const products = [
     "pack": "24",
     "price": 97.74999999999999,
     "barcode": "6974985000123",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image515.jpeg"
   },
   {
@@ -5156,7 +5156,7 @@ const products = [
     "pack": "24",
     "price": 189.74999999999997,
     "barcode": "6976607501582",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image516.jpeg"
   },
   {
@@ -5166,7 +5166,7 @@ const products = [
     "pack": "20",
     "price": 109.24999999999999,
     "barcode": "5949040203000",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image517.jpeg"
   },
   {
@@ -5176,7 +5176,7 @@ const products = [
     "pack": "24",
     "price": 120.74999999999999,
     "barcode": "9556488791226",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image518.jpeg"
   },
   {
@@ -5186,7 +5186,7 @@ const products = [
     "pack": "24",
     "price": 120.74999999999999,
     "barcode": "9556488791219",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image519.jpeg"
   },
   {
@@ -5196,7 +5196,7 @@ const products = [
     "pack": "24",
     "price": 120.74999999999999,
     "barcode": "9556488791233",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image520.jpeg"
   },
   {
@@ -5206,7 +5206,7 @@ const products = [
     "pack": "8",
     "price": 80.00549999999998,
     "barcode": "5701397301361",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image521.jpeg"
   },
   {
@@ -5216,7 +5216,7 @@ const products = [
     "pack": "12",
     "price": 67.85,
     "barcode": "4710022043386",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image522.jpeg"
   },
   {
@@ -5226,7 +5226,7 @@ const products = [
     "pack": "12",
     "price": 67.85,
     "barcode": "4710022043461",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image523.jpeg"
   },
   {
@@ -5236,7 +5236,7 @@ const products = [
     "pack": "12",
     "price": 67.85,
     "barcode": "4710022043409",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image524.jpeg"
   },
   {
@@ -5246,7 +5246,7 @@ const products = [
     "pack": "18",
     "price": 132.25,
     "barcode": "6281184000022",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image525.jpeg"
   },
   {
@@ -5256,7 +5256,7 @@ const products = [
     "pack": "18",
     "price": 132.25,
     "barcode": "6281184000084",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image526.jpeg"
   },
   {
@@ -5266,7 +5266,7 @@ const products = [
     "pack": "18",
     "price": 132.25,
     "barcode": "6281184000046",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image527.jpeg"
   },
   {
@@ -5276,7 +5276,7 @@ const products = [
     "pack": "18",
     "price": 132.25,
     "barcode": "6281184000060",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image528.jpeg"
   },
   {
@@ -5286,7 +5286,7 @@ const products = [
     "pack": "15",
     "price": 322,
     "barcode": "028400031462",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image529.jpeg"
   },
   {
@@ -5296,7 +5296,7 @@ const products = [
     "pack": "15",
     "price": 322,
     "barcode": "028400017053",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image530.jpeg"
   },
   {
@@ -5306,7 +5306,7 @@ const products = [
     "pack": "15",
     "price": 322,
     "barcode": "028400020893",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image531.jpeg"
   },
   {
@@ -5316,7 +5316,7 @@ const products = [
     "pack": "15",
     "price": 322,
     "barcode": "028400659765",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image532.jpeg"
   },
   {
@@ -5326,7 +5326,7 @@ const products = [
     "pack": "32",
     "price": 218.49999999999997,
     "barcode": "028400012089",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image533.jpeg"
   },
   {
@@ -5336,7 +5336,7 @@ const products = [
     "pack": "8",
     "price": 270.25,
     "barcode": "028400180924",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image534.jpeg"
   },
   {
@@ -5346,7 +5346,7 @@ const products = [
     "pack": "6",
     "price": 206.99999999999997,
     "barcode": "028400228268",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image535.jpeg"
   },
   {
@@ -5356,7 +5356,7 @@ const products = [
     "pack": "6",
     "price": 206.99999999999997,
     "barcode": "028400017459",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image536.jpeg"
   },
   {
@@ -5366,7 +5366,7 @@ const products = [
     "pack": "20",
     "price": 166.75,
     "barcode": "6291011008473",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image537.jpeg"
   },
   {
@@ -5376,7 +5376,7 @@ const products = [
     "pack": "20",
     "price": 166.75,
     "barcode": "6291011007773",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image538.jpeg"
   },
   {
@@ -5386,7 +5386,7 @@ const products = [
     "pack": "20",
     "price": 166.75,
     "barcode": "6291011008480",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image539.jpeg"
   },
   {
@@ -5396,7 +5396,7 @@ const products = [
     "pack": "15",
     "price": 26.45,
     "barcode": "8683628933824",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image540.jpeg"
   },
   {
@@ -5406,7 +5406,7 @@ const products = [
     "pack": "15",
     "price": 26.45,
     "barcode": "8683628933831",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image541.jpeg"
   },
   {
@@ -5416,7 +5416,7 @@ const products = [
     "pack": "15",
     "price": 26.45,
     "barcode": "8683628933039",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image542.jpeg"
   },
   {
@@ -5426,7 +5426,7 @@ const products = [
     "pack": "15",
     "price": 26.45,
     "barcode": "8683628933800",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image543.jpeg"
   },
   {
@@ -5436,7 +5436,7 @@ const products = [
     "pack": "48",
     "price": 46,
     "barcode": "8682723819972",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image544.jpeg"
   },
   {
@@ -5446,7 +5446,7 @@ const products = [
     "pack": "48",
     "price": 46,
     "barcode": "8683628930045",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image545.jpeg"
   },
   {
@@ -5456,7 +5456,7 @@ const products = [
     "pack": "48",
     "price": 46,
     "barcode": "8682723819996",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image546.jpeg"
   },
   {
@@ -5466,7 +5466,7 @@ const products = [
     "pack": "48",
     "price": 46,
     "barcode": "8683628930014",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image547.jpeg"
   },
   {
@@ -5476,7 +5476,7 @@ const products = [
     "pack": "20",
     "price": 54.05,
     "barcode": "6223007852135",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image548.jpeg"
   },
   {
@@ -5486,7 +5486,7 @@ const products = [
     "pack": "20",
     "price": 143.75,
     "barcode": "6223007851572",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image549.jpeg"
   },
   {
@@ -5496,7 +5496,7 @@ const products = [
     "pack": "20",
     "price": 86.25,
     "barcode": "6223007851763",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image550.jpeg"
   },
   {
@@ -5506,7 +5506,7 @@ const products = [
     "pack": "30",
     "price": 69,
     "barcode": "6223007851251",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image551.jpeg"
   },
   {
@@ -5516,7 +5516,7 @@ const products = [
     "pack": "20",
     "price": 52.9,
     "barcode": "6223007852142",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image552.jpeg"
   },
   {
@@ -5526,7 +5526,7 @@ const products = [
     "pack": "20",
     "price": 52.9,
     "barcode": "6223007852159",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image553.jpeg"
   },
   {
@@ -5536,7 +5536,7 @@ const products = [
     "pack": "36",
     "price": 43.699999999999996,
     "barcode": "6223007851626",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image554.jpeg"
   },
   {
@@ -5546,7 +5546,7 @@ const products = [
     "pack": "36",
     "price": 43.699999999999996,
     "barcode": "6223007851961",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image555.jpeg"
   },
   {
@@ -5556,7 +5556,7 @@ const products = [
     "pack": "20",
     "price": 206.99999999999997,
     "barcode": "757528046361",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image556.jpeg"
   },
   {
@@ -5566,7 +5566,7 @@ const products = [
     "pack": "46",
     "price": 170.2,
     "barcode": "757528005047",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image557.jpeg"
   },
   {
@@ -5576,7 +5576,7 @@ const products = [
     "pack": "36",
     "price": 46,
     "barcode": "6223007852609",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image558.jpeg"
   },
   {
@@ -5586,7 +5586,7 @@ const products = [
     "pack": "36",
     "price": 46,
     "barcode": "6223007852623",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image559.jpeg"
   },
   {
@@ -5596,7 +5596,7 @@ const products = [
     "pack": "36",
     "price": 46,
     "barcode": "6223007852616",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image560.jpeg"
   },
   {
@@ -5606,7 +5606,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "6291028960016",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image561.jpeg"
   },
   {
@@ -5616,7 +5616,7 @@ const products = [
     "pack": "12",
     "price": 44.849999999999994,
     "barcode": "6291028880048",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image562.jpeg"
   },
   {
@@ -5626,7 +5626,7 @@ const products = [
     "pack": "12",
     "price": 44.849999999999994,
     "barcode": "6291028500014",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image563.jpeg"
   },
   {
@@ -5636,7 +5636,7 @@ const products = [
     "pack": "12",
     "price": 44.849999999999994,
     "barcode": "6291028126108",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image564.jpeg"
   },
   {
@@ -5646,7 +5646,7 @@ const products = [
     "pack": "12",
     "price": 44.849999999999994,
     "barcode": "6291028110022",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image565.jpeg"
   },
   {
@@ -5656,7 +5656,7 @@ const products = [
     "pack": "12",
     "price": 44.849999999999994,
     "barcode": "6291028111029",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image566.jpeg"
   },
   {
@@ -5666,7 +5666,7 @@ const products = [
     "pack": "25",
     "price": 39.099999999999994,
     "barcode": "6287040130216",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image567.jpeg"
   },
   {
@@ -5676,7 +5676,7 @@ const products = [
     "pack": "25",
     "price": 39.099999999999994,
     "barcode": "6287040130261",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image568.jpeg"
   },
   {
@@ -5686,7 +5686,7 @@ const products = [
     "pack": "25",
     "price": 39.099999999999994,
     "barcode": "6287040130230",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image569.jpeg"
   },
   {
@@ -5696,7 +5696,7 @@ const products = [
     "pack": "25",
     "price": 39.099999999999994,
     "barcode": "6287040130278",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image570.jpeg"
   },
   {
@@ -5706,7 +5706,7 @@ const products = [
     "pack": "25",
     "price": 38.525,
     "barcode": "6287040130247",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image571.jpeg"
   },
   {
@@ -5716,7 +5716,7 @@ const products = [
     "pack": "25",
     "price": 38.525,
     "barcode": "6287040130223",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image572.jpeg"
   },
   {
@@ -5726,7 +5726,7 @@ const products = [
     "pack": "15",
     "price": 50.599999999999994,
     "barcode": "6281104275257",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image573.jpeg"
   },
   {
@@ -5736,7 +5736,7 @@ const products = [
     "pack": "30",
     "price": 80.5,
     "barcode": "6287014280763",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image574.jpeg"
   },
   {
@@ -5746,7 +5746,7 @@ const products = [
     "pack": "18",
     "price": 218.49999999999997,
     "barcode": "028400077682",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image575.jpeg"
   },
   {
@@ -5756,7 +5756,7 @@ const products = [
     "pack": "12",
     "price": 82.8,
     "barcode": "055653645054",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image576.jpeg"
   },
   {
@@ -5766,7 +5766,7 @@ const products = [
     "pack": "12",
     "price": 57.49999999999999,
     "barcode": "6287014281456",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image577.jpeg"
   },
   {
@@ -5776,7 +5776,7 @@ const products = [
     "pack": "20",
     "price": 390.99999999999994,
     "barcode": "4903013278205",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image578.jpeg"
   },
   {
@@ -5786,7 +5786,7 @@ const products = [
     "pack": "20",
     "price": 390.99999999999994,
     "barcode": "4903013278304",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image579.jpeg"
   },
   {
@@ -5796,7 +5796,7 @@ const products = [
     "pack": "20",
     "price": 390.99999999999994,
     "barcode": "4903013278243",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image580.jpeg"
   },
   {
@@ -5806,7 +5806,7 @@ const products = [
     "pack": "12",
     "price": 69,
     "barcode": "6290340401702",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image581.jpeg"
   },
   {
@@ -5816,7 +5816,7 @@ const products = [
     "pack": "5*21",
     "price": 44.849999999999994,
     "barcode": "6290340442941",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image582.jpeg"
   },
   {
@@ -5826,7 +5826,7 @@ const products = [
     "pack": "5*21",
     "price": 44.849999999999994,
     "barcode": "6290340362942",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image583.jpeg"
   },
   {
@@ -5836,7 +5836,7 @@ const products = [
     "pack": "5*21",
     "price": 44.849999999999994,
     "barcode": "6290340392949",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image584.jpeg"
   },
   {
@@ -5846,7 +5846,7 @@ const products = [
     "pack": "5*21",
     "price": 44.849999999999994,
     "barcode": "6290340402945",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image585.jpeg"
   },
   {
@@ -5856,7 +5856,7 @@ const products = [
     "pack": "6*6",
     "price": 255.29999999999998,
     "barcode": "8851004416203",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image586.jpeg"
   },
   {
@@ -5866,7 +5866,7 @@ const products = [
     "pack": "3*6",
     "price": 105.8,
     "barcode": "8851727006330",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image587.jpeg"
   },
   {
@@ -5876,7 +5876,7 @@ const products = [
     "pack": "5*25",
     "price": 379.49999999999994,
     "barcode": "757528009113",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image588.jpeg"
   },
   {
@@ -5886,7 +5886,7 @@ const products = [
     "pack": "5*18",
     "price": 39.099999999999994,
     "barcode": "6281016800141",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image589.jpeg"
   },
   {
@@ -5896,7 +5896,7 @@ const products = [
     "pack": "5*18",
     "price": 39.099999999999994,
     "barcode": "6281016905419",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image590.jpeg"
   },
   {
@@ -5906,7 +5906,7 @@ const products = [
     "pack": "5*20",
     "price": 74.175,
     "barcode": "6287040130100",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image591.jpeg"
   },
   {
@@ -5916,7 +5916,7 @@ const products = [
     "pack": "5*20",
     "price": 74.175,
     "barcode": "6287040130322",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image592.jpeg"
   },
   {
@@ -5926,7 +5926,7 @@ const products = [
     "pack": "5*20",
     "price": 74.175,
     "barcode": "6287040130087",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image593.jpeg"
   },
   {
@@ -5936,7 +5936,7 @@ const products = [
     "pack": "5*20",
     "price": 74.175,
     "barcode": "6287040130094",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image594.jpeg"
   },
   {
@@ -5946,7 +5946,7 @@ const products = [
     "pack": "5*20",
     "price": 74.175,
     "barcode": "6287040130117",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image595.jpeg"
   },
   {
@@ -5956,7 +5956,7 @@ const products = [
     "pack": "5*20",
     "price": 39.099999999999994,
     "barcode": "6287006940859",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image596.jpeg"
   },
   {
@@ -5966,7 +5966,7 @@ const products = [
     "pack": "5*20",
     "price": 39.099999999999994,
     "barcode": "6287006940866",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image597.jpeg"
   },
   {
@@ -5976,7 +5976,7 @@ const products = [
     "pack": "5*18",
     "price": 31.049999999999997,
     "barcode": "6287057770016",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image598.jpeg"
   },
   {
@@ -5986,7 +5986,7 @@ const products = [
     "pack": "5*20",
     "price": 43.699999999999996,
     "barcode": "6281016503554",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image599.jpeg"
   },
   {
@@ -5996,7 +5996,7 @@ const products = [
     "pack": "2*24",
     "price": 26.45,
     "barcode": "6084012810172",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image600.jpeg"
   },
   {
@@ -6006,7 +6006,7 @@ const products = [
     "pack": "5*16",
     "price": 67.85,
     "barcode": "6287014280725",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image601.jpeg"
   },
   {
@@ -6016,7 +6016,7 @@ const products = [
     "pack": "5*20",
     "price": 77.05,
     "barcode": "6281039829426",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image602.jpeg"
   },
   {
@@ -6026,7 +6026,7 @@ const products = [
     "pack": "5*18",
     "price": 32.199999999999996,
     "barcode": "6287057770023",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image603.jpeg"
   },
   {
@@ -6036,7 +6036,7 @@ const products = [
     "pack": "7",
     "price": 32.199999999999996,
     "barcode": "6287047770583",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image604.jpeg"
   },
   {
@@ -6046,7 +6046,7 @@ const products = [
     "pack": "7",
     "price": 32.199999999999996,
     "barcode": "6287047770514",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image605.jpeg"
   },
   {
@@ -6056,7 +6056,7 @@ const products = [
     "pack": "7",
     "price": 32.199999999999996,
     "barcode": "6287047770606",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image606.jpeg"
   },
   {
@@ -6066,7 +6066,7 @@ const products = [
     "pack": "7",
     "price": 32.199999999999996,
     "barcode": "6287047770484",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image607.jpeg"
   },
   {
@@ -6076,7 +6076,7 @@ const products = [
     "pack": "7",
     "price": 32.199999999999996,
     "barcode": "6287047770477",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image608.jpeg"
   },
   {
@@ -6086,7 +6086,7 @@ const products = [
     "pack": "4*30",
     "price": 178.25,
     "barcode": "4974587001773",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image609.jpeg"
   },
   {
@@ -6096,7 +6096,7 @@ const products = [
     "pack": "10*30",
     "price": 258.75,
     "barcode": "4974587101152",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image610.jpeg"
   },
   {
@@ -6106,7 +6106,7 @@ const products = [
     "pack": "12",
     "price": 134.54999999999998,
     "barcode": "0181706611254",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image611.jpeg"
   },
   {
@@ -6116,7 +6116,7 @@ const products = [
     "pack": "12",
     "price": 134.54999999999998,
     "barcode": "0181705811259",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image612.jpeg"
   },
   {
@@ -6126,7 +6126,7 @@ const products = [
     "pack": "12",
     "price": 134.54999999999998,
     "barcode": "0181170251123",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image613.jpeg"
   },
   {
@@ -6136,7 +6136,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202607",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image614.jpeg"
   },
   {
@@ -6146,7 +6146,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202683",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image615.jpeg"
   },
   {
@@ -6156,7 +6156,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202645",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image616.jpeg"
   },
   {
@@ -6166,7 +6166,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "5080312252018",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image617.jpeg"
   },
   {
@@ -6176,7 +6176,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202690",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image618.jpeg"
   },
   {
@@ -6186,7 +6186,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202669",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image619.jpeg"
   },
   {
@@ -6196,7 +6196,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202102",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image620.jpeg"
   },
   {
@@ -6206,7 +6206,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202638",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image621.jpeg"
   },
   {
@@ -6216,7 +6216,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0180126200215",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image622.jpeg"
   },
   {
@@ -6226,7 +6226,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202621",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image623.jpeg"
   },
   {
@@ -6236,7 +6236,7 @@ const products = [
     "pack": "12",
     "price": 85.1,
     "barcode": "0693634202614",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image624.jpeg"
   },
   {
@@ -6246,7 +6246,7 @@ const products = [
     "pack": "24",
     "price": 505.99999999999994,
     "barcode": "0693333963014",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image625.jpeg"
   },
   {
@@ -6256,7 +6256,7 @@ const products = [
     "pack": "24",
     "price": 505.99999999999994,
     "barcode": "0693222963224",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image626.jpeg"
   },
   {
@@ -6266,7 +6266,7 @@ const products = [
     "pack": "14",
     "price": 69,
     "barcode": "8683717471435",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image627.jpeg"
   },
   {
@@ -6276,7 +6276,7 @@ const products = [
     "pack": "14",
     "price": 69,
     "barcode": "8683717471442",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image628.jpeg"
   },
   {
@@ -6286,7 +6286,7 @@ const products = [
     "pack": "14",
     "price": 69,
     "barcode": "8683717471428",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image629.jpeg"
   },
   {
@@ -6296,7 +6296,7 @@ const products = [
     "pack": "14",
     "price": 69,
     "barcode": "8683717472432",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image630.jpeg"
   },
   {
@@ -6306,7 +6306,7 @@ const products = [
     "pack": "14",
     "price": 69,
     "barcode": "8683717472418",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image631.jpeg"
   },
   {
@@ -6316,7 +6316,7 @@ const products = [
     "pack": "14",
     "price": 69,
     "barcode": "8683717472777",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image632.jpeg"
   },
   {
@@ -6326,7 +6326,7 @@ const products = [
     "pack": "8",
     "price": 82.8,
     "barcode": "851562007057",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image633.jpeg"
   },
   {
@@ -6336,7 +6336,7 @@ const products = [
     "pack": "8",
     "price": 82.8,
     "barcode": "851562007507",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image634.jpeg"
   },
   {
@@ -6346,7 +6346,7 @@ const products = [
     "pack": "8",
     "price": 82.8,
     "barcode": "851562007132",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image635.jpeg"
   },
   {
@@ -6356,7 +6356,7 @@ const products = [
     "pack": "8",
     "price": 82.8,
     "barcode": "851562007170",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image636.jpeg"
   },
   {
@@ -6366,7 +6366,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "851562007019",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image637.jpeg"
   },
   {
@@ -6376,7 +6376,7 @@ const products = [
     "pack": "12",
     "price": 34.5,
     "barcode": "5053990107292",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image638.jpeg"
   },
   {
@@ -6386,7 +6386,7 @@ const products = [
     "pack": "12",
     "price": 34.5,
     "barcode": "5053990107384",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image639.jpeg"
   },
   {
@@ -6396,7 +6396,7 @@ const products = [
     "pack": "12",
     "price": 34.5,
     "barcode": "5053990107339",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image640.jpeg"
   },
   {
@@ -6406,7 +6406,7 @@ const products = [
     "pack": "12",
     "price": 34.5,
     "barcode": "5053990161935",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image641.jpeg"
   },
   {
@@ -6416,7 +6416,7 @@ const products = [
     "pack": "24",
     "price": 81.64999999999999,
     "barcode": "6287014280565",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image642.jpeg"
   },
   {
@@ -6426,7 +6426,7 @@ const products = [
     "pack": "48",
     "price": 114.99999999999999,
     "barcode": "6287014280008",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image643.jpeg"
   },
   {
@@ -6436,7 +6436,7 @@ const products = [
     "pack": "48",
     "price": 114.99999999999999,
     "barcode": "6287014280015",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image644.jpeg"
   },
   {
@@ -6446,7 +6446,7 @@ const products = [
     "pack": "8",
     "price": 124.19999999999999,
     "barcode": "5060670992390",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image645.jpeg"
   },
   {
@@ -6456,7 +6456,7 @@ const products = [
     "pack": "8",
     "price": 135.7,
     "barcode": "5060670992451",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image646.jpeg"
   },
   {
@@ -6466,7 +6466,7 @@ const products = [
     "pack": "8",
     "price": 124.19999999999999,
     "barcode": "5060670992376",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image647.jpeg"
   },
   {
@@ -6476,7 +6476,7 @@ const products = [
     "pack": "8",
     "price": 124.19999999999999,
     "barcode": "5060670992413",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image648.jpeg"
   },
   {
@@ -6486,7 +6486,7 @@ const products = [
     "pack": "8",
     "price": 124.19999999999999,
     "barcode": "5060670992352",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image649.jpeg"
   },
   {
@@ -6496,7 +6496,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130153",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image650.jpeg"
   },
   {
@@ -6506,7 +6506,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130108",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image651.jpeg"
   },
   {
@@ -6516,7 +6516,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130160",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image652.jpeg"
   },
   {
@@ -6526,7 +6526,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130115",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image653.jpeg"
   },
   {
@@ -6536,7 +6536,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130122",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image654.jpeg"
   },
   {
@@ -6546,7 +6546,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130139",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image655.jpeg"
   },
   {
@@ -6556,7 +6556,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130146",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image656.jpeg"
   },
   {
@@ -6566,7 +6566,7 @@ const products = [
     "pack": "8*5",
     "price": 44.849999999999994,
     "barcode": "6287059130092",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image657.jpeg"
   },
   {
@@ -6576,7 +6576,7 @@ const products = [
     "pack": "30",
     "price": 241.49999999999997,
     "barcode": "8809355881270",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image658.jpeg"
   },
   {
@@ -6586,7 +6586,7 @@ const products = [
     "pack": "30",
     "price": 241.49999999999997,
     "barcode": "8809355880976",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image659.jpeg"
   },
   {
@@ -6596,7 +6596,7 @@ const products = [
     "pack": "30",
     "price": 241.49999999999997,
     "barcode": "8809355880822",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image660.jpeg"
   },
   {
@@ -6606,7 +6606,7 @@ const products = [
     "pack": "12*12*",
     "price": 158.7,
     "barcode": "8994834009327",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image661.jpeg"
   },
   {
@@ -6616,7 +6616,7 @@ const products = [
     "pack": "20",
     "price": 149.5,
     "barcode": "8995102707518",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image662.jpeg"
   },
   {
@@ -6626,7 +6626,7 @@ const products = [
     "pack": "20",
     "price": 149.5,
     "barcode": "8995102707495",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image663.jpeg"
   },
   {
@@ -6636,7 +6636,7 @@ const products = [
     "pack": "6*24",
     "price": 158.7,
     "barcode": "8994834002601",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image664.jpeg"
   },
   {
@@ -6646,7 +6646,7 @@ const products = [
     "pack": "12*24",
     "price": 149.5,
     "barcode": "6903864211510",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image665.jpeg"
   },
   {
@@ -6656,7 +6656,7 @@ const products = [
     "pack": "12*24",
     "price": 149.5,
     "barcode": "6903864211527",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image666.jpeg"
   },
   {
@@ -6666,7 +6666,7 @@ const products = [
     "pack": "12*24",
     "price": 149.5,
     "barcode": "6903864211541",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image667.jpeg"
   },
   {
@@ -6676,7 +6676,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "6281100390510",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image668.jpeg"
   },
   {
@@ -6686,7 +6686,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "6281100391784",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image669.jpeg"
   },
   {
@@ -6696,7 +6696,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "6281100391944",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image670.jpeg"
   },
   {
@@ -6706,7 +6706,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "6281100390497",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image671.jpeg"
   },
   {
@@ -6716,7 +6716,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "6281100390534",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image672.jpeg"
   },
   {
@@ -6726,7 +6726,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "6281100391869",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image673.jpeg"
   },
   {
@@ -6736,7 +6736,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "6281100391845",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image674.jpeg"
   },
   {
@@ -6746,7 +6746,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6288002910822",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image675.jpeg"
   },
   {
@@ -6756,7 +6756,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6288002910839",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image676.jpeg"
   },
   {
@@ -6766,7 +6766,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6288002910815",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image677.jpeg"
   },
   {
@@ -6776,7 +6776,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6281100391760",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image678.jpeg"
   },
   {
@@ -6786,7 +6786,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6281100395782",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image679.jpeg"
   },
   {
@@ -6796,7 +6796,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6281100395737",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image680.jpeg"
   },
   {
@@ -6806,7 +6806,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "6281100391494",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image681.jpeg"
   },
   {
@@ -6816,7 +6816,7 @@ const products = [
     "pack": "24",
     "price": 71.3,
     "barcode": "6281100394891",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image682.jpeg"
   },
   {
@@ -6826,7 +6826,7 @@ const products = [
     "pack": "24",
     "price": 37.949999999999996,
     "barcode": "6281100397199",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image683.jpeg"
   },
   {
@@ -6836,7 +6836,7 @@ const products = [
     "pack": "48",
     "price": 165.6,
     "barcode": "9557727935579",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image684.jpeg"
   },
   {
@@ -6846,7 +6846,7 @@ const products = [
     "pack": "12",
     "price": 161,
     "barcode": "658444231100",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image685.jpeg"
   },
   {
@@ -6856,7 +6856,7 @@ const products = [
     "pack": "12",
     "price": 249.54999999999998,
     "barcode": "658444231063",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image686.jpeg"
   },
   {
@@ -6866,7 +6866,7 @@ const products = [
     "pack": "12",
     "price": 161,
     "barcode": "658444231070",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image687.jpeg"
   },
   {
@@ -6876,7 +6876,7 @@ const products = [
     "pack": "12",
     "price": 161,
     "barcode": "658444231117",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image688.jpeg"
   },
   {
@@ -6886,7 +6886,7 @@ const products = [
     "pack": "12",
     "price": 249.54999999999998,
     "barcode": "658444231094",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image689.jpeg"
   },
   {
@@ -6896,7 +6896,7 @@ const products = [
     "pack": "12",
     "price": 70.14999999999999,
     "barcode": "6298044167597",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image690.jpeg"
   },
   {
@@ -6906,7 +6906,7 @@ const products = [
     "pack": "24",
     "price": 72.44999999999999,
     "barcode": "6298044167580",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image691.jpeg"
   },
   {
@@ -6916,7 +6916,7 @@ const products = [
     "pack": "36",
     "price": 69,
     "barcode": "6298044167573",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image692.jpeg"
   },
   {
@@ -6926,7 +6926,7 @@ const products = [
     "pack": "12",
     "price": 195.49999999999997,
     "barcode": "074305001161",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image693.jpeg"
   },
   {
@@ -6936,7 +6936,7 @@ const products = [
     "pack": "6",
     "price": 201.24999999999997,
     "barcode": "4600680000640",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image694.jpeg"
   },
   {
@@ -6946,7 +6946,7 @@ const products = [
     "pack": "24",
     "price": 345,
     "barcode": "7891000085349",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image695.jpeg"
   },
   {
@@ -6956,7 +6956,7 @@ const products = [
     "pack": "12",
     "price": 158.7,
     "barcode": "8906190380132",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image696.jpeg"
   },
   {
@@ -6966,7 +6966,7 @@ const products = [
     "pack": "12",
     "price": 229.99999999999997,
     "barcode": "0795697319701",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image697.jpeg"
   },
   {
@@ -6976,7 +6976,7 @@ const products = [
     "pack": "12",
     "price": 229.99999999999997,
     "barcode": "0795697319701",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image698.jpeg"
   },
   {
@@ -6986,7 +6986,7 @@ const products = [
     "pack": "10",
     "price": 109.24999999999999,
     "barcode": "7613031513093",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image699.jpeg"
   },
   {
@@ -6996,7 +6996,7 @@ const products = [
     "pack": "10",
     "price": 109.24999999999999,
     "barcode": "7613031513000",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image700.jpeg"
   },
   {
@@ -7006,7 +7006,7 @@ const products = [
     "pack": "9*20",
     "price": 123.05,
     "barcode": "728040693685",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image701.jpeg"
   },
   {
@@ -7016,7 +7016,7 @@ const products = [
     "pack": "12*20",
     "price": 238.04999999999998,
     "barcode": "8998666004444",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image702.jpeg"
   },
   {
@@ -7026,7 +7026,7 @@ const products = [
     "pack": "12*20",
     "price": 212.74999999999997,
     "barcode": "8991002113558",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image703.jpeg"
   },
   {
@@ -7036,7 +7036,7 @@ const products = [
     "pack": "12",
     "price": 128.79999999999998,
     "barcode": "8684201393141",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image704.jpeg"
   },
   {
@@ -7046,7 +7046,7 @@ const products = [
     "pack": "12",
     "price": 120.74999999999999,
     "barcode": "8681571348658",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image705.jpeg"
   },
   {
@@ -7056,7 +7056,7 @@ const products = [
     "pack": "12",
     "price": 258.75,
     "barcode": "6294003598310",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image706.jpeg"
   },
   {
@@ -7066,7 +7066,7 @@ const products = [
     "pack": "12",
     "price": 373.74999999999994,
     "barcode": "8681571348511",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image707.jpeg"
   },
   {
@@ -7076,7 +7076,7 @@ const products = [
     "pack": "12",
     "price": 258.75,
     "barcode": "8681571349235",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image708.jpeg"
   },
   {
@@ -7086,7 +7086,7 @@ const products = [
     "pack": "12",
     "price": 258.75,
     "barcode": "8681571349051",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image709.jpeg"
   },
   {
@@ -7096,7 +7096,7 @@ const products = [
     "pack": "12",
     "price": 165.6,
     "barcode": "8681571349280",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image710.jpeg"
   },
   {
@@ -7106,7 +7106,7 @@ const products = [
     "pack": "12",
     "price": 413.99999999999994,
     "barcode": "8998666003935",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image711.jpeg"
   },
   {
@@ -7116,7 +7116,7 @@ const products = [
     "pack": "12",
     "price": 413.99999999999994,
     "barcode": "8998666001955",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image712.jpeg"
   },
   {
@@ -7126,7 +7126,7 @@ const products = [
     "pack": "24*10",
     "price": 171.35,
     "barcode": "8681571349211",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image713.jpeg"
   },
   {
@@ -7136,7 +7136,7 @@ const products = [
     "pack": "24*10",
     "price": 163.29999999999998,
     "barcode": "8684201393387",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image714.jpeg"
   },
   {
@@ -7146,7 +7146,7 @@ const products = [
     "pack": "12*24",
     "price": 166.75,
     "barcode": "8684201393400",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image715.jpeg"
   },
   {
@@ -7156,7 +7156,7 @@ const products = [
     "pack": "12*10",
     "price": 103.49999999999999,
     "barcode": "8684201393608",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image716.jpeg"
   },
   {
@@ -7166,7 +7166,7 @@ const products = [
     "pack": "24*10",
     "price": 281.75,
     "barcode": "8681571349808",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image717.jpeg"
   },
   {
@@ -7176,7 +7176,7 @@ const products = [
     "pack": "24*10",
     "price": 281.75,
     "barcode": "8681571349655",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image718.jpeg"
   },
   {
@@ -7186,7 +7186,7 @@ const products = [
     "pack": "24*10",
     "price": 163.29999999999998,
     "barcode": "8681571349266",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image719.jpeg"
   },
   {
@@ -7196,7 +7196,7 @@ const products = [
     "pack": "12",
     "price": 149.5,
     "barcode": "6281014002004",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image720.jpeg"
   },
   {
@@ -7206,7 +7206,7 @@ const products = [
     "pack": "12",
     "price": 128.79999999999998,
     "barcode": "6281014001984",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image721.jpeg"
   },
   {
@@ -7216,7 +7216,7 @@ const products = [
     "pack": "12",
     "price": 284.04999999999995,
     "barcode": "0678506559294",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image722.jpeg"
   },
   {
@@ -7226,7 +7226,7 @@ const products = [
     "pack": "12",
     "price": 270.25,
     "barcode": "0678506559270",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image723.jpeg"
   },
   {
@@ -7236,7 +7236,7 @@ const products = [
     "pack": "12",
     "price": 229.99999999999997,
     "barcode": "7348008895017",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image724.jpeg"
   },
   {
@@ -7246,7 +7246,7 @@ const products = [
     "pack": "12",
     "price": 246.1,
     "barcode": "7348008895031",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image725.jpeg"
   },
   {
@@ -7256,7 +7256,7 @@ const products = [
     "pack": "12",
     "price": 281.75,
     "barcode": "7348008895024",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image726.jpeg"
   },
   {
@@ -7266,7 +7266,7 @@ const products = [
     "pack": "12",
     "price": 229.99999999999997,
     "barcode": "3440500046875",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image727.jpeg"
   },
   {
@@ -7276,7 +7276,7 @@ const products = [
     "pack": "8",
     "price": 379.49999999999994,
     "barcode": "8711000592366",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image728.jpeg"
   },
   {
@@ -7286,7 +7286,7 @@ const products = [
     "pack": "12",
     "price": 267.95,
     "barcode": "6287012870171",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image729.jpeg"
   },
   {
@@ -7296,7 +7296,7 @@ const products = [
     "pack": "8",
     "price": 219.64999999999998,
     "barcode": "6287012870089",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image730.jpeg"
   },
   {
@@ -7306,7 +7306,7 @@ const products = [
     "pack": "16",
     "price": 236.89999999999998,
     "barcode": "6287012870010",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image731.jpeg"
   },
   {
@@ -7316,7 +7316,7 @@ const products = [
     "pack": "6*10",
     "price": 282.9,
     "barcode": "6287012870188",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image732.jpeg"
   },
   {
@@ -7326,7 +7326,7 @@ const products = [
     "pack": "6*10",
     "price": 265.65,
     "barcode": "6287012870201",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image733.jpeg"
   },
   {
@@ -7336,7 +7336,7 @@ const products = [
     "pack": "6*10",
     "price": 318.54999999999995,
     "barcode": "6287012870195",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image734.jpeg"
   },
   {
@@ -7346,7 +7346,7 @@ const products = [
     "pack": "6*7",
     "price": 65.55,
     "barcode": "8445291746060",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image735.jpeg"
   },
   {
@@ -7356,7 +7356,7 @@ const products = [
     "pack": "6*7",
     "price": 65.55,
     "barcode": "8445291746879",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image736.jpeg"
   },
   {
@@ -7366,7 +7366,7 @@ const products = [
     "pack": "10",
     "price": 212.74999999999997,
     "barcode": "6287015361201",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image737.jpeg"
   },
   {
@@ -7376,7 +7376,7 @@ const products = [
     "pack": "10",
     "price": 212.74999999999997,
     "barcode": "6287015361195",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image738.jpeg"
   },
   {
@@ -7386,7 +7386,7 @@ const products = [
     "pack": "10",
     "price": 212.74999999999997,
     "barcode": "6287015361218",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image739.jpeg"
   },
   {
@@ -7396,7 +7396,7 @@ const products = [
     "pack": "18",
     "price": 152.95,
     "barcode": "4006508200016",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image740.jpeg"
   },
   {
@@ -7406,7 +7406,7 @@ const products = [
     "pack": "18",
     "price": 141.45,
     "barcode": "4006508200009",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image741.jpeg"
   },
   {
@@ -7416,7 +7416,7 @@ const products = [
     "pack": "10",
     "price": 169.04999999999998,
     "barcode": "4977642723320",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image742.jpeg"
   },
   {
@@ -7426,7 +7426,7 @@ const products = [
     "pack": "12*12",
     "price": 203.54999999999998,
     "barcode": "8681571349785",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image743.jpeg"
   },
   {
@@ -7436,7 +7436,7 @@ const products = [
     "pack": "12",
     "price": 133.39999999999998,
     "barcode": "6287020241253",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image744.jpeg"
   },
   {
@@ -7446,7 +7446,7 @@ const products = [
     "pack": "12",
     "price": 133.39999999999998,
     "barcode": "6287020241215",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image745.jpeg"
   },
   {
@@ -7456,7 +7456,7 @@ const products = [
     "pack": "12",
     "price": 133.39999999999998,
     "barcode": "6287020241239",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image746.jpeg"
   },
   {
@@ -7466,7 +7466,7 @@ const products = [
     "pack": "24",
     "price": 336.95,
     "barcode": "4796027550524",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image747.jpeg"
   },
   {
@@ -7476,7 +7476,7 @@ const products = [
     "pack": "24",
     "price": 254.14999999999998,
     "barcode": "4796027551422",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image748.jpeg"
   },
   {
@@ -7486,7 +7486,7 @@ const products = [
     "pack": "24",
     "price": 320.84999999999997,
     "barcode": "4796015726764",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image749.jpeg"
   },
   {
@@ -7496,7 +7496,7 @@ const products = [
     "pack": "24",
     "price": 488.74999999999994,
     "barcode": "4796027551446",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image750.jpeg"
   },
   {
@@ -7506,7 +7506,7 @@ const products = [
     "pack": "24",
     "price": 419.74999999999994,
     "barcode": "634240305429",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image751.jpeg"
   },
   {
@@ -7516,7 +7516,7 @@ const products = [
     "pack": "8",
     "price": 74.75,
     "barcode": "8699432220678",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image752.jpeg"
   },
   {
@@ -7526,7 +7526,7 @@ const products = [
     "pack": "15",
     "price": 287.5,
     "barcode": "8691230251472",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image753.jpeg"
   },
   {
@@ -7536,7 +7536,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506225277",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image754.jpeg"
   },
   {
@@ -7546,7 +7546,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506221439",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image755.jpeg"
   },
   {
@@ -7556,7 +7556,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506221392",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image756.jpeg"
   },
   {
@@ -7566,7 +7566,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506225291",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image757.jpeg"
   },
   {
@@ -7576,7 +7576,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506223358",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image758.jpeg"
   },
   {
@@ -7586,7 +7586,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506223402",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image759.jpeg"
   },
   {
@@ -7596,7 +7596,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506223396",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image760.jpeg"
   },
   {
@@ -7606,7 +7606,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506223327",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image761.jpeg"
   },
   {
@@ -7616,7 +7616,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506222191",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image762.jpeg"
   },
   {
@@ -7626,7 +7626,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506223334",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image763.jpeg"
   },
   {
@@ -7636,7 +7636,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506223389",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image764.jpeg"
   },
   {
@@ -7646,7 +7646,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253017900090",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image765.jpeg"
   },
   {
@@ -7656,7 +7656,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253506225284",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image766.jpeg"
   },
   {
@@ -7666,7 +7666,7 @@ const products = [
     "pack": "12",
     "price": 55.199999999999996,
     "barcode": "6253017900083",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image767.jpeg"
   },
   {
@@ -7676,7 +7676,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580000115",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image768.jpeg"
   },
   {
@@ -7686,7 +7686,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580000436",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image769.jpeg"
   },
   {
@@ -7696,7 +7696,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580003352",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image770.jpeg"
   },
   {
@@ -7706,7 +7706,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432220197",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image771.jpeg"
   },
   {
@@ -7716,7 +7716,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580000290",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image772.jpeg"
   },
   {
@@ -7726,7 +7726,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580000306",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image773.jpeg"
   },
   {
@@ -7736,7 +7736,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580003475",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image774.jpeg"
   },
   {
@@ -7746,7 +7746,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432209031",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image775.jpeg"
   },
   {
@@ -7756,7 +7756,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432201363",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image776.jpeg"
   },
   {
@@ -7766,7 +7766,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580000030",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image777.jpeg"
   },
   {
@@ -7776,7 +7776,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580000146",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image778.jpeg"
   },
   {
@@ -7786,7 +7786,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580000207",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image779.jpeg"
   },
   {
@@ -7796,7 +7796,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432202032",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image780.jpeg"
   },
   {
@@ -7806,7 +7806,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432220333",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image781.jpeg"
   },
   {
@@ -7816,7 +7816,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432213557",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image782.jpeg"
   },
   {
@@ -7826,7 +7826,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432215261",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image783.jpeg"
   },
   {
@@ -7836,7 +7836,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699580001518",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image784.jpeg"
   },
   {
@@ -7846,7 +7846,7 @@ const products = [
     "pack": "12",
     "price": 111.55,
     "barcode": "8699432220586",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image785.jpeg"
   },
   {
@@ -7856,7 +7856,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401389",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image786.jpeg"
   },
   {
@@ -7866,7 +7866,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401297",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image787.jpeg"
   },
   {
@@ -7876,7 +7876,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824402485",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image788.jpeg"
   },
   {
@@ -7886,7 +7886,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824404168",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image789.jpeg"
   },
   {
@@ -7896,7 +7896,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401075",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image790.jpeg"
   },
   {
@@ -7906,7 +7906,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824400658",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image791.jpeg"
   },
   {
@@ -7916,7 +7916,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824400054",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image792.jpeg"
   },
   {
@@ -7926,7 +7926,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401426",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image793.jpeg"
   },
   {
@@ -7936,7 +7936,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401037",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image794.jpeg"
   },
   {
@@ -7946,7 +7946,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824402461",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image795.jpeg"
   },
   {
@@ -7956,7 +7956,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401341",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image796.jpeg"
   },
   {
@@ -7966,7 +7966,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401167",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image797.jpeg"
   },
   {
@@ -7976,7 +7976,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824406018",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image798.jpeg"
   },
   {
@@ -7986,7 +7986,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824406391",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image799.jpeg"
   },
   {
@@ -7996,7 +7996,7 @@ const products = [
     "pack": "6",
     "price": 89.69999999999999,
     "barcode": "4012824401631",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image800.jpeg"
   },
   {
@@ -8006,7 +8006,7 @@ const products = [
     "pack": "24",
     "price": 46,
     "barcode": "6287034240006",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image801.jpeg"
   },
   {
@@ -8016,7 +8016,7 @@ const products = [
     "pack": "24",
     "price": 55.199999999999996,
     "barcode": "6287034240198",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image802.jpeg"
   },
   {
@@ -8026,7 +8026,7 @@ const products = [
     "pack": "24",
     "price": 198.95,
     "barcode": "90456701",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image803.jpeg"
   },
   {
@@ -8036,7 +8036,7 @@ const products = [
     "pack": "24",
     "price": 488.74999999999994,
     "barcode": "90486586",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image804.jpeg"
   },
   {
@@ -8046,7 +8046,7 @@ const products = [
     "pack": "24",
     "price": 184,
     "barcode": "90162602",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image805.jpeg"
   },
   {
@@ -8056,7 +8056,7 @@ const products = [
     "pack": "124",
     "price": 161,
     "barcode": "8850228007983",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image806.jpeg"
   },
   {
@@ -8066,7 +8066,7 @@ const products = [
     "pack": "24",
     "price": 161,
     "barcode": "8850228008003",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image807.jpeg"
   },
   {
@@ -8076,7 +8076,7 @@ const products = [
     "pack": "24",
     "price": 120.74999999999999,
     "barcode": "6253811342577",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image808.jpeg"
   },
   {
@@ -8086,7 +8086,7 @@ const products = [
     "pack": "24",
     "price": 189.74999999999997,
     "barcode": "6253811342546",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image809.jpeg"
   },
   {
@@ -8096,7 +8096,7 @@ const products = [
     "pack": "24",
     "price": 120.74999999999999,
     "barcode": "6253811342560",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image810.jpeg"
   },
   {
@@ -8106,7 +8106,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "8423453913802",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image811.jpeg"
   },
   {
@@ -8116,7 +8116,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "8423453913758",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image812.jpeg"
   },
   {
@@ -8126,7 +8126,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "8423453913819",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image813.jpeg"
   },
   {
@@ -8136,7 +8136,7 @@ const products = [
     "pack": "24",
     "price": 110.39999999999999,
     "barcode": "8423453913796",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image814.jpeg"
   },
   {
@@ -8146,7 +8146,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6251932003278",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image815.jpeg"
   },
   {
@@ -8156,7 +8156,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6251932003087",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image816.jpeg"
   },
   {
@@ -8166,7 +8166,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6251932003070",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image817.jpeg"
   },
   {
@@ -8176,7 +8176,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6251932004237",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image818.jpeg"
   },
   {
@@ -8186,7 +8186,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6251932003919",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image819.jpeg"
   },
   {
@@ -8196,7 +8196,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6251932004244",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image820.jpeg"
   },
   {
@@ -8206,7 +8206,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6281000010006",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image821.jpeg"
   },
   {
@@ -8216,7 +8216,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6281000010204",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image822.jpeg"
   },
   {
@@ -8226,7 +8226,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6281000010174",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image823.jpeg"
   },
   {
@@ -8236,7 +8236,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6281000010020",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image824.jpeg"
   },
   {
@@ -8246,7 +8246,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6281000010105",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image825.jpeg"
   },
   {
@@ -8256,7 +8256,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "6281000010037",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image826.jpeg"
   },
   {
@@ -8266,7 +8266,7 @@ const products = [
     "pack": "24",
     "price": 80.5,
     "barcode": "8850999016863",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image827.jpeg"
   },
   {
@@ -8276,7 +8276,7 @@ const products = [
     "pack": "12",
     "price": 123.05,
     "barcode": "5056555206874",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image828.jpeg"
   },
   {
@@ -8286,7 +8286,7 @@ const products = [
     "pack": "12",
     "price": 133.39999999999998,
     "barcode": "5056555204894",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image829.jpeg"
   },
   {
@@ -8296,7 +8296,7 @@ const products = [
     "pack": "12",
     "price": 133.39999999999998,
     "barcode": "5056555201138",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image830.jpeg"
   },
   {
@@ -8306,7 +8306,7 @@ const products = [
     "pack": "12",
     "price": 133.39999999999998,
     "barcode": "5056555204900",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image831.jpeg"
   },
   {
@@ -8316,7 +8316,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "8059558540126",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image832.jpeg"
   },
   {
@@ -8326,7 +8326,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "8059558540003",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image833.jpeg"
   },
   {
@@ -8336,7 +8336,7 @@ const products = [
     "pack": "12",
     "price": 103.49999999999999,
     "barcode": "8059558540119",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image834.jpeg"
   },
   {
@@ -8346,7 +8346,7 @@ const products = [
     "pack": "12",
     "price": 92,
     "barcode": "8718858612864",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image835.jpeg"
   },
   {
@@ -8356,7 +8356,7 @@ const products = [
     "pack": "12",
     "price": 92,
     "barcode": "8718858612772",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image836.jpeg"
   },
   {
@@ -8366,7 +8366,7 @@ const products = [
     "pack": "12",
     "price": 57.49999999999999,
     "barcode": "8935330223473",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image837.jpeg"
   },
   {
@@ -8376,7 +8376,7 @@ const products = [
     "pack": "24",
     "price": 65.55,
     "barcode": "8935330205325",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image838.jpeg"
   },
   {
@@ -8386,7 +8386,7 @@ const products = [
     "pack": "12",
     "price": 94.3,
     "barcode": "016571960056",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image839.jpeg"
   },
   {
@@ -8396,7 +8396,7 @@ const products = [
     "pack": "12",
     "price": 69,
     "barcode": "850041914749",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image840.jpeg"
   },
   {
@@ -8406,7 +8406,7 @@ const products = [
     "pack": "12",
     "price": 142.6,
     "barcode": "5056569902526",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image841.jpeg"
   },
   {
@@ -8416,7 +8416,7 @@ const products = [
     "pack": "12",
     "price": 142.6,
     "barcode": "5056569902540",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image842.jpeg"
   },
   {
@@ -8426,7 +8426,7 @@ const products = [
     "pack": "12",
     "price": 142.6,
     "barcode": "842595109368",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image843.jpeg"
   },
   {
@@ -8436,7 +8436,7 @@ const products = [
     "pack": "12",
     "price": 142.6,
     "barcode": "5056569902519",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image844.jpeg"
   },
   {
@@ -8446,7 +8446,7 @@ const products = [
     "pack": "12",
     "price": 142.6,
     "barcode": "842595111071",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image845.jpeg"
   },
   {
@@ -8456,7 +8456,7 @@ const products = [
     "pack": "12",
     "price": 142.6,
     "barcode": "842595106572",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image846.jpeg"
   },
   {
@@ -8466,7 +8466,7 @@ const products = [
     "pack": "12",
     "price": 142.6,
     "barcode": "842595106596",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image847.jpeg"
   },
   {
@@ -8476,7 +8476,7 @@ const products = [
     "pack": "24",
     "price": 243.79999999999998,
     "barcode": "5056569901840",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image848.jpeg"
   },
   {
@@ -8486,7 +8486,7 @@ const products = [
     "pack": "12",
     "price": 120.00249999999998,
     "barcode": "5061013944373",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image849.jpeg"
   },
   {
@@ -8496,7 +8496,7 @@ const products = [
     "pack": "12",
     "price": 120.00249999999998,
     "barcode": "5061013944113",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image850.jpeg"
   },
   {
@@ -8506,7 +8506,7 @@ const products = [
     "pack": "24",
     "price": 235.74999999999997,
     "barcode": "613008735418",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image851.jpeg"
   },
   {
@@ -8516,7 +8516,7 @@ const products = [
     "pack": "24",
     "price": 235.74999999999997,
     "barcode": "613008735470",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image852.jpeg"
   },
   {
@@ -8526,7 +8526,7 @@ const products = [
     "pack": "30",
     "price": 233.45,
     "barcode": "613008735807",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image853.jpeg"
   },
   {
@@ -8536,7 +8536,7 @@ const products = [
     "pack": "30",
     "price": 233.45,
     "barcode": "613008737580",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image854.jpeg"
   },
   {
@@ -8546,7 +8546,7 @@ const products = [
     "pack": "24",
     "price": 133.39999999999998,
     "barcode": "4711115020253",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image855.jpeg"
   },
   {
@@ -8556,7 +8556,7 @@ const products = [
     "pack": "24",
     "price": 133.39999999999998,
     "barcode": "4711115020239",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image856.jpeg"
   },
   {
@@ -8566,7 +8566,7 @@ const products = [
     "pack": "24",
     "price": 133.39999999999998,
     "barcode": "4711115020079",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image857.jpeg"
   },
   {
@@ -8576,7 +8576,7 @@ const products = [
     "pack": "24",
     "price": 133.39999999999998,
     "barcode": "4711115020062",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image858.jpeg"
   },
   {
@@ -8586,7 +8586,7 @@ const products = [
     "pack": "24",
     "price": 133.39999999999998,
     "barcode": "4711115020086",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image859.jpeg"
   },
   {
@@ -8596,7 +8596,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "8936143039817",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image860.jpeg"
   },
   {
@@ -8606,7 +8606,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "8936143039831",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image861.jpeg"
   },
   {
@@ -8616,7 +8616,7 @@ const products = [
     "pack": "24",
     "price": 132.25,
     "barcode": "8410793586131",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image862.jpeg"
   },
   {
@@ -8626,7 +8626,7 @@ const products = [
     "pack": "24",
     "price": 49.449999999999996,
     "barcode": "8410793371942",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image863.jpeg"
   },
   {
@@ -8636,7 +8636,7 @@ const products = [
     "pack": "24",
     "price": 49.449999999999996,
     "barcode": "8697414054600",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image864.jpeg"
   },
   {
@@ -8646,7 +8646,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "4803925061110",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image865.jpeg"
   },
   {
@@ -8656,7 +8656,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "4803925061103",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image866.jpeg"
   },
   {
@@ -8666,7 +8666,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "4803925061141",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image867.jpeg"
   },
   {
@@ -8676,7 +8676,7 @@ const products = [
     "pack": "24",
     "price": 114.99999999999999,
     "barcode": "4803925061127",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image868.jpeg"
   },
   {
@@ -8686,7 +8686,7 @@ const products = [
     "pack": "12",
     "price": 80.5,
     "barcode": "016571940348",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image869.jpeg"
   },
   {
@@ -8696,7 +8696,7 @@ const products = [
     "pack": "12",
     "price": 80.5,
     "barcode": "016571910310",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image870.jpeg"
   },
   {
@@ -8706,7 +8706,7 @@ const products = [
     "pack": "12",
     "price": 80.5,
     "barcode": "016571910327",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image871.jpeg"
   },
   {
@@ -8716,7 +8716,7 @@ const products = [
     "pack": "12",
     "price": 80.5,
     "barcode": "016571910303",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image872.jpeg"
   },
   {
@@ -8726,7 +8726,7 @@ const products = [
     "pack": "24",
     "price": 89.69999999999999,
     "barcode": "6934502301850",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image873.jpeg"
   },
   {
@@ -8736,7 +8736,7 @@ const products = [
     "pack": "6",
     "price": 51.74999999999999,
     "barcode": "4860009121191",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image874.jpeg"
   },
   {
@@ -8746,7 +8746,7 @@ const products = [
     "pack": "6",
     "price": 51.74999999999999,
     "barcode": "4860009121184",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image875.jpeg"
   },
   {
@@ -8756,7 +8756,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "4860009121382",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image876.jpeg"
   },
   {
@@ -8766,7 +8766,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "4860009120934",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image877.jpeg"
   },
   {
@@ -8776,7 +8776,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "4860009121061",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image878.jpeg"
   },
   {
@@ -8786,7 +8786,7 @@ const products = [
     "pack": "6",
     "price": 186.29999999999998,
     "barcode": "603369984600",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image879.jpeg"
   },
   {
@@ -8796,7 +8796,7 @@ const products = [
     "pack": "15",
     "price": 28.749999999999996,
     "barcode": "9621294338027",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image880.jpeg"
   },
   {
@@ -8806,7 +8806,7 @@ const products = [
     "pack": "12",
     "price": 92,
     "barcode": "7350042716791",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image881.jpeg"
   },
   {
@@ -8816,7 +8816,7 @@ const products = [
     "pack": "24",
     "price": 80.5,
     "barcode": "6270290000125",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image882.jpeg"
   },
   {
@@ -8826,7 +8826,7 @@ const products = [
     "pack": "24",
     "price": 80.5,
     "barcode": "6270290000286",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image883.jpeg"
   },
   {
@@ -8836,7 +8836,7 @@ const products = [
     "pack": "30",
     "price": 77.05,
     "barcode": "6270290000347",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image884.jpeg"
   },
   {
@@ -8846,7 +8846,7 @@ const products = [
     "pack": "30",
     "price": 77.05,
     "barcode": "627029000036",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image885.jpeg"
   },
   {
@@ -8856,7 +8856,7 @@ const products = [
     "pack": "24",
     "price": 111.55,
     "barcode": "884394009609",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image886.jpeg"
   },
   {
@@ -8866,7 +8866,7 @@ const products = [
     "pack": "30",
     "price": 139.14999999999998,
     "barcode": "6287001291444",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image887.jpeg"
   },
   {
@@ -8876,7 +8876,7 @@ const products = [
     "pack": "24",
     "price": 19.549999999999997,
     "barcode": "6281106039932",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image888.jpeg"
   },
   {
@@ -8886,7 +8886,7 @@ const products = [
     "pack": "24",
     "price": 79.35,
     "barcode": "8938557198487",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image889.jpeg"
   },
   {
@@ -8896,7 +8896,7 @@ const products = [
     "pack": "24",
     "price": 138,
     "barcode": "8859577502927",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image890.jpeg"
   },
   {
@@ -8906,7 +8906,7 @@ const products = [
     "pack": "24",
     "price": 138,
     "barcode": "8859577502644",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image891.jpeg"
   },
   {
@@ -8916,7 +8916,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "8413481042193",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image892.jpeg"
   },
   {
@@ -8926,7 +8926,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "8413481042186",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image893.jpeg"
   },
   {
@@ -8936,7 +8936,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "8413481042209",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image894.jpeg"
   },
   {
@@ -8946,7 +8946,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "8413481042230",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image895.jpeg"
   },
   {
@@ -8956,7 +8956,7 @@ const products = [
     "pack": "12",
     "price": 46,
     "barcode": "8413481042216",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image896.jpeg"
   },
   {
@@ -8966,7 +8966,7 @@ const products = [
     "pack": "24",
     "price": 92,
     "barcode": "072890006196",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image897.jpeg"
   },
   {
@@ -8976,7 +8976,7 @@ const products = [
     "pack": "24",
     "price": 39.099999999999994,
     "barcode": "8680530570383",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image898.jpeg"
   },
   {
@@ -8986,7 +8986,7 @@ const products = [
     "pack": "24",
     "price": 40.25,
     "barcode": "6251089007556",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image899.jpeg"
   },
   {
@@ -8996,7 +8996,7 @@ const products = [
     "pack": "24",
     "price": 407.09999999999997,
     "barcode": "6251089007587",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image900.jpeg"
   },
   {
@@ -9006,7 +9006,7 @@ const products = [
     "pack": "24",
     "price": 40.25,
     "barcode": "6251089006689",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image901.jpeg"
   },
   {
@@ -9016,7 +9016,7 @@ const products = [
     "pack": "24",
     "price": 40.25,
     "barcode": "6251089007570",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image902.jpeg"
   },
   {
@@ -9026,7 +9026,7 @@ const products = [
     "pack": "24",
     "price": 80.5,
     "barcode": "6251089002759",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image903.jpeg"
   },
   {
@@ -9036,7 +9036,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000082287",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image904.jpeg"
   },
   {
@@ -9046,7 +9046,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000082294",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image905.jpeg"
   },
   {
@@ -9056,7 +9056,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000082317",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image906.jpeg"
   },
   {
@@ -9066,7 +9066,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000082300",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image907.jpeg"
   },
   {
@@ -9076,7 +9076,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000080962",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image908.jpeg"
   },
   {
@@ -9086,7 +9086,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000080979",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image909.jpeg"
   },
   {
@@ -9096,7 +9096,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000082508",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image910.jpeg"
   },
   {
@@ -9106,7 +9106,7 @@ const products = [
     "pack": "24",
     "price": 85.1,
     "barcode": "6223000082201",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image911.jpeg"
   },
   {
@@ -9116,7 +9116,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "8856876000437",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image912.jpeg"
   },
   {
@@ -9126,7 +9126,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "8856876000734",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image913.jpeg"
   },
   {
@@ -9136,7 +9136,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "8856876000802",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image914.jpeg"
   },
   {
@@ -9146,7 +9146,7 @@ const products = [
     "pack": "12",
     "price": 189.74999999999997,
     "barcode": "064579333020",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image915.jpeg"
   },
   {
@@ -9156,7 +9156,7 @@ const products = [
     "pack": "12",
     "price": 189.74999999999997,
     "barcode": "064579007709",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image916.jpeg"
   },
   {
@@ -9166,7 +9166,7 @@ const products = [
     "pack": "12",
     "price": 189.74999999999997,
     "barcode": "064579007624",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image917.jpeg"
   },
   {
@@ -9176,7 +9176,7 @@ const products = [
     "pack": "12",
     "price": 189.74999999999997,
     "barcode": "064579007631",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image918.jpeg"
   },
   {
@@ -9186,7 +9186,7 @@ const products = [
     "pack": "12",
     "price": 189.74999999999997,
     "barcode": "064579332177",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image919.jpeg"
   },
   {
@@ -9196,7 +9196,7 @@ const products = [
     "pack": "12",
     "price": 161,
     "barcode": "6009615146534",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image920.jpeg"
   },
   {
@@ -9206,7 +9206,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "064579330753",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image921.jpeg"
   },
   {
@@ -9216,7 +9216,7 @@ const products = [
     "pack": "12",
     "price": 92,
     "barcode": "064579330791",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image922.jpeg"
   },
   {
@@ -9226,7 +9226,7 @@ const products = [
     "pack": "12",
     "price": 114.99999999999999,
     "barcode": "9556495700013",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image923.jpeg"
   },
   {
@@ -9236,7 +9236,7 @@ const products = [
     "pack": "3*4",
     "price": 116.14999999999999,
     "barcode": "888849008100",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image924.jpeg"
   },
   {
@@ -9246,7 +9246,7 @@ const products = [
     "pack": "3*4",
     "price": 116.14999999999999,
     "barcode": "888849008117",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image925.jpeg"
   },
   {
@@ -9256,7 +9256,7 @@ const products = [
     "pack": "8",
     "price": 80.5,
     "barcode": "7340001804218",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image926.jpeg"
   },
   {
@@ -9266,7 +9266,7 @@ const products = [
     "pack": "8",
     "price": 80.5,
     "barcode": "7340001804201",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image927.jpeg"
   },
   {
@@ -9276,7 +9276,7 @@ const products = [
     "pack": "8",
     "price": 80.5,
     "barcode": "7340001804225",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image928.jpeg"
   },
   {
@@ -9286,7 +9286,7 @@ const products = [
     "pack": "8",
     "price": 80.5,
     "barcode": "7340001804195",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image929.jpeg"
   },
   {
@@ -9296,7 +9296,7 @@ const products = [
     "pack": "20",
     "price": 128.79999999999998,
     "barcode": "5001860147831",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image930.jpeg"
   },
   {
@@ -9306,7 +9306,7 @@ const products = [
     "pack": "12",
     "price": 132.25,
     "barcode": "682430611744",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image931.jpeg"
   },
   {
@@ -9316,7 +9316,7 @@ const products = [
     "pack": "12",
     "price": 114.99999999999999,
     "barcode": "682430400119",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image932.jpeg"
   },
   {
@@ -9326,7 +9326,7 @@ const products = [
     "pack": "24",
     "price": 174.79999999999998,
     "barcode": "682430611737",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image933.jpeg"
   },
   {
@@ -9336,7 +9336,7 @@ const products = [
     "pack": "12",
     "price": 174.79999999999998,
     "barcode": "682430611751",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image934.jpeg"
   },
   {
@@ -9346,7 +9346,7 @@ const products = [
     "pack": "12",
     "price": 93.14999999999999,
     "barcode": "6224009169443",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image935.jpeg"
   },
   {
@@ -9356,7 +9356,7 @@ const products = [
     "pack": "12",
     "price": 93.14999999999999,
     "barcode": "6224009169467",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image936.jpeg"
   },
   {
@@ -9366,7 +9366,7 @@ const products = [
     "pack": "24",
     "price": 126.49999999999999,
     "barcode": "6224009169405",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image937.jpeg"
   },
   {
@@ -9376,7 +9376,7 @@ const products = [
     "pack": "24",
     "price": 89.69999999999999,
     "barcode": "6224009169726",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image938.jpeg"
   },
   {
@@ -9386,7 +9386,7 @@ const products = [
     "pack": "12",
     "price": 88.55,
     "barcode": "6224009169238",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image939.jpeg"
   },
   {
@@ -9396,7 +9396,7 @@ const products = [
     "pack": "24",
     "price": 80.5,
     "barcode": "6224009169788",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image940.jpeg"
   },
   {
@@ -9406,7 +9406,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481042285",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image941.jpeg"
   },
   {
@@ -9416,7 +9416,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481040069",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image942.jpeg"
   },
   {
@@ -9426,7 +9426,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481041691",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image943.jpeg"
   },
   {
@@ -9436,7 +9436,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481040106",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image944.jpeg"
   },
   {
@@ -9446,7 +9446,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481040151",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image945.jpeg"
   },
   {
@@ -9456,7 +9456,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481040090",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image946.jpeg"
   },
   {
@@ -9466,7 +9466,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481040083",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image947.jpeg"
   },
   {
@@ -9476,7 +9476,7 @@ const products = [
     "pack": "12",
     "price": 201.24999999999997,
     "barcode": "8413481040113",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image948.jpeg"
   },
   {
@@ -9486,7 +9486,7 @@ const products = [
     "pack": "24",
     "price": 37.949999999999996,
     "barcode": "6271014010383",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image949.jpeg"
   },
   {
@@ -9496,7 +9496,7 @@ const products = [
     "pack": "24",
     "price": 69,
     "barcode": "8801104940238",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image950.jpeg"
   },
   {
@@ -9506,7 +9506,7 @@ const products = [
     "pack": "30",
     "price": 50.025,
     "barcode": "6287014280466",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image951.jpeg"
   },
   {
@@ -9516,7 +9516,7 @@ const products = [
     "pack": "30",
     "price": 41.4,
     "barcode": "012000802751",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image952.jpeg"
   },
   {
@@ -9526,7 +9526,7 @@ const products = [
     "pack": "30",
     "price": 47.15,
     "barcode": "6212203261094",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image953.jpeg"
   },
   {
@@ -9536,7 +9536,7 @@ const products = [
     "pack": "30",
     "price": 41.4,
     "barcode": "6212201121093",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image954.jpeg"
   },
   {
@@ -9546,7 +9546,7 @@ const products = [
     "pack": "30",
     "price": 41.4,
     "barcode": "6212201011097",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image955.jpeg"
   },
   {
@@ -9556,7 +9556,7 @@ const products = [
     "pack": "4*10",
     "price": 37.949999999999996,
     "barcode": "6281101260126",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image956.jpeg"
   },
   {
@@ -9566,7 +9566,7 @@ const products = [
     "pack": "4*10",
     "price": 37.949999999999996,
     "barcode": "6281101260096",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image957.jpeg"
   },
   {
@@ -9576,7 +9576,7 @@ const products = [
     "pack": "4*10",
     "price": 37.949999999999996,
     "barcode": "6281101260539",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image958.jpeg"
   },
   {
@@ -9586,7 +9586,7 @@ const products = [
     "pack": "4*10",
     "price": 37.949999999999996,
     "barcode": "6281101260119",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image959.jpeg"
   },
   {
@@ -9596,7 +9596,7 @@ const products = [
     "pack": "1",
     "price": 0,
     "barcode": "6253812450318",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image960.jpeg"
   },
   {
@@ -9606,7 +9606,7 @@ const products = [
     "pack": "20",
     "price": 12.649999999999999,
     "barcode": "6281100390411",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image961.jpeg"
   },
   {
@@ -9616,7 +9616,7 @@ const products = [
     "pack": "20",
     "price": 12.649999999999999,
     "barcode": "6281100390398",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image962.jpeg"
   },
   {
@@ -9626,7 +9626,7 @@ const products = [
     "pack": "18",
     "price": 12.649999999999999,
     "barcode": "6281100390169",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image963.jpeg"
   },
   {
@@ -9636,7 +9636,7 @@ const products = [
     "pack": "18",
     "price": 12.649999999999999,
     "barcode": "6281100390183",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image964.jpeg"
   },
   {
@@ -9646,7 +9646,7 @@ const products = [
     "pack": "18",
     "price": 12.649999999999999,
     "barcode": "6281100390145",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image965.jpeg"
   },
   {
@@ -9656,7 +9656,7 @@ const products = [
     "pack": "18",
     "price": 12.649999999999999,
     "barcode": "6281100390121",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image966.jpeg"
   },
   {
@@ -9666,7 +9666,7 @@ const products = [
     "pack": "18",
     "price": 14.6625,
     "barcode": "6281100399643",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image967.jpeg"
   },
   {
@@ -9676,7 +9676,7 @@ const products = [
     "pack": "10*10",
     "price": 19.549999999999997,
     "barcode": "6281100300014",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image968.jpeg"
   },
   {
@@ -9686,7 +9686,7 @@ const products = [
     "pack": "15",
     "price": 287.5,
     "barcode": "8691230251472",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image969.jpeg"
   },
   {
@@ -9696,7 +9696,7 @@ const products = [
     "pack": "6*28",
     "price": 132.25,
     "barcode": "8003466303793",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image970.jpeg"
   },
   {
@@ -9706,7 +9706,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "8801062435692",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image971.jpeg"
   },
   {
@@ -9716,7 +9716,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "8801062436064",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image972.jpeg"
   },
   {
@@ -9726,7 +9726,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "8801062899302",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image973.jpeg"
   },
   {
@@ -9736,7 +9736,7 @@ const products = [
     "pack": "24",
     "price": 172.5,
     "barcode": "8801118251405",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image974.jpeg"
   },
   {
@@ -9746,7 +9746,7 @@ const products = [
     "pack": "6*15",
     "price": 166.75,
     "barcode": "8801062453696",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image975.jpeg"
   },
   {
@@ -9756,7 +9756,7 @@ const products = [
     "pack": "40",
     "price": 92,
     "barcode": "8801206001196",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image976.jpeg"
   },
   {
@@ -9766,7 +9766,7 @@ const products = [
     "pack": "40",
     "price": 92,
     "barcode": "8805584111577",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image977.jpeg"
   },
   {
@@ -9776,7 +9776,7 @@ const products = [
     "pack": "24",
     "price": 97.74999999999999,
     "barcode": "6974333808586",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image978.jpeg"
   },
   {
@@ -9786,7 +9786,7 @@ const products = [
     "pack": "24",
     "price": 206.99999999999997,
     "barcode": "8801062435197",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image979.jpeg"
   },
   {
@@ -9796,7 +9796,7 @@ const products = [
     "pack": "24",
     "price": 206.99999999999997,
     "barcode": "8801062881079",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image980.jpeg"
   },
   {
@@ -9806,7 +9806,7 @@ const products = [
     "pack": "24",
     "price": 206.99999999999997,
     "barcode": "8801062887729",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image981.jpeg"
   },
   {
@@ -9816,7 +9816,7 @@ const products = [
     "pack": "24",
     "price": 206.99999999999997,
     "barcode": "8801062890767",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image982.jpeg"
   },
   {
@@ -9826,7 +9826,7 @@ const products = [
     "pack": "28",
     "price": 161,
     "barcode": "8801062475940",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image983.jpeg"
   },
   {
@@ -9836,7 +9836,7 @@ const products = [
     "pack": "24",
     "price": 92,
     "barcode": "6974333805387",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image984.jpeg"
   },
   {
@@ -9846,7 +9846,7 @@ const products = [
     "pack": "40",
     "price": 166.75,
     "barcode": "8801062417414",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image985.jpeg"
   },
   {
@@ -9856,7 +9856,7 @@ const products = [
     "pack": "24",
     "price": 48.3,
     "barcode": "6918551814240",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image986.jpeg"
   },
   {
@@ -9866,7 +9866,7 @@ const products = [
     "pack": "24",
     "price": 48.3,
     "barcode": "6918551815551",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image987.jpeg"
   },
   {
@@ -9876,7 +9876,7 @@ const products = [
     "pack": "24",
     "price": 48.3,
     "barcode": "6918551807884",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image988.jpeg"
   },
   {
@@ -9886,7 +9886,7 @@ const products = [
     "pack": "24",
     "price": 48.3,
     "barcode": "6918551812147",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image989.jpeg"
   },
   {
@@ -9896,7 +9896,7 @@ const products = [
     "pack": "10",
     "price": 281.75,
     "barcode": "5027324001174",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image990.jpeg"
   },
   {
@@ -9906,7 +9906,7 @@ const products = [
     "pack": "10",
     "price": 281.75,
     "barcode": "5027324001228",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image991.jpeg"
   },
   {
@@ -9916,7 +9916,7 @@ const products = [
     "pack": "10",
     "price": 281.75,
     "barcode": "5027324001198",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image992.jpeg"
   },
   {
@@ -9926,7 +9926,7 @@ const products = [
     "pack": "10",
     "price": 281.75,
     "barcode": "5027324003291",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image993.jpeg"
   },
   {
@@ -9936,7 +9936,7 @@ const products = [
     "pack": "12",
     "price": 97.74999999999999,
     "barcode": "6943090420065",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image994.jpeg"
   },
   {
@@ -9946,7 +9946,7 @@ const products = [
     "pack": "12",
     "price": 97.74999999999999,
     "barcode": "6943090420430",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image995.jpeg"
   },
   {
@@ -9956,7 +9956,7 @@ const products = [
     "pack": "15",
     "price": 114.99999999999999,
     "barcode": "8801118251313",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image996.jpeg"
   },
   {
@@ -9966,7 +9966,7 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "8805489000396",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image997.jpeg"
   },
   {
@@ -9976,7 +9976,9 @@ const products = [
     "pack": "12",
     "price": 121.89999999999999,
     "barcode": "8805489003625",
-    "stock": 10,
+    "stock": 0,
     "image": "images/image998.jpeg"
   }
 ];
+const activeOffers = [];
+window.STORE_PRODUCTS = products;
