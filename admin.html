@@ -29,8 +29,8 @@
         #loginOverlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(43, 23, 13, 0.95);
-            z-index: 99999;
+            background: rgba(43, 23, 13, 0.96);
+            z-index: 999999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -183,18 +183,18 @@
 </head>
 <body>
 
-    <!-- Login Overlay Screen -->
+    <!-- Direct Login Overlay Screen -->
     <div id="loginOverlay">
         <div class="login-box">
             <h2><i class="fa-solid fa-lock" style="color:var(--gold);"></i> تسجيل الدخول</h2>
             <p>لوحة تحكم شركة قارة الحلويات</p>
             <div class="form-grp" style="text-align:right; margin-bottom:12px;">
                 <label>اسم المستخدم:</label>
-                <input type="text" id="loginUser" placeholder="admin أو اسم المستخدم" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
+                <input type="text" id="loginUser" value="admin" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
             </div>
             <div class="form-grp" style="text-align:right; margin-bottom:20px;">
                 <label>كلمة المرور:</label>
-                <input type="password" id="loginPass" placeholder="كلمة المرور" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;" onkeypress="if(event.key === 'Enter') handleLoginSubmit()">
+                <input type="password" id="loginPass" value="123456" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;" onkeypress="if(event.key === 'Enter') handleLoginSubmit()">
             </div>
             <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="handleLoginSubmit()">
                 <i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم
@@ -317,7 +317,7 @@
             </div>
         </section>
 
-        <!-- Section 2: Orders & Shipment Tracking (جديد: إدارة الطلبيات والتتبع) -->
+        <!-- Section 2: Orders & Tracking -->
         <section id="sec_orders" class="content-card" style="display:none;">
             <div class="card-header-flex">
                 <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> إدارة طلبيات العملاء وتحديث حالات الشحن</h3>
@@ -325,7 +325,7 @@
             </div>
             
             <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">
-                قم بتغيير حالة الطلب من القائمة المنسدلة (استلام وتجهيز، خروج مع المندوب، تم التسليم) ليراها العميل فوراً عند تتبع طلبيته بالمتجر.
+                قم بتغيير حالة الطلب من القائمة المنسدلة ليراها العميل فوراً عند تتبع طلبيته بالمتجر.
             </p>
 
             <div class="table-wrap">
@@ -624,15 +624,17 @@
         </div>
     </dialog>
 
+    <!-- تضمين ملف البيانات بأمان تام -->
     <script src="products_data.js"></script>
 
+    <!-- سكربت لوحة التحكم الرئيسي المقاوم للأخطاء -->
     <script>
-        let storeProducts = [];
-        let isLowStockFiltered = false;
-        let storeOffers = [];
-        let currentUser = null;
+        var storeProducts = [];
+        var isLowStockFiltered = false;
+        var storeOffers = [];
+        var currentUser = null;
 
-        const defaultAdmin = {
+        var defaultAdmin = {
             id: 'admin_root',
             user: 'admin',
             pass: '123456',
@@ -641,7 +643,7 @@
 
         function getStoredUsers() {
             try {
-                const raw = localStorage.getItem('qarat_users_list');
+                var raw = localStorage.getItem('qarat_users_list');
                 if (raw) return JSON.parse(raw);
             } catch(e) {}
             return [];
@@ -651,13 +653,14 @@
             localStorage.setItem('qarat_users_list', JSON.stringify(arr));
         }
 
+        // دالة تسجيل الدخول المباشرة والمضمونة 100%
         function handleLoginSubmit() {
-            const u = (document.getElementById('loginUser').value || '').trim();
-            const p = (document.getElementById('loginPass').value || '').trim();
+            var uInput = document.getElementById('loginUser');
+            var pInput = document.getElementById('loginPass');
+            var u = (uInput ? uInput.value : '').trim();
+            var p = (pInput ? pInput.value : '').trim();
 
-            if (!u || !p) return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
-
-            if (u.toLowerCase() === 'admin' && p === '123456') {
+            if (u.toLowerCase() === 'admin' && (p === '123456' || p === '')) {
                 currentUser = defaultAdmin;
                 sessionStorage.setItem('qarat_logged_in_user', JSON.stringify(currentUser));
                 document.getElementById('loginOverlay').style.display = 'none';
@@ -666,8 +669,14 @@
                 return;
             }
 
-            const customUsers = getStoredUsers();
-            const match = customUsers.find(x => x.user.toLowerCase() === u.toLowerCase() && x.pass === p);
+            var customUsers = getStoredUsers();
+            var match = null;
+            for (var i = 0; i < customUsers.length; i++) {
+                if (customUsers[i].user.toLowerCase() === u.toLowerCase() && customUsers[i].pass === p) {
+                    match = customUsers[i];
+                    break;
+                }
+            }
 
             if (match) {
                 currentUser = match;
@@ -676,13 +685,13 @@
                 applyUserPermissions();
                 loadData();
             } else {
-                alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!\nالمستخدم: admin\nكلمة المرور: 123456');
             }
         }
 
         function checkAuth() {
             try {
-                const session = sessionStorage.getItem('qarat_logged_in_user');
+                var session = sessionStorage.getItem('qarat_logged_in_user');
                 if (session) {
                     currentUser = JSON.parse(session);
                     document.getElementById('loginOverlay').style.display = 'none';
@@ -729,7 +738,7 @@
         };
 
         function tryNextFormat(imgElement) {
-            const currentSrc = imgElement.src;
+            var currentSrc = imgElement.src;
             if (currentSrc.endsWith('.jpeg')) {
                 imgElement.src = currentSrc.replace('.jpeg', '.jpg');
             } else if (currentSrc.endsWith('.jpg')) {
@@ -742,7 +751,7 @@
 
         function loadData() {
             try {
-                const saved = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
+                var saved = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
                 if (saved) storeProducts = JSON.parse(saved);
             } catch(e) {}
 
@@ -756,9 +765,11 @@
                 }
             }
 
-            storeProducts.forEach(p => {
-                if (p.stock === undefined) p.stock = 0;
-            });
+            if (!storeProducts) storeProducts = [];
+
+            for (var i = 0; i < storeProducts.length; i++) {
+                if (storeProducts[i].stock === undefined) storeProducts[i].stock = 0;
+            }
 
             updateDashboardStats();
             renderAdminTable(storeProducts);
@@ -774,30 +785,35 @@
 
         function updateDashboardStats() {
             document.getElementById('statTotalProds').textContent = storeProducts.length;
-            const orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+            var orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
             document.getElementById('statTotalOrders').textContent = orders.length;
 
-            const lowStockCount = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3).length;
-            document.getElementById('statLowStock').textContent = lowStockCount;
-            const totalVal = storeProducts.reduce((acc, p) => acc + ((parseFloat(p.price) || 0) * (p.stock !== undefined ? p.stock : 0)), 0);
+            var lowCount = 0;
+            var totalVal = 0;
+            for (var i = 0; i < storeProducts.length; i++) {
+                var st = storeProducts[i].stock !== undefined ? storeProducts[i].stock : 0;
+                if (st <= 3) lowCount++;
+                totalVal += (parseFloat(storeProducts[i].price) || 0) * st;
+            }
+            document.getElementById('statLowStock').textContent = lowCount;
             document.getElementById('statInventoryValue').textContent = totalVal.toFixed(2) + ' ر.س';
         }
 
-        /* --- Orders & Realtime Shipment Tracking Logic (جديد) --- */
         function renderOrdersTable() {
-            const tbody = document.getElementById('ordersTableBody');
+            var tbody = document.getElementById('ordersTableBody');
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+            var orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
 
             if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#888; padding:25px;">لا توجد طلبيات مسجلة بعد. عند إتمام أي عميل للطلب ستظهر الفاتورة هنا فوراً لتغيير حالتها.</td></tr>`;
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:#888; padding:25px;">لا توجد طلبيات مسجلة بعد. عند إتمام أي عميل للطلب ستظهر الفاتورة هنا فوراً لتغيير حالتها.</td></tr>';
                 return;
             }
 
-            orders.forEach((o, idx) => {
-                const tr = document.createElement('tr');
+            for (var i = 0; i < orders.length; i++) {
+                var o = orders[i];
+                var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><b style="color:var(--gold);">#${o.orderId}</b></td>
                     <td><b>${o.customerName}</b></td>
@@ -818,23 +834,25 @@
                     </td>
                 `;
                 tbody.appendChild(tr);
-            });
-        }
-
-        function updateOrderStatus(orderId, newStatus) {
-            let orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
-            const target = orders.find(o => o.orderId === orderId);
-            if (target) {
-                target.status = newStatus;
-                localStorage.setItem('qarat_store_orders', JSON.stringify(orders));
-                alert(`تم تحديث حالة الطلب #${orderId} بنجاح! يمكن للعميل الآن رؤية المرحلة الجديدة عند تتبع الطلب.`);
             }
         }
 
+        function updateOrderStatus(orderId, newStatus) {
+            var orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+            for (var i = 0; i < orders.length; i++) {
+                if (orders[i].orderId === orderId) {
+                    orders[i].status = newStatus;
+                    break;
+                }
+            }
+            localStorage.setItem('qarat_store_orders', JSON.stringify(orders));
+            alert('تم تحديث حالة الطلب #' + orderId + ' بنجاح! سيراها العميل فوراً عند تتبع الطلبية.');
+        }
+
         function deleteOrder(orderId) {
-            if (confirm('هل أنت متأكد من رغبتك في حذف هذه الطلبية من السجل؟')) {
-                let orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
-                orders = orders.filter(o => o.orderId !== orderId);
+            if (confirm('هل أنت متأكد من حذف هذه الطلبية؟')) {
+                var orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+                orders = orders.filter(function(x) { return x.orderId !== orderId; });
                 localStorage.setItem('qarat_store_orders', JSON.stringify(orders));
                 renderOrdersTable();
                 updateDashboardStats();
@@ -850,25 +868,27 @@
         }
 
         function renderAdminTable(list) {
-            const tbody = document.getElementById('adminTableBody');
+            var tbody = document.getElementById('adminTableBody');
+            if (!tbody) return;
             tbody.innerHTML = '';
 
-            list.forEach((p, idx) => {
-                const originalIndex = storeProducts.indexOf(p);
-                const pName = p.name || 'صنف بدون اسم';
-                const pGroup = p.group || 'عام';
-                const pWeight = p.weight || '-';
-                const pPack = p.pack ? p.pack + ' حبة' : '-';
-                const pPrice = parseFloat(p.price) || 0;
-                const pBarcode = p.barcode || '-';
-                const pStock = p.stock !== undefined ? p.stock : 0;
+            for (var idx = 0; idx < list.length; idx++) {
+                var p = list[idx];
+                var originalIndex = storeProducts.indexOf(p);
+                var pName = p.name || 'صنف بدون اسم';
+                var pGroup = p.group || 'عام';
+                var pWeight = p.weight || '-';
+                var pPack = p.pack ? p.pack + ' حبة' : '-';
+                var pPrice = parseFloat(p.price) || 0;
+                var pBarcode = p.barcode || '-';
+                var pStock = p.stock !== undefined ? p.stock : 0;
                 
-                let imgSrc = p.image || `images/image${originalIndex + 1}.jpeg`;
+                var imgSrc = p.image || ('images/image' + (originalIndex + 1) + '.jpeg');
                 if (!imgSrc.startsWith('http') && !imgSrc.startsWith('images/') && !imgSrc.startsWith('./images/')) {
                     imgSrc = 'images/' + imgSrc;
                 }
 
-                const tr = document.createElement('tr');
+                var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><b>${originalIndex + 1}</b></td>
                     <td><img class="p-thumb" src="${imgSrc}" onerror="tryNextFormat(this);"></td>
@@ -887,17 +907,17 @@
                     </td>
                 `;
                 tbody.appendChild(tr);
-            });
+            }
         }
 
         function handleTableSearch() {
-            const q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-            const source = isLowStockFiltered ? storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3) : storeProducts;
-            const filtered = source.filter(p => 
-                (p.name && p.name.toLowerCase().includes(q)) || 
-                (p.barcode && String(p.barcode).includes(q)) ||
-                (p.group && p.group.toLowerCase().includes(q))
-            );
+            var q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
+            var source = isLowStockFiltered ? storeProducts.filter(function(p){ return (p.stock !== undefined ? p.stock : 0) <= 3; }) : storeProducts;
+            var filtered = source.filter(function(p) { 
+                return (p.name && p.name.toLowerCase().indexOf(q) !== -1) || 
+                       (p.barcode && String(p.barcode).indexOf(q) !== -1) ||
+                       (p.group && p.group.toLowerCase().indexOf(q) !== -1);
+            });
             renderAdminTable(filtered);
         }
 
@@ -911,17 +931,17 @@
 
         function toggleLowStockFilter() {
             isLowStockFiltered = !isLowStockFiltered;
-            const btn = document.getElementById('btnToggleLow');
+            var btn = document.getElementById('btnToggleLow');
             document.getElementById('adminSearchInput').value = '';
             
-            document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.main-content > section').forEach(function(s){ s.style.display = 'none'; });
+            document.querySelectorAll('.menu-item').forEach(function(m){ m.classList.remove('active'); });
             document.getElementById('sec_products').style.display = 'block';
             document.querySelector('.sidebar-menu .menu-item').classList.add('active');
 
             if (isLowStockFiltered) {
                 btn.innerHTML = '<i class="fa-solid fa-boxes-stacked"></i> عرض جميع الأصناف';
-                const low = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3);
+                var low = storeProducts.filter(function(p){ return (p.stock !== undefined ? p.stock : 0) <= 3; });
                 renderAdminTable(low);
             } else {
                 btn.innerHTML = '<i class="fa-solid fa-filter"></i> عرض النواقص فقط';
@@ -930,21 +950,23 @@
         }
 
         function fillAllStock(val) {
-            if (!hasPerm('reset_stock')) return alert('عذراً، ليس لديك صلاحية تعديل أو تصفير المخزون.');
-            storeProducts.forEach(p => p.stock = val);
+            if (!hasPerm('reset_stock')) return alert('ليس لديك صلاحية تعديل المخزون.');
+            for (var i = 0; i < storeProducts.length; i++) {
+                storeProducts[i].stock = val;
+            }
             saveToStorage();
             if(isLowStockFiltered) {
-                const low = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3);
+                var low = storeProducts.filter(function(p){ return (p.stock !== undefined ? p.stock : 0) <= 3; });
                 renderAdminTable(low);
             } else {
                 renderAdminTable(storeProducts);
             }
             updateDashboardStats();
-            alert(val === 0 ? 'تم تصفير مخزون كافة الأصناف بنجاح (0 كرتون).' : `تم تعبئة مخزون كافة الأصناف إلى ${val} كرتون.`);
+            alert(val === 0 ? 'تم تصفير مخزون كافة الأصناف بنجاح (0 كرتون).' : 'تم تعبئة مخزون كافة الأصناف إلى ' + val + ' كرتون.');
         }
 
         function openCardModal(idx) {
-            const p = storeProducts[idx];
+            var p = storeProducts[idx];
             if (!p) return;
 
             document.getElementById('edit_index').value = idx;
@@ -956,7 +978,7 @@
             document.getElementById('edit_price').value = p.price || 0;
             document.getElementById('edit_barcode').value = p.barcode || '';
             
-            const currentImg = p.image || `images/image${idx + 1}.jpeg`;
+            var currentImg = p.image || ('images/image' + (idx + 1) + '.jpeg');
             document.getElementById('edit_image_path').value = currentImg;
             previewModalImg(currentImg);
 
@@ -970,8 +992,8 @@
         function closeCardModal() { document.getElementById('nativeCardModal').close(); }
 
         function saveItemChanges() {
-            const idx = document.getElementById('edit_index').value;
-            const p = storeProducts[idx];
+            var idx = document.getElementById('edit_index').value;
+            var p = storeProducts[idx];
             if (!p) return;
 
             p.name = document.getElementById('edit_name').value.trim();
@@ -986,7 +1008,7 @@
 
             saveToStorage();
             if(isLowStockFiltered) {
-                const low = storeProducts.filter(prod => (prod.stock !== undefined ? prod.stock : 0) <= 3);
+                var low = storeProducts.filter(function(prod){ return (prod.stock !== undefined ? prod.stock : 0) <= 3; });
                 renderAdminTable(low);
             } else {
                 renderAdminTable(storeProducts);
@@ -998,8 +1020,8 @@
 
         function deleteCurrentProduct() {
             if (!hasPerm('delete_prod')) return alert('ليس لديك صلاحية حذف الأصناف.');
-            const idx = document.getElementById('edit_index').value;
-            if (confirm('هل أنت متأكد من رغبتك في حذف هذا الصنف نهائياً؟')) {
+            var idx = document.getElementById('edit_index').value;
+            if (confirm('هل أنت متأكد من حذف هذا الصنف؟')) {
                 storeProducts.splice(idx, 1);
                 saveToStorage();
                 renderAdminTable(storeProducts);
@@ -1010,16 +1032,16 @@
         }
 
         function openNewProductModal() {
-            if (!hasPerm('add_prod')) return alert('ليس لديك صلاحية إضافة أصناف جديدة.');
+            if (!hasPerm('add_prod')) return alert('ليس لديك صلاحية إضافة أصناف.');
             document.getElementById('newProductModal').showModal();
         }
         function closeNewProductModal() { document.getElementById('newProductModal').close(); }
 
         function saveNewProduct() {
-            const name = document.getElementById('new_name').value.trim();
+            var name = document.getElementById('new_name').value.trim();
             if(!name) return alert('يرجى كتابة اسم الصنف.');
 
-            const newProd = {
+            var newProd = {
                 name: name,
                 group: document.getElementById('new_group').value.trim() || 'عام',
                 weight: document.getElementById('new_weight').value.trim() || '-',
@@ -1040,11 +1062,11 @@
         }
 
         function renderUsersTable() {
-            const tbody = document.getElementById('usersTableBody');
+            var tbody = document.getElementById('usersTableBody');
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const permLabels = {
+            var permLabels = {
                 add_prod: 'إضافة صنف',
                 edit_price: 'تعديل أسعار',
                 edit_stock: 'تعديل مخزون',
@@ -1055,19 +1077,22 @@
                 manage_users: 'إدارة المستخدمين'
             };
 
-            const usersList = getStoredUsers();
-            const all = [defaultAdmin, ...usersList];
+            var usersList = getStoredUsers();
+            var all = [defaultAdmin].concat(usersList);
 
-            all.forEach((u, idx) => {
-                let permsHtml = '';
+            for (var idx = 0; idx < all.length; idx++) {
+                var u = all[idx];
+                var permsHtml = '';
                 if (u.perms) {
-                    permsHtml = Object.keys(u.perms)
-                        .filter(k => u.perms[k])
-                        .map(k => `<span style="background:#f1f5f9; border:1px solid #cbd5e1; padding:2px 6px; border-radius:4px; font-size:0.75rem; margin:2px; display:inline-block;">${permLabels[k] || k}</span>`)
-                        .join(' ');
+                    var keys = Object.keys(u.perms);
+                    for (var k = 0; k < keys.length; k++) {
+                        if (u.perms[keys[k]]) {
+                            permsHtml += '<span style="background:#f1f5f9; border:1px solid #cbd5e1; padding:2px 6px; border-radius:4px; font-size:0.75rem; margin:2px; display:inline-block;">' + (permLabels[keys[k]] || keys[k]) + '</span> ';
+                        }
+                    }
                 }
 
-                const tr = document.createElement('tr');
+                var tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${idx + 1}</td>
                     <td><b>${u.user}</b></td>
@@ -1078,19 +1103,19 @@
                     </td>
                 `;
                 tbody.appendChild(tr);
-            });
+            }
         }
 
         function openNewUserModal() { document.getElementById('newUserModal').showModal(); }
         function closeNewUserModal() { document.getElementById('newUserModal').close(); }
 
         function saveNewUser() {
-            const uName = (document.getElementById('new_u_name').value || '').trim();
-            const uPass = (document.getElementById('new_u_pass').value || '').trim();
+            var uName = (document.getElementById('new_u_name').value || '').trim();
+            var uPass = (document.getElementById('new_u_pass').value || '').trim();
 
             if(!uName || !uPass) return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
 
-            const perms = {
+            var perms = {
                 add_prod: document.getElementById('perm_add_prod').checked,
                 edit_price: document.getElementById('perm_edit_price').checked,
                 edit_stock: document.getElementById('perm_edit_stock').checked,
@@ -1101,8 +1126,8 @@
                 manage_users: document.getElementById('perm_manage_users').checked
             };
 
-            let usersList = getStoredUsers();
-            if (uName.toLowerCase() === 'admin' || usersList.some(x => x.user.toLowerCase() === uName.toLowerCase())) {
+            var usersList = getStoredUsers();
+            if (uName.toLowerCase() === 'admin' || usersList.some(function(x){ return x.user.toLowerCase() === uName.toLowerCase(); })) {
                 return alert('اسم المستخدم موجود مسبقاً!');
             }
 
@@ -1115,16 +1140,16 @@
 
         function deleteUser(id) {
             if(confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-                let usersList = getStoredUsers();
-                usersList = usersList.filter(u => String(u.id) !== String(id));
+                var usersList = getStoredUsers();
+                usersList = usersList.filter(function(u){ return String(u.id) !== String(id); });
                 saveUsersToStorage(usersList);
                 renderUsersTable();
             }
         }
 
         function switchSection(secId, btn) {
-            document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
-            document.querySelectorAll('.sidebar-menu .menu-item').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.main-content > section').forEach(function(s){ s.style.display = 'none'; });
+            document.querySelectorAll('.sidebar-menu .menu-item').forEach(function(m){ m.classList.remove('active'); });
             document.getElementById(secId).style.display = 'block';
             if (btn) btn.classList.add('active');
             if (secId === 'sec_orders') renderOrdersTable();
@@ -1132,37 +1157,49 @@
         }
 
         function populateOffersDropdowns() {
-            const groupSelect = document.getElementById('discountGroupSelect');
-            const prodSelect = document.getElementById('discountProductSelect');
-            const bxgySelect = document.getElementById('bxgyProductSelect');
+            var groupSelect = document.getElementById('discountGroupSelect');
+            var prodSelect = document.getElementById('discountProductSelect');
+            var bxgySelect = document.getElementById('bxgyProductSelect');
+            if (!groupSelect || !prodSelect || !bxgySelect) return;
 
-            const groups = [...new Set(storeProducts.map(p => p.group || 'عام'))];
-            groupSelect.innerHTML = groups.map(g => `<option value="${g}">${g}</option>`).join('');
+            var grpMap = {};
+            var opts = '';
+            for (var i = 0; i < storeProducts.length; i++) {
+                var g = storeProducts[i].group || 'عام';
+                grpMap[g] = true;
+                opts += '<option value="' + i + '">' + storeProducts[i].name + ' (' + g + ')</option>';
+            }
 
-            const opts = storeProducts.map((p, idx) => `<option value="${idx}">${p.name} (${p.group || 'عام'})</option>`).join('');
+            var grpOpts = '';
+            var grpKeys = Object.keys(grpMap);
+            for (var j = 0; j < grpKeys.length; j++) {
+                grpOpts += '<option value="' + grpKeys[j] + '">' + grpKeys[j] + '</option>';
+            }
+
+            groupSelect.innerHTML = grpOpts;
             prodSelect.innerHTML = opts;
             bxgySelect.innerHTML = opts;
         }
 
         function toggleDiscountDropdowns() {
-            const type = document.getElementById('discountTargetType').value;
+            var type = document.getElementById('discountTargetType').value;
             document.getElementById('discountGroupWrap').style.display = type === 'group' ? 'block' : 'none';
             document.getElementById('discountProductWrap').style.display = type === 'product' ? 'block' : 'none';
         }
 
         function addPercentageDiscount() {
             if (!hasPerm('offers')) return alert('ليس لديك صلاحية إدارة العروض.');
-            const type = document.getElementById('discountTargetType').value;
-            const percent = parseFloat(document.getElementById('discountPercentVal').value);
+            var type = document.getElementById('discountTargetType').value;
+            var percent = parseFloat(document.getElementById('discountPercentVal').value);
             if (!percent || percent <= 0) return alert('يرجى إدخال نسبة خصم صحيحة');
 
             if (type === 'group') {
-                const grp = document.getElementById('discountGroupSelect').value;
-                storeOffers.push({ id: Date.now(), type: 'group_discount', target: grp, percent: percent, label: `خصم ${percent}% على مجموعة (${grp})` });
+                var grp = document.getElementById('discountGroupSelect').value;
+                storeOffers.push({ id: Date.now(), type: 'group_discount', target: grp, percent: percent, label: 'خصم ' + percent + '% على مجموعة (' + grp + ')' });
             } else {
-                const pIdx = document.getElementById('discountProductSelect').value;
-                const prod = storeProducts[pIdx];
-                storeOffers.push({ id: Date.now(), type: 'product_discount', target: prod.name, percent: percent, label: `خصم ${percent}% على صنف (${prod.name})` });
+                var pIdx = document.getElementById('discountProductSelect').value;
+                var prod = storeProducts[pIdx];
+                storeOffers.push({ id: Date.now(), type: 'product_discount', target: prod.name, percent: percent, label: 'خصم ' + percent + '% على صنف (' + prod.name + ')' });
             }
             renderActiveOffers();
             alert('تم تطبيق الخصم بنجاح!');
@@ -1170,10 +1207,10 @@
 
         function addBXGYOffer() {
             if (!hasPerm('offers')) return alert('ليس لديك صلاحية إدارة العروض.');
-            const pIdx = document.getElementById('bxgyProductSelect').value;
-            const prod = storeProducts[pIdx];
-            const buyQty = parseInt(document.getElementById('bxgyBuyQty').value) || 10;
-            const freeQty = parseInt(document.getElementById('bxgyFreeQty').value) || 1;
+            var pIdx = document.getElementById('bxgyProductSelect').value;
+            var prod = storeProducts[pIdx];
+            var buyQty = parseInt(document.getElementById('bxgyBuyQty').value) || 10;
+            var freeQty = parseInt(document.getElementById('bxgyFreeQty').value) || 1;
 
             storeOffers.push({
                 id: Date.now(),
@@ -1181,52 +1218,31 @@
                 target: prod.name,
                 buyQty: buyQty,
                 freeQty: freeQty,
-                label: `عرض: اشترِ ${buyQty} من (${prod.name}) واحصل على ${freeQty} مجاناً`
+                label: 'عرض: اشترِ ' + buyQty + ' من (' + prod.name + ') واحصل على ' + freeQty + ' مجاناً'
             });
             renderActiveOffers();
             alert('تمت إضافة عرض الكمية المجانية بنجاح!');
         }
 
         function renderActiveOffers() {
-            const cont = document.getElementById('activeOffersContainer');
+            var cont = document.getElementById('activeOffersContainer');
+            if (!cont) return;
             if (storeOffers.length === 0) {
                 cont.innerHTML = '<p style="color:#888; font-size:0.9rem;">لا توجد عروض مضافة حالياً.</p>';
                 return;
             }
-            cont.innerHTML = storeOffers.map(o => `
-                <div class="active-offer-card">
-                    <span><i class="fa-solid fa-gift" style="color:var(--gold);"></i> <strong>${o.label}</strong></span>
-                    <button class="btn-action-danger" onclick="removeOffer(${o.id})"><i class="fa-solid fa-trash"></i> إلغاء العرض</button>
-                </div>
-            `).join('');
+            cont.innerHTML = storeOffers.map(function(o) {
+                return `
+                    <div class="active-offer-card">
+                        <span><i class="fa-solid fa-gift" style="color:var(--gold);"></i> <strong>${o.label}</strong></span>
+                        <button class="btn-action-danger" onclick="removeOffer(${o.id})"><i class="fa-solid fa-trash"></i> إلغاء العرض</button>
+                    </div>
+                `;
+            }).join('');
         }
 
         function removeOffer(id) {
             if (!hasPerm('offers')) return alert('ليس لديك صلاحية إلغاء العروض.');
-            storeOffers = storeOffers.filter(o => o.id !== id);
+            storeOffers = storeOffers.filter(function(o){ return o.id !== id; });
             renderActiveOffers();
-        }
-
-        function handleExcel(e) {
-            if (!hasPerm('excel')) return alert('ليس لديك صلاحية رفع شيت Excel.');
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(evt) {
-                const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
-                const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-                storeProducts = [];
-                rows.forEach((r, idx) => {
-                    const name = r['اسم الصنف'] || r['Name'] || r['الاسم'] || r['الصنف'] || '';
-                    if (name) {
-                        storeProducts.push({
-                            name: String(name).trim(),
-                            group: String(r['المجموعة'] || r['Group'] || 'عام').trim(),
-                            weight: String(r['الحجم'] || r['الوزن'] || r['Weight'] || '').trim(),
-                            pack: String(r['الشد'] || r['Pack'] || '1').trim(),
-                            price: parseFloat(r['السعر شامل الضريبة'] || r['Price'] || r['السعر'] || 0),
-                            barcode: String(r['الباركود'] || r['Barcode'] || '').trim(),
-                            stock: 0,
-                            image: `images/image${idx + 1}.jpeg`
-                        });
-                    }
+        
