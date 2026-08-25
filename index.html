@@ -17,6 +17,7 @@
       --text-muted: #666;
       --border: #eaedf1;
       --success: #10b981;
+      --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
     body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 0; }
@@ -184,7 +185,7 @@
       font-weight: 700;
     }
 
-    /* Products Grid (Desktop) */
+    /* Products Grid */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -214,12 +215,38 @@
       border-radius: 12px;
       overflow: hidden;
       margin-bottom: 12px;
+      position: relative;
     }
     .product-img-wrap img {
       max-width: 90%;
       max-height: 90%;
       object-fit: contain;
+      transition: filter 0.3s;
     }
+    .product-card.out-of-stock .product-img-wrap img {
+      filter: grayscale(80%) opacity(0.55);
+    }
+    
+    /* Out of stock overlay banner */
+    .out-stock-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(43, 23, 13, 0.88);
+      color: #ffd166;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.3px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      border: 1.5px solid #ffd166;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 5;
+    }
+
     .product-category {
       font-size: 11px;
       font-weight: 700;
@@ -243,10 +270,12 @@
       align-items: center;
       gap: 4px;
       font-size: 12px;
-      color: var(--success);
       font-weight: 700;
       margin-bottom: 10px;
     }
+    .stock-badge.available { color: var(--success); }
+    .stock-badge.unavailable { color: var(--danger); }
+
     .price-row {
       display: flex;
       align-items: baseline;
@@ -319,10 +348,15 @@
       transition: 0.2s;
     }
     .add-btn:hover { background: var(--primary); }
+    
+    .add-btn:disabled, .add-btn.disabled-btn {
+      background: #e2e8f0 !important;
+      color: #94a3b8 !important;
+      cursor: not-allowed !important;
+      box-shadow: none !important;
+    }
 
-    /* =======================================
-       MOBILE OPTIMIZATIONS (2 Columns, Compact)
-       ======================================= */
+    /* Mobile view 2 Columns */
     @media (max-width: 600px) {
       .main-container { padding: 0 8px; margin-top: 12px; }
       header { padding: 10px 15px; }
@@ -344,6 +378,10 @@
         height: 130px;
         margin-bottom: 6px;
         border-radius: 8px;
+      }
+      .out-stock-overlay {
+        font-size: 10px;
+        padding: 4px 8px;
       }
       .product-category { font-size: 10px; }
       .product-title {
@@ -597,9 +635,11 @@
     let allItems = [];
 
     window.onload = function() {
-      const savedProducts = localStorage.getItem('qarat_products');
+      const savedProducts = localStorage.getItem('qarat_products') || localStorage.getItem('qarat_main_prods');
       if (savedProducts) {
         allItems = JSON.parse(savedProducts);
+      } else if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) {
+        allItems = window.STORE_PRODUCTS;
       } else if (typeof products !== 'undefined') {
         allItems = [...products];
       }
@@ -703,24 +743,35 @@
           offerBadge = `<div class="offer-tag">اشترِ ${offerInfo.bxgy.buyQty} + ${offerInfo.bxgy.freeQty} مجاناً</div>`;
         }
 
+        const stockCount = item.stock !== undefined ? parseInt(item.stock) : 0;
+        const isOutOfStock = stockCount <= 0;
+
         return `
-          <div class="product-card">
+          <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}">
             ${offerBadge}
             <div class="product-img-wrap">
               <img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/180x180?text=🍬'">
+              ${isOutOfStock ? '<div class="out-stock-overlay">⏳ سيتوفر قريباً</div>' : ''}
             </div>
             <div class="product-category">${item.group || 'حلويات'}</div>
             <h3 class="product-title">${item.name}</h3>
             <div class="product-meta">الحجم: ${item.weight || '—'} | الشد: ${item.pack || '—'}</div>
-            <div class="stock-badge">✔ متوفر (${item.stock !== undefined ? item.stock : 10})</div>
+            <div class="stock-badge ${isOutOfStock ? 'unavailable' : 'available'}">
+              ${isOutOfStock ? '✖ نفد من المخزون' : `✔ متوفر بالمخزون (${stockCount})`}
+            </div>
             <div class="price-row">${priceHtml}</div>
             <div class="card-actions">
-              <div class="qty-box">
-                <button class="qty-btn" onclick="adjustQty(${item.originalIndex}, 1)">+</button>
+              <div class="qty-box" style="${isOutOfStock ? 'opacity: 0.5; pointer-events: none;' : ''}">
+                <button class="qty-btn" ${isOutOfStock ? 'disabled' : ''} onclick="adjustQty(${item.originalIndex}, 1)">+</button>
                 <span class="qty-num" id="qty-${item.originalIndex}">1</span>
-                <button class="qty-btn" onclick="adjustQty(${item.originalIndex}, -1)">-</button>
+                <button class="qty-btn" ${isOutOfStock ? 'disabled' : ''} onclick="adjustQty(${item.originalIndex}, -1)">-</button>
               </div>
-              <button class="add-btn" onclick="addToCart(${item.originalIndex})">🛒 إضافة</button>
+              <button 
+                class="add-btn ${isOutOfStock ? 'disabled-btn' : ''}" 
+                ${isOutOfStock ? 'disabled' : ''} 
+                onclick="addToCart(${item.originalIndex})">
+                ${isOutOfStock ? 'غير متوفر حالياً' : '🛒 إضافة'}
+              </button>
             </div>
           </div>
         `;
@@ -762,8 +813,19 @@
     }
 
     function addToCart(idx) {
-      const qty = parseInt(document.getElementById(`qty-${idx}`).innerText) || 1;
       const product = allItems[idx];
+      const stockCount = product.stock !== undefined ? parseInt(product.stock) : 0;
+      
+      if (stockCount <= 0) {
+        return Swal.fire({
+          icon: 'warning',
+          title: 'غير متوفر',
+          text: 'عذراً، هذا الصنف نفد من المخزون وسيتوفر قريباً.',
+          confirmButtonColor: 'var(--primary)'
+        });
+      }
+
+      const qty = parseInt(document.getElementById(`qty-${idx}`).innerText) || 1;
       const offerInfo = getProductOffer(product);
 
       const existing = cart.find(c => c.name === product.name);
