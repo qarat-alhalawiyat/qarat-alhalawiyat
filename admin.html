@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>لوحة التحكم الاحترافية | قارة الحلويات</title>
+<title>لوحة التحكم | قارة الحلويات</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -57,33 +57,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 .perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fdfbf7;padding:10px;border-radius:8px;border:1px solid var(--border)}
 .perm-lbl{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;cursor:pointer}
 
-/* تصميم الفاتورة الرسمي داخل لوحة التحكم للطباعة */
-#pdfInvoiceTemplate {
-  display: none; background: #ffffff; width: 210mm; min-height: 297mm; padding: 15mm;
-  color: #111111; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right;
-}
-.inv-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #4a1d75; padding-bottom: 15px; margin-bottom: 20px; }
-.inv-company-info h2 { color: #4a1d75; font-size: 20px; font-weight: 900; margin-bottom: 4px; }
-.inv-company-info p { font-size: 11px; color: #555; line-height: 1.5; }
-.inv-title-box { text-align: left; }
-.inv-title-box h3 { color: #ff7a00; font-size: 20px; font-weight: 900; margin-bottom: 5px; }
-.inv-title-box p { font-size: 12px; color: #333; font-weight: 600; margin-bottom: 2px; }
-
-.inv-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8f6fc; border: 1.5px solid #ebdcfc; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 12px; }
-.inv-meta-grid p { margin-bottom: 4px; color: #333; }
-
-.inv-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; text-align: right; font-size: 11.5px; }
-.inv-table th { background: #4a1d75; color: #ffffff; padding: 10px 8px; font-weight: 800; border: 1px solid #4a1d75; text-align: center; }
-.inv-table td { padding: 9px 8px; border: 1.5px solid #dcdfe6; color: #222; text-align: center; vertical-align: middle; }
-.inv-table td:nth-child(3) { text-align: right; }
-
-.inv-footer-summary { display: flex; justify-content: space-between; align-items: flex-start; border-top: 2px solid #ddd; padding-top: 15px; margin-top: 10px; }
-.inv-qr-section { display: flex; align-items: center; gap: 15px; }
-.inv-qr-code-box { width: 90px; height: 90px; background: #fff; padding: 4px; border: 1px solid #ccc; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-.inv-totals-box { width: 280px; background: #faf5ff; border: 1.5px solid #4a1d75; padding: 12px; border-radius: 8px; text-align: right; }
-.inv-totals-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: 700; color: #333; }
-.inv-totals-row.grand { font-size: 15px; font-weight: 900; color: #4a1d75; border-top: 1px dashed #4a1d75; padding-top: 6px; margin-top: 6px; }
-
 @media (max-width:768px){
   body{flex-direction:column}
   .sidebar{transform:translateX(100%);box-shadow:-5px 0 20px rgba(0,0,0,.5)}
@@ -116,7 +89,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 </div>
 
 <div class="mobile-topbar">
-  <div style="font-weight:900;color:#E5C383;font-size:1.1rem;">🍬 قارة الحلويات (Pro)</div>
+  <div style="font-weight:900;color:#E5C383;font-size:1.1rem;">🍬 قارة الحلويات</div>
   <button onclick="toggleSidebar()" style="background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;"><i class="fa-solid fa-bars"></i></button>
 </div>
 
@@ -126,18 +99,17 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <h2>🍬 قارة الحلويات</h2>
       <button onclick="toggleSidebar()" style="display:none;background:none;border:none;color:#fff;font-size:1.3rem;" class="mobile-close-btn">&times;</button>
     </div>
-    <span style="font-size:.75rem;color:#E5C383;font-weight:bold;">إدارة متقدمة (Pro)</span>
+    <span style="font-size:.75rem;color:#aaa;">الإدارة العامة</span>
   </div>
   <div class="user-badge">
     <div><b id="currentUserName" style="color:#E5C383;">المدير العام</b><br><span id="currentUserRole" style="font-size:.7rem;color:#aaa;">صلاحيات كاملة</span></div>
-    <button onclick="logout()" style="background:none;border:none;color:var(--danger);font-size:1rem;cursor:pointer;" title="تسجيل الخروج"><i class="fa-solid fa-power-off"></i></button>
+    <button onclick="logout()" style="background:none;border:none;color:var(--danger);font-size:1rem;cursor:pointer;"><i class="fa-solid fa-power-off"></i></button>
   </div>
   <div class="sidebar-menu">
     <a class="menu-item active" onclick="switchSec('sec_products',this)"><i class="fa-solid fa-boxes-stacked"></i><span>الأصناف والمخزون</span></a>
-    <a class="menu-item" id="nav_orders" onclick="switchSec('sec_orders',this)"><i class="fa-solid fa-truck-ramp-box"></i><span>الطلبيات والتتبع</span> <span id="newOrdersBadge" style="background:var(--danger);color:#fff;font-size:10px;padding:1px 6px;border-radius:10px;display:none;">جديد</span></a>
-    <a class="menu-item" id="nav_crm" onclick="switchSec('sec_crm',this)"><i class="fa-solid fa-address-book"></i><span>إدارة العملاء (CRM)</span></a>
-    <a class="menu-item" id="nav_analytics" onclick="switchSec('sec_analytics',this)"><i class="fa-solid fa-chart-line"></i><span>مؤشرات الأداء والتقارير</span></a>
+    <a class="menu-item" id="nav_orders" onclick="switchSec('sec_orders',this)"><i class="fa-solid fa-truck-ramp-box"></i><span>الطلبيات والتتبع</span></a>
     <a class="menu-item" id="nav_offers" onclick="switchSec('sec_offers',this)"><i class="fa-solid fa-tags"></i><span>العروض والخصومات</span></a>
+    <a class="menu-item" id="nav_customers" onclick="switchSec('sec_customers',this)"><i class="fa-solid fa-address-book"></i><span>إدارة العملاء</span></a>
     <a class="menu-item" id="nav_import" onclick="switchSec('sec_import',this)"><i class="fa-solid fa-file-import"></i><span>استيراد وتصدير Excel</span></a>
     <a class="menu-item" id="nav_users" onclick="switchSec('sec_users',this)"><i class="fa-solid fa-users-gear"></i><span>المستخدمين والصلاحيات</span></a>
   </div>
@@ -150,12 +122,11 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 <main class="main-content">
   <div class="top-stats">
     <div class="stat-box click" onclick="showAll()"><div class="stat-icon"><i class="fa-solid fa-box"></i></div><div><h4 style="font-size:.75rem;color:#777;">إجمالي الأصناف</h4><b id="statTotalProds" style="font-size:1.2rem;">0</b></div></div>
-    <div class="stat-box click" onclick="switchSec('sec_orders', document.getElementById('nav_orders'))"><div class="stat-icon"><i class="fa-solid fa-cart-shopping"></i></div><div><h4 style="font-size:.75rem;color:#777;">الطلبيات الواردة</h4><b id="statTotalOrders" style="font-size:1.2rem;">0</b></div></div>
+    <div class="stat-box"><div class="stat-icon"><i class="fa-solid fa-cart-shopping"></i></div><div><h4 style="font-size:.75rem;color:#777;">الطلبيات</h4><b id="statTotalOrders" style="font-size:1.2rem;">0</b></div></div>
     <div class="stat-box click" style="border-color:#fee2e2;" onclick="toggleLow()"><div class="stat-icon" style="background:#fee2e2;color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i></div><div><h4 style="font-size:.75rem;color:#777;">النواقص</h4><b id="statLowStock" style="color:#991b1b;font-size:1.2rem;">0</b></div></div>
     <div class="stat-box"><div class="stat-icon" style="background:#dcfce7;color:#166534;"><i class="fa-solid fa-sack-dollar"></i></div><div><h4 style="font-size:.75rem;color:#777;">قيمة المخزون</h4><b id="statInventoryValue" style="color:#166534;font-size:1rem;">0 ر.س</b></div></div>
   </div>
 
-  <!-- Section 1: Products & Inventory -->
   <section id="sec_products" class="content-card">
     <div class="card-header">
       <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> إدارة الأصناف والمخزون</h3>
@@ -175,10 +146,9 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
-  <!-- Section 2: Orders & Tracking -->
   <section id="sec_orders" class="content-card" style="display:none;">
     <div class="card-header">
-      <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> طلبيات العملاء والتتبع الحي</h3>
+      <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> طلبيات العملاء وتحديث التتبع</h3>
       <button class="btn-danger" onclick="clearOrders()"><i class="fa-solid fa-trash"></i> مسح السجل</button>
     </div>
     <div class="table-wrap">
@@ -189,40 +159,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
-  <!-- Section 3: CRM (إدارة العملاء وكروت العملاء وإرسال الإشعارات التشويقية) -->
-  <section id="sec_crm" class="content-card" style="display:none;">
-    <div class="card-header">
-      <h3><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> إدارة العملاء والكروت والإشعارات (CRM Pro)</h3>
-      <button class="btn-green" onclick="openNewCustomerModal()"><i class="fa-solid fa-user-plus"></i> إضافة عميل جديد</button>
-    </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>#</th><th>اسم المؤسسة / المتجر</th><th>اسم المسؤول</th><th>رقم الجوال</th><th>مكان العمل</th><th>إرسال إشعار تشويقي عبر الواتساب</th><th>إجراء</th></tr></thead>
-        <tbody id="tbodyCRM"></tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- Section 4: Analytics & Reports -->
-  <section id="sec_analytics" class="content-card" style="display:none;">
-    <div class="card-header">
-      <h3><i class="fa-solid fa-chart-line" style="color:var(--gold);"></i> تقارير الأداء المالي والمخزون</h3>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:15px;">
-      <div style="background:var(--cream); padding:20px; border-radius:12px; border:1px solid var(--border);">
-        <h4 style="color:var(--dark); margin-bottom:10px;"><i class="fa-solid fa-wallet"></i> إجمالي مبيعات الطلبيات الواردة</h4>
-        <div id="analyticsTotalSales" style="font-size:24px; font-weight:900; color:var(--success);">0.00 ر.س</div>
-        <p style="font-size:11px; color:#666; margin-top:5px;">شاملة ضريبة القيمة المضافة 15%</p>
-      </div>
-      <div style="background:var(--cream); padding:20px; border-radius:12px; border:1px solid var(--border);">
-        <h4 style="color:var(--dark); margin-bottom:10px;"><i class="fa-solid fa-boxes-stacked"></i> إجمالي الكراتين المتوفرة بالمخزون</h4>
-        <div id="analyticsTotalStockCount" style="font-size:24px; font-weight:900; color:var(--primary);">0 كرتون</div>
-        <p style="font-size:11px; color:#666; margin-top:5px;">مجموع الأرصدة الحالية لجميع الأصناف</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Section 5: Offers & Discounts -->
   <section id="sec_offers" class="content-card" style="display:none;">
     <div class="card-header"><h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> العروض والخصومات</h3></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-bottom:15px;">
@@ -230,7 +166,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
         <h4 style="margin-bottom:10px;">خصم مئوي (%)</h4>
         <div class="form-grp" style="margin-bottom:8px;"><label>اختر المجموعة:</label><select id="discGroup"></select></div>
         <div class="form-grp" style="margin-bottom:10px;"><label>نسبة الخصم (%):</label><input type="number" id="discVal" placeholder="10"></div>
-        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addDisc()"><i class="fa-solid fa-check"></i> تطبيق الخصم</button>
+        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addDisc()"><i class="fa-solid fa-check"></i> تطبيق وإرسال للعملاء</button>
       </div>
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
         <h4 style="margin-bottom:10px;">عرض كمية مجانية</h4>
@@ -239,22 +175,35 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
           <div class="form-grp"><label>اشترِ:</label><input type="number" id="bxgyB" value="10"></div>
           <div class="form-grp"><label>مجاناً:</label><input type="number" id="bxgyF" value="1"></div>
         </div>
-        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addBxgy()"><i class="fa-solid fa-gift"></i> إضافة العرض</button>
+        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addBxgy()"><i class="fa-solid fa-gift"></i> إضافة وإرسال للعملاء</button>
       </div>
     </div>
     <div id="offersList" style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);"></div>
   </section>
 
-  <!-- Section 6: Import & Export Excel -->
+  <!-- قسم إدارة العملاء المحدث -->
+  <section id="sec_customers" class="content-card" style="display:none;">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> إدارة العملاء والمؤسسات</h3>
+      <button class="btn-green" onclick="openNewCustomerModal()"><i class="fa-solid fa-user-plus"></i> إضافة عميل جديد</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>اسم المؤسسة / العميل</th><th>رقم الواتساب / الجوال</th><th>المدينة</th><th>إجمالي الطلبات</th><th>إجراء</th></tr></thead>
+        <tbody id="tbodyCustomers"></tbody>
+      </table>
+    </div>
+  </section>
+
   <section id="sec_import" class="content-card" style="display:none;">
     <div class="card-header">
-      <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> استيراد وتحديث المخزون عبر Excel</h3>
+      <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> أدوات Excel و GitHub</h3>
       <button class="btn-green" onclick="exportXLSX()"><i class="fa-solid fa-download"></i> تصدير Excel</button>
     </div>
     <div style="background:#fdfbf7;border:2px dashed var(--gold);padding:1.5rem;border-radius:10px;text-align:center;margin-bottom:1rem;">
-      <p style="font-weight:700;margin-bottom:10px;">رفع شيت إكسيل لتحديث الأصناف والأسعار والمخزون دفعة واحدة (.xlsx)</p>
+      <p style="font-weight:700;margin-bottom:10px;">استيراد شيت إكسيل (.xlsx)</p>
       <input type="file" id="xlIn" accept=".xlsx,.xls" style="display:none;" onchange="importXLSX(event)">
-      <button class="btn-gold" onclick="document.getElementById('xlIn').click()"><i class="fa-solid fa-upload"></i> اختيار ملف الإكسيل وتحديثه</button>
+      <button class="btn-gold" onclick="document.getElementById('xlIn').click()"><i class="fa-solid fa-upload"></i> اختيار ملف الإكسيل</button>
     </div>
     <div class="form-grp">
       <label>كود GitHub المباشر:</label>
@@ -263,7 +212,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
-  <!-- Section 7: Users & Permissions -->
   <section id="sec_users" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين وتعديل حساب المدير</h3>
@@ -277,72 +225,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 </main>
-
-<!-- Hidden Container for Admin PDF Printing -->
-<div id="pdfInvoiceTemplate">
-  <div class="inv-header">
-    <div class="inv-company-info">
-      <h2>شركة قارة الحلويات التجارية</h2>
-      <p>المملكة العربية السعودية - الرياض - العزيزية - حي المصانع - مستودع رقم 72</p>
-      <p>الرقم الضريبي: <b>312473488800003</b> | السجل التجاري: 1010000000</p>
-    </div>
-    <div class="inv-title-box">
-      <h3>فاتورة مبيعات ضريبية</h3>
-      <p>رقم الفاتورة: <b id="pdf_inv_id" style="color:#4a1d75;">#QAR-0000</b></p>
-      <p>تاريخ الإصدار: <span id="pdf_inv_date"></span></p>
-    </div>
-  </div>
-
-  <div class="inv-meta-grid">
-    <div>
-      <p><b>اسم العميل / المؤسسة:</b> <span id="pdf_cust_name"></span></p>
-      <p><b>رقم الجوال:</b> <span id="pdf_cust_phone"></span></p>
-    </div>
-    <div>
-      <p><b>المدينة / العنوان:</b> <span id="pdf_cust_city"></span></p>
-      <p><b>طريقة الدفع:</b> تحويل بنكي / الدفع عند الاستلام</p>
-    </div>
-  </div>
-
-  <table class="inv-table">
-    <thead>
-      <tr>
-        <th style="width: 5%;">#</th>
-        <th style="width: 22%;">الباركود</th>
-        <th style="width: 33%;">اسم الصنف</th>
-        <th style="width: 10%;">الكمية</th>
-        <th style="width: 15%;">سعر الكرتون</th>
-        <th style="width: 15%;">الإجمالي (ر.س)</th>
-      </tr>
-    </thead>
-    <tbody id="pdf_items_tbody"></tbody>
-  </table>
-
-  <div class="inv-footer-summary">
-    <div class="inv-qr-section">
-      <div class="inv-qr-code-box" id="qrcodeContainer"></div>
-      <div style="font-size: 11px; color: #555; line-height: 1.5;">
-        <b>فاتورة إلكترونية معتمدة</b><br>
-        شركة قارة الحلويات التجارية<br>
-        مطابقة لاشتراطات هيئة الزكاة والضريبة والجمارك (zatca)
-      </div>
-    </div>
-    <div class="inv-totals-box">
-      <div class="inv-totals-row">
-        <span>المجموع الخاضع للضريبة:</span>
-        <span id="pdf_subtotal">0.00</span>
-      </div>
-      <div class="inv-totals-row">
-        <span>ضريبة القيمة المضافة (15%):</span>
-        <span id="pdf_vat">0.00</span>
-      </div>
-      <div class="inv-totals-row grand">
-        <span>الإجمالي النهائي:</span>
-        <span><span id="pdf_total_val">0.00</span> ر.س</span>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Dialogs -->
 <dialog id="dlgEdit">
@@ -390,17 +272,14 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
-<!-- Dialog New Customer (CRM Pro) -->
+<!-- حوار إضافة عميل جديد يدويًا -->
 <dialog id="dlgNewCustomer">
-  <div class="modal-head"><h3>إضافة عميل جديد (كارت العميل)</h3><button onclick="document.getElementById('dlgNewCustomer').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
+  <div class="modal-head"><h3>إضافة عميل أو مؤسسة جديدة</h3><button onclick="document.getElementById('dlgNewCustomer').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
-    <div class="form-grp"><label>اسم المؤسسة / المتجر:</label><input type="text" id="c_org" placeholder="مثال: مؤسسة أطياب الحلويات"></div>
-    <div class="form-grp"><label>اسم الشخص المسؤول:</label><input type="text" id="c_name" placeholder="مثال: الأستاذ محمد"></div>
-    <div class="form-row">
-      <div class="form-grp"><label>رقم الجوال (الواتساب):</label><input type="tel" id="c_phone" placeholder="9665xxxxxxxx"></div>
-      <div class="form-grp"><label>مكان العمل / المدينة:</label><input type="text" id="c_city" placeholder="الرياض - حي الملز"></div>
-    </div>
-    <button class="btn-gold" style="margin-top:10px;" onclick="saveNewCustomer()"><i class="fa-solid fa-check"></i> حفظ كارت العميل</button>
+    <div class="form-grp"><label>اسم المؤسسة / العميل:</label><input type="text" id="nc_name" placeholder="مثلاً: مؤسسة الذوق الرفيع"></div>
+    <div class="form-grp"><label>رقم الجوال / الواتساب:</label><input type="tel" id="nc_phone" placeholder="05xxxxxxxx"></div>
+    <div class="form-grp"><label>المدينة:</label><input type="text" id="nc_city" value="الرياض"></div>
+    <button class="btn-gold" style="margin-top:10px;" onclick="saveNewCustomerManually()"><i class="fa-solid fa-check"></i> حفظ العميل</button>
   </div>
 </dialog>
 
@@ -475,23 +354,8 @@ function applyPerms(){
 window.onload=function(){
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
-  loadData(); renderUsers(); renderOrders(); renderCRM(); renderAnalytics();
-  startLiveOrderListener();
+  loadData(); renderUsers(); renderOrders(); renderCustomers();
 };
-
-let lastOrdersCount = 0;
-function startLiveOrderListener() {
-  setInterval(function(){
-    var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
-    if(lastOrdersCount > 0 && ords.length > lastOrdersCount) {
-      document.getElementById('newOrdersBadge').style.display = 'inline-block';
-      if(document.getElementById('sec_orders').style.display !== 'none') {
-        renderOrders();
-      }
-    }
-    lastOrdersCount = ords.length;
-  }, 3000);
-}
 
 function loadData(){
   try{var s=localStorage.getItem('qarat_main_prods')||localStorage.getItem('qarat_products');if(s)prods=JSON.parse(s);}catch(e){}
@@ -502,7 +366,7 @@ function loadData(){
   }
   if(!prods)prods=[];
   prods.forEach(function(p){if(p.stock===undefined)p.stock=0;});
-  updateStats(); renderTable(prods); popDropdowns(); renderUsers(); renderOrders(); renderCRM(); renderAnalytics();
+  updateStats(); renderTable(prods); popDropdowns(); renderUsers(); renderOrders(); renderCustomers();
 }
 
 function saveLocal(){
@@ -547,7 +411,7 @@ function toggleLow(){
 
 function fillStock(v){
   if(!hasP('reset'))return alert('ليس لديك صلاحية.');
-  prods.forEach(function(p){p.stock=v;});saveLocal();renderTable(prods);updateStats();renderAnalytics();
+  prods.forEach(function(p){p.stock=v;});saveLocal();renderTable(prods);updateStats();
   alert(v===0?'تم تصفير المخزون (0 كرتون).':'تمت التعبئة إلى '+v);
 }
 
@@ -563,89 +427,20 @@ function saveP(){
   p.name=document.getElementById('e_name').value.trim();p.group=document.getElementById('e_grp').value.trim();p.weight=document.getElementById('e_weight').value.trim();p.pack=document.getElementById('e_pack').value.trim();p.barcode=document.getElementById('e_barcode').value.trim();p.image=document.getElementById('e_img').value.trim();
   if(hasP('price'))p.price=parseFloat(document.getElementById('e_price').value)||0;
   if(hasP('stock'))p.stock=parseInt(document.getElementById('e_stock').value)||0;
-  saveLocal();renderTable(prods);updateStats();renderAnalytics();document.getElementById('dlgEdit').close();alert('تم الحفظ بنجاح!');
+  saveLocal();renderTable(prods);updateStats();document.getElementById('dlgEdit').close();alert('تم الحفظ بنجاح!');
 }
 
 function delP(){
   if(!hasP('del'))return alert('ليس لديك صلاحية.');
   var i=document.getElementById('e_idx').value;
-  if(confirm('حذف هذا الصنف؟')){prods.splice(i,1);saveLocal();renderTable(prods);updateStats();renderAnalytics();document.getElementById('dlgEdit').close();}
+  if(confirm('حذف هذا الصنف؟')){prods.splice(i,1);saveLocal();renderTable(prods);updateStats();document.getElementById('dlgEdit').close();}
 }
 
 function openNewP(){if(!hasP('add'))return alert('ليس لديك صلاحية.');document.getElementById('dlgNewP').showModal();}
 function saveNewP(){
   var n=document.getElementById('n_name').value.trim();if(!n)return alert('اكتب اسم الصنف');
   prods.unshift({name:n,group:document.getElementById('n_grp').value.trim()||'عام',weight:document.getElementById('n_weight').value.trim()||'-',pack:document.getElementById('n_pack').value.trim()||'1',stock:parseInt(document.getElementById('n_stock').value)||0,price:parseFloat(document.getElementById('n_price').value)||0,barcode:document.getElementById('n_barcode').value.trim()||'-',image:'images/image1.jpeg'});
-  saveLocal();renderTable(prods);updateStats();renderAnalytics();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة!');
-}
-
-function generateZatcaQRCode(sellerName, vatNumber, timestamp, totalWithVat, vatTotal) {
-  function toTLV(tag, val) {
-    const vBytes = new TextEncoder().encode(val);
-    return new Uint8Array([tag, vBytes.length, ...vBytes]);
-  }
-  const t1 = toTLV(1, sellerName);
-  const t2 = toTLV(2, vatNumber);
-  const t3 = toTLV(3, timestamp);
-  const t4 = toTLV(4, totalWithVat.toString());
-  const t5 = toTLV(5, vatTotal.toString());
-  const totalLen = t1.length + t2.length + t3.length + t4.length + t5.length;
-  const result = new Uint8Array(totalLen);
-  let offset = 0;
-  [t1, t2, t3, t4, t5].forEach(arr => { result.set(arr, offset); offset += arr.length; });
-  return btoa(String.fromCharCode.apply(null, result));
-}
-
-function printOrderInvoice(orderId) {
-  var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
-  var o = ords.find(function(x){ return x.orderId === orderId; });
-  if (!o) return alert('الطلبية غير موجودة');
-
-  var total = parseFloat(o.total || 0);
-  var vat = total * 0.15;
-  var subtotal = total - vat;
-
-  document.getElementById('pdf_inv_id').textContent = '#' + o.orderId;
-  document.getElementById('pdf_inv_date').textContent = o.date;
-  document.getElementById('pdf_cust_name').textContent = o.customerName;
-  document.getElementById('pdf_cust_phone').textContent = o.phone;
-  document.getElementById('pdf_cust_city').textContent = o.city || 'الرياض';
-  document.getElementById('pdf_subtotal').textContent = subtotal.toFixed(2) + ' ر.س';
-  document.getElementById('pdf_vat').textContent = vat.toFixed(2) + ' ر.س';
-  document.getElementById('pdf_total_val').textContent = total.toFixed(2);
-
-  var tbody = document.getElementById('pdf_items_tbody');
-  tbody.innerHTML = '';
-  (o.items || []).forEach(function(item, idx) {
-    var unit = item.unitPrice || item.price || 0;
-    var sub = (item.qty * unit).toFixed(2);
-    tbody.innerHTML += `
-      <tr>
-        <td>${idx + 1}</td>
-        <td style="font-family:monospace; font-size:11px;">${item.barcode || '—'}</td>
-        <td><b>${item.name}</b></td>
-        <td>${item.qty} كرتون</td>
-        <td>${unit.toFixed(2)}</td>
-        <td><b>${sub}</b></td>
-      </tr>
-    `;
-  });
-
-  document.getElementById('qrcodeContainer').innerHTML = '';
-  var zatcaBase64 = generateZatcaQRCode("شركة قارة الحلويات التجارية", "312473488800003", o.date, total.toFixed(2), vat.toFixed(2));
-  new QRCode(document.getElementById("qrcodeContainer"), { text: zatcaBase64, width: 84, height: 84 });
-
-  var pdfElement = document.getElementById('pdfInvoiceTemplate');
-  pdfElement.style.display = 'block';
-  var opt = {
-    margin: [5, 5, 5, 5], filename: `فاتورة_قارة_الحلويات_${o.orderId}.pdf`,
-    image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
-
-  html2pdf().set(opt).from(pdfElement).save().then(function() {
-    pdfElement.style.display = 'none';
-  });
+  saveLocal();renderTable(prods);updateStats();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة!');
 }
 
 function renderOrders(){
@@ -654,97 +449,133 @@ function renderOrders(){
   if(!ords.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:#888;">لا توجد طلبيات بعد.</td></tr>';return;}
   ords.forEach(function(o){
     var tr=document.createElement('tr');
-    tr.innerHTML='<td><a href="javascript:void(0)" onclick="printOrderInvoice(\''+o.orderId+'\')" style="color:var(--gold); font-weight:bold; text-decoration:underline;" title="اضغط لطباعة الفاتورة">#'+o.orderId+' 🖨️</a></td><td><b>'+o.customerName+'</b></td><td>'+o.phone+'</td><td>'+(o.city||'الرياض')+'</td><td><b>'+parseFloat(o.total||0).toFixed(2)+' ر.س</b></td><td>'+o.date+'</td><td><select class="status-sel" onchange="updOrd(\''+o.orderId+'\',this.value)"><option value="received" '+(o.status==='received'?'selected':'')+'>1. تم استلام الطلب وتأكيده</option><option value="preparing" '+(o.status==='preparing'?'selected':'')+'>2. استلام المستودع والتجهيز</option><option value="shipping" '+(o.status==='shipping'?'selected':'')+'>3. خرجت في الطريق مع المندوب</option><option value="delivered" '+(o.status==='delivered'?'selected':'')+'>4. تم التسليم للعميل</option></select></td><td><button class="btn-danger" style="padding:3px 6px;" onclick="delOrd(\''+o.orderId+'\')"><i class="fa-solid fa-trash"></i></button></td>';
+    tr.innerHTML='<td><b style="color:var(--gold);">#'+o.orderId+'</b></td><td><b>'+o.customerName+'</b></td><td>'+o.phone+'</td><td>'+(o.city||'الرياض')+'</td><td><b>'+parseFloat(o.total||0).toFixed(2)+' ر.س</b></td><td>'+o.date+'</td><td><select class="status-sel" onchange="updOrd(\''+o.orderId+'\',this.value)"><option value="received" '+(o.status==='received'?'selected':'')+'>1. تم استلام الطلب وتأكيده</option><option value="preparing" '+(o.status==='preparing'?'selected':'')+'>2. استلام المستودع والتجهيز</option><option value="shipping" '+(o.status==='shipping'?'selected':'')+'>3. خرجت في الطريق مع المندوب</option><option value="delivered" '+(o.status==='delivered'?'selected':'')+'>4. تم التسليم للعميل</option></select></td><td><button class="btn-danger" style="padding:3px 6px;" onclick="delOrd(\''+o.orderId+'\')"><i class="fa-solid fa-trash"></i></button></td>';
     tb.appendChild(tr);
   });
 }
 
 function updOrd(id,st){
   var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
-  var t=ords.find(function(x){return x.orderId===id});if(t){t.status=st;localStorage.setItem('qarat_store_orders',JSON.stringify(ords));alert('تم تحديث حالة الطلب #'+id);renderAnalytics();}
+  var t=ords.find(function(x){return x.orderId===id});if(t){t.status=st;localStorage.setItem('qarat_store_orders',JSON.stringify(ords));alert('تم تحديث حالة الطلب #'+id);}
 }
 
 function delOrd(id){
-  if(confirm('حذف الطلبية؟')){var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');ords=ords.filter(function(x){return x.orderId!==id});localStorage.setItem('qarat_store_orders',JSON.stringify(ords));renderOrders();updateStats();renderCRM();renderAnalytics();}
+  if(confirm('حذف الطلبية؟')){var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');ords=ords.filter(function(x){return x.orderId!==id});localStorage.setItem('qarat_store_orders',JSON.stringify(ords));renderOrders();updateStats();}
 }
-function clearOrders(){if(confirm('مسح جميع الطلبيات؟')){localStorage.removeItem('qarat_store_orders');renderOrders();updateStats();renderCRM();renderAnalytics();}}
+function clearOrders(){if(confirm('مسح جميع الطلبيات؟')){localStorage.removeItem('qarat_store_orders');renderOrders();updateStats();}}
 
-// إدارة العملاء وكروت العملاء (CRM Pro) والإرسال التشويقي عبر الواتساب
-function renderCRM(){
-  var tb=document.getElementById('tbodyCRM');if(!tb)return;tb.innerHTML='';
-  var cList = JSON.parse(localStorage.getItem('qarat_crm_customers') || '[]');
+/* --- إدارة العملاء وإرسال الإشعارات التشويقية --- */
+function getCustomersList() {
+  var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
+  var manual = JSON.parse(localStorage.getItem('qarat_manual_customers') || '[]');
+  var map = {};
+  
+  // دمج العملاء من الطلبات السابقة
+  ords.forEach(function(o) {
+    if(o.phone) {
+      map[o.phone] = { name: o.customerName, phone: o.phone, city: o.city || 'الرياض', ordersCount: (map[o.phone] ? map[o.phone].ordersCount + 1 : 1) };
+    }
+  });
+  
+  // دمج العملاء المضافين يدويًا
+  manual.forEach(function(c) {
+    if(c.phone) {
+      map[c.phone] = { name: c.name, phone: c.phone, city: c.city || 'الرياض', ordersCount: (map[c.phone] ? map[c.phone].ordersCount : 0) };
+    }
+  });
 
-  if(!cList.length){
-    tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:#888;">لا توجد كروت عملاء مسجلة حالياً. اضغط على (إضافة عميل جديد).</td></tr>';
+  return Object.values(map);
+}
+
+function renderCustomers() {
+  var tb = document.getElementById('tbodyCustomers');
+  if(!tb) return;
+  tb.innerHTML = '';
+  var list = getCustomersList();
+  
+  if(!list.length) {
+    tb.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">لا توجد بيانات عملاء مسجلة بعد.</td></tr>';
     return;
   }
-
-  cList.forEach(function(c, i){
-    var cleanPhone = c.phone.replace(/[^0-9]/g, '');
-    var teaserMsg = `✨ مرحباً بك يا أستاذ ${c.name} في *شركة قارة الحلويات التجارية* 🍬\n\nبصفتكم من عملائنا المميزين في (${c.org})، يسعدنا إبلاغكم بنزول تشكيلة واسعة من المنتجات الجديدة وتوفير كميات الكراتين السابقة بأسعار جملة تنافسية! 🔥\n\nتفضل بزيارة متجرنا للاطلاع على العروض وتحديث طلبياتكم. يسعدنا دائماً خدمتكم! 📦`;
-    var waUrl = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(teaserMsg)}`;
-
-    var tr=document.createElement('tr');
-    tr.innerHTML=`
-      <td>${i + 1}</td>
-      <td><b>${c.org}</b></td>
-      <td>${c.name}</td>
-      <td><a href="tel:${c.phone}" style="color:var(--dark); font-weight:bold;">${c.phone}</a></td>
-      <td>${c.city}</td>
-      <td>
-        <a href="${waUrl}" target="_blank" class="btn-green" style="padding:6px 10px; font-size:0.75rem; text-decoration:none;">
-          <i class="fa-brands fa-whatsapp"></i> إرسال إشعار تشويقي
-        </a>
-      </td>
-      <td>
-        <button class="btn-danger" style="padding:4px 8px;" onclick="deleteCustomer('${c.id}')"><i class="fa-solid fa-trash"></i></button>
-      </td>
-    `;
+  
+  list.forEach(function(c, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>'+(i+1)+'</td><td><b>'+c.name+'</b></td><td>'+c.phone+'</td><td>'+c.city+'</td><td>'+c.ordersCount+' طلبات</td><td><a href="https://api.whatsapp.com/send?phone='+c.phone+'" target="_blank" style="background:#25D366;color:#fff;padding:4px 8px;border-radius:4px;text-decoration:none;font-size:.75rem;font-weight:bold;">💬 واتساب</a></td>';
     tb.appendChild(tr);
   });
 }
 
-function openNewCustomerModal(){ document.getElementById('dlgNewCustomer').showModal(); }
+function openNewCustomerModal() {
+  document.getElementById('dlgNewCustomer').showModal();
+}
 
-function saveNewCustomer(){
-  var org = document.getElementById('c_org').value.trim();
-  var name = document.getElementById('c_name').value.trim();
-  var phone = document.getElementById('c_phone').value.trim();
-  var city = document.getElementById('c_city').value.trim();
-
-  if(!org || !name || !phone) return alert('يرجى كتابة اسم المؤسسة، اسم المسؤول، ورقم الجوال.');
-
-  var cList = JSON.parse(localStorage.getItem('qarat_crm_customers') || '[]');
-  cList.push({ id: 'cust_' + Date.now(), org: org, name: name, phone: phone, city: city || 'الرياض' });
-  localStorage.setItem('qarat_crm_customers', JSON.stringify(cList));
-
-  document.getElementById('c_org').value = '';
-  document.getElementById('c_name').value = '';
-  document.getElementById('c_phone').value = '';
-  document.getElementById('c_city').value = '';
-
+function saveNewCustomerManually() {
+  var name = (document.getElementById('nc_name').value || '').trim();
+  var phone = (document.getElementById('nc_phone').value || '').trim();
+  var city = (document.getElementById('nc_city').value || '').trim() || 'الرياض';
+  
+  if(!name || !phone) return alert('يرجى كتابة اسم العميل ورقم الجوال.');
+  
+  var manual = JSON.parse(localStorage.getItem('qarat_manual_customers') || '[]');
+  manual.push({ name: name, phone: phone, city: city });
+  localStorage.setItem('qarat_manual_customers', JSON.stringify(manual));
+  
   document.getElementById('dlgNewCustomer').close();
-  renderCRM();
-  alert('تم حفظ كارت العميل بنجاح!');
+  document.getElementById('nc_name').value = '';
+  document.getElementById('nc_phone').value = '';
+  renderCustomers();
+  alert('تمت إضافة العميل بنجاح!');
 }
 
-function deleteCustomer(id){
-  if(confirm('هل أنت متأكد من حذف كارت هذا العميل؟')){
-    var cList = JSON.parse(localStorage.getItem('qarat_crm_customers') || '[]');
-    cList = cList.filter(function(x){ return String(x.id) !== String(id); });
-    localStorage.setItem('qarat_crm_customers', JSON.stringify(cList));
-    renderCRM();
-  }
+function broadcastOfferToCustomers(offerLabel) {
+  var customers = getCustomersList();
+  if(!customers.length) return alert('لا توجد أرقام عملاء مسجلة لإرسال العرض لها.');
+  
+  // رابط المتجر الخاص بك (تستطيع استبداله برابط Vercel الحقيقي الخاص بك)
+  var storeUrl = window.location.origin + '/index.html'; 
+  
+  Swal.fire({
+    title: '📢 إرسال العرض التشويقي للعملاء',
+    text: `تم تجهيز إرسال العرض (${offerLabel}) إلى ${customers.length} عميل مسجل. هل تريد البدء بإرسال الرسائل؟`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'نعم، إرسال الآن',
+    cancelButtonText: 'إلغاء',
+    confirmButtonColor: '#25D366'
+  }).then(res => {
+    if(res.isConfirmed) {
+      // فتح واتساب لأول عميل كمثال أو إرسال جماعي
+      var sampleMsg = `*عرض خاص من شركة قارة الحلويات التجارية* 🍬\n\n${offerLabel}\n\nتسوق الآن واعرف تفاصيل العروض عبر متجرنا:\n${storeUrl}`;
+      var firstCust = customers[0];
+      window.open(`https://api.whatsapp.com/send?phone=${firstCust.phone}&text=${encodeURIComponent(sampleMsg)}`, '_blank');
+      
+      Swal.fire('تم بنجاح', 'تم بدء إرسال العرض للعملاء المسجلين عبر الواتساب!', 'success');
+    }
+  });
 }
 
-// تقارير الأداء
-function renderAnalytics(){
-  var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
-  var totalSales = ords.reduce(function(sum, o){ return sum + parseFloat(o.total || 0); }, 0);
-  document.getElementById('analyticsTotalSales').textContent = totalSales.toFixed(2) + ' ر.س';
+function addDisc(){
+  if(!hasP('offers'))return alert('ليس لديك صلاحية.');
+  var g=document.getElementById('discGroup').value,pct=parseFloat(document.getElementById('discVal').value)||0;
+  if(pct<=0)return alert('أدخل نسبة صحيحة');
+  var label = 'خصم '+pct+'% على مجموعة ('+g+')';
+  offers.push({id:Date.now(),type:'group_discount',target:g,percent:pct,label:label});
+  renderOffers();
+  broadcastOfferToCustomers(label);
+}
 
-  var totalStock = prods.reduce(function(sum, p){ return sum + (parseInt(p.stock) || 0); }, 0);
-  document.getElementById('analyticsTotalStockCount').textContent = totalStock + ' كرتون';
+function addBxgy(){
+  if(!hasP('offers'))return alert('ليس لديك صلاحية.');
+  var p=prods[document.getElementById('bxgyProd').value],b=parseInt(document.getElementById('bxgyB').value)||10,f=parseInt(document.getElementById('bxgyF').value)||1;
+  var label = 'عرض كميات: اشترِ '+b+' من ('+p.name+') واحصل على '+f+' مجاناً';
+  offers.push({id:Date.now(),type:'bxgy',target:p.name,buyQty:b,freeQty:f,label:label});
+  renderOffers();
+  broadcastOfferToCustomers(label);
+}
+
+function renderOffers(){
+  var d=document.getElementById('offersList');if(!d)return;
+  d.innerHTML=offers.length?offers.map(function(o){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;"><span>🎁 '+o.label+'</span><button class="btn-danger" style="padding:2px 6px;" onclick="offers=offers.filter(x=>x.id!='+o.id+');renderOffers();">إلغاء</button></div>'}).join(''):'<p style="color:#888;font-size:.85rem;">لا توجد عروض مضافة.</p>';
 }
 
 function renderUsers(){
@@ -799,10 +630,9 @@ function switchSec(id,btn){
   document.querySelectorAll('.sidebar-menu .menu-item').forEach(function(m){m.classList.remove('active');});
   document.getElementById(id).style.display='block';if(btn)btn.classList.add('active');
   if(window.innerWidth <= 768) document.getElementById('sidebarNav').classList.remove('open');
-  if(id==='sec_orders') { renderOrders(); document.getElementById('newOrdersBadge').style.display='none'; }
-  if(id==='sec_crm') renderCRM();
-  if(id==='sec_analytics') renderAnalytics();
-  if(id==='sec_import') genRaw();
+  if(id==='sec_orders')renderOrders();
+  if(id==='sec_customers')renderCustomers();
+  if(id==='sec_import')genRaw();
 }
 
 function popDropdowns(){
@@ -810,26 +640,6 @@ function popDropdowns(){
   var grps=[...new Set(prods.map(function(p){return p.group||'عام';}))];
   grpSel.innerHTML=grps.map(function(g){return '<option value="'+g+'">'+g+'</option>'}).join('');
   prodSel.innerHTML=prods.map(function(p,i){return '<option value="'+i+'">'+p.name+'</option>'}).join('');
-}
-
-function addDisc(){
-  if(!hasP('offers'))return alert('ليس لديك صلاحية.');
-  var g=document.getElementById('discGroup').value,pct=parseFloat(document.getElementById('discVal').value)||0;
-  if(pct<=0)return alert('أدخل نسبة صحيحة');
-  offers.push({id:Date.now(),type:'group_discount',target:g,percent:pct,label:'خصم '+pct+'% على ('+g+')'});
-  renderOffers();alert('تم تطبيق الخصم!');
-}
-
-function addBxgy(){
-  if(!hasP('offers'))return alert('ليس لديك صلاحية.');
-  var p=prods[document.getElementById('bxgyProd').value],b=parseInt(document.getElementById('bxgyB').value)||10,f=parseInt(document.getElementById('bxgyF').value)||1;
-  offers.push({id:Date.now(),type:'bxgy',target:p.name,buyQty:b,freeQty:f,label:'اشترِ '+b+' من ('+p.name+') واحصل على '+f+' مجاناً'});
-  renderOffers();alert('تمت إضافة العرض!');
-}
-
-function renderOffers(){
-  var d=document.getElementById('offersList');if(!d)return;
-  d.innerHTML=offers.length?offers.map(function(o){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;"><span>🎁 '+o.label+'</span><button class="btn-danger" style="padding:2px 6px;" onclick="offers=offers.filter(x=>x.id!='+o.id+');renderOffers();">إلغاء</button></div>'}).join(''):'<p style="color:#888;font-size:.85rem;">لا توجد عروض مضافة.</p>';
 }
 
 function importXLSX(e){
@@ -842,18 +652,9 @@ function importXLSX(e){
     prods=[];
     rows.forEach(function(row,idx){
       var nm=row['اسم الصنف']||row['Name']||row['الاسم']||row['الصنف']||'';
-      if(nm)prods.push({
-        name:String(nm).trim(),
-        group:String(row['المجموعة']||row['Group']||'عام').trim(),
-        weight:String(row['الحجم']||row['الوزن']||'-').trim(),
-        pack:String(row['الشد']||'1').trim(),
-        price:parseFloat(row['السعر شامل الضريبة']||row['Price']||row['السعر']||0),
-        barcode:String(row['الباركود']||row['Barcode']||'-').trim(),
-        stock:parseInt(row['المخزون']||row['Stock']||0),
-        image:'images/image'+(idx+1)+'.jpeg'
-      });
+      if(nm)prods.push({name:String(nm).trim(),group:String(row['المجموعة']||row['Group']||'عام').trim(),weight:String(row['الحجم']||row['الوزن']||'-').trim(),pack:String(row['الشد']||'1').trim(),price:parseFloat(row['السعر شامل الضريبة']||row['Price']||0),barcode:String(row['الباركود']||'-').trim(),stock:0,image:'images/image'+(idx+1)+'.jpeg'});
     });
-    saveLocal();updateStats();renderTable(prods);renderAnalytics();alert('تم تحديث واستيراد ' + prods.length + ' صنف بنجاح من شيت الإكسيل!');
+    saveLocal();updateStats();renderTable(prods);alert('تم استيراد '+prods.length+' صنف بنجاح!');
   };
   r.readAsArrayBuffer(file);
 }
