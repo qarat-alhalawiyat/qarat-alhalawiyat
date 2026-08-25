@@ -29,7 +29,7 @@
         #loginOverlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, var(--choc-dark), #150a04);
+            background: rgba(43, 23, 13, 0.95);
             z-index: 99999;
             display: flex;
             align-items: center;
@@ -39,14 +39,14 @@
         .login-box {
             background: #fff;
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             border: 2px solid var(--gold);
             text-align: center;
         }
-        .login-box h2 { color: var(--choc-dark); font-weight: 900; margin-bottom: 5px; font-size: 1.4rem; }
+        .login-box h2 { color: var(--choc-dark); font-weight: 900; margin-bottom: 5px; font-size: 1.3rem; }
         .login-box p { font-size: 0.85rem; color: #777; margin-bottom: 20px; }
 
         .sidebar { width: 280px; background: var(--choc-dark); color: #fff; min-height: 100vh; display: flex; flex-direction: column; border-left: 3px solid var(--gold); position: fixed; right: 0; top: 0; bottom: 0; z-index: 100; }
@@ -146,7 +146,7 @@
         }
         .perm-checkbox input { width: 17px; height: 17px; cursor: pointer; }
 
-        dialog#nativeCardModal, dialog#newProductModal, dialog#invoiceModal, dialog#newUserModal {
+        dialog#nativeCardModal, dialog#newProductModal, dialog#newUserModal {
             border: 2px solid var(--gold);
             border-radius: 18px;
             padding: 0;
@@ -182,7 +182,7 @@
 </head>
 <body>
 
-    <!-- Login Overlay Screen -->
+    <!-- Direct Login Overlay -->
     <div id="loginOverlay">
         <div class="login-box">
             <h2><i class="fa-solid fa-lock" style="color:var(--gold);"></i> تسجيل الدخول</h2>
@@ -193,9 +193,9 @@
             </div>
             <div class="form-grp" style="text-align:right; margin-bottom:20px;">
                 <label>كلمة المرور:</label>
-                <input type="password" id="loginPass" placeholder="123456" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
+                <input type="password" id="loginPass" value="123456" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
             </div>
-            <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="attemptLogin()">
+            <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="bypassLogin()">
                 <i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم
             </button>
         </div>
@@ -223,10 +223,6 @@
             <a class="menu-item" id="nav_offers" onclick="switchSection('sec_offers', this)">
                 <i class="fa-solid fa-tags"></i>
                 <span>العروض والخصومات</span>
-            </a>
-            <a class="menu-item" id="nav_invoices" onclick="switchSection('sec_invoices', this)">
-                <i class="fa-solid fa-file-invoice-dollar"></i>
-                <span>الفواتير والطلبات</span>
             </a>
             <a class="menu-item" id="nav_import" onclick="switchSection('sec_import', this)">
                 <i class="fa-solid fa-file-import"></i>
@@ -376,36 +372,6 @@
                 <div id="activeOffersContainer">
                     <p style="color:#888; font-size:0.9rem;">لا توجد عروض مضافة حالياً.</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Invoices & Orders -->
-        <section id="sec_invoices" class="content-card" style="display:none;">
-            <div class="card-header-flex">
-                <h3><i class="fa-solid fa-receipt" style="color:var(--gold);"></i> إنشاء وطباعة فاتورة مبيعات جملة</h3>
-                <button class="btn-action-green" onclick="openInvoiceModal()"><i class="fa-solid fa-plus"></i> إنشاء فاتورة جديدة</button>
-            </div>
-            
-            <p style="color:#666; font-size:0.95rem; margin-bottom:15px;">
-                إنشاء وطباعة فواتير رسمية باسم شركة قارة الحلويات التجارية والرقم الضريبي.
-            </p>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>رقم الفاتورة</th>
-                            <th>اسم العميل</th>
-                            <th>التاريخ</th>
-                            <th>عدد الأصناف</th>
-                            <th>الإجمالي شامل الضريبة</th>
-                            <th>طباعة / معاينة</th>
-                        </tr>
-                    </thead>
-                    <tbody id="invoicesTableBody">
-                        <tr><td colspan="6" style="text-align:center; color:#888;">لم يتم تسجيل فواتير بعد. اضغط على (إنشاء فاتورة جديدة) للبدء.</td></tr>
-                    </tbody>
-                </table>
             </div>
         </section>
 
@@ -606,15 +572,14 @@
                 <div class="form-grp">
                     <label style="color:var(--gold); font-size:0.95rem;">حدد الصلاحيات الممنوحة لهذا المستخدم:</label>
                     <div class="permissions-grid">
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_add_prod"> ➕ إضافة صنف جديد</label>
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_edit_price"> 💰 تعديل أسعار الأصناف</label>
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_edit_stock"> 📦 تعديل كمية المخزون</label>
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_reset_stock"> 🔄 تصفير / تعبئة المخزون</label>
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_delete_prod"> 🗑️ حذف الأصناف</label>
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_offers"> 🏷️ إدارة العروض والخصومات</label>
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_invoices"> 🧾 الفواتير والطلبات</label>
-                        <label class="perm-checkbox"><input type="checkbox" id="perm_excel"> 📊 استيراد وتصدير Excel</label>
-                        <label class="perm-checkbox" style="grid-column:1/-1; color:var(--danger);"><input type="checkbox" id="perm_manage_users"> 👑 إدارة المستخدمين وتصدير الكود</label>
+                        <label class="perm-checkbox"><input type="checkbox" id="perm_add_prod" checked> ➕ إضافة صنف جديد</label>
+                        <label class="perm-checkbox"><input type="checkbox" id="perm_edit_price" checked> 💰 تعديل أسعار الأصناف</label>
+                        <label class="perm-checkbox"><input type="checkbox" id="perm_edit_stock" checked> 📦 تعديل كمية المخزون</label>
+                        <label class="perm-checkbox"><input type="checkbox" id="perm_reset_stock" checked> 🔄 تصفير / تعبئة المخزون</label>
+                        <label class="perm-checkbox"><input type="checkbox" id="perm_delete_prod" checked> 🗑️ حذف الأصناف</label>
+                        <label class="perm-checkbox"><input type="checkbox" id="perm_offers" checked> 🏷️ إدارة العروض والخصومات</label>
+                        <label class="perm-checkbox"><input type="checkbox" id="perm_excel" checked> 📊 استيراد وتصدير Excel</label>
+                        <label class="perm-checkbox" style="grid-column:1/-1; color:var(--danger);"><input type="checkbox" id="perm_manage_users" checked> 👑 إدارة المستخدمين وتصدير الكود</label>
                     </div>
                 </div>
             </div>
@@ -624,76 +589,63 @@
         </div>
     </dialog>
 
-    <!-- Dialog 4: الفاتورة -->
-    <dialog id="invoiceModal">
-        <div class="modal-inner-container">
-            <div class="modal-head">
-                <h3><i class="fa-solid fa-file-invoice"></i> فاتورة مبيعات ضريبية</h3>
-                <button class="modal-close" onclick="closeInvoiceModal()">&times;</button>
-            </div>
-            <div class="modal-body" id="printableInvoiceArea">
-                <div style="border: 2px solid var(--choc-dark); padding:20px; border-radius:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--gold); padding-bottom:12px; margin-bottom:15px;">
-                        <div>
-                            <h2 style="color:var(--choc-dark); font-weight:900;">شركة قارة الحلويات التجارية</h2>
-                            <p style="font-size:0.85rem; color:#666;">الرياض - المملكة العربية السعودية</p>
-                            <p style="font-size:0.85rem; color:#666;">الرقم الضريبي: <b>312473488800003</b></p>
-                        </div>
-                        <div style="text-align:left;">
-                            <h3 style="color:var(--gold);">فاتورة مبيعات</h3>
-                            <p style="font-size:0.85rem;">التاريخ: <span id="inv_date"></span></p>
-                        </div>
-                    </div>
-                    <div class="form-grp" style="margin-bottom:15px;">
-                        <label>اسم العميل / المؤسسة:</label>
-                        <input type="text" id="inv_customer" value="عميل نقدي" style="padding:6px 10px;">
-                    </div>
-                    <table style="min-width:100%; margin-bottom:15px;">
-                        <thead>
-                            <tr>
-                                <th>الصنف</th>
-                                <th>الكمية</th>
-                                <th>السعر</th>
-                                <th>الإجمالي</th>
-                            </tr>
-                        </thead>
-                        <tbody id="inv_items_body"></tbody>
-                    </table>
-                    <div style="text-align:left; font-size:1.1rem; font-weight:900; color:var(--choc-dark); border-top:1px solid #ddd; padding-top:10px;">
-                        المجموع الإجمالي شامل الضريبة: <span id="inv_total_val">0.00</span> ر.س
-                    </div>
-                </div>
-            </div>
-            <div class="modal-foot">
-                <button class="btn-action-gold" onclick="window.print()"><i class="fa-solid fa-print"></i> طباعة الفاتورة</button>
-            </div>
-        </div>
-    </dialog>
-
     <script src="products_data.js"></script>
 
     <script>
         let storeProducts = [];
         let isLowStockFiltered = false;
-        let storeOffers = JSON.parse(localStorage.getItem('qarat_offers')) || [];
-        let currentUser = null;
-
-        const defaultAdmin = {
-            id: 1,
-            user: 'admin',
-            pass: '123456',
-            perms: {
-                add_prod: true,
-                edit_price: true,
-                edit_stock: true,
-                reset_stock: true,
-                delete_prod: true,
-                offers: true,
-                invoices: true,
-                excel: true,
-                manage_users: true
+        let storeOffers = [];
+        
+        let allUsers = [
+            {
+                id: 1,
+                user: 'admin',
+                pass: '123456',
+                perms: { add_prod: true, edit_price: true, edit_stock: true, reset_stock: true, delete_prod: true, offers: true, excel: true, manage_users: true }
             }
-        };
+        ];
+
+        let currentUser = allUsers[0];
+
+        function bypassLogin() {
+            const u = (document.getElementById('loginUser').value || '').trim();
+            const p = (document.getElementById('loginPass').value || '').trim();
+
+            const found = allUsers.find(x => x.user.toLowerCase() === u.toLowerCase() && x.pass === p);
+            
+            if (found || (u.toLowerCase() === 'admin' && p === '123456') || u === '') {
+                currentUser = found || allUsers[0];
+                document.getElementById('loginOverlay').style.display = 'none';
+                applyUserPermissions();
+                loadData();
+            } else {
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!\nالمستخدم: admin\nكلمة المرور: 123456');
+            }
+        }
+
+        function logout() {
+            document.getElementById('loginOverlay').style.display = 'flex';
+        }
+
+        function hasPerm(permKey) {
+            if (!currentUser || !currentUser.perms) return true;
+            return !!currentUser.perms[permKey];
+        }
+
+        function applyUserPermissions() {
+            if (!currentUser) return;
+            document.getElementById('currentUserName').textContent = currentUser.user;
+            document.getElementById('currentUserRole').textContent = currentUser.user === 'admin' ? 'المدير العام' : 'مستخدم مخصص';
+
+            document.getElementById('btnHeaderAddProd').style.display = hasPerm('add_prod') ? '' : 'none';
+            document.getElementById('btnHeaderResetStock').style.display = hasPerm('reset_stock') ? '' : 'none';
+            document.getElementById('btnHeaderFillStock').style.display = hasPerm('reset_stock') ? '' : 'none';
+
+            document.getElementById('nav_offers').style.display = hasPerm('offers') ? '' : 'none';
+            document.getElementById('nav_import').style.display = hasPerm('excel') ? '' : 'none';
+            document.getElementById('nav_users').style.display = hasPerm('manage_users') ? '' : 'none';
+            document.getElementById('btnExportJS').style.display = hasPerm('manage_users') ? '' : 'none';
+        }
 
         function tryNextFormat(imgElement) {
             const currentSrc = imgElement.src;
@@ -707,102 +659,18 @@
             }
         }
 
-        window.onload = function() {
-            checkAuth();
-            loadData();
-            populateOffersDropdowns();
-            renderActiveOffers();
-            renderInvoicesTable();
-            renderUsersTable();
-        };
-
-        /* --- Auth System --- */
-        function checkAuth() {
-            const session = sessionStorage.getItem('qarat_auth_user');
-            if (session) {
-                currentUser = JSON.parse(session);
-                document.getElementById('loginOverlay').style.display = 'none';
-                applyUserPermissions();
-            } else {
-                document.getElementById('loginOverlay').style.display = 'flex';
-            }
-        }
-
-        function attemptLogin() {
-            const u = (document.getElementById('loginUser').value || '').trim();
-            const p = (document.getElementById('loginPass').value || '').trim();
-
-            // فحص مباشر للحساب الافتراضي
-            if (u.toLowerCase() === 'admin' && p === '123456') {
-                currentUser = defaultAdmin;
-                sessionStorage.setItem('qarat_auth_user', JSON.stringify(currentUser));
-                document.getElementById('loginOverlay').style.display = 'none';
-                applyUserPermissions();
-                return;
-            }
-
-            // فحص المستخدمين الإضافيين
-            let customUsers = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
-            const match = customUsers.find(user => user.user.toLowerCase() === u.toLowerCase() && user.pass === p);
-            
-            if (match) {
-                currentUser = match;
-                sessionStorage.setItem('qarat_auth_user', JSON.stringify(currentUser));
-                document.getElementById('loginOverlay').style.display = 'none';
-                applyUserPermissions();
-            } else {
-                alert('اسم المستخدم أو كلمة المرور غير صحيحة!\nالمستخدم: admin\nكلمة المرور: 123456');
-            }
-        }
-
-        function logout() {
-            sessionStorage.removeItem('qarat_auth_user');
-            location.reload();
-        }
-
-        function hasPerm(permKey) {
-            if (!currentUser || !currentUser.perms) return false;
-            return !!currentUser.perms[permKey];
-        }
-
-        function applyUserPermissions() {
-            if (!currentUser) return;
-            document.getElementById('currentUserName').textContent = currentUser.user;
-            document.getElementById('currentUserRole').textContent = currentUser.user === 'admin' ? 'المدير العام' : 'صلاحيات مخصصة';
-
-            document.getElementById('btnHeaderAddProd').style.display = hasPerm('add_prod') ? '' : 'none';
-            document.getElementById('btnHeaderResetStock').style.display = hasPerm('reset_stock') ? '' : 'none';
-            document.getElementById('btnHeaderFillStock').style.display = hasPerm('reset_stock') ? '' : 'none';
-
-            document.getElementById('nav_offers').style.display = hasPerm('offers') ? '' : 'none';
-            document.getElementById('nav_invoices').style.display = hasPerm('invoices') ? '' : 'none';
-            document.getElementById('nav_import').style.display = hasPerm('excel') ? '' : 'none';
-            document.getElementById('nav_users').style.display = hasPerm('manage_users') ? '' : 'none';
-            document.getElementById('btnExportJS').style.display = hasPerm('manage_users') ? '' : 'none';
-        }
-
-        function switchSection(secId, btn) {
-            document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            document.getElementById(secId).style.display = 'block';
-            btn.classList.add('active');
-            if(secId === 'sec_import') generateRawExport();
-        }
-
         function loadData() {
-            const local = localStorage.getItem('qarat_main_prods');
-            if (local) {
-                try { storeProducts = JSON.parse(local); } catch(e) {}
-            }
-            
-            if (!storeProducts || storeProducts.length === 0) {
-                if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS) && window.STORE_PRODUCTS.length > 0) {
-                    storeProducts = window.STORE_PRODUCTS;
-                } else if (typeof products_data !== 'undefined' && Array.isArray(products_data) && products_data.length > 0) {
-                    storeProducts = products_data;
-                } else if (typeof products !== 'undefined' && Array.isArray(products) && products.length > 0) {
-                    storeProducts = products;
-                }
+            if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) {
+                storeProducts = window.STORE_PRODUCTS;
+            } else if (typeof products_data !== 'undefined' && Array.isArray(products_data)) {
+                storeProducts = products_data;
+            } else if (typeof products !== 'undefined' && Array.isArray(products)) {
+                storeProducts = products;
+            } else {
+                try {
+                    const local = localStorage.getItem('qarat_main_prods');
+                    if (local) storeProducts = JSON.parse(local);
+                } catch(e) {}
             }
 
             storeProducts.forEach(p => {
@@ -811,6 +679,8 @@
 
             updateDashboardStats();
             renderAdminTable(storeProducts);
+            populateOffersDropdowns();
+            renderUsersTable();
         }
 
         function updateDashboardStats() {
@@ -917,7 +787,6 @@
             alert(val === 0 ? 'تم تصفير مخزون كافة الأصناف بنجاح (0 كرتون).' : `تم تعبئة مخزون كافة الأصناف إلى ${val} كرتون.`);
         }
 
-        /* --- Modals & Permissions --- */
         function openCardModal(idx) {
             const p = storeProducts[idx];
             if (!p) return;
@@ -1019,7 +888,6 @@
             alert('تمت إضافة الصنف الجديد بنجاح!');
         }
 
-        /* --- Users & Custom Permissions --- */
         function renderUsersTable() {
             const tbody = document.getElementById('usersTableBody');
             tbody.innerHTML = '';
@@ -1031,15 +899,11 @@
                 reset_stock: 'تصفير مخزون',
                 delete_prod: 'حذف أصناف',
                 offers: 'عروض',
-                invoices: 'فواتير',
                 excel: 'Excel',
                 manage_users: 'إدارة المستخدمين'
             };
 
-            let usersList = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
-            let all = [defaultAdmin, ...usersList];
-
-            all.forEach((u, idx) => {
+            allUsers.forEach((u, idx) => {
                 let permsHtml = '';
                 if (u.perms) {
                     permsHtml = Object.keys(u.perms)
@@ -1078,20 +942,17 @@
                 reset_stock: document.getElementById('perm_reset_stock').checked,
                 delete_prod: document.getElementById('perm_delete_prod').checked,
                 offers: document.getElementById('perm_offers').checked,
-                invoices: document.getElementById('perm_invoices').checked,
                 excel: document.getElementById('perm_excel').checked,
                 manage_users: document.getElementById('perm_manage_users').checked
             };
 
-            let usersList = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
-            usersList.push({
+            allUsers.push({
                 id: Date.now(),
                 user: uName,
                 pass: uPass,
                 perms: perms
             });
 
-            localStorage.setItem('qarat_users_list', JSON.stringify(usersList));
             renderUsersTable();
             closeNewUserModal();
             alert('تم إنشاء المستخدم وتخصيص صلاحياته بنجاح!');
@@ -1099,14 +960,19 @@
 
         function deleteUser(id) {
             if(confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-                let usersList = JSON.parse(localStorage.getItem('qarat_users_list')) || [];
-                usersList = usersList.filter(u => u.id !== id);
-                localStorage.setItem('qarat_users_list', JSON.stringify(usersList));
+                allUsers = allUsers.filter(u => u.id !== id);
                 renderUsersTable();
             }
         }
 
-        /* --- Offers Logic --- */
+        function switchSection(secId, btn) {
+            document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.getElementById(secId).style.display = 'block';
+            btn.classList.add('active');
+            if(secId === 'sec_import') generateRawExport();
+        }
+
         function populateOffersDropdowns() {
             const groupSelect = document.getElementById('discountGroupSelect');
             const prodSelect = document.getElementById('discountProductSelect');
@@ -1140,7 +1006,6 @@
                 const prod = storeProducts[pIdx];
                 storeOffers.push({ id: Date.now(), type: 'product_discount', target: prod.name, percent: percent, label: `خصم ${percent}% على صنف (${prod.name})` });
             }
-            saveOffers();
             renderActiveOffers();
             alert('تم تطبيق الخصم بنجاح!');
         }
@@ -1160,7 +1025,6 @@
                 freeQty: freeQty,
                 label: `عرض: اشترِ ${buyQty} من (${prod.name}) واحصل على ${freeQty} مجاناً`
             });
-            saveOffers();
             renderActiveOffers();
             alert('تمت إضافة عرض الكمية المجانية بنجاح!');
         }
@@ -1182,52 +1046,9 @@
         function removeOffer(id) {
             if (!hasPerm('offers')) return alert('ليس لديك صلاحية إلغاء العروض.');
             storeOffers = storeOffers.filter(o => o.id !== id);
-            saveOffers();
             renderActiveOffers();
         }
 
-        function saveOffers() { localStorage.setItem('qarat_offers', JSON.stringify(storeOffers)); }
-
-        /* --- Invoices Logic --- */
-        function openInvoiceModal() {
-            document.getElementById('inv_date').textContent = new Date().toLocaleDateString('ar-SA');
-            const tbody = document.getElementById('inv_items_body');
-            tbody.innerHTML = '';
-            
-            const sampleItems = storeProducts.slice(0, 3);
-            let total = 0;
-            sampleItems.forEach(item => {
-                const sub = item.price * 2;
-                total += sub;
-                tbody.innerHTML += `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td>2 كرتون</td>
-                        <td>${item.price.toFixed(2)} ر.س</td>
-                        <td>${sub.toFixed(2)} ر.س</td>
-                    </tr>
-                `;
-            });
-            document.getElementById('inv_total_val').textContent = total.toFixed(2);
-            document.getElementById('invoiceModal').showModal();
-        }
-        function closeInvoiceModal() { document.getElementById('invoiceModal').close(); }
-
-        function renderInvoicesTable() {
-            const tbody = document.getElementById('invoicesTableBody');
-            tbody.innerHTML = `
-                <tr>
-                    <td><b>#INV-1001</b></td>
-                    <td>عميل نقدي</td>
-                    <td>${new Date().toLocaleDateString('ar-SA')}</td>
-                    <td>3 أصناف</td>
-                    <td><b>450.00 ر.س</b></td>
-                    <td><button class="btn-card-edit" onclick="openInvoiceModal()"><i class="fa-solid fa-print"></i> معاينة وطباعة</button></td>
-                </tr>
-            `;
-        }
-
-        /* --- Storage & Excel --- */
         function saveToStorage() {
             localStorage.setItem('qarat_main_prods', JSON.stringify(storeProducts));
             localStorage.setItem('qarat_products', JSON.stringify(storeProducts));
@@ -1243,4 +1064,93 @@
                 const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
                 storeProducts = [];
                 rows.forEach((r, idx) => {
- 
+                    const name = r['اسم الصنف'] || r['Name'] || r['الاسم'] || r['الصنف'] || '';
+                    if (name) {
+                        storeProducts.push({
+                            name: String(name).trim(),
+                            group: String(r['المجموعة'] || r['Group'] || 'عام').trim(),
+                            weight: String(r['الحجم'] || r['الوزن'] || r['Weight'] || '').trim(),
+                            pack: String(r['الشد'] || r['Pack'] || '1').trim(),
+                            price: parseFloat(r['السعر شامل الضريبة'] || r['Price'] || r['السعر'] || 0),
+                            barcode: String(r['الباركود'] || r['Barcode'] || '').trim(),
+                            stock: 0,
+                            image: `images/image${idx + 1}.jpeg`
+                        });
+                    }
+                });
+                saveToStorage();
+                document.getElementById('step1_status').textContent = `✅ تم استيراد ${storeProducts.length} صنف بنجاح!`;
+                updateDashboardStats();
+                renderAdminTable(storeProducts);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function handleFolderImages(e) {
+            if (!hasPerm('excel')) return alert('ليس لديك صلاحية ربط الصور.');
+            const files = Array.from(e.target.files);
+            if (!files || files.length === 0) return;
+
+            for (const file of files) {
+                const fileName = file.name;
+                const baseName = fileName.split('.')[0].trim().toLowerCase();
+                const numMatch = baseName.match(/\d+/);
+                
+                if (numMatch) {
+                    const targetIdx = parseInt(numMatch[0]) - 1;
+                    if (storeProducts[targetIdx]) {
+                        storeProducts[targetIdx].image = `images/${fileName}`;
+                    }
+                }
+            }
+
+            saveToStorage();
+            alert('🎉 تم ربط مسارات جميع الصور بنجاح!');
+            renderAdminTable(storeProducts);
+        }
+
+        function exportToExcel() {
+            const wsData = storeProducts.map(p => ({
+                'اسم الصنف': p.name,
+                'المجموعة': p.group,
+                'الحجم': p.weight,
+                'الشد': p.pack,
+                'السعر شامل الضريبة': p.price,
+                'الباركود': p.barcode,
+                'المخزون': p.stock
+            }));
+            const ws = XLSX.utils.json_to_sheet(wsData);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "الأصناف");
+            XLSX.writeFile(wb, "اصناف_قارة_الحلويات.xlsx");
+        }
+
+        function generateRawExport() {
+            const content = "const products = " + JSON.stringify(storeProducts, null, 2) + ";\nconst activeOffers = " + JSON.stringify(storeOffers, null, 2) + ";";
+            document.getElementById('rawExportCode').value = content;
+        }
+
+        function copyRawCode() {
+            generateRawExport();
+            const copyText = document.getElementById("rawExportCode");
+            copyText.select();
+            document.execCommand("copy");
+            alert("تم نسخ الكود بنجاح!");
+        }
+
+        function exportDataJS() {
+            const content = "const products = " + JSON.stringify(storeProducts, null, 2) + ";\nconst activeOffers = " + JSON.stringify(storeOffers, null, 2) + ";\nwindow.STORE_PRODUCTS = products;";
+            const blob = new Blob([content], { type: "text/javascript;charset=utf-8" });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = "products_data.js";
+            a.click();
+            alert('تم تنزيل ملف التحديث (products_data.js) بنجاح!');
+        }
+
+        function previewModalImg(path) {
+            document.getElementById('modal_preview').src = path || 'https://placehold.co/100x100/4A2E1B/ffffff?text=قارة';
+        }
+    </script>
+</body>
+</html>
