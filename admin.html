@@ -6,6 +6,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<!-- مكتبات الطباعة والـ PDF داخل لوحة التحكم -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
 :root{--dark:#2B170D;--mid:#4A2E1B;--gold:#C5A059;--cream:#FAF6F0;--danger:#e11d48;--success:#16a34a;--border:#EBDDCF}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
@@ -53,8 +57,33 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 .form-grp input,.form-grp select{padding:8px;border:1.5px solid var(--border);border-radius:6px;outline:none;font-size:.85rem}
 .perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fdfbf7;padding:10px;border-radius:8px;border:1px solid var(--border)}
 .perm-lbl{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;cursor:pointer}
-.order-link{color:var(--dark);text-decoration:underline;cursor:pointer;font-weight:900}
-.order-link:hover{color:var(--gold)}
+
+/* تصميم الفاتورة الرسمي المطور داخل لوحة التحكم */
+#pdfInvoiceTemplate {
+  display: none; background: #ffffff; width: 210mm; min-height: 297mm; padding: 15mm;
+  color: #111111; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right;
+}
+.inv-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #4a1d75; padding-bottom: 15px; margin-bottom: 20px; }
+.inv-company-info h2 { color: #4a1d75; font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+.inv-company-info p { font-size: 11px; color: #555; line-height: 1.5; }
+.inv-title-box { text-align: left; }
+.inv-title-box h3 { color: #ff7a00; font-size: 20px; font-weight: 900; margin-bottom: 5px; }
+.inv-title-box p { font-size: 12px; color: #333; font-weight: 600; margin-bottom: 2px; }
+
+.inv-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; background: #f8f6fc; border: 1.5px solid #ebdcfc; padding: 12px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 12px; }
+.inv-meta-grid p { margin-bottom: 4px; color: #333; }
+
+.inv-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; text-align: right; font-size: 11.5px; }
+.inv-table th { background: #4a1d75; color: #ffffff; padding: 10px 8px; font-weight: 800; border: 1px solid #4a1d75; text-align: center; }
+.inv-table td { padding: 9px 8px; border: 1.5px solid #dcdfe6; color: #222; text-align: center; vertical-align: middle; }
+.inv-table td:nth-child(3) { text-align: right; }
+
+.inv-footer-summary { display: flex; justify-content: space-between; align-items: flex-start; border-top: 2px solid #ddd; padding-top: 15px; margin-top: 10px; }
+.inv-qr-section { display: flex; align-items: center; gap: 15px; }
+.inv-qr-code-box { width: 90px; height: 90px; background: #fff; padding: 4px; border: 1px solid #ccc; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+.inv-totals-box { width: 280px; background: #faf5ff; border: 1.5px solid #4a1d75; padding: 12px; border-radius: 8px; text-align: right; }
+.inv-totals-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; font-weight: 700; color: #333; }
+.inv-totals-row.grand { font-size: 15px; font-weight: 900; color: #4a1d75; border-top: 1px dashed #4a1d75; padding-top: 6px; margin-top: 6px; }
 
 @media (max-width:768px){
   body{flex-direction:column}
@@ -125,7 +154,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <div class="stat-box"><div class="stat-icon" style="background:#dcfce7;color:#166534;"><i class="fa-solid fa-sack-dollar"></i></div><div><h4 style="font-size:.75rem;color:#777;">قيمة المخزون</h4><b id="statInventoryValue" style="color:#166534;font-size:1rem;">0 ر.س</b></div></div>
   </div>
 
-  <!-- Products Section -->
   <section id="sec_products" class="content-card">
     <div class="card-header">
       <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> إدارة الأصناف والمخزون</h3>
@@ -145,72 +173,41 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
-  <!-- Orders Section -->
   <section id="sec_orders" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> طلبيات العملاء وتحديث التتبع</h3>
       <button class="btn-danger" onclick="clearOrders()"><i class="fa-solid fa-trash"></i> مسح السجل</button>
     </div>
-    <p style="color:#666;font-size:.85rem;margin-bottom:12px;">💡 اضغط على <b>رقم الطلب</b> لعرض تفاصيل الفاتورة كاملة وطباعتها.</p>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>رقم الطلب (للتفاصيل)</th><th>العميل</th><th>الجوال</th><th>المدينة</th><th>الإجمالي</th><th>التاريخ</th><th>حالة الشحن والتتبع</th><th>إجراء</th></tr></thead>
+        <thead><tr><th>رقم الطلب</th><th>العميل</th><th>الجوال</th><th>المدينة</th><th>الإجمالي</th><th>التاريخ</th><th>حالة الشحن والتتبع</th><th>إجراء</th></tr></thead>
         <tbody id="tbodyOrders"></tbody>
       </table>
     </div>
   </section>
 
-  <!-- Offers Section with Barcode Input -->
   <section id="sec_offers" class="content-card" style="display:none;">
     <div class="card-header"><h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> العروض والخصومات</h3></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:15px;">
-      
-      <!-- Percentage Discount Box -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-bottom:15px;">
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
-        <h4 style="margin-bottom:10px;"><i class="fa-solid fa-percent"></i> خصم بالنسبة المئوية (%)</h4>
-        <div class="form-grp" style="margin-bottom:8px;">
-          <label>نوع الهدف:</label>
-          <select id="discType" onchange="toggleDiscTarget()">
-            <option value="group">مجموعة كاملة</option>
-            <option value="product">صنف محدد (بالاسم أو الباركود)</option>
-          </select>
-        </div>
-        <div class="form-grp" id="discGroupWrap" style="margin-bottom:8px;">
-          <label>اختر المجموعة:</label>
-          <select id="discGroup"></select>
-        </div>
-        <div class="form-grp" id="discProdWrap" style="display:none;margin-bottom:8px;">
-          <label>ابحث بباركود أو اسم الصنف:</label>
-          <input type="text" id="discBarcodeIn" placeholder="اكتب الباركود أو جزء من الاسم..." oninput="filterOffersSelect('discBarcodeIn','discProdSelect')">
-          <select id="discProdSelect" style="margin-top:4px;"></select>
-        </div>
-        <div class="form-grp" style="margin-bottom:10px;">
-          <label>نسبة الخصم (%):</label>
-          <input type="number" id="discVal" placeholder="مثلاً: 10" min="1" max="99">
-        </div>
+        <h4 style="margin-bottom:10px;">خصم مئوي (%)</h4>
+        <div class="form-grp" style="margin-bottom:8px;"><label>اختر المجموعة:</label><select id="discGroup"></select></div>
+        <div class="form-grp" style="margin-bottom:10px;"><label>نسبة الخصم (%):</label><input type="number" id="discVal" placeholder="10"></div>
         <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addDisc()"><i class="fa-solid fa-check"></i> تطبيق الخصم</button>
       </div>
-
-      <!-- BXGY Offer Box with Barcode -->
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
-        <h4 style="margin-bottom:10px;"><i class="fa-solid fa-gift"></i> عروض الكميات (اشترِ X واحصل على Y)</h4>
-        <div class="form-grp" style="margin-bottom:8px;">
-          <label>ابحث بباركود أو اسم الصنف:</label>
-          <input type="text" id="bxgyBarcodeIn" placeholder="اكتب الباركود أو جزء من الاسم..." oninput="filterOffersSelect('bxgyBarcodeIn','bxgyProdSelect')">
-          <select id="bxgyProdSelect" style="margin-top:4px;"></select>
-        </div>
+        <h4 style="margin-bottom:10px;">عرض كمية مجانية</h4>
+        <div class="form-grp" style="margin-bottom:8px;"><label>اختر الصنف:</label><select id="bxgyProd"></select></div>
         <div class="form-row" style="margin-bottom:10px;">
-          <div class="form-grp"><label>اشترِ عدد:</label><input type="number" id="bxgyB" value="10" min="1"></div>
-          <div class="form-grp"><label>واحصل على مجاناً:</label><input type="number" id="bxgyF" value="1" min="1"></div>
+          <div class="form-grp"><label>اشترِ:</label><input type="number" id="bxgyB" value="10"></div>
+          <div class="form-grp"><label>مجاناً:</label><input type="number" id="bxgyF" value="1"></div>
         </div>
-        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addBxgy()"><i class="fa-solid fa-gift"></i> إضافة عرض الكمية</button>
+        <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addBxgy()"><i class="fa-solid fa-gift"></i> إضافة العرض</button>
       </div>
-
     </div>
     <div id="offersList" style="background:#fff;padding:12px;border-radius:8px;border:1px solid var(--border);"></div>
   </section>
 
-  <!-- Import / Export Section -->
   <section id="sec_import" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> أدوات Excel و GitHub</h3>
@@ -228,7 +225,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
-  <!-- Users Section -->
   <section id="sec_users" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين وتعديل حساب المدير</h3>
@@ -243,7 +239,73 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </section>
 </main>
 
-<!-- Dialog Edit Product -->
+<!-- Hidden Container for Admin PDF Printing -->
+<div id="pdfInvoiceTemplate">
+  <div class="inv-header">
+    <div class="inv-company-info">
+      <h2>شركة قارة الحلويات التجارية</h2>
+      <p>المملكة العربية السعودية - الرياض - العزيزية - حي المصانع - مستودع رقم 72</p>
+      <p>الرقم الضريبي: <b>312473488800003</b> | السجل التجاري: 1010000000</p>
+    </div>
+    <div class="inv-title-box">
+      <h3>فاتورة مبيعات ضريبية</h3>
+      <p>رقم الفاتورة: <b id="pdf_inv_id" style="color:#4a1d75;">#QAR-0000</b></p>
+      <p>تاريخ الإصدار: <span id="pdf_inv_date"></span></p>
+    </div>
+  </div>
+
+  <div class="inv-meta-grid">
+    <div>
+      <p><b>اسم العميل / المؤسسة:</b> <span id="pdf_cust_name"></span></p>
+      <p><b>رقم الجوال:</b> <span id="pdf_cust_phone"></span></p>
+    </div>
+    <div>
+      <p><b>المدينة / العنوان:</b> <span id="pdf_cust_city"></span></p>
+      <p><b>طريقة الدفع:</b> تحويل بنكي / الدفع عند الاستلام</p>
+    </div>
+  </div>
+
+  <table class="inv-table">
+    <thead>
+      <tr>
+        <th style="width: 5%;">#</th>
+        <th style="width: 22%;">الباركود</th>
+        <th style="width: 33%;">اسم الصنف</th>
+        <th style="width: 10%;">الكمية</th>
+        <th style="width: 15%;">سعر الكرتون</th>
+        <th style="width: 15%;">الإجمالي (ر.س)</th>
+      </tr>
+    </thead>
+    <tbody id="pdf_items_tbody"></tbody>
+  </table>
+
+  <div class="inv-footer-summary">
+    <div class="inv-qr-section">
+      <div class="inv-qr-code-box" id="qrcodeContainer"></div>
+      <div style="font-size: 11px; color: #555; line-height: 1.5;">
+        <b>فاتورة إلكترونية معتمدة</b><br>
+        شركة قارة الحلويات التجارية<br>
+        مطابقة لاشتراطات هيئة الزكاة والضريبة والجمارك (zatca)
+      </div>
+    </div>
+    <div class="inv-totals-box">
+      <div class="inv-totals-row">
+        <span>المجموع الخاضع للضريبة:</span>
+        <span id="pdf_subtotal">0.00</span>
+      </div>
+      <div class="inv-totals-row">
+        <span>ضريبة القيمة المضافة (15%):</span>
+        <span id="pdf_vat">0.00</span>
+      </div>
+      <div class="inv-totals-row grand">
+        <span>الإجمالي النهائي:</span>
+        <span><span id="pdf_total_val">0.00</span> ر.س</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Dialogs -->
 <dialog id="dlgEdit">
   <div class="modal-head"><h3>تعديل الصنف</h3><button onclick="document.getElementById('dlgEdit').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -269,7 +331,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
-<!-- Dialog New Product -->
 <dialog id="dlgNewP">
   <div class="modal-head"><h3>إضافة صنف جديد</h3><button onclick="document.getElementById('dlgNewP').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -290,7 +351,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
-<!-- Dialog New User -->
 <dialog id="dlgNewU">
   <div class="modal-head"><h3>إضافة مستخدم جديد</h3><button onclick="document.getElementById('dlgNewU').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -314,7 +374,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
-<!-- Dialog Edit Admin / User -->
 <dialog id="dlgEditUser">
   <div class="modal-head"><h3>تعديل بيانات الحساب وكلمة المرور</h3><button onclick="document.getElementById('dlgEditUser').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -325,90 +384,27 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
-<!-- Dialog View & Print Order Details (جديد: نافذة تفاصيل وطباعة الفاتورة) -->
-<dialog id="dlgOrderDetails" style="max-width:700px;">
-  <div class="modal-head">
-    <h3 id="od_title">تفاصيل الفاتورة</h3>
-    <button onclick="document.getElementById('dlgOrderDetails').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button>
-  </div>
-  <div class="modal-body" id="printArea">
-    <div style="border-bottom:2px solid var(--gold);padding-bottom:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;">
-      <div>
-        <h3 style="color:var(--dark);">🍬 شركة قارة الحلويات التجارية</h3>
-        <p style="font-size:.8rem;color:#666;">الرياض - العزيزية - حي المصانع - مستودع 72</p>
-      </div>
-      <div style="text-align:left;">
-        <h4 id="od_id" style="color:var(--gold);"></h4>
-        <span id="od_date" style="font-size:.8rem;color:#777;"></span>
-      </div>
-    </div>
-    <div style="background:#faf5ff;padding:10px;border-radius:8px;font-size:.85rem;margin-bottom:12px;line-height:1.6;">
-      <p>👤 <b>العميل:</b> <span id="od_cust"></span></p>
-      <p>📱 <b>الجوال:</b> <span id="od_phone"></span></p>
-      <p>📍 <b>الموقع / المدينة:</b> <span id="od_city"></span></p>
-    </div>
-    <table style="width:100%;border-collapse:collapse;margin-bottom:12px;font-size:.85rem;">
-      <thead>
-        <tr style="background:#f6ede3;">
-          <th style="padding:6px;border:1px solid #ddd;">#</th>
-          <th style="padding:6px;border:1px solid #ddd;">الباركود</th>
-          <th style="padding:6px;border:1px solid #ddd;">الصنف</th>
-          <th style="padding:6px;border:1px solid #ddd;">الكمية</th>
-          <th style="padding:6px;border:1px solid #ddd;">السعر</th>
-          <th style="padding:6px;border:1px solid #ddd;">الإجمالي</th>
-        </tr>
-      </thead>
-      <tbody id="od_items"></tbody>
-    </table>
-    <div style="display:flex;justify-content:space-between;align-items:center;background:#fdfbf7;padding:10px;border-radius:8px;border:1px solid var(--border);">
-      <span style="font-size:.8rem;color:#777;">الأسعار شاملة ضريبة القيمة المضافة 15%</span>
-      <b id="od_total" style="font-size:1.1rem;color:var(--dark);"></b>
-    </div>
-  </div>
-  <div style="padding:10px 1.2rem 1.2rem;display:flex;justify-content:flex-end;gap:10px;">
-    <button class="btn-green" onclick="printCurrentOrder()"><i class="fa-solid fa-print"></i> طباعة الفاتورة</button>
-    <button class="btn-gold" onclick="document.getElementById('dlgOrderDetails').close()">إغلاق</button>
-  </div>
-</dialog>
-
 <script src="products_data.js"></script>
 <script>
 var prods=[],offers=[];
 var adminRoot = JSON.parse(localStorage.getItem('qarat_root_admin') || JSON.stringify({id:'root',user:'admin',pass:'123456',perms:{add:true,price:true,stock:true,reset:true,del:true,offers:true,xl:true,mgr:true}}));
 var user = adminRoot;
 
-function toggleSidebar(){
-  var sb = document.getElementById('sidebarNav');
-  sb.classList.toggle('open');
-}
+function toggleSidebar(){ document.getElementById('sidebarNav').classList.toggle('open'); }
 
 function doLogin(){
   var u=(document.getElementById('loginUser').value||'').trim(),p=(document.getElementById('loginPass').value||'').trim();
   adminRoot = JSON.parse(localStorage.getItem('qarat_root_admin') || JSON.stringify(adminRoot));
-  
   if(u.toLowerCase() === adminRoot.user.toLowerCase() && p === adminRoot.pass){
-    user = adminRoot;
-    document.getElementById('loginOverlay').style.display='none';
-    applyPerms();loadData();return;
+    user = adminRoot; document.getElementById('loginOverlay').style.display='none'; applyPerms(); loadData(); return;
   }
-  
   var users=JSON.parse(localStorage.getItem('qarat_users_list')||'[]');
   var match=users.find(function(x){return x.user.toLowerCase()===u.toLowerCase()&&x.pass===p});
-  if(match){
-    user=match;
-    document.getElementById('loginOverlay').style.display='none';
-    applyPerms();loadData();
-  } else {
-    alert('خطأ في اسم المستخدم أو كلمة المرور!');
-  }
+  if(match){ user=match; document.getElementById('loginOverlay').style.display='none'; applyPerms(); loadData(); }
+  else { alert('خطأ في اسم المستخدم أو كلمة المرور!'); }
 }
 
-function logout(){
-  document.getElementById('loginUser').value = '';
-  document.getElementById('loginPass').value = '';
-  document.getElementById('loginOverlay').style.display='flex';
-}
-
+function logout(){ document.getElementById('loginUser').value=''; document.getElementById('loginPass').value=''; document.getElementById('loginOverlay').style.display='flex'; }
 function hasP(k){return user&&user.perms?!!user.perms[k]:true;}
 
 function applyPerms(){
@@ -426,9 +422,7 @@ function applyPerms(){
 window.onload=function(){
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
-  loadData();
-  renderUsers();
-  renderOrders();
+  loadData(); renderUsers(); renderOrders();
 };
 
 function loadData(){
@@ -440,7 +434,7 @@ function loadData(){
   }
   if(!prods)prods=[];
   prods.forEach(function(p){if(p.stock===undefined)p.stock=0;});
-  updateStats();renderTable(prods);popDropdowns();renderUsers();renderOrders();
+  updateStats(); renderTable(prods); popDropdowns(); renderUsers(); renderOrders();
 }
 
 function saveLocal(){
@@ -517,61 +511,86 @@ function saveNewP(){
   saveLocal();renderTable(prods);updateStats();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة!');
 }
 
-/* Orders Rendering & Details Popup Logic */
+// توليد باركود ZATCA QR Code بصيغة TLV
+function generateZatcaQRCode(sellerName, vatNumber, timestamp, totalWithVat, vatTotal) {
+  function toTLV(tag, val) {
+    const vBytes = new TextEncoder().encode(val);
+    return new Uint8Array([tag, vBytes.length, ...vBytes]);
+  }
+  const t1 = toTLV(1, sellerName);
+  const t2 = toTLV(2, vatNumber);
+  const t3 = toTLV(3, timestamp);
+  const t4 = toTLV(4, totalWithVat.toString());
+  const t5 = toTLV(5, vatTotal.toString());
+  const totalLen = t1.length + t2.length + t3.length + t4.length + t5.length;
+  const result = new Uint8Array(totalLen);
+  let offset = 0;
+  [t1, t2, t3, t4, t5].forEach(arr => { result.set(arr, offset); offset += arr.length; });
+  return btoa(String.fromCharCode.apply(null, result));
+}
+
+// دالة الطباعة من لوحة التحكم (بدون الخروج منها)
+function printOrderInvoice(orderId) {
+  var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
+  var o = ords.find(function(x){ return x.orderId === orderId; });
+  if (!o) return alert('الطلبية غير موجودة');
+
+  var total = parseFloat(o.total || 0);
+  var vat = total * 0.15;
+  var subtotal = total - vat;
+
+  document.getElementById('pdf_inv_id').textContent = '#' + o.orderId;
+  document.getElementById('pdf_inv_date').textContent = o.date;
+  document.getElementById('pdf_cust_name').textContent = o.customerName;
+  document.getElementById('pdf_cust_phone').textContent = o.phone;
+  document.getElementById('pdf_cust_city').textContent = o.city || 'الرياض';
+  document.getElementById('pdf_subtotal').textContent = subtotal.toFixed(2) + ' ر.س';
+  document.getElementById('pdf_vat').textContent = vat.toFixed(2) + ' ر.س';
+  document.getElementById('pdf_total_val').textContent = total.toFixed(2);
+
+  var tbody = document.getElementById('pdf_items_tbody');
+  tbody.innerHTML = '';
+  (o.items || []).forEach(function(item, idx) {
+    var unit = item.unitPrice || item.price || 0;
+    var sub = (item.qty * unit).toFixed(2);
+    tbody.innerHTML += `
+      <tr>
+        <td>${idx + 1}</td>
+        <td style="font-family:monospace; font-size:11px;">${item.barcode || '—'}</td>
+        <td><b>${item.name}</b></td>
+        <td>${item.qty} كرتون</td>
+        <td>${unit.toFixed(2)}</td>
+        <td><b>${sub}</b></td>
+      </tr>
+    `;
+  });
+
+  document.getElementById('qrcodeContainer').innerHTML = '';
+  var zatcaBase64 = generateZatcaQRCode("شركة قارة الحلويات التجارية", "312473488800003", o.date, total.toFixed(2), vat.toFixed(2));
+  new QRCode(document.getElementById("qrcodeContainer"), { text: zatcaBase64, width: 84, height: 84 });
+
+  var pdfElement = document.getElementById('pdfInvoiceTemplate');
+  pdfElement.style.display = 'block';
+  var opt = {
+    margin: [5, 5, 5, 5], filename: `فاتورة_قارة_الحلويات_${o.orderId}.pdf`,
+    image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  html2pdf().set(opt).from(pdfElement).save().then(function() {
+    pdfElement.style.display = 'none';
+  });
+}
+
 function renderOrders(){
   var tb=document.getElementById('tbodyOrders');if(!tb)return;tb.innerHTML='';
   var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
   if(!ords.length){tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:#888;">لا توجد طلبيات بعد.</td></tr>';return;}
   ords.forEach(function(o){
     var tr=document.createElement('tr');
-    tr.innerHTML='<td><a class="order-link" onclick="viewOrderDetails(\''+o.orderId+'\')">#'+o.orderId+'</a></td><td><b>'+o.customerName+'</b></td><td>'+o.phone+'</td><td>'+(o.city||'الرياض')+'</td><td><b>'+parseFloat(o.total||0).toFixed(2)+' ر.س</b></td><td>'+o.date+'</td><td><select class="status-sel" onchange="updOrd(\''+o.orderId+'\',this.value)"><option value="received" '+(o.status==='received'?'selected':'')+'>1. تم استلام الطلب وتأكيده</option><option value="preparing" '+(o.status==='preparing'?'selected':'')+'>2. استلام المستودع والتجهيز</option><option value="shipping" '+(o.status==='shipping'?'selected':'')+'>3. خرجت في الطريق مع المندوب</option><option value="delivered" '+(o.status==='delivered'?'selected':'')+'>4. تم التسليم للعميل</option></select></td><td><button class="btn-danger" style="padding:3px 6px;" onclick="delOrd(\''+o.orderId+'\')"><i class="fa-solid fa-trash"></i></button></td>';
+    tr.innerHTML='<td><a href="javascript:void(0)" onclick="printOrderInvoice(\''+o.orderId+'\')" style="color:var(--gold); font-weight:bold; text-decoration:underline;" title="اضغط لطباعة الفاتورة">#'+o.orderId+' 🖨️</a></td><td><b>'+o.customerName+'</b></td><td>'+o.phone+'</td><td>'+(o.city||'الرياض')+'</td><td><b>'+parseFloat(o.total||0).toFixed(2)+' ر.س</b></td><td>'+o.date+'</td><td><select class="status-sel" onchange="updOrd(\''+o.orderId+'\',this.value)"><option value="received" '+(o.status==='received'?'selected':'')+'>1. تم استلام الطلب وتأكيده</option><option value="preparing" '+(o.status==='preparing'?'selected':'')+'>2. استلام المستودع والتجهيز</option><option value="shipping" '+(o.status==='shipping'?'selected':'')+'>3. خرجت في الطريق مع المندوب</option><option value="delivered" '+(o.status==='delivered'?'selected':'')+'>4. تم التسليم للعميل</option></select></td><td><button class="btn-danger" style="padding:3px 6px;" onclick="delOrd(\''+o.orderId+'\')"><i class="fa-solid fa-trash"></i></button></td>';
     tb.appendChild(tr);
   });
-}
-
-function viewOrderDetails(orderId){
-  var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
-  var o = ords.find(function(x){return x.orderId===orderId});
-  if(!o) return alert('الطلب غير موجود');
-
-  document.getElementById('od_title').textContent = 'فاتورة طلب #' + o.orderId;
-  document.getElementById('od_id').textContent = '#' + o.orderId;
-  document.getElementById('od_date').textContent = o.date;
-  document.getElementById('od_cust').textContent = o.customerName;
-  document.getElementById('od_phone').textContent = o.phone;
-  document.getElementById('od_city').textContent = o.city || 'الرياض';
-  document.getElementById('od_total').textContent = 'الإجمالي: ' + parseFloat(o.total||0).toFixed(2) + ' ر.س';
-
-  var tbody = document.getElementById('od_items');
-  tbody.innerHTML = '';
-  if(o.items && o.items.length){
-    o.items.forEach(function(it, idx){
-      var sub = ((it.qty||1) * (it.unitPrice||it.price||0)).toFixed(2);
-      tbody.innerHTML += `
-        <tr>
-          <td style="padding:6px;border:1px solid #ddd;text-align:center;">${idx+1}</td>
-          <td style="padding:6px;border:1px solid #ddd;"><code>${it.barcode||'-'}</code></td>
-          <td style="padding:6px;border:1px solid #ddd;"><b>${it.name}</b></td>
-          <td style="padding:6px;border:1px solid #ddd;text-align:center;">${it.qty} كرتون</td>
-          <td style="padding:6px;border:1px solid #ddd;text-align:center;">${(it.unitPrice||it.price||0).toFixed(2)}</td>
-          <td style="padding:6px;border:1px solid #ddd;text-align:center;"><b>${sub} ر.س</b></td>
-        </tr>
-      `;
-    });
-  } else {
-    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:10px;">لا توجد تفاصيل إضافية للأصناف.</td></tr>';
-  }
-
-  document.getElementById('dlgOrderDetails').showModal();
-}
-
-function printCurrentOrder(){
-  var printContent = document.getElementById('printArea').innerHTML;
-  var originalContent = document.body.innerHTML;
-  document.body.innerHTML = printContent;
-  window.print();
-  document.body.innerHTML = originalContent;
-  window.location.reload();
 }
 
 function updOrd(id,st){
@@ -610,16 +629,11 @@ function saveUserEdit(){
   var id = document.getElementById('eu_id').value;
   var newU = document.getElementById('eu_name').value.trim();
   var newP = document.getElementById('eu_pass').value.trim();
-  
   if(!newU || !newP) return alert('يرجى كتابة اسم المستخدم وكلمة المرور');
-  
   if(id === 'root'){
-    adminRoot.user = newU;
-    adminRoot.pass = newP;
+    adminRoot.user = newU; adminRoot.pass = newP;
     localStorage.setItem('qarat_root_admin', JSON.stringify(adminRoot));
-    user = adminRoot;
-    applyPerms();
-    renderUsers();
+    user = adminRoot; applyPerms(); renderUsers();
     document.getElementById('dlgEditUser').close();
     alert('تم تعديل بيانات المدير العام بنجاح!');
   }
@@ -644,68 +658,26 @@ function switchSec(id,btn){
   if(id==='sec_orders')renderOrders();if(id==='sec_import')genRaw();
 }
 
-/* Offers & Barcode Dropdown Helpers */
 function popDropdowns(){
-  var grpSel=document.getElementById('discGroup');
-  if(grpSel){
-    var grps=[...new Set(prods.map(function(p){return p.group||'عام';}))];
-    grpSel.innerHTML=grps.map(function(g){return '<option value="'+g+'">'+g+'</option>'}).join('');
-  }
-  fillProdOffersSelect('discProdSelect', prods);
-  fillProdOffersSelect('bxgyProdSelect', prods);
-}
-
-function fillProdOffersSelect(selectId, list){
-  var sel = document.getElementById(selectId);
-  if(!sel) return;
-  sel.innerHTML = list.map(function(p){
-    var origIdx = prods.indexOf(p);
-    var bCode = p.barcode ? ` [باركود: ${p.barcode}]` : '';
-    return `<option value="${origIdx}">${p.name}${bCode}</option>`;
-  }).join('');
-}
-
-function filterOffersSelect(inputId, selectId){
-  var q = (document.getElementById(inputId).value || '').trim().toLowerCase();
-  var filtered = prods.filter(function(p){
-    return (p.name && p.name.toLowerCase().includes(q)) || (p.barcode && String(p.barcode).toLowerCase().includes(q));
-  });
-  fillProdOffersSelect(selectId, filtered);
-}
-
-function toggleDiscTarget(){
-  var t = document.getElementById('discType').value;
-  document.getElementById('discGroupWrap').style.display = t === 'group' ? 'block' : 'none';
-  document.getElementById('discProdWrap').style.display = t === 'product' ? 'block' : 'none';
+  var grpSel=document.getElementById('discGroup'),prodSel=document.getElementById('bxgyProd');if(!grpSel||!prodSel)return;
+  var grps=[...new Set(prods.map(function(p){return p.group||'عام';}))];
+  grpSel.innerHTML=grps.map(function(g){return '<option value="'+g+'">'+g+'</option>'}).join('');
+  prodSel.innerHTML=prods.map(function(p,i){return '<option value="'+i+'">'+p.name+'</option>'}).join('');
 }
 
 function addDisc(){
   if(!hasP('offers'))return alert('ليس لديك صلاحية.');
-  var t = document.getElementById('discType').value;
-  var pct = parseFloat(document.getElementById('discVal').value)||0;
+  var g=document.getElementById('discGroup').value,pct=parseFloat(document.getElementById('discVal').value)||0;
   if(pct<=0)return alert('أدخل نسبة صحيحة');
-
-  if(t === 'group'){
-    var g = document.getElementById('discGroup').value;
-    offers.push({id:Date.now(),type:'group_discount',target:g,percent:pct,label:'خصم '+pct+'% على مجموعة ('+g+')'});
-  } else {
-    var pIdx = document.getElementById('discProdSelect').value;
-    var prod = prods[pIdx];
-    if(!prod) return alert('يرجى اختيار صنف صحيح');
-    offers.push({id:Date.now(),type:'product_discount',target:prod.name,percent:pct,label:`خصم ${pct}% على (${prod.name}) [باركود: ${prod.barcode||'-'}]`});
-  }
+  offers.push({id:Date.now(),type:'group_discount',target:g,percent:pct,label:'خصم '+pct+'% على ('+g+')'});
   renderOffers();alert('تم تطبيق الخصم!');
 }
 
 function addBxgy(){
   if(!hasP('offers'))return alert('ليس لديك صلاحية.');
-  var pIdx = document.getElementById('bxgyProdSelect').value;
-  var p = prods[pIdx];
-  if(!p) return alert('يرجى اختيار صنف صحيح');
-  var b = parseInt(document.getElementById('bxgyB').value)||10;
-  var f = parseInt(document.getElementById('bxgyF').value)||1;
-  offers.push({id:Date.now(),type:'bxgy',target:p.name,buyQty:b,freeQty:f,label:`عرض: اشترِ ${b} من (${p.name}) [باركود: ${p.barcode||'-'}] واحصل على ${f} مجاناً`});
-  renderOffers();alert('تمت إضافة عرض الكمية!');
+  var p=prods[document.getElementById('bxgyProd').value],b=parseInt(document.getElementById('bxgyB').value)||10,f=parseInt(document.getElementById('bxgyF').value)||1;
+  offers.push({id:Date.now(),type:'bxgy',target:p.name,buyQty:b,freeQty:f,label:'اشترِ '+b+' من ('+p.name+') واحصل على '+f+' مجاناً'});
+  renderOffers();alert('تمت إضافة العرض!');
 }
 
 function renderOffers(){
