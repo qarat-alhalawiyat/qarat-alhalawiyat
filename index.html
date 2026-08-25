@@ -6,6 +6,8 @@
   <title>شركة قارة الحلويات التجارية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- مكتبة إنشاء وتحميل ملفات الـ PDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root {
       --primary: #4a1d75;
@@ -235,6 +237,7 @@
       overflow: hidden;
       margin-bottom: 10px;
       position: relative;
+      cursor: pointer;
     }
     .product-img-wrap img {
       max-width: 90%;
@@ -273,7 +276,10 @@
       margin-bottom: 4px;
       line-height: 1.4;
       min-height: 40px;
+      cursor: pointer;
+      transition: color 0.2s;
     }
+    .product-title:hover { color: var(--primary); }
     .product-meta {
       font-size: 11px;
       color: var(--text-muted);
@@ -415,6 +421,15 @@
       .add-btn { width: 100%; padding: 6px 0; font-size: 12px; }
     }
 
+    /* PDF Template Hidden Container */
+    #pdfInvoiceTemplate {
+      display: none;
+      background: #fff;
+      padding: 30px;
+      color: #222;
+      font-family: 'Cairo', sans-serif;
+    }
+
     /* Modern Footer */
     footer {
       background: linear-gradient(135deg, #1f0b35, #2b0f47);
@@ -457,9 +472,7 @@
       list-style: none;
       padding: 0;
     }
-    .footer-links li {
-      margin-bottom: 8px;
-    }
+    .footer-links li { margin-bottom: 8px; }
     .footer-links a, .footer-links button {
       color: #cbd5e1;
       text-decoration: none;
@@ -474,9 +487,7 @@
       align-items: center;
       gap: 5px;
     }
-    .footer-links a:hover, .footer-links button:hover {
-      color: #ffd166;
-    }
+    .footer-links a:hover, .footer-links button:hover { color: #ffd166; }
     .footer-contact-item {
       display: flex;
       align-items: center;
@@ -563,15 +574,61 @@
         <button class="dropdown-btn" onclick="toggleDropdown(event)">
           📂 التصنيفات <span style="font-size: 9px;">▼</span>
         </button>
-        <div class="dropdown-menu" id="dropdownMenuList">
-        </div>
+        <div class="dropdown-menu" id="dropdownMenuList"></div>
       </div>
     </div>
 
     <!-- Products Grid -->
-    <div class="products-grid" id="productsGrid">
-    </div>
+    <div class="products-grid" id="productsGrid"></div>
 
+  </div>
+
+  <!-- Hidden Container for PDF Rendering -->
+  <div id="pdfInvoiceTemplate">
+    <div style="border: 2px solid #4a1d75; padding: 25px; border-radius: 12px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff7a00; padding-bottom: 15px; margin-bottom: 20px;">
+        <div>
+          <h2 style="color: #4a1d75; font-weight: 900; margin-bottom: 4px;">شركة قارة الحلويات التجارية</h2>
+          <p style="font-size: 13px; color: #555;">الرياض - المملكة العربية السعودية</p>
+          <p style="font-size: 13px; color: #555;">الرقم الضريبي: <b>312473488800003</b></p>
+        </div>
+        <div style="text-align: left;">
+          <h3 style="color: #ff7a00; font-size: 18px; margin-bottom: 4px;">فاتورة مبيعات جملة</h3>
+          <p style="font-size: 12px; color: #666;">رقم الفاتورة: <b id="pdf_inv_id" style="color:#4a1d75;">#QAR-0000</b></p>
+          <p style="font-size: 12px; color: #666;">التاريخ: <span id="pdf_inv_date"></span></p>
+        </div>
+      </div>
+
+      <div style="background: #faf5ff; border: 1px solid #ebdcfc; padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 13px;">
+        <p><b>اسم العميل / المؤسسة:</b> <span id="pdf_cust_name"></span></p>
+        <p><b>رقم الجوال:</b> <span id="pdf_cust_phone"></span></p>
+        <p><b>المدينة / الموقع:</b> <span id="pdf_cust_city"></span></p>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; text-align: right; font-size: 12px;">
+        <thead>
+          <tr style="background: #4a1d75; color: #fff;">
+            <th style="padding: 10px; border: 1px solid #4a1d75;">#</th>
+            <th style="padding: 10px; border: 1px solid #4a1d75;">الباركود</th>
+            <th style="padding: 10px; border: 1px solid #4a1d75;">اسم الصنف</th>
+            <th style="padding: 10px; border: 1px solid #4a1d75;">الكمية (كرتون)</th>
+            <th style="padding: 10px; border: 1px solid #4a1d75;">سعر الكرتون</th>
+            <th style="padding: 10px; border: 1px solid #4a1d75;">الإجمالي شامل الضريبة</th>
+          </tr>
+        </thead>
+        <tbody id="pdf_items_tbody"></tbody>
+      </table>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #eee; padding-top: 15px;">
+        <div style="font-size: 11px; color: #666;">
+          * جميع الأسعار تشمل ضريبة القيمة المضافة 15%<br>
+          * شكراً لتعاملكم مع شركة قارة الحلويات التجارية
+        </div>
+        <div style="font-size: 16px; font-weight: 900; color: #4a1d75; background: #faf5ff; padding: 8px 16px; border-radius: 8px; border: 1px solid #ebdcfc;">
+          المجموع الكلي: <span id="pdf_total_val">0.00</span> ر.س
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Modern Store Footer -->
@@ -620,7 +677,7 @@
         </div>
         <div class="footer-contact-item">
           <span>📱</span>
-          <span>هاتف المبيعات: 0578384009</span>
+          <span>واتساب المبيعات: 0578384009</span>
         </div>
         <div class="footer-contact-item">
           <span>✉️</span>
@@ -763,12 +820,12 @@
         return `
           <div class="product-card ${isOutOfStock ? 'out-of-stock' : ''}">
             ${offerBadge}
-            <div class="product-img-wrap">
+            <div class="product-img-wrap" onclick="openProductDetailsModal(${item.originalIndex})">
               <img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/180x180?text=🍬'">
               ${isOutOfStock ? '<div class="out-stock-overlay">⏳ سيتوفر قريباً</div>' : ''}
             </div>
             <div class="product-category">${item.group || 'حلويات'}</div>
-            <h3 class="product-title">${item.name}</h3>
+            <h3 class="product-title" onclick="openProductDetailsModal(${item.originalIndex})">${item.name}</h3>
             <div class="product-meta">الحجم: ${item.weight || '—'} | الشد: ${item.pack || '—'}</div>
             <div class="stock-badge ${isOutOfStock ? 'unavailable' : 'available'}">
               ${isOutOfStock ? '✖ نفد من المخزون' : `✔ متوفر بالمخزون (${stockCount})`}
@@ -839,7 +896,8 @@
         });
       }
 
-      const qty = parseInt(document.getElementById(`qty-${idx}`).innerText) || 1;
+      const qtyEl = document.getElementById(`qty-${idx}`);
+      const qty = qtyEl ? (parseInt(qtyEl.innerText) || 1) : 1;
       const offerInfo = getProductOffer(product);
 
       const existing = cart.find(c => c.name === product.name);
@@ -871,6 +929,93 @@
       document.getElementById('cartCount').innerText = total;
     }
 
+    /* --- Smart AI Details Modal --- */
+    function generateAIDetails(product) {
+      const name = (product.name || '').toLowerCase();
+      const group = (product.group || '').toLowerCase();
+
+      let desc = 'منتج عالي الجودة مستورد ومطابق لأعلى المواصفات القياسية لهيئة الغذاء والدواء، يتميز بمذاق رائع وقوام استثنائي مناسب للاستهلاك اليومي والضيافة ومحلات التجزئة.';
+      let ingredients = 'مكونات فاخرة مختارة بعناية، نكهات طبيعية متوازنة، ومستحلبات غذائية نقية.';
+      let storage = 'يحفظ في مكان بارد وجاف بدرجة حرارة لا تتعدى 22°C بعيداً عن أشعة الشمس المباشرة للحفاظ على الجودة والنكهة.';
+
+      if (group.includes('بروتين') || name.includes('بروتين') || name.includes('protein') || name.includes('غرينيد') || name.includes('grenade')) {
+        desc = 'لوح بروتين فاخر قليل السكر وغني بالألياف والبروتين النقي، مصمم لدعم الرياضيين والحميات الغذائية الصحية.';
+        ingredients = 'مزيج بروتيني عالي الجودة (مصل اللبن المعزول، كازينات الكالسيوم)، كاكاو منخفض الدهون، ألياف، محليات طبيعية بدون سكر مضاف.';
+      } else if (group.includes('شوكولاتة') || name.includes('شوكولاتة') || name.includes('chocolate') || name.includes('بسكويت')) {
+        desc = 'شوكولاتة وبسكويت محشو بنكهات غنية ومقرمشة، مثالية للضيافة والتقديم الفاخر.';
+        ingredients = 'زبدة كاكاو نقية، حليب كامل الدسم، دقيق قمح منتقى، كاكاو سائل، فانيليا طبيعية.';
+      } else if (group.includes('حلوى') || group.includes('حلاو') || name.includes('حلاو') || name.includes('جلي')) {
+        desc = 'حلوى وجيلي بنكهات الفواكه المنعشة، قوام طري وناعم محبوب لدى جميع أفراد العائلة.';
+        ingredients = 'عصائر فواكه طبيعية، جيلاتين بقري حلال نقي، سكر قصب طبيعي، ألوان طبيعية مستخلصة من الفواكه.';
+      }
+
+      return { desc, ingredients, storage };
+    }
+
+    function openProductDetailsModal(idx) {
+      const item = allItems[idx];
+      if (!item) return;
+
+      const ai = generateAIDetails(item);
+      const offerInfo = getProductOffer(item);
+      const stockCount = item.stock !== undefined ? parseInt(item.stock) : 0;
+      const isOutOfStock = stockCount <= 0;
+
+      let priceDisplay = `${item.price.toFixed(2)} ر.س`;
+      if (offerInfo.hasDiscount) {
+        priceDisplay = `<span style="color:var(--accent); font-weight:900;">${offerInfo.finalPrice.toFixed(2)} ر.س</span> <span style="text-decoration:line-through; color:#999; font-size:12px;">${item.price.toFixed(2)} ر.س</span>`;
+      }
+
+      const modalHtml = `
+        <div style="text-align: right; font-size: 13px; line-height: 1.6;">
+          <div style="text-align: center; background: #fdfbf7; border-radius: 12px; padding: 12px; border: 1px solid #ebdcfc; margin-bottom: 15px;">
+            <img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/220x220?text=🍬'" style="max-height: 180px; max-width: 90%; object-fit: contain;">
+          </div>
+
+          <div style="margin-bottom: 10px;">
+            <span style="background: #ede7f6; color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: bold; font-size: 11px;">${item.group || 'عام'}</span>
+            <h3 style="color: var(--primary); margin-top: 6px; font-size: 16px; font-weight: 900;">${item.name}</h3>
+          </div>
+
+          <p style="color: #444; margin-bottom: 12px; font-size: 12.5px;">${ai.desc}</p>
+
+          <div style="background: #faf5ff; border: 1px solid #ede7f6; border-radius: 8px; padding: 10px; margin-bottom: 12px;">
+            <div style="margin-bottom: 6px;">🧪 <b>المكونات:</b> <span style="color: #555;">${ai.ingredients}</span></div>
+            <div>❄️ <b>شروط الحفظ:</b> <span style="color: #555;">${ai.storage}</span></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 15px;">
+            <div>⚖️ <b>الوزن / الحجم:</b> ${item.weight || '—'}</div>
+            <div>📦 <b>الشد بالكرتون:</b> ${item.pack || '—'}</div>
+            <div>🧾 <b>الباركود:</b> <code style="background:#eee; padding:1px 4px; border-radius:4px;">${item.barcode || '—'}</code></div>
+            <div>📊 <b>المخزون:</b> ${isOutOfStock ? '<span style="color:var(--danger); font-weight:bold;">نفد من المخزون</span>' : `<span style="color:var(--success); font-weight:bold;">متوفر (${stockCount} كرتون)</span>`}</div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 12px;">
+            <div style="font-size: 15px; font-weight: 900;">السعر للكرتون: ${priceDisplay}</div>
+            ${isOutOfStock ? '<span style="background:#fee2e2; color:#ef4444; padding:6px 12px; border-radius:8px; font-weight:bold; font-size:12px;">سيتوفر قريباً</span>' : `
+              <button onclick="addToCartFromModal(${item.originalIndex})" style="background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:13px;">
+                🛒 إضافة للسلة
+              </button>
+            `}
+          </div>
+        </div>
+      `;
+
+      Swal.fire({
+        html: modalHtml,
+        showConfirmButton: false,
+        showCloseButton: true,
+        width: '520px',
+        padding: '18px'
+      });
+    }
+
+    function addToCartFromModal(idx) {
+      addToCart(idx);
+      Swal.close();
+    }
+
     /* --- Cart Management --- */
     function viewCart() {
       if (cart.length === 0) {
@@ -900,6 +1045,7 @@
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f1f1; padding: 8px 0;">
             <div style="flex: 1;">
               <strong style="font-size: 13px; color: var(--primary);">${item.name}</strong>
+              <div style="font-size: 11px; color:#888;">باركود: <code>${item.barcode || '—'}</code></div>
               <div style="font-size: 12px; color: #555;">${subtotal.toFixed(2)} ر.س ${freeText}</div>
             </div>
             <div style="display: flex; align-items: center; gap: 6px;">
@@ -922,7 +1068,7 @@
         </div>
 
         <div style="text-align: right; background: #fdfbf7; border: 1px dashed var(--accent); padding: 12px; border-radius: 8px;">
-          <h4 style="font-size: 13px; margin-bottom: 8px; color: var(--primary);">📋 بيانات تأكيد الطلب والفاتورة:</h4>
+          <h4 style="font-size: 13px; margin-bottom: 8px; color: var(--primary);">📋 بيانات تأكيد الطلب وإصدار الفاتورة:</h4>
           <input type="text" id="cust_name" placeholder="اسم العميل / الشركة / المحل *" style="width:100%; padding:8px 10px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
           <input type="tel" id="cust_phone" placeholder="رقم الجوال / الواتساب للتواصل *" style="width:100%; padding:8px 10px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
           <input type="text" id="cust_city" placeholder="المدينة / العنوان (مثلاً: الرياض - حي الملز)" style="width:100%; padding:8px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
@@ -933,9 +1079,9 @@
         title: '🛒 سلة الطلبات وتأكيد الشراء',
         html: itemsListHtml,
         showCancelButton: true,
-        confirmButtonText: '✅ تأكيد وإرسال الطلب',
+        confirmButtonText: '📄 إصدار الفاتورة PDF وإرسال الطلب',
         cancelButtonText: 'متابعة التسوق',
-        confirmButtonColor: '#16a34a',
+        confirmButtonColor: '#25D366',
         cancelButtonColor: '#64748b',
         width: '500px'
       }).then(res => {
@@ -961,9 +1107,7 @@
     function changeCartItemQty(idx, delta) {
       if (!cart[idx]) return;
       cart[idx].qty += delta;
-      if (cart[idx].qty <= 0) {
-        cart.splice(idx, 1);
-      }
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
       localStorage.setItem('qarat_cart', JSON.stringify(cart));
       updateCartBadge();
       viewCart();
@@ -999,7 +1143,7 @@
       const orderId = 'QAR-' + Math.floor(1000 + Math.random() * 9000);
       const orderDate = new Date().toLocaleDateString('ar-SA');
 
-      // Save order for tracking
+      // 1. حفظ الطلب للتتبع
       const newOrder = {
         orderId: orderId,
         customerName: cName,
@@ -1015,24 +1159,89 @@
       existingOrders.unshift(newOrder);
       localStorage.setItem('qarat_store_orders', JSON.stringify(existingOrders));
 
+      // 2. تجهيز قالب الفاتورة PDF وتنزيله للعميل
+      document.getElementById('pdf_inv_id').textContent = '#' + orderId;
+      document.getElementById('pdf_inv_date').textContent = orderDate;
+      document.getElementById('pdf_cust_name').textContent = cName;
+      document.getElementById('pdf_cust_phone').textContent = cPhone;
+      document.getElementById('pdf_cust_city').textContent = cCity;
+      document.getElementById('pdf_total_val').textContent = total.toFixed(2);
+
+      const tbody = document.getElementById('pdf_items_tbody');
+      tbody.innerHTML = '';
+      cart.forEach((item, idx) => {
+        const sub = (item.qty * item.unitPrice).toFixed(2);
+        tbody.innerHTML += `
+          <tr style="border-bottom: 1px solid #ddd; ${idx % 2 === 1 ? 'background:#f9f9f9;' : ''}">
+            <td style="padding: 8px; border: 1px solid #ddd; text-align:center;">${idx + 1}</td>
+            <td style="padding: 8px; border: 1px solid #ddd; font-family:monospace;">${item.barcode || '—'}</td>
+            <td style="padding: 8px; border: 1px solid #ddd;"><b>${item.name}</b> (${item.weight || ''})</td>
+            <td style="padding: 8px; border: 1px solid #ddd; text-align:center;">${item.qty} كرتون</td>
+            <td style="padding: 8px; border: 1px solid #ddd; text-align:center;">${item.unitPrice.toFixed(2)} ر.س</td>
+            <td style="padding: 8px; border: 1px solid #ddd; text-align:center;"><b>${sub} ر.س</b></td>
+          </tr>
+        `;
+      });
+
+      // تنزيل ملف الـ PDF تلقائياً
+      const pdfElement = document.getElementById('pdfInvoiceTemplate');
+      pdfElement.style.display = 'block';
+      const opt = {
+        margin:       10,
+        filename:     `فاتورة_قارة_الحلويات_${orderId}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(pdfElement).save().then(() => {
+        pdfElement.style.display = 'none';
+      });
+
+      // 3. تجهيز نص رسالة الواتساب الاحترافية المجدولة
+      let msg = `*🧾 فاتورة طلب جديدة - شركة قارة الحلويات التجارية* 🍬\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `📄 *رقم الفاتورة:* #${orderId}\n`;
+      msg += `👤 *العميل / المنشأة:* ${cName}\n`;
+      msg += `📱 *رقم الجوال:* ${cPhone}\n`;
+      msg += `📍 *المدينة / العنوان:* ${cCity}\n`;
+      msg += `📅 *التاريخ:* ${orderDate}\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `*📋 تفاصيل الأصناف والباركود (كرتون):*\n`;
+
+      cart.forEach((i, idx) => {
+        let free = (i.bxgy && i.qty >= i.bxgy.buyQty) ? ` (+${Math.floor(i.qty / i.bxgy.buyQty) * i.bxgy.freeQty} مجاناً)` : '';
+        msg += `\n${idx + 1}. *${i.name}*\n`;
+        msg += `   ▫️ الباركود: \`${i.barcode || '—'}\`\n`;
+        msg += `   ▫️ الكمية: ${i.qty} كرتون ${free}\n`;
+        msg += `   ▫️ السعر: ${i.unitPrice.toFixed(2)} ر.س | الإجمالي: ${(i.qty * i.unitPrice).toFixed(2)} ر.س\n`;
+      });
+
+      msg += `━━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `💰 *الإجمالي النهائي شامل الضريبة (15% VAT):* *${total.toFixed(2)} ر.س*\n\n`;
+      msg += `📎 *تم تنزيل نسخة الفاتورة الرسمية (PDF) وإرفاقها للطلب.*\n`;
+      msg += `🔍 *تتبع حالة الشحنة بالمتجر برقم:* #${orderId}`;
+
       // تفريغ السلة
       cart = [];
       localStorage.removeItem('qarat_cart');
       updateCartBadge();
 
-      // رسالة النجاح مباشرة دون تحويل
+      // فتح الواتساب
+      const url = `https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+
       Swal.fire({
         icon: 'success',
-        title: 'تم استلام وتأكيد طلبك بنجاح!',
+        title: 'تم إصدار الفاتورة وإرسال الطلب!',
         html: `
           <div style="font-size:14px; text-align:center;">
-            <p>رقم طلبيتك هو: <b style="color:var(--primary); font-size:18px;">#${orderId}</b></p>
-            <p style="color:#555; margin-top:8px;">تم تسجيل بيانات الفاتورة بنجاح في النظام، وسيتم التواصل معكم للتجهيز والشحن فوراً.</p>
-            <p style="color:#888; font-size:12px; margin-top:6px;">يمكنك متابعة حالة الشحنة في أي وقت عبر زر (📍 تتبع الطلبية) أعلى الموقع.</p>
+            <p>رقم الفاتورة: <b style="color:var(--primary); font-size:17px;">#${orderId}</b></p>
+            <p style="color:#16a34a; font-weight:bold; margin-top:6px;">📥 جاري تنزيل ملف الفاتورة (PDF) على جهازك الآن...</p>
+            <p style="color:#666; font-size:12px; margin-top:4px;">يمكنك إرفاق ملف الـ PDF في محادثة الواتساب مع فريق المبيعات.</p>
           </div>
         `,
-        confirmButtonColor: 'var(--primary)',
-        confirmButtonText: 'حسناً'
+        confirmButtonColor: 'var(--primary)'
       });
     }
 
