@@ -27,7 +27,7 @@ window.STORE_PRODUCTS = [
     "price": 124.19999999999999,
     "barcode": "5060811383810",
     "stock": 10,
-    "image": "data:image/image3.jpeg"
+    "image": "images/image3.jpeg"
    },   
   {
     "name": "بروتين جراند كراميل محلا",
