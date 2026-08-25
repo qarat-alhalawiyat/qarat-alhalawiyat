@@ -149,7 +149,7 @@
       top: 115%;
       right: 0;
       background: #fff;
-      min-width: 200px;
+      min-width: 220px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.12);
       border-radius: 12px;
       border: 1px solid var(--border);
@@ -161,7 +161,9 @@
     .dropdown.show .dropdown-menu { display: block; }
     .dropdown-item {
       padding: 10px 18px;
-      display: block;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       color: var(--text-dark);
       text-decoration: none;
       font-size: 13px;
@@ -172,6 +174,14 @@
     .dropdown-item:hover {
       background: #f5efff;
       color: var(--primary);
+    }
+    .dropdown-count {
+      background: #ede7f6;
+      color: var(--primary);
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-weight: 700;
     }
 
     /* Products Grid */
@@ -363,7 +373,7 @@
           📂 التصنيفات <span style="font-size: 10px;">▼</span>
         </button>
         <div class="dropdown-menu" id="dropdownMenuList">
-          <!-- Categories list inserted dynamically -->
+          <!-- Categories list with counts inserted dynamically -->
         </div>
       </div>
     </div>
@@ -384,7 +394,6 @@
     let allItems = [];
 
     window.onload = function() {
-      // Load products from localStorage or products_data.js
       const savedProducts = localStorage.getItem('qarat_products');
       if (savedProducts) {
         allItems = JSON.parse(savedProducts);
@@ -409,10 +418,19 @@
 
     function buildCategoriesMenu() {
       const menu = document.getElementById('dropdownMenuList');
-      const groups = [...new Set(allItems.map(p => (p.group && p.group.trim() !== '') ? p.group.trim() : 'عام'))];
       
-      menu.innerHTML = groups.map(g => `
-        <div class="dropdown-item" onclick="filterByCategory('${g}')">🏷️ ${g}</div>
+      // Calculate group counts
+      const groupCounts = {};
+      allItems.forEach(p => {
+        const g = (p.group && p.group.trim() !== '') ? p.group.trim() : 'عام';
+        groupCounts[g] = (groupCounts[g] || 0) + 1;
+      });
+
+      menu.innerHTML = Object.entries(groupCounts).map(([groupName, count]) => `
+        <div class="dropdown-item" onclick="filterByCategory('${groupName}')">
+          <span>🏷️ ${groupName}</span>
+          <span class="dropdown-count">${count}</span>
+        </div>
       `).join('');
     }
 
@@ -447,7 +465,6 @@
 
       let filtered = allItems.map((p, idx) => ({ ...p, originalIndex: idx }));
 
-      // Search Filter
       if (q) {
         filtered = filtered.filter(p => 
           (p.name && p.name.toLowerCase().includes(q)) || 
@@ -456,13 +473,12 @@
         );
       }
 
-      // Tab Filters
       if (currentFilter === 'bestseller') {
-        filtered = filtered.filter((_, idx) => idx % 3 === 0); // الأصناف الأكثر مبيعاً
+        filtered = filtered.filter((_, idx) => idx % 3 === 0);
       } else if (currentFilter === 'offers') {
         filtered = filtered.filter(p => hasOffer(p));
       } else if (currentFilter === 'category' && selectedCategory) {
-        filtered = filtered.filter(p => (p.group || 'عام').trim() === selectedCategory);
+        filtered = filtered.filter(p => ((p.group && p.group.trim() !== '') ? p.group.trim() : 'عام') === selectedCategory);
       }
 
       if (filtered.length === 0) {
