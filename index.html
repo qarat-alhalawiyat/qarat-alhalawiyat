@@ -6,9 +6,7 @@
   <title>شركة قارة الحلويات التجارية</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <!-- مكتبة الـ PDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <!-- مكتبة توليد QR Code -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     :root {
@@ -136,7 +134,7 @@
       .product-img-wrap { height: 125px; margin-bottom: 6px; }
     }
 
-    /* تصميم الفاتورة الرسمي المطور والاحترافي للـ PDF */
+    /* قالب الفاتورة PDF */
     #pdfInvoiceTemplate {
       display: none; background: #ffffff; width: 210mm; min-height: 297mm; padding: 15mm;
       color: #111111; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right;
@@ -154,7 +152,7 @@
     .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; text-align: right; font-size: 11.5px; }
     .inv-table th { background: #4a1d75; color: #ffffff; padding: 10px 8px; font-weight: 800; border: 1px solid #4a1d75; text-align: center; }
     .inv-table td { padding: 9px 8px; border: 1.5px solid #dcdfe6; color: #222; text-align: center; vertical-align: middle; }
-    .inv-table td:nth-child(3) { text-align: right; } /* اسم الصنف محاذاة لليمين */
+    .inv-table td:nth-child(3) { text-align: right; }
 
     .inv-footer-summary { display: flex; justify-content: space-between; align-items: flex-start; border-top: 2px solid #ddd; padding-top: 15px; margin-top: 10px; }
     .inv-qr-section { display: flex; align-items: center; gap: 15px; }
@@ -220,7 +218,7 @@
     <div class="products-grid" id="productsGrid"></div>
   </div>
 
-  <!-- Hidden Container for Professional PDF Invoice Template with QR -->
+  <!-- قالب الفاتورة PDF -->
   <div id="pdfInvoiceTemplate">
     <div class="inv-header">
       <div class="inv-company-info">
@@ -456,16 +454,19 @@
     }
 
     function hasOffer(p) {
-      return offersList.some(o => (o.type === 'product_discount' && o.target === p.name) || (o.type === 'group_discount' && o.target === p.group) || (o.type === 'bxgy' && o.target === p.name));
+      return offersList.some(o => (o.type === 'product_discount' && o.target === p.name) || (o.type === 'group_discount' && o.target === p.group) || (o.type === 'bxgy' && o.target === p.name) || (o.type === 'price_cut' && o.target === p.name));
     }
 
     function getProductOffer(p) {
       let res = { hasDiscount: false, finalPrice: p.price, discountPercent: 0, bxgy: null };
       const pDisc = offersList.find(o => o.type === 'product_discount' && o.target === p.name);
       const gDisc = offersList.find(o => o.type === 'group_discount' && o.target === p.group);
+      const pCut = offersList.find(o => o.type === 'price_cut' && o.target === p.name);
       const bxgy = offersList.find(o => o.type === 'bxgy' && o.target === p.name);
+      
       const disc = pDisc || gDisc;
       if (disc) { res.hasDiscount = true; res.discountPercent = disc.percent; res.finalPrice = p.price * (1 - disc.percent / 100); }
+      else if (pCut) { res.hasDiscount = true; res.finalPrice = pCut.newPrice; res.discountPercent = Math.round((1 - pCut.newPrice / pCut.oldPrice) * 100); }
       if (bxgy) res.bxgy = bxgy;
       return res;
     }
@@ -501,16 +502,20 @@
       document.getElementById('cartCount').innerText = total;
     }
 
-    /* --- Smart AI Details Modal --- */
+    /* --- تفاصيل الصنف الفخمة بالذكاء الاصطناعي --- */
     function generateAIDetails(product) {
       const name = (product.name || '').toLowerCase();
       const group = (product.group || '').toLowerCase();
       let desc = 'منتج عالي الجودة مستورد ومطابق لأعلى المواصفات القياسية لهيئة الغذاء والدواء، يتميز بمذاق رائع وقوام استثنائي.';
-      let ingredients = 'مكونات فاخرة مختارة بعناية، نكهات طبيعية متوازنة.';
-      let storage = 'يحفظ في مكان بارد وجاف بدرجة حرارة لا تتعدى 22°C بعيداً عن أشعة الشمس المباشرة.';
-      if (group.includes('بروتين') || name.includes('بروتين')) {
+      let ingredients = 'مكونات فاخرة مختارة بعناية، نكهات طبيعية متوازنة ومستحلبات غذائية نقية.';
+      let storage = 'يحفظ في مكان بارد وجاف بدرجة حرارة لا تتعدى 22°C بعيداً عن أشعة الشمس المباشرة للحفاظ على الجودة.';
+
+      if (group.includes('بروتين') || name.includes('بروتين') || name.includes('protein') || name.includes('غرينيد') || name.includes('grenade')) {
         desc = 'لوح بروتين فاخر قليل السكر وغني بالألياف والبروتين النقي، مصمم لدعم الرياضيين والحميات الغذائية الصحية.';
-        ingredients = 'مزيج بروتيني عالي الجودة (مصل اللبن المعزول)، كاكاو منخفض الدهون، محليات طبيعية بدون سكر مضاف.';
+        ingredients = 'مزيج بروتيني عالي الجودة (مصل اللبن المعزول، كازينات الكالسيوم)، كاكاو منخفض الدهون، ببتيدات كولاجين، ألياف، محليات طبيعية بدون سكر مضاف.';
+      } else if (group.includes('شوكولاتة') || name.includes('شوكولاتة') || name.includes('chocolate') || name.includes('بسكويت')) {
+        desc = 'شوكولاتة وبسكويت محشو بنكهات غنية وطبقات مقرمشة تذوب في الفم، مثالية كوجبة خفيفة ومناسبات راقية.';
+        ingredients = 'زبدة كاكاو نقية، حليب مجفف كامل الدسم، دقيق قمح منتقى، كاكاو سائل، فانيليا طبيعية.';
       }
       return { desc, ingredients, storage };
     }
@@ -521,24 +526,54 @@
       const offerInfo = getProductOffer(item);
       const stockCount = item.stock !== undefined ? parseInt(item.stock) : 0;
       const isOutOfStock = stockCount <= 0;
+
       let priceDisplay = `${item.price.toFixed(2)} ر.س`;
-      if (offerInfo.hasDiscount) { priceDisplay = `<span style="color:var(--accent); font-weight:900;">${offerInfo.finalPrice.toFixed(2)} ر.س</span>`; }
+      if (offerInfo.hasDiscount) {
+        priceDisplay = `<span style="color:var(--accent); font-weight:900;">${offerInfo.finalPrice.toFixed(2)} ر.س</span> <span style="text-decoration:line-through; color:#999; font-size:12px;">${item.price.toFixed(2)} ر.س</span>`;
+      }
+
+      const modalHtml = `
+        <div style="text-align: right; font-size: 13px; line-height: 1.6;">
+          <div style="text-align: center; background: #fdfbf7; border-radius: 12px; padding: 12px; border: 1px solid #ebdcfc; margin-bottom: 15px;">
+            <img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/220x220?text=🍬'" style="max-height: 180px; max-width: 90%; object-fit: contain;">
+          </div>
+          
+          <div style="margin-bottom: 6px;">
+            <span style="background: #ede7f6; color: var(--primary); padding: 2px 8px; border-radius: 6px; font-weight: bold; font-size: 11px;">${item.group || 'حلويات'}</span>
+            <h3 style="color: var(--primary); margin-top: 5px; font-size: 16px; font-weight: 900;">${item.name}</h3>
+          </div>
+
+          <p style="color: #444; margin-bottom: 12px; font-size: 12.5px;">${ai.desc}</p>
+
+          <div style="background: #faf5ff; border: 1px solid #ede7f6; border-radius: 8px; padding: 10px; margin-bottom: 12px;">
+            <div style="margin-bottom: 6px;">🧪 <b>المكونات:</b> <span style="color: #555;">${ai.ingredients}</span></div>
+            <div>❄️ <b>شروط الحفظ:</b> <span style="color: #555;">${ai.storage}</span></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; margin-bottom: 15px;">
+            <div>⚖️ <b>الوزن / الحجم:</b> ${item.weight || '—'}</div>
+            <div>📦 <b>الشد بالكرتون:</b> ${item.pack || '—'} حبة</div>
+            <div>🧾 <b>الباركود:</b> <code style="background:#eee; padding:1px 4px; border-radius:4px;">${item.barcode || '—'}</code></div>
+            <div>📊 <b>المخزون:</b> ${isOutOfStock ? '<span style="color:var(--danger); font-weight:bold;">نفد من المخزون</span>' : `<span style="color:var(--success); font-weight:bold;">متوفر (${stockCount} كرتون)</span>`}</div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 12px;">
+            <div style="font-size: 15px; font-weight: 900;">السعر للكرتون: ${priceDisplay}</div>
+            ${isOutOfStock ? '<span style="background:#fee2e2; color:#ef4444; padding:6px 12px; border-radius:8px; font-weight:bold; font-size:12px;">سيتوفر قريباً</span>' : `
+              <button onclick="addToCartFromModal(${item.originalIndex})" style="background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:13px;">
+                🛒 إضافة
+              </button>
+            `}
+          </div>
+        </div>
+      `;
 
       Swal.fire({
-        html: `
-          <div style="text-align: right; font-size: 13px; line-height: 1.6;">
-            <div style="text-align: center; background: #fdfbf7; border-radius: 12px; padding: 12px; border: 1px solid #ebdcfc; margin-bottom: 15px;">
-              <img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/220x220?text=🍬'" style="max-height: 180px; max-width: 90%; object-fit: contain;">
-            </div>
-            <h3 style="color: var(--primary); margin-bottom: 6px; font-size: 16px; font-weight: 900;">${item.name}</h3>
-            <p style="color: #444; margin-bottom: 12px; font-size: 12.5px;">${ai.desc}</p>
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 12px;">
-              <div style="font-size: 15px; font-weight: 900;">السعر: ${priceDisplay}</div>
-              ${isOutOfStock ? '<span>نفد</span>' : `<button onclick="addToCartFromModal(${item.originalIndex})" style="background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;">🛒 إضافة</button>`}
-            </div>
-          </div>
-        `,
-        showConfirmButton: false, showCloseButton: true, width: '500px'
+        html: modalHtml,
+        showConfirmButton: false,
+        showCloseButton: true,
+        width: '500px',
+        padding: '18px'
       });
     }
 
@@ -598,7 +633,6 @@
     function removeCartItem(idx) { cart.splice(idx, 1); localStorage.setItem('qarat_cart', JSON.stringify(cart)); updateCartBadge(); viewCart(); }
     function clearEntireCart() { cart = []; localStorage.removeItem('qarat_cart'); updateCartBadge(); Swal.fire('تم التفريغ', '', 'success'); }
 
-    // توليد باركود ZATCA QR Code بصيغة TLV (الاسم، الرقم الضريبي، التاريخ، الإجمالي، الضريبة)
     function generateZatcaQRCode(sellerName, vatNumber, timestamp, totalWithVat, vatTotal) {
       function toTLV(tag, val) {
         const vBytes = new TextEncoder().encode(val);
@@ -616,17 +650,14 @@
       return btoa(String.fromCharCode.apply(null, result));
     }
 
-    function processOrderSubmission(total, cName, cPhone, cCity, existingOrderId = null, existingDate = null, existingItems = null) {
-      const orderId = existingOrderId || ('QAR-' + Math.floor(1000 + Math.random() * 9000));
-      const orderDate = existingDate || new Date().toISOString().slice(0, 10) + ' ' + new Date().toLocaleTimeString('ar-SA');
-      const itemsToProcess = existingItems || [...cart];
-
-      if (!existingOrderId) {
-        const newOrder = { orderId, customerName: cName, phone: cPhone, city: cCity, total, date: orderDate, status: 'received', items: itemsToProcess };
-        let existingOrders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
-        existingOrders.unshift(newOrder);
-        localStorage.setItem('qarat_store_orders', JSON.stringify(existingOrders));
-      }
+    function processOrderSubmission(total, cName, cPhone, cCity) {
+      const orderId = 'QAR-' + Math.floor(1000 + Math.random() * 9000);
+      const orderDate = new Date().toLocaleDateString('ar-SA') + ' ' + new Date().toLocaleTimeString('ar-SA');
+      
+      const newOrder = { orderId, customerName: cName, phone: cPhone, city: cCity, total, date: orderDate, status: 'received', items: [...cart] };
+      let existingOrders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+      existingOrders.unshift(newOrder);
+      localStorage.setItem('qarat_store_orders', JSON.stringify(existingOrders));
 
       const vat = total * 0.15;
       const subtotal = total - vat;
@@ -642,7 +673,7 @@
 
       const tbody = document.getElementById('pdf_items_tbody');
       tbody.innerHTML = '';
-      itemsToProcess.forEach((item, idx) => {
+      cart.forEach((item, idx) => {
         const unit = item.unitPrice || item.price || 0;
         const sub = (item.qty * unit).toFixed(2);
         tbody.innerHTML += `
@@ -657,7 +688,6 @@
         `;
       });
 
-      // توليد الـ QR Code الفعلي بناءً على معايير الهيئة
       document.getElementById('qrcodeContainer').innerHTML = '';
       const zatcaBase64 = generateZatcaQRCode("شركة قارة الحلويات التجارية", "312473488800003", orderDate, total.toFixed(2), vat.toFixed(2));
       new QRCode(document.getElementById("qrcodeContainer"), { text: zatcaBase64, width: 84, height: 84 });
@@ -674,11 +704,9 @@
         pdfElement.style.display = 'none';
       });
 
-      if (!existingOrderId) {
-        let msg = `*🧾 فاتورة طلب جديدة - قارة الحلويات التجارية* 🍬\n📄 رقم الفاتورة: #${orderId}\n👤 العميل: ${cName}\n📱 الجوال: ${cPhone}\n📍 العنوان: ${cCity}\n💰 الإجمالي: ${total.toFixed(2)} ر.س`;
-        cart = []; localStorage.removeItem('qarat_cart'); updateCartBadge();
-        window.open(`https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`, '_blank');
-      }
+      let msg = `*🧾 فاتورة طلب جديدة - قارة الحلويات التجارية* 🍬\n📄 رقم الفاتورة: #${orderId}\n👤 العميل: ${cName}\n📱 الجوال: ${cPhone}\n📍 العنوان: ${cCity}\n💰 الإجمالي: ${total.toFixed(2)} ر.س`;
+      cart = []; localStorage.removeItem('qarat_cart'); updateCartBadge();
+      window.open(`https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     /* --- Order Tracker System --- */
