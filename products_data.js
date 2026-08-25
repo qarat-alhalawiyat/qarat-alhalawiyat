@@ -1,4 +1,4 @@
-window.STORE_PRODUCTS = [
+const products = [
   {
     "name": "بروتين جراند  حلوي الفودج",
     "group": "بروتين",
