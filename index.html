@@ -620,7 +620,7 @@
         </div>
         <div class="footer-contact-item">
           <span>📱</span>
-          <span>واتساب المبيعات: 0578384009</span>
+          <span>هاتف المبيعات: 0578384009</span>
         </div>
         <div class="footer-contact-item">
           <span>✉️</span>
@@ -871,7 +871,7 @@
       document.getElementById('cartCount').innerText = total;
     }
 
-    /* --- Advanced Cart Management (Edit Qty, Delete Items, Customer Info) --- */
+    /* --- Cart Management --- */
     function viewCart() {
       if (cart.length === 0) {
         return Swal.fire({
@@ -917,14 +917,14 @@
       itemsListHtml += `
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #faf5ff; padding: 10px; border-radius: 8px;">
-          <button style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:6px 12px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="clearEntireCart()">🗑️ تفريغ السلة بالكامل</button>
+          <button style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:6px 12px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="clearEntireCart()">🗑️ تفريغ السلة</button>
           <div style="font-size:15px; font-weight:900; color:var(--primary);">المجموع: ${total.toFixed(2)} ر.س</div>
         </div>
 
         <div style="text-align: right; background: #fdfbf7; border: 1px dashed var(--accent); padding: 12px; border-radius: 8px;">
           <h4 style="font-size: 13px; margin-bottom: 8px; color: var(--primary);">📋 بيانات تأكيد الطلب والفاتورة:</h4>
           <input type="text" id="cust_name" placeholder="اسم العميل / الشركة / المحل *" style="width:100%; padding:8px 10px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
-          <input type="tel" id="cust_phone" placeholder="رقم الواتساب للتواصل *" style="width:100%; padding:8px 10px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
+          <input type="tel" id="cust_phone" placeholder="رقم الجوال / الواتساب للتواصل *" style="width:100%; padding:8px 10px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
           <input type="text" id="cust_city" placeholder="المدينة / العنوان (مثلاً: الرياض - حي الملز)" style="width:100%; padding:8px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
         </div>
       `;
@@ -933,9 +933,9 @@
         title: '🛒 سلة الطلبات وتأكيد الشراء',
         html: itemsListHtml,
         showCancelButton: true,
-        confirmButtonText: '📱 تأكيد وإرسال الطلب عبر الواتساب',
+        confirmButtonText: '✅ تأكيد وإرسال الطلب',
         cancelButtonText: 'متابعة التسوق',
-        confirmButtonColor: '#25D366',
+        confirmButtonColor: '#16a34a',
         cancelButtonColor: '#64748b',
         width: '500px'
       }).then(res => {
@@ -948,7 +948,7 @@
             return Swal.fire({
               icon: 'error',
               title: 'بيانات ناقصة',
-              text: 'يرجى كتابة اسم العميل ورقم الواتساب لتأكيد الطلب.',
+              text: 'يرجى كتابة اسم العميل ورقم الجوال لتأكيد الطلب.',
               confirmButtonColor: 'var(--primary)'
             }).then(() => viewCart());
           }
@@ -1007,7 +1007,7 @@
         city: cCity,
         total: total,
         date: orderDate,
-        status: 'received', // received -> preparing -> shipping -> delivered
+        status: 'received',
         items: [...cart]
       };
 
@@ -1015,45 +1015,24 @@
       existingOrders.unshift(newOrder);
       localStorage.setItem('qarat_store_orders', JSON.stringify(existingOrders));
 
-      // WhatsApp Message Preparation
-      let msg = `*طلب جديد من شركة قارة الحلويات التجارية* 🍬\n`;
-      msg += `----------------------------------------\n`;
-      msg += `🧾 *رقم الطلب / الفاتورة:* #${orderId}\n`;
-      msg += `👤 *العميل / المؤسسة:* ${cName}\n`;
-      msg += `📱 *رقم الجوال:* ${cPhone}\n`;
-      msg += `📍 *المدينة / الموقع:* ${cCity}\n`;
-      msg += `📅 *التاريخ:* ${orderDate}\n`;
-      msg += `----------------------------------------\n`;
-      msg += `*قائمة الأصناف المطلوبة (كرتون):*\n`;
-
-      cart.forEach((i, idx) => {
-        let free = (i.bxgy && i.qty >= i.bxgy.buyQty) ? ` (+${Math.floor(i.qty / i.bxgy.buyQty) * i.bxgy.freeQty} مجاناً)` : '';
-        msg += `${idx + 1}. ${i.name} | العدد: ${i.qty} كرتون ${free} | السعر: ${(i.qty * i.unitPrice).toFixed(2)} ر.س\n`;
-      });
-
-      msg += `----------------------------------------\n`;
-      msg += `💰 *المجموع الإجمالي شامل الضريبة:* ${total.toFixed(2)} ر.س\n`;
-      msg += `🔍 *يمكن تتبع حالة الطلب من المتجر برقم الطلب:* #${orderId}`;
-
-      // Empty cart after placing order
+      // تفريغ السلة
       cart = [];
       localStorage.removeItem('qarat_cart');
       updateCartBadge();
 
-      // Open WhatsApp
-      const url = `https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`;
-      window.open(url, '_blank');
-
+      // رسالة النجاح مباشرة دون تحويل
       Swal.fire({
         icon: 'success',
-        title: 'تم إرسال الطلب بنجاح!',
+        title: 'تم استلام وتأكيد طلبك بنجاح!',
         html: `
           <div style="font-size:14px; text-align:center;">
-            <p>رقم طلبيتك هو: <b style="color:var(--primary); font-size:16px;">#${orderId}</b></p>
-            <p style="color:#666; margin-top:6px;">تم فتح الواتساب لإرسال الفاتورة، ويمكنك تتبع الطلبية بأي وقت عبر زر (تتبع الطلبية) أعلى الموقع.</p>
+            <p>رقم طلبيتك هو: <b style="color:var(--primary); font-size:18px;">#${orderId}</b></p>
+            <p style="color:#555; margin-top:8px;">تم تسجيل بيانات الفاتورة بنجاح في النظام، وسيتم التواصل معكم للتجهيز والشحن فوراً.</p>
+            <p style="color:#888; font-size:12px; margin-top:6px;">يمكنك متابعة حالة الشحنة في أي وقت عبر زر (📍 تتبع الطلبية) أعلى الموقع.</p>
           </div>
         `,
-        confirmButtonColor: 'var(--primary)'
+        confirmButtonColor: 'var(--primary)',
+        confirmButtonText: 'حسناً'
       });
     }
 
@@ -1082,7 +1061,6 @@
           if (found) {
             displayTrackResult(found);
           } else {
-            // Demo fallback tracking status
             displayTrackResult({
               orderId: inputId,
               customerName: 'عميل مميز',
