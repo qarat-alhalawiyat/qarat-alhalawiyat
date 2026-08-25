@@ -19,7 +19,7 @@
       --success: #10b981;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-    body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 70px; }
+    body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 0; }
 
     /* Top Bar */
     .top-announcement {
@@ -45,7 +45,6 @@
       box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
     .brand-area { display: flex; align-items: center; gap: 12px; }
-    .brand-area img { width: 45px; height: 45px; border-radius: 10px; }
     .brand-text h1 { font-size: 20px; font-weight: 900; color: var(--primary); }
     .brand-text span { font-size: 11px; color: var(--text-muted); }
 
@@ -73,7 +72,7 @@
     }
 
     /* Container */
-    .main-container { max-width: 1250px; margin: 20px auto; padding: 0 20px; }
+    .main-container { max-width: 1250px; margin: 20px auto 40px; padding: 0 20px; }
 
     /* Search Bar */
     .search-wrapper { margin-bottom: 20px; position: relative; }
@@ -278,7 +277,7 @@
       border-radius: 6px;
     }
 
-    /* Quantity Controls & Add Button */
+    /* Actions */
     .card-actions {
       display: flex;
       gap: 8px;
@@ -322,6 +321,98 @@
       transition: 0.2s;
     }
     .add-btn:hover { background: var(--primary); }
+
+    /* Modern Footer */
+    footer {
+      background: linear-gradient(135deg, #1f0b35, #2b0f47);
+      color: #e2e8f0;
+      padding: 50px 20px 25px;
+      border-top: 3px solid var(--accent);
+    }
+    .footer-container {
+      max-width: 1250px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 30px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .footer-col h4 {
+      color: #ffd166;
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .footer-col h4::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      right: 0;
+      width: 35px;
+      height: 2px;
+      background: var(--accent);
+    }
+    .footer-col p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: #cbd5e1;
+    }
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+    .footer-links a, .footer-links button {
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 13px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0;
+      transition: color 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer-links a:hover, .footer-links button:hover {
+      color: #ffd166;
+    }
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      margin-bottom: 12px;
+      color: #cbd5e1;
+    }
+    .vat-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      margin-top: 10px;
+      font-size: 12px;
+    }
+    .footer-bottom {
+      max-width: 1250px;
+      margin: 20px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
   </style>
 </head>
 <body>
@@ -373,7 +464,7 @@
           📂 التصنيفات <span style="font-size: 10px;">▼</span>
         </button>
         <div class="dropdown-menu" id="dropdownMenuList">
-          <!-- Categories list with counts inserted dynamically -->
+          <!-- Categories list inserted dynamically -->
         </div>
       </div>
     </div>
@@ -384,6 +475,72 @@
     </div>
 
   </div>
+
+  <!-- Modern Store Footer -->
+  <footer>
+    <div class="footer-container">
+      
+      <!-- Col 1: About -->
+      <div class="footer-col">
+        <h4>🍬 مؤسسة قارة الحلويات</h4>
+        <p>
+          وجهتك الأولى لتوريد أجود أنواع الحلويات والشوكولاتة ومنتجات البروتين المستوردة بأسعار الجملة التنافسية للكرتون، ملتزمون بالجودة وسرعة التوصيل لكافة المنشآت والأفراد.
+        </p>
+        <div class="vat-badge">
+          <span>🧾 الرقم الضريبي: <b>300000000000003</b></span>
+        </div>
+      </div>
+
+      <!-- Col 2: Quick Links -->
+      <div class="footer-col">
+        <h4>🔗 روابط تهمك</h4>
+        <ul class="footer-links">
+          <li><a href="#searchInput" onclick="setFilter('all')">📦 جميع المنتجات</a></li>
+          <li><a href="#searchInput" onclick="setFilter('bestseller')">🔥 الأكثر طلباً ومبيعاً</a></li>
+          <li><a href="#searchInput" onclick="setFilter('offers')">🏷️ عروض وتخفيضات الكرتون</a></li>
+          <li><button onclick="toggleDropdown(event)">📂 تصفح حسب التصنيف</button></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Customer Care & Policies -->
+      <div class="footer-col">
+        <h4>🛡️ السياسات والخدمات</h4>
+        <ul class="footer-links">
+          <li><button onclick="showPolicy('returns')">🔄 سياسة الاسترجاع والاستبدال</button></li>
+          <li><button onclick="showPolicy('shipping')">🚚 الشحن والتوصيل المبرد</button></li>
+          <li><button onclick="showPolicy('wholesale')">💼 طلبات الجملة والتوريد</button></li>
+          <li><button onclick="showPolicy('guarantee')">✨ ضمان الجودة والصلاحية</button></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Contact Info -->
+      <div class="footer-col">
+        <h4>📞 تواصل معنا</h4>
+        <div class="footer-contact-item">
+          <span>📍</span>
+          <span>المملكة العربية السعودية - الرياض</span>
+        </div>
+        <div class="footer-contact-item">
+          <span>📱</span>
+          <span>واتساب المبيعات: 0500000000</span>
+        </div>
+        <div class="footer-contact-item">
+          <span>✉️</span>
+          <span>info@qarat-alhalawiyat.com</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Copyright -->
+    <div class="footer-bottom">
+      <div>جميع الحقوق محفوظة © 2026 مؤسسة قارة الحلويات للتجارة</div>
+      <div style="display: flex; gap: 8px; align-items: center;">
+        <span>جميع الأسعار تشمل ضريبة القيمة المضافة</span>
+        <span style="background: #fff; color: #1f0b35; padding: 2px 6px; border-radius: 4px; font-weight: 800; font-size: 10px;">15% VAT</span>
+      </div>
+    </div>
+  </footer>
 
   <script src="products_data.js"></script>
   <script>
@@ -419,7 +576,6 @@
     function buildCategoriesMenu() {
       const menu = document.getElementById('dropdownMenuList');
       
-      // Calculate group counts
       const groupCounts = {};
       allItems.forEach(p => {
         const g = (p.group && p.group.trim() !== '') ? p.group.trim() : 'عام';
@@ -641,6 +797,33 @@
       
       const url = `https://api.whatsapp.com/send?phone=966500000000&text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
+    }
+
+    function showPolicy(type) {
+      let title = '';
+      let text = '';
+
+      if (type === 'returns') {
+        title = '🔄 سياسة الاسترجاع والاستبدال';
+        text = 'حرصاً على سلامة وجودة المنتجات الغذائية، يقبل الاستبدال والاسترجاع خلال 48 ساعة من الاستلام في حالة وجود تلف مصنعي أو اختلاف في الصنف المستلم، بشرط بقاء المنتجات في كراتينها الأصلية وبحالتها المغلفة.';
+      } else if (type === 'shipping') {
+        title = '🚚 الشحن والتوصيل المبرد';
+        text = 'يتم توصيل الطلبات داخل مدينة الرياض خلال 24 - 48 ساعة، ولجميع مناطق المملكة الأخرى عبر شركات الشحن المعتمدة والمبردة خلال 2 - 4 أيام عمل لضمان سلامة الأصناف ضد الحرارة.';
+      } else if (type === 'wholesale') {
+        title = '💼 طلبات الجملة والتوريد';
+        text = 'نوفر عروضاً وأسعاراً خاصة للكميات الكبيرة، والسوبرماركت، ومحلات المكملات الغذائية والمقاهي. تفضل بمراسلتنا مباشرة عبر الواتساب للحصول على عروض الأسعار المخصصة.';
+      } else if (type === 'guarantee') {
+        title = '✨ ضمان الجودة والصلاحية';
+        text = 'نضمن أن جميع المنتجات والحلويات أصلية 100%، ومخزنة في مستودعات مبردة ومطابقة لجميع اشتراطات الهيئة العامة للغذاء والدواء مع تواريخ صلاحية حديثة ووفيرة.';
+      }
+
+      Swal.fire({
+        title: title,
+        text: text,
+        icon: 'info',
+        confirmButtonText: 'حسناً',
+        confirmButtonColor: 'var(--primary)'
+      });
     }
   </script>
 </body>
