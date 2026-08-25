@@ -43,7 +43,9 @@
         .main-content { margin-right: 280px; flex: 1; padding: 2rem; width: calc(100% - 280px); }
         
         .top-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .stat-box { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.2rem; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); }
+        .stat-box { background: var(--white); border: 1.5px solid var(--border); border-radius: 14px; padding: 1.2rem; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); transition: transform 0.2s; }
+        .stat-box.clickable { cursor: pointer; }
+        .stat-box.clickable:hover { transform: translateY(-3px); border-color: var(--gold); }
         .stat-icon { width: 50px; height: 50px; border-radius: 12px; background: var(--choc-dark); color: var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
         .stat-details h4 { font-size: 0.85rem; color: #777; font-weight: 700; }
         .stat-details span { font-size: 1.35rem; font-weight: 900; color: var(--choc-dark); }
@@ -52,13 +54,14 @@
         .card-header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem; }
         .card-header-flex h3 { font-size: 1.2rem; font-weight: 900; color: var(--choc-dark); display: flex; align-items: center; gap: 10px; }
 
-        .btn-action-gold { background: var(--choc-dark); color: var(--gold-light); border: none; padding: 9px 18px; border-radius: 8px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-action-gold { background: var(--choc-dark); color: var(--gold-light); border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; }
         .btn-action-gold:hover { background: var(--choc-medium); }
-        .btn-action-green { background: var(--success); color: white; border: none; padding: 9px 18px; border-radius: 8px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+        .btn-action-green { background: var(--success); color: white; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; }
         .btn-action-green:hover { background: #15803d; }
-        .btn-action-danger { background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 6px; font-weight: 800; cursor: pointer; }
+        .btn-action-danger { background: var(--danger); color: white; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; }
+        .btn-action-danger:hover { opacity: 0.9; }
 
-        .table-search-input { padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 25px; outline: none; width: 300px; font-size: 0.95rem; background: var(--cream); }
+        .table-search-input { padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 25px; outline: none; width: 280px; font-size: 0.95rem; background: var(--cream); }
         .table-search-input:focus { border-color: var(--gold); background: #fff; }
 
         .table-wrap { width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; max-height: 700px; }
@@ -118,7 +121,7 @@
         .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
         .form-grp { display: flex; flex-direction: column; gap: 6px; }
         .form-grp label { font-size: 0.85rem; font-weight: 800; color: var(--choc-dark); }
-        .form-grp input, .form-grp select, .form-grp textarea { padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; font-size: 0.95rem; }
+        .form-grp input, .form-grp select { padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; outline: none; font-size: 0.95rem; }
 
         .modal-foot { padding: 1.2rem 1.5rem; background: #fdfbf7; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
         .btn-save-modal { background: var(--choc-dark); color: var(--gold); border: none; padding: 12px 28px; border-radius: 8px; font-weight: 900; cursor: pointer; font-size: 0.95rem; }
@@ -172,10 +175,10 @@
     <main class="main-content">
         <!-- Dashboard Top Stats -->
         <div class="top-stats-row">
-            <div class="stat-box">
+            <div class="stat-box clickable" title="اضغط لعرض جميع الأصناف" onclick="showAllProducts()">
                 <div class="stat-icon"><i class="fa-solid fa-box"></i></div>
                 <div class="stat-details">
-                    <h4>إجمالي الأصناف</h4>
+                    <h4>إجمالي الأصناف (عرض الكل)</h4>
                     <span id="statTotalProds">0</span>
                 </div>
             </div>
@@ -186,7 +189,7 @@
                     <span id="statTotalGroups">0</span>
                 </div>
             </div>
-            <div class="stat-box">
+            <div class="stat-box clickable" style="border-color:#fee2e2;" title="اضغط لعرض النواقص فقط" onclick="toggleLowStockFilter()">
                 <div class="stat-icon" style="background:#fee2e2; color:#991b1b;"><i class="fa-solid fa-triangle-exclamation"></i></div>
                 <div class="stat-details">
                     <h4>أصناف قاربت النفاد</h4>
@@ -206,11 +209,12 @@
         <section id="sec_products" class="content-card">
             <div class="card-header-flex">
                 <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> إدارة أصناف ومخزون المتجر</h3>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <button class="btn-action-green" onclick="openNewProductModal()"><i class="fa-solid fa-plus"></i> إضافة صنف جديد</button>
-                    <button class="btn-action-gold" onclick="fillAllStock(10)"><i class="fa-solid fa-boxes-packing"></i> تعبئة كل المخزون (10)</button>
-                    <button class="btn-action-gold" onclick="filterLowStockOnly()"><i class="fa-solid fa-filter"></i> عرض النواقص فقط</button>
-                    <input type="text" id="adminSearchInput" class="table-search-input" placeholder="ابحث باسم الصنف، الباركود، أو المجموعة..." oninput="handleTableSearch()">
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="btn-action-green" onclick="openNewProductModal()"><i class="fa-solid fa-plus"></i> إضافة صنف</button>
+                    <button class="btn-action-danger" onclick="fillAllStock(0)"><i class="fa-solid fa-rotate-left"></i> تصفير المخزون (0)</button>
+                    <button class="btn-action-gold" onclick="fillAllStock(10)"><i class="fa-solid fa-boxes-packing"></i> تعبئة (10)</button>
+                    <button id="btnToggleLow" class="btn-action-gold" onclick="toggleLowStockFilter()"><i class="fa-solid fa-filter"></i> عرض النواقص فقط</button>
+                    <input type="text" id="adminSearchInput" class="table-search-input" placeholder="ابحث باسم الصنف أو الباركود..." oninput="handleTableSearch()">
                 </div>
             </div>
 
@@ -241,7 +245,6 @@
             </div>
 
             <div class="offers-grid-layout">
-                <!-- Percentage Offer Box -->
                 <div class="offer-setup-box">
                     <h4><i class="fa-solid fa-percent"></i> خصم بالنسبة المئوية (%)</h4>
                     <div class="form-grp" style="margin-bottom:12px;">
@@ -268,7 +271,6 @@
                     </button>
                 </div>
 
-                <!-- BXGY Offer Box -->
                 <div class="offer-setup-box">
                     <h4><i class="fa-solid fa-gift"></i> عروض الكميات (اشترِ X واحصل على Y مجاناً)</h4>
                     <div class="form-grp" style="margin-bottom:12px;">
@@ -411,7 +413,7 @@
                     </div>
                     <div class="form-grp">
                         <label>حالة المخزون (الكمية):</label>
-                        <input type="number" id="edit_stock" placeholder="10">
+                        <input type="number" id="edit_stock" value="0">
                     </div>
                 </div>
 
@@ -462,7 +464,7 @@
                     </div>
                     <div class="form-grp">
                         <label>المخزون الابتدائي:</label>
-                        <input type="number" id="new_stock" value="10">
+                        <input type="number" id="new_stock" value="0">
                     </div>
                 </div>
                 <div class="form-row">
@@ -520,7 +522,6 @@
                             </tr>
                         </thead>
                         <tbody id="inv_items_body">
-                            <!-- Injected Dynamically -->
                         </tbody>
                     </table>
                     <div style="text-align:left; font-size:1.1rem; font-weight:900; color:var(--choc-dark); border-top:1px solid #ddd; padding-top:10px;">
@@ -538,6 +539,7 @@
 
     <script>
         let storeProducts = [];
+        let isLowStockFiltered = false;
         let storeOffers = JSON.parse(localStorage.getItem('qarat_offers')) || [];
         let storeInvoices = JSON.parse(localStorage.getItem('qarat_invoices')) || [];
 
@@ -584,6 +586,11 @@
                 }
             }
 
+            // ضبط المخزون الابتدائي ليكون 0 إذا لم يكن محدداً
+            storeProducts.forEach(p => {
+                if (p.stock === undefined) p.stock = 0;
+            });
+
             updateDashboardStats();
             renderAdminTable(storeProducts);
         }
@@ -594,10 +601,10 @@
             const groups = new Set(storeProducts.map(p => p.group || 'عام'));
             document.getElementById('statTotalGroups').textContent = groups.size;
 
-            const lowStockCount = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 10) <= 3).length;
+            const lowStockCount = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3).length;
             document.getElementById('statLowStock').textContent = lowStockCount;
 
-            const totalVal = storeProducts.reduce((acc, p) => acc + ((parseFloat(p.price) || 0) * (p.stock !== undefined ? p.stock : 10)), 0);
+            const totalVal = storeProducts.reduce((acc, p) => acc + ((parseFloat(p.price) || 0) * (p.stock !== undefined ? p.stock : 0)), 0);
             document.getElementById('statInventoryValue').textContent = totalVal.toFixed(2) + ' ر.س';
         }
 
@@ -613,16 +620,16 @@
                 const pPack = p.pack ? p.pack + ' حبة' : '-';
                 const pPrice = parseFloat(p.price) || 0;
                 const pBarcode = p.barcode || '-';
-                const pStock = p.stock !== undefined ? p.stock : 10;
+                const pStock = p.stock !== undefined ? p.stock : 0;
                 
-                let imgSrc = p.image || `images/image${idx + 1}.jpeg`;
+                let imgSrc = p.image || `images/image${originalIndex + 1}.jpeg`;
                 if (!imgSrc.startsWith('http') && !imgSrc.startsWith('images/') && !imgSrc.startsWith('./images/')) {
                     imgSrc = 'images/' + imgSrc;
                 }
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td><b>${idx + 1}</b></td>
+                    <td><b>${originalIndex + 1}</b></td>
                     <td><img class="p-thumb" src="${imgSrc}" onerror="tryNextFormat(this);"></td>
                     <td class="p-name-bold">${pName}</td>
                     <td><span style="background:#ede7f6; padding:3px 8px; border-radius:6px; font-weight:700; color:var(--choc-dark); font-size:0.85rem;">${pGroup}</span></td>
@@ -644,7 +651,8 @@
 
         function handleTableSearch() {
             const q = document.getElementById('adminSearchInput').value.trim().toLowerCase();
-            const filtered = storeProducts.filter(p => 
+            const source = isLowStockFiltered ? storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3) : storeProducts;
+            const filtered = source.filter(p => 
                 (p.name && p.name.toLowerCase().includes(q)) || 
                 (p.barcode && String(p.barcode).includes(q)) ||
                 (p.group && p.group.toLowerCase().includes(q))
@@ -652,17 +660,46 @@
             renderAdminTable(filtered);
         }
 
+        function showAllProducts() {
+            isLowStockFiltered = false;
+            document.getElementById('adminSearchInput').value = '';
+            document.getElementById('btnToggleLow').innerHTML = '<i class="fa-solid fa-filter"></i> عرض النواقص فقط';
+            switchSection('sec_products', document.querySelector('.sidebar-menu .menu-item'));
+            renderAdminTable(storeProducts);
+        }
+
+        function toggleLowStockFilter() {
+            isLowStockFiltered = !isLowStockFiltered;
+            const btn = document.getElementById('btnToggleLow');
+            document.getElementById('adminSearchInput').value = '';
+            
+            // التأكد من فتح تبويب الأصناف
+            document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.getElementById('sec_products').style.display = 'block';
+            document.querySelector('.sidebar-menu .menu-item').classList.add('active');
+
+            if (isLowStockFiltered) {
+                btn.innerHTML = '<i class="fa-solid fa-boxes-stacked"></i> عرض جميع الأصناف';
+                const low = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3);
+                renderAdminTable(low);
+            } else {
+                btn.innerHTML = '<i class="fa-solid fa-filter"></i> عرض النواقص فقط';
+                renderAdminTable(storeProducts);
+            }
+        }
+
         function fillAllStock(val) {
             storeProducts.forEach(p => p.stock = val);
             saveToStorage();
-            renderAdminTable(storeProducts);
+            if(isLowStockFiltered) {
+                const low = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3);
+                renderAdminTable(low);
+            } else {
+                renderAdminTable(storeProducts);
+            }
             updateDashboardStats();
-            alert(`تم تعبئة مخزون كافة الأصناف إلى ${val} كرتون.`);
-        }
-
-        function filterLowStockOnly() {
-            const low = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 10) <= 3);
-            renderAdminTable(low);
+            alert(val === 0 ? 'تم تصفير مخزون كافة الأصناف بنجاح (0 كرتون).' : `تم تعبئة مخزون كافة الأصناف إلى ${val} كرتون.`);
         }
 
         /* --- Modals Management --- */
@@ -675,7 +712,7 @@
             document.getElementById('edit_group').value = p.group || '';
             document.getElementById('edit_weight').value = p.weight || '';
             document.getElementById('edit_pack').value = p.pack || '';
-            document.getElementById('edit_stock').value = p.stock !== undefined ? p.stock : 10;
+            document.getElementById('edit_stock').value = p.stock !== undefined ? p.stock : 0;
             document.getElementById('edit_price').value = p.price || 0;
             document.getElementById('edit_barcode').value = p.barcode || '';
             
@@ -703,7 +740,12 @@
             p.image = document.getElementById('edit_image_path').value.trim();
 
             saveToStorage();
-            renderAdminTable(storeProducts);
+            if(isLowStockFiltered) {
+                const low = storeProducts.filter(prod => (prod.stock !== undefined ? prod.stock : 0) <= 3);
+                renderAdminTable(low);
+            } else {
+                renderAdminTable(storeProducts);
+            }
             updateDashboardStats();
             closeCardModal();
             alert('تم حفظ التعديل بنجاح!');
@@ -735,7 +777,7 @@
                 group: document.getElementById('new_group').value.trim() || 'عام',
                 weight: document.getElementById('new_weight').value.trim() || '-',
                 pack: document.getElementById('new_pack').value.trim() || '1',
-                stock: parseInt(document.getElementById('new_stock').value) || 10,
+                stock: parseInt(document.getElementById('new_stock').value) || 0,
                 price: parseFloat(document.getElementById('new_price').value) || 0,
                 barcode: document.getElementById('new_barcode').value.trim() || '-',
                 image: document.getElementById('new_image').value.trim() || 'images/image1.jpeg'
@@ -837,7 +879,6 @@
             const tbody = document.getElementById('inv_items_body');
             tbody.innerHTML = '';
             
-            // Generate sample invoice with first 3 items
             const sampleItems = storeProducts.slice(0, 3);
             let total = 0;
             sampleItems.forEach(item => {
@@ -875,6 +916,73 @@
         function saveToStorage() {
             localStorage.setItem('qarat_main_prods', JSON.stringify(storeProducts));
             localStorage.setItem('qarat_products', JSON.stringify(storeProducts));
+        }
+
+        function handleExcel(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const wb = XLSX.read(new Uint8Array(evt.target.result), { type: 'array' });
+                const rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                storeProducts = [];
+                rows.forEach((r, idx) => {
+                    const name = r['اسم الصنف'] || r['Name'] || r['الاسم'] || r['الصنف'] || '';
+                    if (name) {
+                        storeProducts.push({
+                            name: String(name).trim(),
+                            group: String(r['المجموعة'] || r['Group'] || 'عام').trim(),
+                            weight: String(r['الحجم'] || r['الوزن'] || r['Weight'] || '').trim(),
+                            pack: String(r['الشد'] || r['Pack'] || '1').trim(),
+                            price: parseFloat(r['السعر شامل الضريبة'] || r['Price'] || r['السعر'] || 0),
+                            barcode: String(r['الباركود'] || r['Barcode'] || '').trim(),
+                            stock: 0,
+                            image: `images/image${idx + 1}.jpeg`
+                        });
+                    }
+                });
+                saveToStorage();
+                document.getElementById('step1_status').textContent = `✅ تم استيراد ${storeProducts.length} صنف بنجاح!`;
+                updateDashboardStats();
+                renderAdminTable(storeProducts);
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function handleFolderImages(e) {
+            const files = Array.from(e.target.files);
+            if (!files || files.length === 0) return;
+
+            const pBar = document.getElementById('pBar');
+            const pFill = document.getElementById('pFill');
+            const status = document.getElementById('step2_status');
+
+            pBar.style.display = 'block';
+            let count = 0;
+            const total = files.length;
+
+            for (const file of files) {
+                const fileName = file.name;
+                const baseName = fileName.split('.')[0].trim().toLowerCase();
+                const numMatch = baseName.match(/\d+/);
+                
+                if (numMatch) {
+                    const targetIdx = parseInt(numMatch[0]) - 1;
+                    if (storeProducts[targetIdx]) {
+                        storeProducts[targetIdx].image = `images/${fileName}`;
+                    }
+                }
+                count++;
+                const pct = Math.round((count / total) * 100);
+                pFill.style.width = pct + '%';
+            }
+
+            saveToStorage();
+            status.textContent = `🎉 تم ربط مسارات جميع الصور بنجاح! اضغط الآن على (حفظ وتنزيل products_data.js) بالأسفل.`;
+            setTimeout(() => { 
+                pBar.style.display = 'none'; 
+                renderAdminTable(storeProducts); 
+            }, 600);
         }
 
         function exportToExcel() {
