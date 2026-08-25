@@ -115,10 +115,11 @@
         .btn-card-edit { background: var(--choc-dark); color: var(--gold-light); border: none; padding: 7px 14px; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
         .btn-card-edit:hover { background: var(--choc-medium); }
 
+        .status-select { padding: 6px 10px; border-radius: 6px; border: 1.5px solid var(--gold); font-weight: 800; font-size: 0.85rem; outline: none; background: #fff; }
+
         .offers-grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px; }
         .offer-setup-box { background: var(--cream); border: 1.5px solid var(--border); border-radius: 12px; padding: 20px; }
         .offer-setup-box h4 { color: var(--choc-dark); font-weight: 800; margin-bottom: 15px; font-size: 1.05rem; }
-        
         .active-offer-card { background: white; border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
 
         .import-step-box { background: #fdfbf7; border: 2px dashed var(--gold); border-radius: 16px; padding: 2rem; text-align: center; margin-bottom: 1.5rem; }
@@ -220,6 +221,10 @@
                 <i class="fa-solid fa-boxes-stacked"></i>
                 <span>كافة الأصناف والمخزون</span>
             </a>
+            <a class="menu-item" id="nav_orders" onclick="switchSection('sec_orders', this)">
+                <i class="fa-solid fa-truck-ramp-box"></i>
+                <span>طلبيات العملاء والتتبع</span>
+            </a>
             <a class="menu-item" id="nav_offers" onclick="switchSection('sec_offers', this)">
                 <i class="fa-solid fa-tags"></i>
                 <span>العروض والخصومات</span>
@@ -257,10 +262,10 @@
                 </div>
             </div>
             <div class="stat-box">
-                <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
+                <div class="stat-icon"><i class="fa-solid fa-cart-shopping"></i></div>
                 <div class="stat-details">
-                    <h4>عدد المجموعات</h4>
-                    <span id="statTotalGroups">0</span>
+                    <h4>إجمالي الطلبيات الواردة</h4>
+                    <span id="statTotalOrders">0</span>
                 </div>
             </div>
             <div class="stat-box clickable" style="border-color:#fee2e2;" title="اضغط لعرض النواقص فقط" onclick="toggleLowStockFilter()">
@@ -312,7 +317,37 @@
             </div>
         </section>
 
-        <!-- Section 2: Offers & Discounts -->
+        <!-- Section 2: Orders & Shipment Tracking (جديد: إدارة الطلبيات والتتبع) -->
+        <section id="sec_orders" class="content-card" style="display:none;">
+            <div class="card-header-flex">
+                <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> إدارة طلبيات العملاء وتحديث حالات الشحن</h3>
+                <button class="btn-action-danger" onclick="clearAllOrders()"><i class="fa-solid fa-trash"></i> مسح سجل الطلبات</button>
+            </div>
+            
+            <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">
+                قم بتغيير حالة الطلب من القائمة المنسدلة (استلام وتجهيز، خروج مع المندوب، تم التسليم) ليراها العميل فوراً عند تتبع طلبيته بالمتجر.
+            </p>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم الفاتورة / الطلب</th>
+                            <th>العميل / المنشأة</th>
+                            <th>رقم الجوال</th>
+                            <th>المدينة</th>
+                            <th>قيمة الفاتورة</th>
+                            <th>تاريخ الطلب</th>
+                            <th>حالة الطلبية الحالية</th>
+                            <th>إجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 3: Offers & Discounts -->
         <section id="sec_offers" class="content-card" style="display:none;">
             <div class="card-header-flex">
                 <h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> محرك العروض والخصومات الذكية</h3>
@@ -375,7 +410,7 @@
             </div>
         </section>
 
-        <!-- Section 3: Import & Export -->
+        <!-- Section 4: Import & Export -->
         <section id="sec_import" class="content-card" style="display:none;">
             <div class="card-header-flex">
                 <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> أدوات الاستيراد وتصدير Excel و GitHub</h3>
@@ -410,7 +445,7 @@
             </div>
         </section>
 
-        <!-- Section 4: Users & Permissions -->
+        <!-- Section 5: Users & Permissions -->
         <section id="sec_users" class="content-card" style="display:none;">
             <div class="card-header-flex">
                 <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين وتحديد الصلاحيات المخصصة</h3>
@@ -550,7 +585,7 @@
         </div>
     </dialog>
 
-    <!-- Dialog 3: إضافة مستخدم جديد بصلاحيات Checkboxes -->
+    <!-- Dialog 3: إضافة مستخدم جديد -->
     <dialog id="newUserModal">
         <div class="modal-inner-container">
             <div class="modal-head">
@@ -620,11 +655,8 @@
             const u = (document.getElementById('loginUser').value || '').trim();
             const p = (document.getElementById('loginPass').value || '').trim();
 
-            if (!u || !p) {
-                return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
-            }
+            if (!u || !p) return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
 
-            // تحقق من حساب المدير الافتراضي
             if (u.toLowerCase() === 'admin' && p === '123456') {
                 currentUser = defaultAdmin;
                 sessionStorage.setItem('qarat_logged_in_user', JSON.stringify(currentUser));
@@ -634,7 +666,6 @@
                 return;
             }
 
-            // تحقق من المستخدمين الإضافيين المخزنين
             const customUsers = getStoredUsers();
             const match = customUsers.find(x => x.user.toLowerCase() === u.toLowerCase() && x.pass === p);
 
@@ -694,6 +725,7 @@
                 loadData();
             }
             renderUsersTable();
+            renderOrdersTable();
         };
 
         function tryNextFormat(imgElement) {
@@ -709,12 +741,9 @@
         }
 
         function loadData() {
-            // قراءة المخزون المحفوظ أولاً لمنع الرجوع للبيانات القديمة
             try {
                 const saved = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
-                if (saved) {
-                    storeProducts = JSON.parse(saved);
-                }
+                if (saved) storeProducts = JSON.parse(saved);
             } catch(e) {}
 
             if (!storeProducts || storeProducts.length === 0) {
@@ -735,6 +764,7 @@
             renderAdminTable(storeProducts);
             populateOffersDropdowns();
             renderUsersTable();
+            renderOrdersTable();
         }
 
         function saveToStorage() {
@@ -744,12 +774,79 @@
 
         function updateDashboardStats() {
             document.getElementById('statTotalProds').textContent = storeProducts.length;
-            const groups = new Set(storeProducts.map(p => p.group || 'عام'));
-            document.getElementById('statTotalGroups').textContent = groups.size;
+            const orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+            document.getElementById('statTotalOrders').textContent = orders.length;
+
             const lowStockCount = storeProducts.filter(p => (p.stock !== undefined ? p.stock : 0) <= 3).length;
             document.getElementById('statLowStock').textContent = lowStockCount;
             const totalVal = storeProducts.reduce((acc, p) => acc + ((parseFloat(p.price) || 0) * (p.stock !== undefined ? p.stock : 0)), 0);
             document.getElementById('statInventoryValue').textContent = totalVal.toFixed(2) + ' ر.س';
+        }
+
+        /* --- Orders & Realtime Shipment Tracking Logic (جديد) --- */
+        function renderOrdersTable() {
+            const tbody = document.getElementById('ordersTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            const orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#888; padding:25px;">لا توجد طلبيات مسجلة بعد. عند إتمام أي عميل للطلب ستظهر الفاتورة هنا فوراً لتغيير حالتها.</td></tr>`;
+                return;
+            }
+
+            orders.forEach((o, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><b style="color:var(--gold);">#${o.orderId}</b></td>
+                    <td><b>${o.customerName}</b></td>
+                    <td><a href="tel:${o.phone}" style="color:var(--choc-dark); font-weight:bold; text-decoration:none;">${o.phone}</a></td>
+                    <td>${o.city || 'الرياض'}</td>
+                    <td><b>${parseFloat(o.total || 0).toFixed(2)} ر.س</b></td>
+                    <td>${o.date}</td>
+                    <td>
+                        <select class="status-select" onchange="updateOrderStatus('${o.orderId}', this.value)">
+                            <option value="received" ${o.status === 'received' ? 'selected' : ''}>1. تم استلام الطلب وتأكيده</option>
+                            <option value="preparing" ${o.status === 'preparing' ? 'selected' : ''}>2. استلام أمين المستودع وجاري التجهيز</option>
+                            <option value="shipping" ${o.status === 'shipping' ? 'selected' : ''}>3. خرجت في الطريق مع المندوب</option>
+                            <option value="delivered" ${o.status === 'delivered' ? 'selected' : ''}>4. تم التسليم للعميل بنجاح</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn-action-danger" style="padding:4px 8px; font-size:0.8rem;" onclick="deleteOrder('${o.orderId}')"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            let orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+            const target = orders.find(o => o.orderId === orderId);
+            if (target) {
+                target.status = newStatus;
+                localStorage.setItem('qarat_store_orders', JSON.stringify(orders));
+                alert(`تم تحديث حالة الطلب #${orderId} بنجاح! يمكن للعميل الآن رؤية المرحلة الجديدة عند تتبع الطلب.`);
+            }
+        }
+
+        function deleteOrder(orderId) {
+            if (confirm('هل أنت متأكد من رغبتك في حذف هذه الطلبية من السجل؟')) {
+                let orders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+                orders = orders.filter(o => o.orderId !== orderId);
+                localStorage.setItem('qarat_store_orders', JSON.stringify(orders));
+                renderOrdersTable();
+                updateDashboardStats();
+            }
+        }
+
+        function clearAllOrders() {
+            if (confirm('هل أنت متأكد من مسح جميع سجلات الطلبيات؟')) {
+                localStorage.removeItem('qarat_store_orders');
+                renderOrdersTable();
+                updateDashboardStats();
+            }
         }
 
         function renderAdminTable(list) {
@@ -884,13 +981,8 @@
             p.barcode = document.getElementById('edit_barcode').value.trim();
             p.image = document.getElementById('edit_image_path').value.trim();
 
-            if (hasPerm('edit_price')) {
-                p.price = parseFloat(document.getElementById('edit_price').value) || 0;
-            }
-
-            if (hasPerm('edit_stock')) {
-                p.stock = parseInt(document.getElementById('edit_stock').value) || 0;
-            }
+            if (hasPerm('edit_price')) p.price = parseFloat(document.getElementById('edit_price').value) || 0;
+            if (hasPerm('edit_stock')) p.stock = parseInt(document.getElementById('edit_stock').value) || 0;
 
             saveToStorage();
             if(isLowStockFiltered) {
@@ -947,7 +1039,6 @@
             alert('تمت إضافة الصنف الجديد بنجاح!');
         }
 
-        /* --- Users & Custom Permissions Management --- */
         function renderUsersTable() {
             const tbody = document.getElementById('usersTableBody');
             if (!tbody) return;
@@ -1011,19 +1102,11 @@
             };
 
             let usersList = getStoredUsers();
-            
-            // منع تكرار اسم المستخدم
             if (uName.toLowerCase() === 'admin' || usersList.some(x => x.user.toLowerCase() === uName.toLowerCase())) {
-                return alert('اسم المستخدم هذا موجود بالفعل! يرجى اختيار اسم آخر.');
+                return alert('اسم المستخدم موجود مسبقاً!');
             }
 
-            usersList.push({
-                id: 'u_' + Date.now(),
-                user: uName,
-                pass: uPass,
-                perms: perms
-            });
-
+            usersList.push({ id: 'u_' + Date.now(), user: uName, pass: uPass, perms: perms });
             saveUsersToStorage(usersList);
             renderUsersTable();
             closeNewUserModal();
@@ -1044,7 +1127,8 @@
             document.querySelectorAll('.sidebar-menu .menu-item').forEach(m => m.classList.remove('active'));
             document.getElementById(secId).style.display = 'block';
             if (btn) btn.classList.add('active');
-            if(secId === 'sec_import') generateRawExport();
+            if (secId === 'sec_orders') renderOrdersTable();
+            if (secId === 'sec_import') generateRawExport();
         }
 
         function populateOffersDropdowns() {
@@ -1146,80 +1230,3 @@
                             image: `images/image${idx + 1}.jpeg`
                         });
                     }
-                });
-                saveToStorage();
-                document.getElementById('step1_status').textContent = `✅ تم استيراد ${storeProducts.length} صنف بنجاح!`;
-                updateDashboardStats();
-                renderAdminTable(storeProducts);
-            };
-            reader.readAsArrayBuffer(file);
-        }
-
-        function handleFolderImages(e) {
-            if (!hasPerm('excel')) return alert('ليس لديك صلاحية ربط الصور.');
-            const files = Array.from(e.target.files);
-            if (!files || files.length === 0) return;
-
-            for (const file of files) {
-                const fileName = file.name;
-                const baseName = fileName.split('.')[0].trim().toLowerCase();
-                const numMatch = baseName.match(/\d+/);
-                
-                if (numMatch) {
-                    const targetIdx = parseInt(numMatch[0]) - 1;
-                    if (storeProducts[targetIdx]) {
-                        storeProducts[targetIdx].image = `images/${fileName}`;
-                    }
-                }
-            }
-
-            saveToStorage();
-            alert('🎉 تم ربط مسارات جميع الصور بنجاح!');
-            renderAdminTable(storeProducts);
-        }
-
-        function exportToExcel() {
-            const wsData = storeProducts.map(p => ({
-                'اسم الصنف': p.name,
-                'المجموعة': p.group,
-                'الحجم': p.weight,
-                'الشد': p.pack,
-                'السعر شامل الضريبة': p.price,
-                'الباركود': p.barcode,
-                'المخزون': p.stock
-            }));
-            const ws = XLSX.utils.json_to_sheet(wsData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "الأصناف");
-            XLSX.writeFile(wb, "اصناف_قارة_الحلويات.xlsx");
-        }
-
-        function generateRawExport() {
-            const content = "const products = " + JSON.stringify(storeProducts, null, 2) + ";\nconst activeOffers = " + JSON.stringify(storeOffers, null, 2) + ";";
-            document.getElementById('rawExportCode').value = content;
-        }
-
-        function copyRawCode() {
-            generateRawExport();
-            const copyText = document.getElementById("rawExportCode");
-            copyText.select();
-            document.execCommand("copy");
-            alert("تم نسخ الكود بنجاح!");
-        }
-
-        function exportDataJS() {
-            const content = "const products = " + JSON.stringify(storeProducts, null, 2) + ";\nconst activeOffers = " + JSON.stringify(storeOffers, null, 2) + ";\nwindow.STORE_PRODUCTS = products;";
-            const blob = new Blob([content], { type: "text/javascript;charset=utf-8" });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = "products_data.js";
-            a.click();
-            alert('تم تنزيل ملف التحديث (products_data.js) بنجاح!');
-        }
-
-        function previewModalImg(path) {
-            document.getElementById('modal_preview').src = path || 'https://placehold.co/100x100/4A2E1B/ffffff?text=قارة';
-        }
-    </script>
-</body>
-</html>
