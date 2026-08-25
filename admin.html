@@ -25,17 +25,17 @@
     header {
       background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
-      padding: 20px 30px;
+      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 4px 15px rgba(92, 45, 145, 0.2);
     }
-    header h1 { font-size: 22px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+    header h1 { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
     header .header-btns { display: flex; gap: 10px; }
     
     .btn {
-      padding: 9px 18px;
+      padding: 8px 16px;
       border: none;
       border-radius: 8px;
       font-weight: 700;
@@ -43,7 +43,7 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 14px;
+      font-size: 13px;
       transition: all 0.2s;
       text-decoration: none;
     }
@@ -52,7 +52,7 @@
     .btn-success { background: var(--success); color: white; }
     .btn-danger { background: var(--danger); color: white; }
     .btn-light { background: white; color: var(--primary); }
-    .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn:hover { opacity: 0.9; }
 
     .nav-tabs {
       display: flex;
@@ -65,8 +65,8 @@
     .tab-btn {
       background: none;
       border: none;
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 10px 18px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--text-muted);
       cursor: pointer;
@@ -78,43 +78,42 @@
       color: white;
     }
 
-    .container { max-width: 1200px; margin: 25px auto; padding: 0 20px; }
+    .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
-    /* Groups & Inventory */
     .search-bar-wrap {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       margin-bottom: 20px;
       background: white;
       padding: 15px;
       border-radius: 12px;
       border: 1px solid var(--border);
+      align-items: center;
     }
     .search-input {
       flex: 1;
-      padding: 12px 18px;
+      padding: 10px 15px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
       outline: none;
     }
     .group-card {
       background: white;
-      border-radius: 14px;
-      margin-bottom: 25px;
+      border-radius: 12px;
+      margin-bottom: 20px;
       border: 1px solid var(--border);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       overflow: hidden;
     }
     .group-header {
-      background: #fdfcff;
-      padding: 15px 20px;
-      font-size: 18px;
+      background: #faf7fd;
+      padding: 12px 18px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--primary);
-      border-bottom: 2px solid #ede7f6;
+      border-bottom: 1px solid #ede7f6;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -122,8 +121,8 @@
     .group-badge {
       background: var(--primary);
       color: white;
-      font-size: 13px;
-      padding: 3px 12px;
+      font-size: 12px;
+      padding: 2px 10px;
       border-radius: 20px;
     }
     .items-table {
@@ -132,65 +131,59 @@
       text-align: right;
     }
     .items-table th, .items-table td {
-      padding: 12px 16px;
+      padding: 10px 14px;
       border-bottom: 1px solid var(--border);
-      font-size: 14px;
+      font-size: 13px;
     }
-    .items-table th { background: #fafafa; color: var(--text-muted); font-weight: 700; }
+    .items-table th { background: #fdfdfd; color: var(--text-muted); }
     .items-table img {
       width: 45px;
       height: 45px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 1px solid var(--border);
     }
     .stock-input, .price-input {
-      width: 80px;
-      padding: 6px 10px;
+      width: 85px;
+      padding: 6px;
       border: 1px solid var(--border);
       border-radius: 6px;
-      font-size: 14px;
       font-weight: 700;
       text-align: center;
     }
 
-    /* Offers Section */
     .offers-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 25px;
+      gap: 20px;
     }
-    @media (max-width: 850px) { .offers-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 800px) { .offers-grid { grid-template-columns: 1fr; } }
     .offer-box {
       background: white;
-      padding: 25px;
-      border-radius: 14px;
+      padding: 20px;
+      border-radius: 12px;
       border: 1px solid var(--border);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
     }
     .offer-box h3 {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--primary);
       margin-bottom: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 13px; }
     .form-control {
       width: 100%;
-      padding: 10px 14px;
+      padding: 9px 12px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 14px;
+      border-radius: 6px;
+      font-size: 13px;
       outline: none;
     }
     .active-offers-list {
-      margin-top: 25px;
+      margin-top: 20px;
       background: white;
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 20px;
       border: 1px solid var(--border);
     }
@@ -198,11 +191,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 12px 16px;
-      background: #fcfaff;
+      padding: 10px 14px;
+      background: #faf7fd;
       border: 1px solid #ede7f6;
-      border-radius: 10px;
-      margin-bottom: 10px;
+      border-radius: 8px;
+      margin-bottom: 8px;
     }
   </style>
 </head>
@@ -212,40 +205,41 @@
     <h1>🍬 لوحة إدارة متجر قارة الحلويات</h1>
     <div class="header-btns">
       <a href="index.html" target="_blank" class="btn btn-light">🛒 معاينة المتجر</a>
-      <button onclick="saveAllChanges()" class="btn btn-success">💾 حفظ كل التعديلات</button>
+      <button onclick="saveAllChanges()" class="btn btn-success">💾 حفظ التعديلات</button>
     </div>
   </header>
 
   <nav class="nav-tabs">
-    <button class="tab-btn active" onclick="switchTab('inventory-tab')">📦 المخزون والأصناف حسب المجموعات</button>
-    <button class="tab-btn" onclick="switchTab('offers-tab')">🏷️ إدارة العروض والخصومات</button>
-    <button class="tab-btn" onclick="switchTab('export-tab')">⚙️ تصدير الكود لـ GitHub</button>
+    <button class="tab-btn active" onclick="switchTab(event, 'inventory-tab')">📦 المخزون والأصناف حسب المجموعات</button>
+    <button class="tab-btn" onclick="switchTab(event, 'offers-tab')">🏷️ إدارة العروض والخصومات</button>
+    <button class="tab-btn" onclick="switchTab(event, 'export-tab')">⚙️ تصدير البيانات</button>
   </nav>
 
   <div class="container">
     
-    <!-- Tab 1: Groups & Inventory -->
+    <!-- Tab 1: Inventory -->
     <div id="inventory-tab" class="tab-content active">
       <div class="search-bar-wrap">
         <input type="text" id="adminSearch" class="search-input" placeholder="🔍 ابحث بالاسم، الباركود، أو اسم المجموعة..." onkeyup="filterInventory()" />
-        <button onclick="resetAllStock(10)" class="btn btn-accent">تعبئة كل المخزون (10)</button>
+        <button onclick="resetAllStock(10)" class="btn btn-accent">تعبئة المخزون (10)</button>
       </div>
       <div id="groupsContainer">
-        <!-- Generated Dynamically -->
+        <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+          ⏳ جاري قراءة الأصناف من قاعدة البيانات...
+        </div>
       </div>
     </div>
 
-    <!-- Tab 2: Offers & Discounts -->
+    <!-- Tab 2: Offers -->
     <div id="offers-tab" class="tab-content">
       <div class="offers-grid">
         
-        <!-- Offer Type 1: Percentage Discount -->
         <div class="offer-box">
           <h3>📊 تطبيق نسبة خصم مئوية (%)</h3>
           <div class="form-group">
             <label>تطبيق الخصم على:</label>
             <select id="discountTargetType" class="form-control" onchange="toggleDiscountTarget()">
-              <option value="group">مجموعة أصناف كاملة</option>
+              <option value="group">مجموعة كاملة</option>
               <option value="product">صنف واحد محدد</option>
             </select>
           </div>
@@ -259,12 +253,11 @@
           </div>
           <div class="form-group">
             <label>نسبة الخصم (%):</label>
-            <input type="number" id="discountPercent" class="form-control" placeholder="مثلاً: 15" min="1" max="90" />
+            <input type="number" id="discountPercent" class="form-control" placeholder="مثلاً: 10" min="1" max="90" />
           </div>
           <button onclick="applyPercentageDiscount()" class="btn btn-primary" style="width: 100%;">تطبيق الخصم</button>
         </div>
 
-        <!-- Offer Type 2: Buy X Get Y Free -->
         <div class="offer-box">
           <h3>🎁 عروض الكميات (اشترِ X واحصل على Y مجاناً)</h3>
           <div class="form-group">
@@ -273,12 +266,12 @@
           </div>
           <div style="display: flex; gap: 10px;">
             <div class="form-group" style="flex: 1;">
-              <label>اشترِ عدد (كرتون):</label>
-              <input type="number" id="bxgyBuyQty" class="form-control" placeholder="10" value="10" min="1" />
+              <label>اشترِ عدد:</label>
+              <input type="number" id="bxgyBuyQty" class="form-control" value="10" min="1" />
             </div>
             <div class="form-group" style="flex: 1;">
-              <label>احصل على مجاناً:</label>
-              <input type="number" id="bxgyFreeQty" class="form-control" placeholder="1" value="1" min="1" />
+              <label>احصل مجاناً:</label>
+              <input type="number" id="bxgyFreeQty" class="form-control" value="1" min="1" />
             </div>
           </div>
           <button onclick="applyBXGYOffer()" class="btn btn-accent" style="width: 100%;">إضافة عرض الكمية المجانية</button>
@@ -286,24 +279,23 @@
 
       </div>
 
-      <!-- Active Offers List -->
       <div class="active-offers-list">
-        <h3 style="font-size: 17px; font-weight: 800; color: var(--primary); margin-bottom: 15px;">📋 العروض والخصومات الفعالة حالياً</h3>
+        <h3 style="font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 12px;">📋 العروض الفعالة حالياً</h3>
         <div id="activeOffersContainer">
-          <p style="color: var(--text-muted); font-size: 14px;">لا توجد عروض مضافة حالياً.</p>
+          <p style="color: var(--text-muted); font-size: 13px;">لا توجد عروض مضافة حالياً.</p>
         </div>
       </div>
     </div>
 
-    <!-- Tab 3: Export Data -->
+    <!-- Tab 3: Export -->
     <div id="export-tab" class="tab-content">
       <div class="offer-box">
-        <h3>🚀 تصدير التعديلات لملف products_data.js</h3>
-        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 15px;">
-          بعد إجراء أي تعديلات على الأصناف أو العروض، يمكنك نسخ الكود بالكامل من هنا ولصقه في ملف <code>products_data.js</code> على GitHub لتحديث المتجر دائماً.
+        <h3>🚀 تصدير البيانات وحفظها</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;">
+          يمكنك نسخ الكود بالكامل واستبداله في ملف <code>products_data.js</code> في GitHub لحفظ التعديلات نهائياً.
         </p>
-        <textarea id="exportedCode" class="form-control" style="height: 250px; font-family: monospace; direction: ltr; text-align: left;" readonly></textarea>
-        <div style="margin-top: 15px; display: flex; gap: 10px;">
+        <textarea id="exportedCode" class="form-control" style="height: 220px; font-family: monospace; direction: ltr; text-align: left;" readonly></textarea>
+        <div style="margin-top: 12px; display: flex; gap: 10px;">
           <button onclick="generateExportCode()" class="btn btn-primary">توليد الكود المحدث</button>
           <button onclick="copyExportedCode()" class="btn btn-success">نسخ الكود</button>
         </div>
@@ -317,35 +309,54 @@
     let localProducts = [];
     let activeOffers = JSON.parse(localStorage.getItem('qarat_offers')) || [];
 
-    // Init
-    window.onload = function() {
-      const savedProducts = localStorage.getItem('qarat_products');
-      if (savedProducts) {
-        localProducts = JSON.parse(savedProducts);
-      } else if (typeof products !== 'undefined') {
-        localProducts = [...products];
+    function initData() {
+      const saved = localStorage.getItem('qarat_products');
+      if (saved) {
+        try {
+          localProducts = JSON.parse(saved);
+        } catch(e) { localProducts = []; }
       }
+      
+      if (!localProducts || localProducts.length === 0) {
+        if (typeof products !== 'undefined' && Array.isArray(products)) {
+          localProducts = [...products];
+        } else if (typeof productsData !== 'undefined' && Array.isArray(productsData)) {
+          localProducts = [...productsData];
+        }
+      }
+
+      if (!localProducts || localProducts.length === 0) {
+        document.getElementById('groupsContainer').innerHTML = `
+          <div style="text-align: center; padding: 30px; background: white; border-radius: 10px; border: 1px dashed var(--danger);">
+            <p style="color: var(--danger); font-weight: bold; margin-bottom: 10px;">لم يتم العثور على مصفوفة الأصناف في ملف products_data.js</p>
+            <p style="color: var(--text-muted); font-size: 13px;">تأكد من أن اسم المتغير في بداية الملف هو <code>const products = [...]</code></p>
+          </div>
+        `;
+        return;
+      }
+
       renderInventory();
       populateDropdowns();
       renderActiveOffers();
-    };
+    }
 
-    function switchTab(tabId) {
+    window.addEventListener('DOMContentLoaded', initData);
+
+    function switchTab(e, tabId) {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      event.target.classList.add('active');
+      e.target.classList.add('active');
       document.getElementById(tabId).classList.add('active');
       if(tabId === 'export-tab') generateExportCode();
     }
 
-    // Group items by category
     function renderInventory() {
       const container = document.getElementById('groupsContainer');
       container.innerHTML = '';
 
       const groups = {};
       localProducts.forEach((p, idx) => {
-        const grp = p.group || 'أصناف متنوعة';
+        const grp = p.group && p.group.trim() !== '' ? p.group : 'أصناف متنوعة';
         if (!groups[grp]) groups[grp] = [];
         groups[grp].push({ ...p, originalIndex: idx });
       });
@@ -353,18 +364,20 @@
       for (const [groupName, items] of Object.entries(groups)) {
         let rowsHtml = '';
         items.forEach(item => {
+          const price = typeof item.price === 'number' ? item.price.toFixed(2) : item.price;
+          const stock = item.stock !== undefined ? item.stock : 10;
           rowsHtml += `
-            <tr class="product-row" data-name="${item.name}" data-barcode="${item.barcode || ''}" data-group="${groupName}">
-              <td style="width: 60px;"><img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/50x50?text=🍬'"></td>
+            <tr class="product-row" data-name="${item.name || ''}" data-barcode="${item.barcode || ''}" data-group="${groupName}">
+              <td style="width: 55px;"><img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/50x50?text=🍬'"></td>
               <td>
-                <strong>${item.name}</strong><br/>
+                <strong>${item.name || 'صنف بدون اسم'}</strong><br/>
                 <span style="font-size: 12px; color: var(--text-muted);">الباركود: ${item.barcode || '—'} | الحجم: ${item.weight || '—'}</span>
               </td>
               <td>
-                <input type="number" step="0.01" value="${item.price.toFixed(2)}" class="price-input" onchange="updateItemPrice(${item.originalIndex}, this.value)" /> ر.س
+                <input type="number" step="0.01" value="${price}" class="price-input" onchange="updateItemPrice(${item.originalIndex}, this.value)" /> ر.س
               </td>
               <td>
-                <input type="number" value="${item.stock !== undefined ? item.stock : 10}" class="stock-input" onchange="updateItemStock(${item.originalIndex}, this.value)" />
+                <input type="number" value="${stock}" class="stock-input" onchange="updateItemStock(${item.originalIndex}, this.value)" />
               </td>
             </tr>
           `;
@@ -382,7 +395,7 @@
               <tr>
                 <th>الصورة</th>
                 <th>اسم الصنف والبيانات</th>
-                <th>سعر الكرتون</th>
+                <th>السعر</th>
                 <th>المخزون المتوفر</th>
               </tr>
             </thead>
@@ -423,16 +436,15 @@
       });
     }
 
-    // Populate Dropdowns for Offers
     function populateDropdowns() {
       const groupSelect = document.getElementById('discountGroupSelect');
       const prodSelect = document.getElementById('discountProductSelect');
       const bxgySelect = document.getElementById('bxgyProductSelect');
 
-      const groups = [...new Set(localProducts.map(p => p.group || 'أصناف متنوعة'))];
+      const groups = [...new Set(localProducts.map(p => (p.group && p.group.trim() !== '') ? p.group : 'أصناف متنوعة'))];
       groupSelect.innerHTML = groups.map(g => `<option value="${g}">${g}</option>`).join('');
 
-      const prodOptions = localProducts.map((p, idx) => `<option value="${idx}">${p.name} (${p.group || 'عام'})</option>`).join('');
+      const prodOptions = localProducts.map((p, idx) => `<option value="${idx}">${p.name || 'صنف'} (${p.group || 'عام'})</option>`).join('');
       prodSelect.innerHTML = prodOptions;
       bxgySelect.innerHTML = prodOptions;
     }
@@ -443,7 +455,6 @@
       document.getElementById('productSelectWrap').style.display = type === 'product' ? 'block' : 'none';
     }
 
-    // Offers Application
     function applyPercentageDiscount() {
       const type = document.getElementById('discountTargetType').value;
       const percent = parseFloat(document.getElementById('discountPercent').value);
@@ -451,7 +462,7 @@
 
       if (type === 'group') {
         const grp = document.getElementById('discountGroupSelect').value;
-        activeOffers.push({ id: Date.now(), type: 'group_discount', target: grp, percent: percent, label: `خصم ${percent}% على كافة أصناف مجموعة (${grp})` });
+        activeOffers.push({ id: Date.now(), type: 'group_discount', target: grp, percent: percent, label: `خصم ${percent}% على أصناف مجموعة (${grp})` });
       } else {
         const pIdx = document.getElementById('discountProductSelect').value;
         const prod = localProducts[pIdx];
@@ -475,7 +486,7 @@
         target: prod.name,
         buyQty: buyQty,
         freeQty: freeQty,
-        label: `عرض: اشترِ ${buyQty} كرتون من (${prod.name}) واحصل على ${freeQty} مجاناً`
+        label: `عرض: اشترِ ${buyQty} من (${prod.name}) واحصل على ${freeQty} مجاناً`
       });
 
       saveOffers();
@@ -486,7 +497,7 @@
     function renderActiveOffers() {
       const container = document.getElementById('activeOffersContainer');
       if (activeOffers.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted); font-size: 14px;">لا توجد عروض مضافة حالياً.</p>';
+        container.innerHTML = '<p style="color: var(--text-muted); font-size: 13px;">لا توجد عروض مضافة حالياً.</p>';
         return;
       }
       container.innerHTML = activeOffers.map(o => `
@@ -510,11 +521,11 @@
     function saveAllChanges() {
       localStorage.setItem('qarat_products', JSON.stringify(localProducts));
       saveOffers();
-      Swal.fire('تم الحفظ بنجاح', 'تم حفظ جميع تعديلات المخزون والأسعار والعروض في المتصفح', 'success');
+      Swal.fire('تم الحفظ بنجاح', 'تم حفظ التعديلات بنجاح في المتصفح', 'success');
     }
 
     function generateExportCode() {
-      const code = `// تم تحديث البيانات من لوحة تحكم قارة الحلويات\nconst products = ${JSON.stringify(localProducts, null, 2)};\nconst activeOffers = ${JSON.stringify(activeOffers, null, 2)};`;
+      const code = `const products = ${JSON.stringify(localProducts, null, 2)};\nconst activeOffers = ${JSON.stringify(activeOffers, null, 2)};`;
       document.getElementById('exportedCode').value = code;
     }
 
@@ -523,7 +534,7 @@
       const area = document.getElementById('exportedCode');
       area.select();
       document.execCommand('copy');
-      Swal.fire('تم النسخ', 'تم نسخ الكود الحافظ للبيانات، يمكنك الآن لصقه في GitHub!', 'success');
+      Swal.fire('تم النسخ', 'تم نسخ الكود بنجاح!', 'success');
     }
   </script>
 </body>
