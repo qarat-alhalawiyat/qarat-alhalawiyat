@@ -182,20 +182,20 @@
 </head>
 <body>
 
-    <!-- Direct Login Overlay -->
+    <!-- Login Overlay Screen -->
     <div id="loginOverlay">
         <div class="login-box">
             <h2><i class="fa-solid fa-lock" style="color:var(--gold);"></i> تسجيل الدخول</h2>
             <p>لوحة تحكم شركة قارة الحلويات</p>
             <div class="form-grp" style="text-align:right; margin-bottom:12px;">
                 <label>اسم المستخدم:</label>
-                <input type="text" id="loginUser" value="admin" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
+                <input type="text" id="loginUser" placeholder="admin أو اسم المستخدم" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
             </div>
             <div class="form-grp" style="text-align:right; margin-bottom:20px;">
                 <label>كلمة المرور:</label>
-                <input type="password" id="loginPass" value="123456" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;">
+                <input type="password" id="loginPass" placeholder="كلمة المرور" style="width:100%; padding:10px; border:1.5px solid var(--border); border-radius:8px;" onkeypress="if(event.key === 'Enter') handleLoginSubmit()">
             </div>
-            <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="bypassLogin()">
+            <button type="button" class="btn-action-gold" style="width:100%; justify-content:center; padding:12px;" onclick="handleLoginSubmit()">
                 <i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم
             </button>
         </div>
@@ -375,7 +375,7 @@
             </div>
         </section>
 
-        <!-- Section 4: Import & Export -->
+        <!-- Section 3: Import & Export -->
         <section id="sec_import" class="content-card" style="display:none;">
             <div class="card-header-flex">
                 <h3><i class="fa-solid fa-file-excel" style="color:var(--gold);"></i> أدوات الاستيراد وتصدير Excel و GitHub</h3>
@@ -410,7 +410,7 @@
             </div>
         </section>
 
-        <!-- Section 5: Users & Permissions -->
+        <!-- Section 4: Users & Permissions -->
         <section id="sec_users" class="content-card" style="display:none;">
             <div class="card-header-flex">
                 <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين وتحديد الصلاحيات المخصصة</h3>
@@ -579,7 +579,7 @@
                         <label class="perm-checkbox"><input type="checkbox" id="perm_delete_prod" checked> 🗑️ حذف الأصناف</label>
                         <label class="perm-checkbox"><input type="checkbox" id="perm_offers" checked> 🏷️ إدارة العروض والخصومات</label>
                         <label class="perm-checkbox"><input type="checkbox" id="perm_excel" checked> 📊 استيراد وتصدير Excel</label>
-                        <label class="perm-checkbox" style="grid-column:1/-1; color:var(--danger);"><input type="checkbox" id="perm_manage_users" checked> 👑 إدارة المستخدمين وتصدير الكود</label>
+                        <label class="perm-checkbox" style="grid-column:1/-1; color:var(--danger);"><input type="checkbox" id="perm_manage_users"> 👑 إدارة المستخدمين وتصدير الكود</label>
                     </div>
                 </div>
             </div>
@@ -595,35 +595,77 @@
         let storeProducts = [];
         let isLowStockFiltered = false;
         let storeOffers = [];
-        
-        let allUsers = [
-            {
-                id: 1,
-                user: 'admin',
-                pass: '123456',
-                perms: { add_prod: true, edit_price: true, edit_stock: true, reset_stock: true, delete_prod: true, offers: true, excel: true, manage_users: true }
-            }
-        ];
+        let currentUser = null;
 
-        let currentUser = allUsers[0];
+        const defaultAdmin = {
+            id: 'admin_root',
+            user: 'admin',
+            pass: '123456',
+            perms: { add_prod: true, edit_price: true, edit_stock: true, reset_stock: true, delete_prod: true, offers: true, excel: true, manage_users: true }
+        };
 
-        function bypassLogin() {
+        function getStoredUsers() {
+            try {
+                const raw = localStorage.getItem('qarat_users_list');
+                if (raw) return JSON.parse(raw);
+            } catch(e) {}
+            return [];
+        }
+
+        function saveUsersToStorage(arr) {
+            localStorage.setItem('qarat_users_list', JSON.stringify(arr));
+        }
+
+        function handleLoginSubmit() {
             const u = (document.getElementById('loginUser').value || '').trim();
             const p = (document.getElementById('loginPass').value || '').trim();
 
-            const found = allUsers.find(x => x.user.toLowerCase() === u.toLowerCase() && x.pass === p);
-            
-            if (found || (u.toLowerCase() === 'admin' && p === '123456') || u === '') {
-                currentUser = found || allUsers[0];
+            if (!u || !p) {
+                return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
+            }
+
+            // تحقق من حساب المدير الافتراضي
+            if (u.toLowerCase() === 'admin' && p === '123456') {
+                currentUser = defaultAdmin;
+                sessionStorage.setItem('qarat_logged_in_user', JSON.stringify(currentUser));
+                document.getElementById('loginOverlay').style.display = 'none';
+                applyUserPermissions();
+                loadData();
+                return;
+            }
+
+            // تحقق من المستخدمين الإضافيين المخزنين
+            const customUsers = getStoredUsers();
+            const match = customUsers.find(x => x.user.toLowerCase() === u.toLowerCase() && x.pass === p);
+
+            if (match) {
+                currentUser = match;
+                sessionStorage.setItem('qarat_logged_in_user', JSON.stringify(currentUser));
                 document.getElementById('loginOverlay').style.display = 'none';
                 applyUserPermissions();
                 loadData();
             } else {
-                alert('اسم المستخدم أو كلمة المرور غير صحيحة!\nالمستخدم: admin\nكلمة المرور: 123456');
+                alert('اسم المستخدم أو كلمة المرور غير صحيحة!');
             }
         }
 
+        function checkAuth() {
+            try {
+                const session = sessionStorage.getItem('qarat_logged_in_user');
+                if (session) {
+                    currentUser = JSON.parse(session);
+                    document.getElementById('loginOverlay').style.display = 'none';
+                    applyUserPermissions();
+                    return true;
+                }
+            } catch(e) {}
+            document.getElementById('loginOverlay').style.display = 'flex';
+            return false;
+        }
+
         function logout() {
+            sessionStorage.removeItem('qarat_logged_in_user');
+            currentUser = null;
             document.getElementById('loginOverlay').style.display = 'flex';
         }
 
@@ -647,6 +689,13 @@
             document.getElementById('btnExportJS').style.display = hasPerm('manage_users') ? '' : 'none';
         }
 
+        window.onload = function() {
+            if (checkAuth()) {
+                loadData();
+            }
+            renderUsersTable();
+        };
+
         function tryNextFormat(imgElement) {
             const currentSrc = imgElement.src;
             if (currentSrc.endsWith('.jpeg')) {
@@ -660,17 +709,22 @@
         }
 
         function loadData() {
-            if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) {
-                storeProducts = window.STORE_PRODUCTS;
-            } else if (typeof products_data !== 'undefined' && Array.isArray(products_data)) {
-                storeProducts = products_data;
-            } else if (typeof products !== 'undefined' && Array.isArray(products)) {
-                storeProducts = products;
-            } else {
-                try {
-                    const local = localStorage.getItem('qarat_main_prods');
-                    if (local) storeProducts = JSON.parse(local);
-                } catch(e) {}
+            // قراءة المخزون المحفوظ أولاً لمنع الرجوع للبيانات القديمة
+            try {
+                const saved = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
+                if (saved) {
+                    storeProducts = JSON.parse(saved);
+                }
+            } catch(e) {}
+
+            if (!storeProducts || storeProducts.length === 0) {
+                if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) {
+                    storeProducts = JSON.parse(JSON.stringify(window.STORE_PRODUCTS));
+                } else if (typeof products_data !== 'undefined' && Array.isArray(products_data)) {
+                    storeProducts = JSON.parse(JSON.stringify(products_data));
+                } else if (typeof products !== 'undefined' && Array.isArray(products)) {
+                    storeProducts = JSON.parse(JSON.stringify(products));
+                }
             }
 
             storeProducts.forEach(p => {
@@ -681,6 +735,11 @@
             renderAdminTable(storeProducts);
             populateOffersDropdowns();
             renderUsersTable();
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('qarat_main_prods', JSON.stringify(storeProducts));
+            localStorage.setItem('qarat_products', JSON.stringify(storeProducts));
         }
 
         function updateDashboardStats() {
@@ -888,8 +947,10 @@
             alert('تمت إضافة الصنف الجديد بنجاح!');
         }
 
+        /* --- Users & Custom Permissions Management --- */
         function renderUsersTable() {
             const tbody = document.getElementById('usersTableBody');
+            if (!tbody) return;
             tbody.innerHTML = '';
 
             const permLabels = {
@@ -903,7 +964,10 @@
                 manage_users: 'إدارة المستخدمين'
             };
 
-            allUsers.forEach((u, idx) => {
+            const usersList = getStoredUsers();
+            const all = [defaultAdmin, ...usersList];
+
+            all.forEach((u, idx) => {
                 let permsHtml = '';
                 if (u.perms) {
                     permsHtml = Object.keys(u.perms)
@@ -919,7 +983,7 @@
                     <td><code>${u.pass}</code></td>
                     <td>${permsHtml || '<span style="color:#888;">بدون صلاحيات</span>'}</td>
                     <td>
-                        ${u.user === 'admin' ? '<span style="color:#888; font-weight:bold;">المدير الرئيسي</span>' : `<button class="btn-action-danger" style="padding:4px 8px; font-size:0.8rem;" onclick="deleteUser(${u.id})"><i class="fa-solid fa-trash"></i> حذف</button>`}
+                        ${u.user === 'admin' ? '<span style="color:#888; font-weight:bold;">المدير الرئيسي</span>' : `<button class="btn-action-danger" style="padding:4px 8px; font-size:0.8rem;" onclick="deleteUser('${u.id}')"><i class="fa-solid fa-trash"></i> حذف</button>`}
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -930,8 +994,8 @@
         function closeNewUserModal() { document.getElementById('newUserModal').close(); }
 
         function saveNewUser() {
-            const uName = document.getElementById('new_u_name').value.trim();
-            const uPass = document.getElementById('new_u_pass').value.trim();
+            const uName = (document.getElementById('new_u_name').value || '').trim();
+            const uPass = (document.getElementById('new_u_pass').value || '').trim();
 
             if(!uName || !uPass) return alert('يرجى كتابة اسم المستخدم وكلمة المرور.');
 
@@ -946,13 +1010,21 @@
                 manage_users: document.getElementById('perm_manage_users').checked
             };
 
-            allUsers.push({
-                id: Date.now(),
+            let usersList = getStoredUsers();
+            
+            // منع تكرار اسم المستخدم
+            if (uName.toLowerCase() === 'admin' || usersList.some(x => x.user.toLowerCase() === uName.toLowerCase())) {
+                return alert('اسم المستخدم هذا موجود بالفعل! يرجى اختيار اسم آخر.');
+            }
+
+            usersList.push({
+                id: 'u_' + Date.now(),
                 user: uName,
                 pass: uPass,
                 perms: perms
             });
 
+            saveUsersToStorage(usersList);
             renderUsersTable();
             closeNewUserModal();
             alert('تم إنشاء المستخدم وتخصيص صلاحياته بنجاح!');
@@ -960,16 +1032,18 @@
 
         function deleteUser(id) {
             if(confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-                allUsers = allUsers.filter(u => u.id !== id);
+                let usersList = getStoredUsers();
+                usersList = usersList.filter(u => String(u.id) !== String(id));
+                saveUsersToStorage(usersList);
                 renderUsersTable();
             }
         }
 
         function switchSection(secId, btn) {
             document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+            document.querySelectorAll('.sidebar-menu .menu-item').forEach(m => m.classList.remove('active'));
             document.getElementById(secId).style.display = 'block';
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
             if(secId === 'sec_import') generateRawExport();
         }
 
@@ -1047,11 +1121,6 @@
             if (!hasPerm('offers')) return alert('ليس لديك صلاحية إلغاء العروض.');
             storeOffers = storeOffers.filter(o => o.id !== id);
             renderActiveOffers();
-        }
-
-        function saveToStorage() {
-            localStorage.setItem('qarat_main_prods', JSON.stringify(storeProducts));
-            localStorage.setItem('qarat_products', JSON.stringify(storeProducts));
         }
 
         function handleExcel(e) {
