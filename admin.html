@@ -74,11 +74,11 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <p style="font-size:.8rem;color:#777;margin-bottom:15px;">لوحة تحكم شركة قارة الحلويات</p>
     <div class="form-grp" style="margin-bottom:10px;">
       <label>اسم المستخدم:</label>
-      <input type="text" id="loginUser" value="admin">
+      <input type="text" id="loginUser" placeholder="أدخل اسم المستخدم" autocomplete="off">
     </div>
     <div class="form-grp" style="margin-bottom:15px;">
       <label>كلمة المرور:</label>
-      <input type="password" id="loginPass" value="123456" onkeydown="if(event.key==='Enter')doLogin()">
+      <input type="password" id="loginPass" placeholder="أدخل كلمة المرور" autocomplete="new-password" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <button type="button" class="btn-gold" style="width:100%;justify-content:center;padding:10px;" onclick="doLogin()">
       <i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم
@@ -323,7 +323,12 @@ function doLogin(){
   }
 }
 
-function logout(){document.getElementById('loginOverlay').style.display='flex';}
+function logout(){
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginOverlay').style.display='flex';
+}
+
 function hasP(k){return user&&user.perms?!!user.perms[k]:true;}
 
 function applyPerms(){
@@ -339,8 +344,8 @@ function applyPerms(){
 }
 
 window.onload=function(){
-  document.getElementById('loginUser').value = adminRoot.user;
-  document.getElementById('loginPass').value = adminRoot.pass;
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
   loadData();
   renderUsers();
   renderOrders();
