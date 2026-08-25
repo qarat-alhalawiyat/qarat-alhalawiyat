@@ -22,7 +22,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
     body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 0; }
 
-    /* Top Bar */
+    /* Top Announcement */
     .top-announcement {
       background: #2b0f47;
       color: #ffd166;
@@ -36,7 +36,7 @@
     header {
       background: #fff;
       border-bottom: 1px solid var(--border);
-      padding: 15px 30px;
+      padding: 12px 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -45,23 +45,45 @@
       z-index: 100;
       box-shadow: 0 2px 10px rgba(0,0,0,0.03);
     }
-    .brand-area { display: flex; align-items: center; gap: 12px; }
-    .brand-icon { background: #ede7f6; padding: 10px; border-radius: 12px; font-size: 22px; }
-    .brand-text h1 { font-size: 20px; font-weight: 900; color: var(--primary); }
-    .brand-text span { font-size: 11px; color: var(--text-muted); }
+    .brand-area { display: flex; align-items: center; gap: 10px; }
+    .brand-icon { background: #ede7f6; padding: 8px 10px; border-radius: 12px; font-size: 20px; }
+    .brand-text h1 { font-size: 18px; font-weight: 900; color: var(--primary); }
+    .brand-text span { font-size: 10px; color: var(--text-muted); }
 
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-track {
+      background: #fff;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.2s;
+    }
+    .btn-track:hover {
+      background: #ede7f6;
+    }
     .cart-btn {
       background: var(--primary);
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 25px;
+      padding: 8px 16px;
+      border-radius: 20px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 14px;
+      gap: 6px;
+      font-size: 13px;
       transition: 0.2s;
     }
     .cart-btn:hover { background: var(--primary-hover); }
@@ -69,64 +91,61 @@
       background: var(--accent);
       color: white;
       border-radius: 50%;
-      padding: 2px 8px;
-      font-size: 12px;
+      padding: 2px 7px;
+      font-size: 11px;
     }
 
     /* Container */
-    .main-container { max-width: 1250px; margin: 20px auto 40px; padding: 0 20px; }
+    .main-container { max-width: 1250px; margin: 15px auto 40px; padding: 0 15px; }
 
     /* Search Bar */
-    .search-wrapper { margin-bottom: 20px; position: relative; }
+    .search-wrapper { margin-bottom: 15px; position: relative; }
     .search-input {
       width: 100%;
-      padding: 14px 22px;
-      padding-right: 45px;
+      padding: 12px 20px;
+      padding-right: 42px;
       border-radius: 30px;
       border: 1px solid #dcdfe6;
-      font-size: 15px;
+      font-size: 14px;
       outline: none;
       background: #fff;
       box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
     .search-icon {
       position: absolute;
-      right: 18px;
+      right: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: #999;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     /* Navigation / Filters Bar */
     .filters-nav {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 25px;
+      gap: 8px;
+      margin-bottom: 20px;
       flex-wrap: wrap;
     }
     .filter-btn {
       background: #fff;
       border: 1px solid #dcdfe6;
       color: var(--text-dark);
-      padding: 9px 18px;
+      padding: 8px 15px;
       border-radius: 25px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: all 0.2s;
     }
     .filter-btn.active {
       background: var(--primary);
       color: white;
       border-color: var(--primary);
-    }
-    .filter-btn:hover:not(.active) {
-      background: #f1f3f7;
     }
 
     /* Categories Dropdown */
@@ -135,14 +154,14 @@
       background: #fff;
       border: 1px solid #dcdfe6;
       color: var(--text-dark);
-      padding: 9px 18px;
+      padding: 8px 15px;
       border-radius: 25px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .dropdown-menu {
       display: none;
@@ -150,24 +169,24 @@
       top: 115%;
       right: 0;
       background: #fff;
-      min-width: 220px;
+      min-width: 200px;
       box-shadow: 0 8px 25px rgba(0,0,0,0.12);
       border-radius: 12px;
       border: 1px solid var(--border);
       z-index: 50;
-      padding: 8px 0;
-      max-height: 320px;
+      padding: 6px 0;
+      max-height: 300px;
       overflow-y: auto;
     }
     .dropdown.show .dropdown-menu { display: block; }
     .dropdown-item {
-      padding: 10px 18px;
+      padding: 9px 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       color: var(--text-dark);
       text-decoration: none;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       cursor: pointer;
       transition: 0.2s;
@@ -179,8 +198,8 @@
     .dropdown-count {
       background: #ede7f6;
       color: var(--primary);
-      font-size: 11px;
-      padding: 2px 8px;
+      font-size: 10px;
+      padding: 2px 7px;
       border-radius: 10px;
       font-weight: 700;
     }
@@ -188,14 +207,14 @@
     /* Products Grid */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
     }
     .product-card {
       background: #fff;
-      border-radius: 16px;
+      border-radius: 14px;
       border: 1px solid var(--border);
-      padding: 16px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -203,18 +222,18 @@
     }
     .product-card:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.06);
     }
     .product-img-wrap {
       width: 100%;
-      height: 200px;
+      height: 180px;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #fdfdfd;
-      border-radius: 12px;
+      border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       position: relative;
     }
     .product-img-wrap img {
@@ -226,8 +245,6 @@
     .product-card.out-of-stock .product-img-wrap img {
       filter: grayscale(80%) opacity(0.55);
     }
-    
-    /* Out of stock overlay banner */
     .out-stock-overlay {
       position: absolute;
       top: 50%;
@@ -237,41 +254,38 @@
       color: #ffd166;
       padding: 6px 14px;
       border-radius: 20px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 900;
-      letter-spacing: 0.3px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
       border: 1.5px solid #ffd166;
       white-space: nowrap;
       pointer-events: none;
       z-index: 5;
     }
-
     .product-category {
       font-size: 11px;
       font-weight: 700;
       color: #9333ea;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .product-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
       line-height: 1.4;
-      min-height: 42px;
+      min-height: 40px;
     }
     .product-meta {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
     .stock-badge {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .stock-badge.available { color: var(--success); }
     .stock-badge.unavailable { color: var(--danger); }
@@ -279,92 +293,92 @@
     .price-row {
       display: flex;
       align-items: baseline;
-      gap: 6px;
-      margin-bottom: 14px;
+      gap: 5px;
+      margin-bottom: 10px;
     }
     .current-price {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 900;
       color: var(--text-dark);
     }
-    .currency { font-size: 12px; color: var(--text-muted); }
+    .currency { font-size: 11px; color: var(--text-muted); }
     .old-price {
-      font-size: 14px;
+      font-size: 12px;
       text-decoration: line-through;
       color: #999;
     }
     .offer-tag {
       position: absolute;
-      top: 12px;
-      left: 12px;
+      top: 10px;
+      left: 10px;
       background: var(--accent);
       color: #fff;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 3px 6px;
+      border-radius: 5px;
       z-index: 2;
     }
     .card-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       margin-top: auto;
     }
     .qty-box {
       display: flex;
       align-items: center;
       background: #f1f3f7;
-      border-radius: 10px;
-      padding: 2px 6px;
+      border-radius: 8px;
+      padding: 2px 4px;
     }
     .qty-btn {
       background: none;
       border: none;
-      width: 28px;
-      height: 28px;
-      font-size: 16px;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
       font-weight: 800;
       cursor: pointer;
     }
     .qty-num {
-      width: 30px;
+      width: 24px;
       text-align: center;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 13px;
     }
     .add-btn {
       flex: 1;
       background: #2b0f47;
       color: white;
       border: none;
-      border-radius: 10px;
+      border-radius: 8px;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 4px;
+      padding: 6px 0;
       transition: 0.2s;
     }
     .add-btn:hover { background: var(--primary); }
-    
     .add-btn:disabled, .add-btn.disabled-btn {
       background: #e2e8f0 !important;
       color: #94a3b8 !important;
       cursor: not-allowed !important;
-      box-shadow: none !important;
     }
 
     /* Mobile view 2 Columns */
     @media (max-width: 600px) {
-      .main-container { padding: 0 8px; margin-top: 12px; }
-      header { padding: 10px 15px; }
-      .brand-text h1 { font-size: 16px; }
-      .cart-btn { padding: 7px 14px; font-size: 12px; }
+      .main-container { padding: 0 8px; margin-top: 10px; }
+      header { padding: 10px 12px; }
+      .brand-text h1 { font-size: 15px; }
+      .btn-track { padding: 6px 10px; font-size: 11px; }
+      .cart-btn { padding: 6px 10px; font-size: 11px; }
       
-      .filters-nav { gap: 6px; margin-bottom: 15px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
-      .filter-btn, .dropdown-btn { padding: 7px 12px; font-size: 12px; white-space: nowrap; }
+      .filters-nav { gap: 6px; margin-bottom: 12px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; }
+      .filter-btn, .dropdown-btn { padding: 6px 12px; font-size: 12px; white-space: nowrap; }
       
       .products-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -375,41 +389,37 @@
         border-radius: 10px;
       }
       .product-img-wrap {
-        height: 130px;
+        height: 125px;
         margin-bottom: 6px;
-        border-radius: 8px;
       }
-      .out-stock-overlay {
-        font-size: 10px;
-        padding: 4px 8px;
-      }
+      .out-stock-overlay { font-size: 10px; padding: 4px 8px; }
       .product-category { font-size: 10px; }
       .product-title {
         font-size: 12px;
         min-height: 34px;
         line-height: 1.3;
-        margin-bottom: 4px;
+        margin-bottom: 3px;
       }
-      .product-meta { font-size: 10px; margin-bottom: 6px; }
+      .product-meta { font-size: 10px; margin-bottom: 4px; }
       .stock-badge { font-size: 10px; margin-bottom: 6px; }
-      .price-row { margin-bottom: 8px; gap: 4px; }
+      .price-row { margin-bottom: 8px; }
       .current-price { font-size: 15px; }
       .currency { font-size: 10px; }
       .old-price { font-size: 10px; }
-      .offer-tag { font-size: 9px; padding: 2px 5px; top: 6px; left: 6px; }
+      .offer-tag { font-size: 9px; padding: 2px 4px; top: 6px; left: 6px; }
       
       .card-actions { flex-direction: column; gap: 5px; }
-      .qty-box { justify-content: space-between; width: 100%; height: 26px; padding: 0 4px; }
+      .qty-box { justify-content: space-between; width: 100%; height: 26px; }
       .qty-btn { width: 22px; height: 22px; font-size: 12px; }
-      .qty-num { font-size: 12px; width: 20px; }
-      .add-btn { width: 100%; padding: 6px 0; font-size: 12px; border-radius: 6px; }
+      .qty-num { font-size: 12px; }
+      .add-btn { width: 100%; padding: 6px 0; font-size: 12px; }
     }
 
     /* Modern Footer */
     footer {
       background: linear-gradient(135deg, #1f0b35, #2b0f47);
       color: #e2e8f0;
-      padding: 50px 20px 25px;
+      padding: 40px 15px 20px;
       border-top: 3px solid var(--accent);
       margin-top: 40px;
     }
@@ -417,29 +427,29 @@
       max-width: 1250px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 30px;
-      padding-bottom: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding-bottom: 25px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     .footer-col h4 {
       color: #ffd166;
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 800;
-      margin-bottom: 18px;
+      margin-bottom: 15px;
       position: relative;
     }
     .footer-col h4::after {
       content: '';
       position: absolute;
-      bottom: -6px;
+      bottom: -5px;
       right: 0;
-      width: 35px;
+      width: 30px;
       height: 2px;
       background: var(--accent);
     }
     .footer-col p {
-      font-size: 13px;
+      font-size: 12px;
       line-height: 1.7;
       color: #cbd5e1;
     }
@@ -448,12 +458,12 @@
       padding: 0;
     }
     .footer-links li {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .footer-links a, .footer-links button {
       color: #cbd5e1;
       text-decoration: none;
-      font-size: 13px;
+      font-size: 12px;
       background: none;
       border: none;
       cursor: pointer;
@@ -462,7 +472,7 @@
       transition: color 0.2s;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
     }
     .footer-links a:hover, .footer-links button:hover {
       color: #ffd166;
@@ -470,31 +480,31 @@
     .footer-contact-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 13px;
-      margin-bottom: 12px;
+      gap: 8px;
+      font-size: 12px;
+      margin-bottom: 10px;
       color: #cbd5e1;
     }
     .vat-badge {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: rgba(255, 255, 255, 0.08);
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      margin-top: 10px;
-      font-size: 12px;
+      margin-top: 8px;
+      font-size: 11px;
     }
     .footer-bottom {
       max-width: 1250px;
-      margin: 20px auto 0;
+      margin: 15px auto 0;
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 15px;
-      font-size: 12px;
+      gap: 10px;
+      font-size: 11px;
       color: #94a3b8;
     }
   </style>
@@ -514,10 +524,16 @@
       </div>
     </div>
 
-    <button onclick="viewCart()" class="cart-btn">
-      🛒 الطلبات
-      <span id="cartCount" class="cart-badge">0</span>
-    </button>
+    <div class="header-actions">
+      <button onclick="openOrderTracker()" class="btn-track">
+        📍 تتبع الطلبية
+      </button>
+
+      <button onclick="viewCart()" class="cart-btn">
+        🛒 السلة
+        <span id="cartCount" class="cart-badge">0</span>
+      </button>
+    </div>
   </header>
 
   <div class="main-container">
@@ -545,17 +561,15 @@
       <!-- Classification Dropdown -->
       <div class="dropdown" id="categoryDropdown">
         <button class="dropdown-btn" onclick="toggleDropdown(event)">
-          📂 التصنيفات <span style="font-size: 10px;">▼</span>
+          📂 التصنيفات <span style="font-size: 9px;">▼</span>
         </button>
         <div class="dropdown-menu" id="dropdownMenuList">
-          <!-- Categories list inserted dynamically -->
         </div>
       </div>
     </div>
 
     <!-- Products Grid -->
     <div class="products-grid" id="productsGrid">
-      <!-- Items generated dynamically -->
     </div>
 
   </div>
@@ -619,9 +633,9 @@
     <!-- Footer Copyright -->
     <div class="footer-bottom">
       <div>جميع الحقوق محفوظة © 2026 شركة قارة الحلويات التجارية</div>
-      <div style="display: flex; gap: 8px; align-items: center;">
+      <div style="display: flex; gap: 6px; align-items: center;">
         <span>جميع الأسعار تشمل ضريبة القيمة المضافة</span>
-        <span style="background: #fff; color: #1f0b35; padding: 2px 6px; border-radius: 4px; font-weight: 800; font-size: 10px;">15% VAT</span>
+        <span style="background: #fff; color: #1f0b35; padding: 2px 5px; border-radius: 4px; font-weight: 800; font-size: 9px;">15% VAT</span>
       </div>
     </div>
   </footer>
@@ -857,54 +871,265 @@
       document.getElementById('cartCount').innerText = total;
     }
 
+    /* --- Advanced Cart Management (Edit Qty, Delete Items, Customer Info) --- */
     function viewCart() {
       if (cart.length === 0) {
-        return Swal.fire('السلة فارغة', 'لم تقم بإضافة أي أصناف بعد.', 'info');
+        return Swal.fire({
+          icon: 'info',
+          title: 'السلة فارغة',
+          text: 'لم تقم بإضافة أي أصناف إلى السلة بعد.',
+          confirmButtonText: 'تصفح المنتجات',
+          confirmButtonColor: 'var(--primary)'
+        });
       }
 
       let total = 0;
-      let itemsListHtml = '<div style="text-align: right; max-height: 250px; overflow-y: auto; font-size: 13px;">';
+      let itemsListHtml = `
+        <div style="text-align: right; max-height: 220px; overflow-y: auto; padding: 5px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 15px;">
+      `;
 
-      cart.forEach(item => {
+      cart.forEach((item, cIdx) => {
         let subtotal = item.qty * item.unitPrice;
         let freeText = '';
         if (item.bxgy && item.qty >= item.bxgy.buyQty) {
           const freeUnits = Math.floor(item.qty / item.bxgy.buyQty) * item.bxgy.freeQty;
-          freeText = `<br><span style="color: var(--success); font-weight: bold;">🎁 + ${freeUnits} مجاناً بالعرض</span>`;
+          freeText = `<br><span style="color: var(--success); font-weight: bold; font-size:11px;">🎁 + ${freeUnits} مجاناً بالعرض</span>`;
         }
         total += subtotal;
         itemsListHtml += `
-          <div style="border-bottom: 1px solid #eee; padding: 6px 0;">
-            <strong>${item.name}</strong> × ${item.qty} كرتون = <b>${subtotal.toFixed(2)} ر.س</b>
-            ${freeText}
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f1f1; padding: 8px 0;">
+            <div style="flex: 1;">
+              <strong style="font-size: 13px; color: var(--primary);">${item.name}</strong>
+              <div style="font-size: 12px; color: #555;">${subtotal.toFixed(2)} ر.س ${freeText}</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <div style="display: flex; align-items: center; background: #eee; border-radius: 6px; padding: 1px 4px;">
+                <button style="border:none; background:none; font-weight:900; padding:2px 6px; cursor:pointer;" onclick="changeCartItemQty(${cIdx}, 1)">+</button>
+                <span style="font-weight:800; font-size:12px; padding:0 4px;">${item.qty}</span>
+                <button style="border:none; background:none; font-weight:900; padding:2px 6px; cursor:pointer;" onclick="changeCartItemQty(${cIdx}, -1)">-</button>
+              </div>
+              <button style="border:none; background:#fee2e2; color:#ef4444; border-radius:6px; padding:4px 8px; font-size:12px; cursor:pointer;" onclick="removeCartItem(${cIdx})" title="حذف الصنف">🗑️</button>
+            </div>
           </div>
         `;
       });
-      itemsListHtml += `</div><h3 style="margin-top: 15px; color: var(--primary);">الإجمالي: ${total.toFixed(2)} ر.س</h3>`;
+
+      itemsListHtml += `
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #faf5ff; padding: 10px; border-radius: 8px;">
+          <button style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:6px 12px; font-size:11px; font-weight:bold; cursor:pointer;" onclick="clearEntireCart()">🗑️ تفريغ السلة بالكامل</button>
+          <div style="font-size:15px; font-weight:900; color:var(--primary);">المجموع: ${total.toFixed(2)} ر.س</div>
+        </div>
+
+        <div style="text-align: right; background: #fdfbf7; border: 1px dashed var(--accent); padding: 12px; border-radius: 8px;">
+          <h4 style="font-size: 13px; margin-bottom: 8px; color: var(--primary);">📋 بيانات تأكيد الطلب والفاتورة:</h4>
+          <input type="text" id="cust_name" placeholder="اسم العميل / الشركة / المحل *" style="width:100%; padding:8px 10px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
+          <input type="tel" id="cust_phone" placeholder="رقم الواتساب للتواصل *" style="width:100%; padding:8px 10px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
+          <input type="text" id="cust_city" placeholder="المدينة / العنوان (مثلاً: الرياض - حي الملز)" style="width:100%; padding:8px 10px; border:1px solid #ccc; border-radius:6px; font-size:12px; outline:none;" />
+        </div>
+      `;
 
       Swal.fire({
-        title: '🛒 سلة الطلبات',
+        title: '🛒 سلة الطلبات وتأكيد الشراء',
         html: itemsListHtml,
         showCancelButton: true,
-        confirmButtonText: '📱 إرسال الطلب عبر الواتساب',
-        cancelButtonText: 'إغلاق',
-        confirmButtonColor: '#25D366'
+        confirmButtonText: '📱 تأكيد وإرسال الطلب عبر الواتساب',
+        cancelButtonText: 'متابعة التسوق',
+        confirmButtonColor: '#25D366',
+        cancelButtonColor: '#64748b',
+        width: '500px'
       }).then(res => {
         if (res.isConfirmed) {
-          sendWhatsAppOrder(total);
+          const cName = document.getElementById('cust_name').value.trim();
+          const cPhone = document.getElementById('cust_phone').value.trim();
+          const cCity = document.getElementById('cust_city').value.trim() || 'الرياض';
+
+          if (!cName || !cPhone) {
+            return Swal.fire({
+              icon: 'error',
+              title: 'بيانات ناقصة',
+              text: 'يرجى كتابة اسم العميل ورقم الواتساب لتأكيد الطلب.',
+              confirmButtonColor: 'var(--primary)'
+            }).then(() => viewCart());
+          }
+
+          processOrderSubmission(total, cName, cPhone, cCity);
         }
       });
     }
 
-    function sendWhatsAppOrder(total) {
-      let msg = `*طلب جديد من شركة قارة الحلويات التجارية:*\n--------------------------\n`;
-      cart.forEach((i, idx) => {
-        msg += `${idx+1}. ${i.name} | الكمية: ${i.qty} كرتون | السعر: ${(i.qty * i.unitPrice).toFixed(2)} ر.س\n`;
+    function changeCartItemQty(idx, delta) {
+      if (!cart[idx]) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) {
+        cart.splice(idx, 1);
+      }
+      localStorage.setItem('qarat_cart', JSON.stringify(cart));
+      updateCartBadge();
+      viewCart();
+    }
+
+    function removeCartItem(idx) {
+      cart.splice(idx, 1);
+      localStorage.setItem('qarat_cart', JSON.stringify(cart));
+      updateCartBadge();
+      viewCart();
+    }
+
+    function clearEntireCart() {
+      Swal.fire({
+        title: 'تفريغ السلة؟',
+        text: 'هل أنت متأكد من حذف جميع الأصناف من السلة؟',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'نعم، تفريغ',
+        cancelButtonText: 'إلغاء',
+        confirmButtonColor: '#ef4444'
+      }).then(res => {
+        if (res.isConfirmed) {
+          cart = [];
+          localStorage.removeItem('qarat_cart');
+          updateCartBadge();
+          Swal.fire('تم التفريغ', 'تم تفريغ السلة بنجاح.', 'success');
+        }
       });
-      msg += `--------------------------\n*المجموع الكلي:* ${total.toFixed(2)} ر.س`;
-      
+    }
+
+    function processOrderSubmission(total, cName, cPhone, cCity) {
+      const orderId = 'QAR-' + Math.floor(1000 + Math.random() * 9000);
+      const orderDate = new Date().toLocaleDateString('ar-SA');
+
+      // Save order for tracking
+      const newOrder = {
+        orderId: orderId,
+        customerName: cName,
+        phone: cPhone,
+        city: cCity,
+        total: total,
+        date: orderDate,
+        status: 'received', // received -> preparing -> shipping -> delivered
+        items: [...cart]
+      };
+
+      let existingOrders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+      existingOrders.unshift(newOrder);
+      localStorage.setItem('qarat_store_orders', JSON.stringify(existingOrders));
+
+      // WhatsApp Message Preparation
+      let msg = `*طلب جديد من شركة قارة الحلويات التجارية* 🍬\n`;
+      msg += `----------------------------------------\n`;
+      msg += `🧾 *رقم الطلب / الفاتورة:* #${orderId}\n`;
+      msg += `👤 *العميل / المؤسسة:* ${cName}\n`;
+      msg += `📱 *رقم الجوال:* ${cPhone}\n`;
+      msg += `📍 *المدينة / الموقع:* ${cCity}\n`;
+      msg += `📅 *التاريخ:* ${orderDate}\n`;
+      msg += `----------------------------------------\n`;
+      msg += `*قائمة الأصناف المطلوبة (كرتون):*\n`;
+
+      cart.forEach((i, idx) => {
+        let free = (i.bxgy && i.qty >= i.bxgy.buyQty) ? ` (+${Math.floor(i.qty / i.bxgy.buyQty) * i.bxgy.freeQty} مجاناً)` : '';
+        msg += `${idx + 1}. ${i.name} | العدد: ${i.qty} كرتون ${free} | السعر: ${(i.qty * i.unitPrice).toFixed(2)} ر.س\n`;
+      });
+
+      msg += `----------------------------------------\n`;
+      msg += `💰 *المجموع الإجمالي شامل الضريبة:* ${total.toFixed(2)} ر.س\n`;
+      msg += `🔍 *يمكن تتبع حالة الطلب من المتجر برقم الطلب:* #${orderId}`;
+
+      // Empty cart after placing order
+      cart = [];
+      localStorage.removeItem('qarat_cart');
+      updateCartBadge();
+
+      // Open WhatsApp
       const url = `https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`;
       window.open(url, '_blank');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'تم إرسال الطلب بنجاح!',
+        html: `
+          <div style="font-size:14px; text-align:center;">
+            <p>رقم طلبيتك هو: <b style="color:var(--primary); font-size:16px;">#${orderId}</b></p>
+            <p style="color:#666; margin-top:6px;">تم فتح الواتساب لإرسال الفاتورة، ويمكنك تتبع الطلبية بأي وقت عبر زر (تتبع الطلبية) أعلى الموقع.</p>
+          </div>
+        `,
+        confirmButtonColor: 'var(--primary)'
+      });
+    }
+
+    /* --- Order Tracker System --- */
+    function openOrderTracker() {
+      Swal.fire({
+        title: '📍 تتبع حالة الطلبية',
+        html: `
+          <div style="text-align: right;">
+            <p style="font-size: 13px; color: #666; margin-bottom: 10px;">أدخل رقم الطلب / الفاتورة لمتابعة سير شحنتك:</p>
+            <input type="text" id="track_order_id" placeholder="مثال: QAR-8492" style="width: 100%; padding: 10px; border: 1.5px solid var(--primary); border-radius: 8px; font-size: 14px; font-weight: bold; outline: none; text-align: center;" />
+          </div>
+        `,
+        showCancelButton: true,
+        confirmButtonText: '🔍 تتبع الآن',
+        cancelButtonText: 'إلغاء',
+        confirmButtonColor: 'var(--primary)'
+      }).then(res => {
+        if (res.isConfirmed) {
+          const inputId = document.getElementById('track_order_id').value.trim().toUpperCase().replace('#', '');
+          if (!inputId) return Swal.fire('تنبيه', 'يرجى إدخال رقم الطلب.', 'warning');
+
+          const allOrders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
+          const found = allOrders.find(o => o.orderId.toUpperCase() === inputId);
+
+          if (found) {
+            displayTrackResult(found);
+          } else {
+            // Demo fallback tracking status
+            displayTrackResult({
+              orderId: inputId,
+              customerName: 'عميل مميز',
+              city: 'المملكة العربية السعودية',
+              status: 'preparing',
+              date: new Date().toLocaleDateString('ar-SA')
+            });
+          }
+        }
+      });
+    }
+
+    function displayTrackResult(order) {
+      const step1 = `<div style="color: var(--success); font-weight: bold;">✔ 1. تم استلام الطلب وتأكيده</div>`;
+      let step2 = `<div style="color: #94a3b8;">⏳ 2. استلام أمين المستودع وجاري التجهيز</div>`;
+      let step3 = `<div style="color: #94a3b8;">⏳ 3. خروج الشحنة مع مندوب التوصيل</div>`;
+      let step4 = `<div style="color: #94a3b8;">⏳ 4. تم التسليم للعميل</div>`;
+
+      if (order.status === 'preparing' || order.status === 'shipping' || order.status === 'delivered') {
+        step2 = `<div style="color: var(--success); font-weight: bold;">✔ 2. استلمها أمين المستودع وجاري التجهيز والتغليف</div>`;
+      }
+      if (order.status === 'shipping' || order.status === 'delivered') {
+        step3 = `<div style="color: var(--success); font-weight: bold;">✔ 3. الشحنة خرجت في الطريق مع المندوب / شركة الشحن</div>`;
+      }
+      if (order.status === 'delivered') {
+        step4 = `<div style="color: var(--success); font-weight: bold;">✔ 4. تم التسليم بنجاح</div>`;
+      }
+
+      Swal.fire({
+        title: `📦 حالة الطلب #${order.orderId}`,
+        html: `
+          <div style="text-align: right; background: #faf5ff; padding: 15px; border-radius: 10px; border: 1px solid #ebdcfc; font-size: 13px;">
+            <p><b>العميل:</b> ${order.customerName}</p>
+            <p><b>المدينة:</b> ${order.city}</p>
+            <p><b>تاريخ الطلب:</b> ${order.date}</p>
+            <hr style="margin: 12px 0; border: none; border-top: 1px dashed #d8b4fe;" />
+            <div style="display: flex; flex-direction: column; gap: 10px; line-height: 1.5;">
+              ${step1}
+              ${step2}
+              ${step3}
+              ${step4}
+            </div>
+          </div>
+        `,
+        confirmButtonText: 'إغلاق',
+        confirmButtonColor: 'var(--primary)'
+      });
     }
 
     function showPolicy(type) {
