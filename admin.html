@@ -9,10 +9,10 @@
 <style>
 :root{--dark:#2B170D;--mid:#4A2E1B;--gold:#C5A059;--cream:#FAF6F0;--danger:#e11d48;--success:#16a34a;--border:#EBDDCF}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
-body{background:var(--cream);color:#222;display:flex;min-height:100vh}
+body{background:var(--cream);color:#222;display:flex;min-height:100vh;flex-direction:row}
 #loginOverlay{position:fixed;inset:0;background:rgba(43,23,13,.96);z-index:999999;display:flex;align-items:center;justify-content:center;padding:20px}
 .login-box{background:#fff;width:100%;max-width:360px;padding:25px;border-radius:14px;border:2px solid var(--gold);text-align:center}
-.sidebar{width:260px;background:var(--dark);color:#fff;min-height:100vh;display:flex;flex-direction:column;border-left:3px solid var(--gold);position:fixed;right:0;top:0;bottom:0;z-index:100}
+.sidebar{width:260px;background:var(--dark);color:#fff;min-height:100vh;display:flex;flex-direction:column;border-left:3px solid var(--gold);position:fixed;right:0;top:0;bottom:0;z-index:100;transition:transform .3s ease}
 .sidebar-brand{padding:1.2rem;text-align:center;border-bottom:1px solid rgba(197,160,89,.2)}
 .sidebar-brand h2{font-size:1.2rem;color:#E5C383;font-weight:900}
 .user-badge{background:rgba(197,160,89,.15);border:1px solid var(--gold);padding:8px 12px;margin:10px;border-radius:8px;display:flex;justify-content:space-between;align-items:center;font-size:.8rem}
@@ -22,7 +22,8 @@ body{background:var(--cream);color:#222;display:flex;min-height:100vh}
 .sidebar-footer{padding:1rem;border-top:1px solid rgba(197,160,89,.2);display:flex;flex-direction:column;gap:8px}
 .btn-visit{background:#16a34a;color:#fff;border:none;padding:9px;border-radius:8px;font-weight:900;cursor:pointer;text-align:center;text-decoration:none;font-size:.85rem}
 .btn-sync{background:linear-gradient(135deg,var(--gold),#E5C383);color:var(--dark);border:none;padding:9px;border-radius:8px;font-weight:900;cursor:pointer;font-size:.85rem}
-.main-content{margin-right:260px;flex:1;padding:1.5rem;width:calc(100% - 260px)}
+.main-content{margin-right:260px;flex:1;padding:1.5rem;width:calc(100% - 260px);transition:margin .3s ease}
+.mobile-topbar{display:none;background:var(--dark);color:#fff;padding:12px 15px;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:90;border-bottom:2px solid var(--gold)}
 .top-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:1.5rem}
 .stat-box{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:1rem;display:flex;align-items:center;gap:12px;box-shadow:0 3px 10px rgba(0,0,0,.05)}
 .stat-box.click{cursor:pointer}
@@ -52,6 +53,17 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 .form-grp input,.form-grp select{padding:8px;border:1.5px solid var(--border);border-radius:6px;outline:none;font-size:.85rem}
 .perm-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fdfbf7;padding:10px;border-radius:8px;border:1px solid var(--border)}
 .perm-lbl{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;cursor:pointer}
+
+/* Responsive Mobile Rules */
+@media (max-width:768px){
+  body{flex-direction:column}
+  .sidebar{transform:translateX(100%);box-shadow:-5px 0 20px rgba(0,0,0,.5)}
+  .sidebar.open{transform:translateX(0)}
+  .main-content{margin-right:0;width:100%;padding:10px}
+  .mobile-topbar{display:flex}
+  .search-in{width:100%}
+  .form-row{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -74,8 +86,19 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </div>
 
-<aside class="sidebar">
-  <div class="sidebar-brand"><h2>🍬 قارة الحلويات</h2><span style="font-size:.75rem;color:#aaa;">الإدارة العامة</span></div>
+<div class="mobile-topbar">
+  <div style="font-weight:900;color:#E5C383;font-size:1.1rem;">🍬 قارة الحلويات</div>
+  <button onclick="toggleSidebar()" style="background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;"><i class="fa-solid fa-bars"></i></button>
+</div>
+
+<aside class="sidebar" id="sidebarNav">
+  <div class="sidebar-brand">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <h2>🍬 قارة الحلويات</h2>
+      <button onclick="toggleSidebar()" style="display:none;background:none;border:none;color:#fff;font-size:1.3rem;" class="mobile-close-btn">&times;</button>
+    </div>
+    <span style="font-size:.75rem;color:#aaa;">الإدارة العامة</span>
+  </div>
   <div class="user-badge">
     <div><b id="currentUserName" style="color:#E5C383;">المدير العام</b><br><span id="currentUserRole" style="font-size:.7rem;color:#aaa;">صلاحيات كاملة</span></div>
     <button onclick="logout()" style="background:none;border:none;color:var(--danger);font-size:1rem;cursor:pointer;"><i class="fa-solid fa-power-off"></i></button>
@@ -135,7 +158,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 
   <section id="sec_offers" class="content-card" style="display:none;">
     <div class="card-header"><h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> العروض والخصومات</h3></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px;margin-bottom:15px;">
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
         <h4 style="margin-bottom:10px;">خصم مئوي (%)</h4>
         <div class="form-grp" style="margin-bottom:8px;"><label>اختر المجموعة:</label><select id="discGroup"></select></div>
@@ -143,7 +166,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
         <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addDisc()"><i class="fa-solid fa-check"></i> تطبيق الخصم</button>
       </div>
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
-        <h4 style="margin-bottom:10px;">عرض كمية مجانية (اشترِ X واحصل على Y)</h4>
+        <h4 style="margin-bottom:10px;">عرض كمية مجانية</h4>
         <div class="form-grp" style="margin-bottom:8px;"><label>اختر الصنف:</label><select id="bxgyProd"></select></div>
         <div class="form-row" style="margin-bottom:10px;">
           <div class="form-grp"><label>اشترِ:</label><input type="number" id="bxgyB" value="10"></div>
@@ -174,18 +197,19 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 
   <section id="sec_users" class="content-card" style="display:none;">
     <div class="card-header">
-      <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين والصلاحيات</h3>
+      <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين وتعديل حساب المدير</h3>
       <button class="btn-green" onclick="openNewU()"><i class="fa-solid fa-user-plus"></i> إضافة مستخدم</button>
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>#</th><th>المستخدم</th><th>كلمة المرور</th><th>الصلاحيات</th><th>إجراء</th></tr></thead>
+        <thead><tr><th>#</th><th>المستخدم</th><th>كلمة المرور</th><th>الصلاحيات</th><th>إجراء / تعديل</th></tr></thead>
         <tbody id="tbodyUsers"></tbody>
       </table>
     </div>
   </section>
 </main>
 
+<!-- Dialog Edit Product -->
 <dialog id="dlgEdit">
   <div class="modal-head"><h3>تعديل الصنف</h3><button onclick="document.getElementById('dlgEdit').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -211,6 +235,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
+<!-- Dialog New Product -->
 <dialog id="dlgNewP">
   <div class="modal-head"><h3>إضافة صنف جديد</h3><button onclick="document.getElementById('dlgNewP').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -231,6 +256,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
+<!-- Dialog New User -->
 <dialog id="dlgNewU">
   <div class="modal-head"><h3>إضافة مستخدم جديد</h3><button onclick="document.getElementById('dlgNewU').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -254,24 +280,55 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
+<!-- Dialog Edit Admin / User -->
+<dialog id="dlgEditUser">
+  <div class="modal-head"><h3>تعديل بيانات الحساب وكلمة المرور</h3><button onclick="document.getElementById('dlgEditUser').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="eu_id">
+    <div class="form-grp"><label>اسم المستخدم الجديد:</label><input type="text" id="eu_name"></div>
+    <div class="form-grp"><label>كلمة المرور الجديدة:</label><input type="text" id="eu_pass"></div>
+    <button class="btn-gold" style="margin-top:10px;" onclick="saveUserEdit()"><i class="fa-solid fa-check"></i> حفظ البيانات الجديدة</button>
+  </div>
+</dialog>
+
 <script src="products_data.js"></script>
 <script>
-var prods=[],offers=[],user={id:'root',user:'admin',pass:'123456',perms:{add:true,price:true,stock:true,reset:true,del:true,offers:true,xl:true,mgr:true}};
+var prods=[],offers=[];
+var adminRoot = JSON.parse(localStorage.getItem('qarat_root_admin') || JSON.stringify({id:'root',user:'admin',pass:'123456',perms:{add:true,price:true,stock:true,reset:true,del:true,offers:true,xl:true,mgr:true}}));
+var user = adminRoot;
+
+function toggleSidebar(){
+  var sb = document.getElementById('sidebarNav');
+  sb.classList.toggle('open');
+}
+
 function doLogin(){
   var u=(document.getElementById('loginUser').value||'').trim(),p=(document.getElementById('loginPass').value||'').trim();
-  if(u.toLowerCase()==='admin'&&(p==='123456'||p==='')){
-    document.getElementById('loginOverlay').style.display='none';applyPerms();loadData();return;
+  adminRoot = JSON.parse(localStorage.getItem('qarat_root_admin') || JSON.stringify(adminRoot));
+  
+  if(u.toLowerCase() === adminRoot.user.toLowerCase() && p === adminRoot.pass){
+    user = adminRoot;
+    document.getElementById('loginOverlay').style.display='none';
+    applyPerms();loadData();return;
   }
+  
   var users=JSON.parse(localStorage.getItem('qarat_users_list')||'[]');
   var match=users.find(function(x){return x.user.toLowerCase()===u.toLowerCase()&&x.pass===p});
-  if(match){user=match;document.getElementById('loginOverlay').style.display='none';applyPerms();loadData();}
-  else{alert('خطأ في اسم المستخدم أو كلمة المرور!');}
+  if(match){
+    user=match;
+    document.getElementById('loginOverlay').style.display='none';
+    applyPerms();loadData();
+  } else {
+    alert('خطأ في اسم المستخدم أو كلمة المرور!');
+  }
 }
+
 function logout(){document.getElementById('loginOverlay').style.display='flex';}
 function hasP(k){return user&&user.perms?!!user.perms[k]:true;}
+
 function applyPerms(){
   document.getElementById('currentUserName').textContent=user.user;
-  document.getElementById('currentUserRole').textContent=user.user==='admin'?'المدير العام':'مستخدم';
+  document.getElementById('currentUserRole').textContent=user.id==='root'?'المدير العام':'مستخدم';
   document.getElementById('btnAddP').style.display=hasP('add')?'':'none';
   document.getElementById('btnResetS').style.display=hasP('reset')?'':'none';
   document.getElementById('btnFillS').style.display=hasP('reset')?'':'none';
@@ -280,7 +337,15 @@ function applyPerms(){
   document.getElementById('nav_users').style.display=hasP('mgr')?'':'none';
   document.getElementById('btnExportJS').style.display=hasP('mgr')?'':'none';
 }
-window.onload=function(){loadData();renderUsers();renderOrders();};
+
+window.onload=function(){
+  document.getElementById('loginUser').value = adminRoot.user;
+  document.getElementById('loginPass').value = adminRoot.pass;
+  loadData();
+  renderUsers();
+  renderOrders();
+};
+
 function loadData(){
   try{var s=localStorage.getItem('qarat_main_prods')||localStorage.getItem('qarat_products');if(s)prods=JSON.parse(s);}catch(e){}
   if(!prods||!prods.length){
@@ -292,10 +357,12 @@ function loadData(){
   prods.forEach(function(p){if(p.stock===undefined)p.stock=0;});
   updateStats();renderTable(prods);popDropdowns();renderUsers();renderOrders();
 }
+
 function saveLocal(){
   localStorage.setItem('qarat_main_prods',JSON.stringify(prods));
   localStorage.setItem('qarat_products',JSON.stringify(prods));
 }
+
 function updateStats(){
   document.getElementById('statTotalProds').textContent=prods.length;
   var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
@@ -305,6 +372,7 @@ function updateStats(){
   document.getElementById('statLowStock').textContent=low;
   document.getElementById('statInventoryValue').textContent=val.toFixed(2)+' ر.س';
 }
+
 function renderTable(list){
   var tb=document.getElementById('tbodyProds');if(!tb)return;tb.innerHTML='';
   list.forEach(function(p){
@@ -316,28 +384,33 @@ function renderTable(list){
     tb.appendChild(tr);
   });
 }
+
 function doSearch(){
   var q=document.getElementById('adminSearch').value.trim().toLowerCase();
   var f=prods.filter(function(p){return (p.name&&p.name.toLowerCase().includes(q))||(p.barcode&&String(p.barcode).includes(q))||(p.group&&p.group.toLowerCase().includes(q));});
   renderTable(f);
 }
+
 function showAll(){document.getElementById('adminSearch').value='';switchSec('sec_products',document.querySelector('.sidebar-menu .menu-item'));renderTable(prods);}
 var isLow=false;
 function toggleLow(){
   isLow=!isLow;document.getElementById('btnToggleL').textContent=isLow?'عرض الكل':'عرض النواقص';
   renderTable(isLow?prods.filter(function(p){return (p.stock||0)<=3;}):prods);
 }
+
 function fillStock(v){
-  if(!hasP('reset'))return alert('ليس لديك صلاحية تعديل المخزون.');
+  if(!hasP('reset'))return alert('ليس لديك صلاحية.');
   prods.forEach(function(p){p.stock=v;});saveLocal();renderTable(prods);updateStats();
-  alert(v===0?'تم تصفير المخزون بالكامل (0 كرتون).':'تمت التعبئة إلى '+v);
+  alert(v===0?'تم تصفير المخزون (0 كرتون).':'تمت التعبئة إلى '+v);
 }
+
 function openEdit(idx){
   var p=prods[idx];if(!p)return;
   document.getElementById('e_idx').value=idx;document.getElementById('e_name').value=p.name||'';document.getElementById('e_grp').value=p.group||'';document.getElementById('e_weight').value=p.weight||'';document.getElementById('e_pack').value=p.pack||'';document.getElementById('e_stock').value=p.stock||0;document.getElementById('e_price').value=p.price||0;document.getElementById('e_barcode').value=p.barcode||'';document.getElementById('e_img').value=p.image||'';
   document.getElementById('e_price').disabled=!hasP('price');document.getElementById('e_stock').disabled=!hasP('stock');document.getElementById('btnDelP').style.display=hasP('del')?'':'none';
   document.getElementById('dlgEdit').showModal();
 }
+
 function saveP(){
   var i=document.getElementById('e_idx').value,p=prods[i];if(!p)return;
   p.name=document.getElementById('e_name').value.trim();p.group=document.getElementById('e_grp').value.trim();p.weight=document.getElementById('e_weight').value.trim();p.pack=document.getElementById('e_pack').value.trim();p.barcode=document.getElementById('e_barcode').value.trim();p.image=document.getElementById('e_img').value.trim();
@@ -345,17 +418,20 @@ function saveP(){
   if(hasP('stock'))p.stock=parseInt(document.getElementById('e_stock').value)||0;
   saveLocal();renderTable(prods);updateStats();document.getElementById('dlgEdit').close();alert('تم الحفظ بنجاح!');
 }
+
 function delP(){
   if(!hasP('del'))return alert('ليس لديك صلاحية.');
   var i=document.getElementById('e_idx').value;
-  if(confirm('حذف هذا الصنف نهائياً؟')){prods.splice(i,1);saveLocal();renderTable(prods);updateStats();document.getElementById('dlgEdit').close();}
+  if(confirm('حذف هذا الصنف؟')){prods.splice(i,1);saveLocal();renderTable(prods);updateStats();document.getElementById('dlgEdit').close();}
 }
+
 function openNewP(){if(!hasP('add'))return alert('ليس لديك صلاحية.');document.getElementById('dlgNewP').showModal();}
 function saveNewP(){
   var n=document.getElementById('n_name').value.trim();if(!n)return alert('اكتب اسم الصنف');
   prods.unshift({name:n,group:document.getElementById('n_grp').value.trim()||'عام',weight:document.getElementById('n_weight').value.trim()||'-',pack:document.getElementById('n_pack').value.trim()||'1',stock:parseInt(document.getElementById('n_stock').value)||0,price:parseFloat(document.getElementById('n_price').value)||0,barcode:document.getElementById('n_barcode').value.trim()||'-',image:'images/image1.jpeg'});
-  saveLocal();renderTable(prods);updateStats();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة بنجاح!');
+  saveLocal();renderTable(prods);updateStats();popDropdowns();document.getElementById('dlgNewP').close();alert('تمت الإضافة!');
 }
+
 function renderOrders(){
   var tb=document.getElementById('tbodyOrders');if(!tb)return;tb.innerHTML='';
   var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
@@ -366,24 +442,58 @@ function renderOrders(){
     tb.appendChild(tr);
   });
 }
+
 function updOrd(id,st){
   var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');
   var t=ords.find(function(x){return x.orderId===id});if(t){t.status=st;localStorage.setItem('qarat_store_orders',JSON.stringify(ords));alert('تم تحديث حالة الطلب #'+id);}
 }
+
 function delOrd(id){
   if(confirm('حذف الطلبية؟')){var ords=JSON.parse(localStorage.getItem('qarat_store_orders')||'[]');ords=ords.filter(function(x){return x.orderId!==id});localStorage.setItem('qarat_store_orders',JSON.stringify(ords));renderOrders();updateStats();}
 }
 function clearOrders(){if(confirm('مسح جميع الطلبيات؟')){localStorage.removeItem('qarat_store_orders');renderOrders();updateStats();}}
+
 function renderUsers(){
   var tb=document.getElementById('tbodyUsers');if(!tb)return;tb.innerHTML='';
+  adminRoot = JSON.parse(localStorage.getItem('qarat_root_admin') || JSON.stringify(adminRoot));
   var uList=JSON.parse(localStorage.getItem('qarat_users_list')||'[]');
-  var all=[user].concat(uList);
+  var all=[adminRoot].concat(uList);
+  
   all.forEach(function(u,i){
     var tr=document.createElement('tr');
-    tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+u.user+'</b></td><td><code>'+u.pass+'</code></td><td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;font-size:.75rem;">'+(u.user==='admin'?'صلاحيات كاملة':'مخصص')+'</span></td><td>'+(u.user==='admin'?'<b>المدير</b>':'<button class="btn-danger" style="padding:2px 6px;" onclick="delU(\''+u.id+'\')"><i class="fa-solid fa-trash"></i></button>')+'</td>';
+    tr.innerHTML='<td>'+(i+1)+'</td><td><b>'+u.user+'</b></td><td><code>'+u.pass+'</code></td><td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;font-size:.75rem;">'+(u.id==='root'?'المدير العام (كاملة)':'مستخدم')+'</span></td><td>' +
+      (u.id==='root' ? '<button class="btn-gold" style="padding:3px 8px;font-size:.75rem;" onclick="openEditAdmin()"><i class="fa-solid fa-user-pen"></i> تعديل اسم وباسورد المدير</button>' : '<button class="btn-danger" style="padding:3px 6px;" onclick="delU(\''+u.id+'\')"><i class="fa-solid fa-trash"></i></button>') +
+      '</td>';
     tb.appendChild(tr);
   });
 }
+
+function openEditAdmin(){
+  document.getElementById('eu_id').value = 'root';
+  document.getElementById('eu_name').value = adminRoot.user;
+  document.getElementById('eu_pass').value = adminRoot.pass;
+  document.getElementById('dlgEditUser').showModal();
+}
+
+function saveUserEdit(){
+  var id = document.getElementById('eu_id').value;
+  var newU = document.getElementById('eu_name').value.trim();
+  var newP = document.getElementById('eu_pass').value.trim();
+  
+  if(!newU || !newP) return alert('يرجى كتابة اسم المستخدم وكلمة المرور');
+  
+  if(id === 'root'){
+    adminRoot.user = newU;
+    adminRoot.pass = newP;
+    localStorage.setItem('qarat_root_admin', JSON.stringify(adminRoot));
+    user = adminRoot;
+    applyPerms();
+    renderUsers();
+    document.getElementById('dlgEditUser').close();
+    alert('تم تعديل بيانات المدير العام بنجاح!');
+  }
+}
+
 function openNewU(){document.getElementById('dlgNewU').showModal();}
 function saveNewU(){
   var un=(document.getElementById('nu_name').value||'').trim(),pw=(document.getElementById('nu_pass').value||'').trim();
@@ -392,19 +502,24 @@ function saveNewU(){
   uList.push({id:'u_'+Date.now(),user:un,pass:pw,perms:{add:document.getElementById('p_add').checked,price:document.getElementById('p_price').checked,stock:document.getElementById('p_stock').checked,reset:document.getElementById('p_reset').checked,del:document.getElementById('p_del').checked,offers:document.getElementById('p_offers').checked,xl:document.getElementById('p_xl').checked,mgr:document.getElementById('p_mgr').checked}});
   localStorage.setItem('qarat_users_list',JSON.stringify(uList));renderUsers();document.getElementById('dlgNewU').close();alert('تم حفظ المستخدم!');
 }
+
 function delU(id){if(confirm('حذف المستخدم؟')){var uList=JSON.parse(localStorage.getItem('qarat_users_list')||'[]');uList=uList.filter(function(x){return String(x.id)!==String(id)});localStorage.setItem('qarat_users_list',JSON.stringify(uList));renderUsers();}}
+
 function switchSec(id,btn){
   document.querySelectorAll('.main-content > section').forEach(function(s){s.style.display='none';});
   document.querySelectorAll('.sidebar-menu .menu-item').forEach(function(m){m.classList.remove('active');});
   document.getElementById(id).style.display='block';if(btn)btn.classList.add('active');
+  if(window.innerWidth <= 768) document.getElementById('sidebarNav').classList.remove('open');
   if(id==='sec_orders')renderOrders();if(id==='sec_import')genRaw();
 }
+
 function popDropdowns(){
   var grpSel=document.getElementById('discGroup'),prodSel=document.getElementById('bxgyProd');if(!grpSel||!prodSel)return;
   var grps=[...new Set(prods.map(function(p){return p.group||'عام';}))];
   grpSel.innerHTML=grps.map(function(g){return '<option value="'+g+'">'+g+'</option>'}).join('');
   prodSel.innerHTML=prods.map(function(p,i){return '<option value="'+i+'">'+p.name+'</option>'}).join('');
 }
+
 function addDisc(){
   if(!hasP('offers'))return alert('ليس لديك صلاحية.');
   var g=document.getElementById('discGroup').value,pct=parseFloat(document.getElementById('discVal').value)||0;
@@ -412,16 +527,19 @@ function addDisc(){
   offers.push({id:Date.now(),type:'group_discount',target:g,percent:pct,label:'خصم '+pct+'% على ('+g+')'});
   renderOffers();alert('تم تطبيق الخصم!');
 }
+
 function addBxgy(){
   if(!hasP('offers'))return alert('ليس لديك صلاحية.');
   var p=prods[document.getElementById('bxgyProd').value],b=parseInt(document.getElementById('bxgyB').value)||10,f=parseInt(document.getElementById('bxgyF').value)||1;
   offers.push({id:Date.now(),type:'bxgy',target:p.name,buyQty:b,freeQty:f,label:'اشترِ '+b+' من ('+p.name+') واحصل على '+f+' مجاناً'});
   renderOffers();alert('تمت إضافة العرض!');
 }
+
 function renderOffers(){
   var d=document.getElementById('offersList');if(!d)return;
   d.innerHTML=offers.length?offers.map(function(o){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #eee;"><span>🎁 '+o.label+'</span><button class="btn-danger" style="padding:2px 6px;" onclick="offers=offers.filter(x=>x.id!='+o.id+');renderOffers();">إلغاء</button></div>'}).join(''):'<p style="color:#888;font-size:.85rem;">لا توجد عروض مضافة.</p>';
 }
+
 function importXLSX(e){
   if(!hasP('xl'))return alert('ليس لديك صلاحية.');
   var file=e.target.files[0];if(!file)return;
@@ -438,10 +556,12 @@ function importXLSX(e){
   };
   r.readAsArrayBuffer(file);
 }
+
 function exportXLSX(){
   var ws=XLSX.utils.json_to_sheet(prods.map(function(p){return {'اسم الصنف':p.name,'المجموعة':p.group,'الحجم':p.weight,'الشد':p.pack,'السعر':p.price,'الباركود':p.barcode,'المخزون':p.stock};}));
   var wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'الأصناف');XLSX.writeFile(wb,'اصناف_قارة_الحلويات.xlsx');
 }
+
 function genRaw(){document.getElementById('rawCode').value="const products = "+JSON.stringify(prods,null,2)+";\nconst activeOffers = "+JSON.stringify(offers,null,2)+";";}
 function copyCode(){genRaw();document.getElementById('rawCode').select();document.execCommand('copy');alert('تم نسخ الكود!');}
 function exportDataJS(){
