@@ -6,7 +6,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811383834",
-    "stock": 5,
+    "stock": 0,
     "image": "images/image1.jpeg"
   },
   {
@@ -16,7 +16,7 @@ const products = [
     "pack": "12",
     "price": 124.19999999999999,
     "barcode": "5060811383513",
-    "stock": 5,
+    "stock": 0,
     "image": "images/image2.jpeg"
   },
   {
@@ -825,7 +825,7 @@ const products = [
     "weight": "80 g",
     "pack": "18",
     "price": 109.24999999999999,
-    "barcode": "",
+    "barcode": "-",
     "stock": 0,
     "image": "images/image83.jpeg"
   },
@@ -5132,10 +5132,10 @@ const products = [
   {
     "name": "روزي مارشميلو علي شكل قلب بنكهه التوتي فروتي",
     "group": "مارشميلو",
-    "weight": "",
+    "weight": "-",
     "pack": "12",
     "price": 66.69999999999999,
-    "barcode": "",
+    "barcode": "-",
     "stock": 0,
     "image": "images/image514.jpeg"
   },
@@ -7392,7 +7392,7 @@ const products = [
   {
     "name": "فلتر قهوة ميليتا الأصلي 1X4",
     "group": "قهوة",
-    "weight": "",
+    "weight": "-",
     "pack": "18",
     "price": 152.95,
     "barcode": "4006508200016",
@@ -7402,7 +7402,7 @@ const products = [
   {
     "name": "فلتر قهوة ميليتا الأصلي 1X2",
     "group": "قهوة",
-    "weight": "",
+    "weight": "-",
     "pack": "18",
     "price": 141.45,
     "barcode": "4006508200009",
@@ -7412,7 +7412,7 @@ const products = [
   {
     "name": "فلتر قهوة",
     "group": "قهوة",
-    "weight": "",
+    "weight": "-",
     "pack": "10",
     "price": 169.04999999999998,
     "barcode": "4977642723320",
@@ -9978,6 +9978,1156 @@ const products = [
     "barcode": "8805489003625",
     "stock": 0,
     "image": "images/image998.jpeg"
+  },
+  {
+    "name": "كادبوري سبيشل تريتس مشكل",
+    "group": "شوكولاته",
+    "weight": "180 g",
+    "pack": "14",
+    "price": 310.5,
+    "barcode": "9300617042532",
+    "stock": 0,
+    "image": "images/image999.jpeg"
+  },
+  {
+    "name": "شوكولاتة كادبوري دايري ميلك بولز كرات شوكولاتة بالحليب",
+    "group": "شوكولاته",
+    "weight": "135 g",
+    "pack": "14",
+    "price": 310.5,
+    "barcode": "9300617307921",
+    "stock": 0,
+    "image": "images/image1000.jpeg"
+  },
+  {
+    "name": "كادبوري دي ميلك  قطع الفراولة",
+    "group": "شوكولاته",
+    "weight": "142 g",
+    "pack": "12",
+    "price": 264.5,
+    "barcode": "9300617301073",
+    "stock": 0,
+    "image": "images/image1001.jpeg"
+  },
+  {
+    "name": "شوكولاتة كادبوري دايري ميلك بايتس بالنعناع",
+    "group": "شوكولاته",
+    "weight": "142 g",
+    "pack": "12",
+    "price": 310.5,
+    "barcode": "9300617300977",
+    "stock": 0,
+    "image": "images/image1002.jpeg"
+  },
+  {
+    "name": "كادبوري ديري ميلك فريدو بنكهة الفراولة",
+    "group": "شوكولاته",
+    "weight": "180 g",
+    "pack": "14",
+    "price": 333.5,
+    "barcode": "9300617287902",
+    "stock": 0,
+    "image": "images/image1003.jpeg"
+  },
+  {
+    "name": "شوكولاتة فريدو بالحليب – كادبوري ديري ميلك",
+    "group": "شوكولاته",
+    "weight": "144 g",
+    "pack": "14",
+    "price": 151.79999999999998,
+    "barcode": "9300617292005",
+    "stock": 0,
+    "image": "images/image1004.jpeg"
+  },
+  {
+    "name": "كادبوري بيكنيك",
+    "group": "شوكولاته",
+    "weight": "180 g",
+    "pack": "12",
+    "price": 273.7,
+    "barcode": "9300617042570",
+    "stock": 0,
+    "image": "images/image1005.jpeg"
+  },
+  {
+    "name": "مالتيزرز بنكهة شوكولاتة الحليب والعسل",
+    "group": "شوكولاته",
+    "weight": "125 g",
+    "pack": "12",
+    "price": 322,
+    "barcode": "9300682065382",
+    "stock": 0,
+    "image": "images/image1006.jpeg"
+  },
+  {
+    "name": "مالتيزرز دارك شوكولاتة",
+    "group": "شوكولاته",
+    "weight": "135 g",
+    "pack": "12",
+    "price": 276,
+    "barcode": "9300682058513",
+    "stock": 0,
+    "image": "images/image1007.jpeg"
+  },
+  {
+    "name": "بودز سنيكرز",
+    "group": "شوكولاته",
+    "weight": "160 g",
+    "pack": "15",
+    "price": 335.79999999999995,
+    "barcode": "9300682047944",
+    "stock": 0,
+    "image": "images/image1008.jpeg"
+  },
+  {
+    "name": "بودز تويكس",
+    "group": "شوكولاته",
+    "weight": "160 g",
+    "pack": "15",
+    "price": 269.09999999999997,
+    "barcode": "9300682047975",
+    "stock": 0,
+    "image": "images/image1009.jpeg"
+  },
+  {
+    "name": "بودز مارس",
+    "group": "شوكولاته",
+    "weight": "160 g",
+    "pack": "15",
+    "price": 335.79999999999995,
+    "barcode": "9300682047913",
+    "stock": 0,
+    "image": "images/image1010.jpeg"
+  },
+  {
+    "name": "شوكولاتة ليندت إكسيلنس الداكنة المركزة 70% كاكاو",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "20",
+    "price": 385.24999999999994,
+    "barcode": "3046920028004",
+    "stock": 0,
+    "image": "images/image1011.jpeg"
+  },
+  {
+    "name": "ليندت اكسلنس شوكولاتة غامقة 90% كاكاو",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "20",
+    "price": 385.24999999999994,
+    "barcode": "3046920029759",
+    "stock": 0,
+    "image": "images/image1012.jpeg"
+  },
+  {
+    "name": "لوح شوكولاتة ليندت إكسيلنس بالنعناع الداكن",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "20",
+    "price": 385.24999999999994,
+    "barcode": "3046920028417",
+    "stock": 0,
+    "image": "images/image1013.jpeg"
+  },
+  {
+    "name": "لوح شوكولاتة ليندت إكسيلنس الداكنة بالتوت البري واللوز والبندق",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "20",
+    "price": 385.24999999999994,
+    "barcode": "3046920028431",
+    "stock": 0,
+    "image": "images/image1014.jpeg"
+  },
+  {
+    "name": "لوح شوكولاتة ليندت إكسيلنس بالفستق الداكن",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "20",
+    "price": 385.24999999999994,
+    "barcode": "3046920023085",
+    "stock": 0,
+    "image": "images/image1015.jpeg"
+  },
+  {
+    "name": "لوح شوكولاتة ليندت إكسيلنس الداكنة بملح البحر",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "20",
+    "price": 385.24999999999994,
+    "barcode": "3046920029674",
+    "stock": 0,
+    "image": "images/image1016.jpeg"
+  },
+  {
+    "name": "شوكولاته ليندت اكسيلنس الطبيعيه البيضاء بنكهه الفانيليا",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "20",
+    "price": 385.24999999999994,
+    "barcode": "3046920084000",
+    "stock": 0,
+    "image": "images/image1017.jpeg"
+  },
+  {
+    "name": "شوكولاتة ترابا  أرز بالشوكولاتة منتفخ مع ستيفيا",
+    "group": "شوكولاته",
+    "weight": "75 g",
+    "pack": "15",
+    "price": 152.95,
+    "barcode": "8410679030055",
+    "stock": 0,
+    "image": "images/image1018.jpeg"
+  },
+  {
+    "name": "شوكلاته ترابا ستيفيا بلانكو كون لوح شوكولاتة بيضاء",
+    "group": "شوكولاته",
+    "weight": "75 g",
+    "pack": "20",
+    "price": 166.75,
+    "barcode": "8410679030048",
+    "stock": 0,
+    "image": "images/image1019.jpeg"
+  },
+  {
+    "name": "ترابا ستيفيا لوح شوكولاتة بالحليب مع اللوز خالية من السكر",
+    "group": "شوكولاته",
+    "weight": "75 g",
+    "pack": "20",
+    "price": 166.75,
+    "barcode": "8410679030062",
+    "stock": 0,
+    "image": "images/image1020.jpeg"
+  },
+  {
+    "name": "ترابا ستيفيا الواح شوكلاتة بالحليب",
+    "group": "شوكولاته",
+    "weight": "75 g",
+    "pack": "20",
+    "price": 166.75,
+    "barcode": "8410679030017",
+    "stock": 0,
+    "image": "images/image1021.jpeg"
+  },
+  {
+    "name": "ترابا ستيفيا لوح شوكولاتة بالحليب مع اللوز  80 % دارك",
+    "group": "شوكولاته",
+    "weight": "75 g",
+    "pack": "20",
+    "price": 166.75,
+    "barcode": "8410679030031",
+    "stock": 0,
+    "image": "images/image1022.jpeg"
+  },
+  {
+    "name": "يوركي الأصلي - نستله",
+    "group": "شوكولاته",
+    "weight": "138 g",
+    "pack": "14",
+    "price": 128.79999999999998,
+    "barcode": "7613034872579",
+    "stock": 0,
+    "image": "images/image1023.jpeg"
+  },
+  {
+    "name": "شوكولاتة كيت كات بريطاني شينكي بالحليب",
+    "group": "شوكولاته",
+    "weight": "128",
+    "pack": "15*4",
+    "price": 143.75,
+    "barcode": "3800020401415",
+    "stock": 0,
+    "image": "images/image1024.jpeg"
+  },
+  {
+    "name": "نستله ليون بالفول السوداني  شوكولاتة بالحليب",
+    "group": "شوكولاته",
+    "weight": "124 g",
+    "pack": "10*4",
+    "price": 92,
+    "barcode": "8445291996335",
+    "stock": 0,
+    "image": "images/image1025.jpeg"
+  },
+  {
+    "name": "ألواح شوكولاتة بنكهة النعناع الفوارة من آيرو",
+    "group": "شوكولاته",
+    "weight": "144 g",
+    "pack": "14*4",
+    "price": 134.54999999999998,
+    "barcode": "7613034919625",
+    "stock": 0,
+    "image": "images/image1026.jpeg"
+  },
+  {
+    "name": "شوكولاتة نستله سمارتيس قطع شوكولاتة ملوّنة",
+    "group": "سناك",
+    "weight": "105 g",
+    "pack": "8",
+    "price": 74.75,
+    "barcode": "7613039535042",
+    "stock": 0,
+    "image": "images/image1027.jpeg"
+  },
+  {
+    "name": "سكيتلز بنكهة التوت البري",
+    "group": "سناك",
+    "weight": "136 g",
+    "pack": "15",
+    "price": 94.3,
+    "barcode": "4009900546041",
+    "stock": 0,
+    "image": "images/image1028.jpeg"
+  },
+  {
+    "name": "تونوكس كراميل لوق ميني بريطاني",
+    "group": "ويفر",
+    "weight": "150 g",
+    "pack": "2*28",
+    "price": 478.4,
+    "barcode": "5010975075090",
+    "stock": 0,
+    "image": "images/image1029.jpeg"
+  },
+  {
+    "name": "يم ايرث جيلي عضوي بنكهة فواكة",
+    "group": "مصاص",
+    "weight": "198 g",
+    "pack": "12",
+    "price": 299,
+    "barcode": "810165019584",
+    "stock": 0,
+    "image": "images/image1030.jpeg"
+  },
+  {
+    "name": "شوكلاته ويتورز برالين  جولدن بالبندق والحبوب",
+    "group": "شوكولاته",
+    "weight": "125 g",
+    "pack": "12",
+    "price": 133.39999999999998,
+    "barcode": "8003535089375",
+    "stock": 0,
+    "image": "images/image1031.jpeg"
+  },
+  {
+    "name": "حلوى ويتورز برالين جولدن شوكلاته دارك",
+    "group": "شوكولاته",
+    "weight": "125 g",
+    "pack": "12",
+    "price": 133.39999999999998,
+    "barcode": "8003535089610",
+    "stock": 0,
+    "image": "images/image1032.jpeg"
+  },
+  {
+    "name": "شوكولاتة ويتورز جولدن بالفستق",
+    "group": "شوكولاته",
+    "weight": "125 g",
+    "pack": "12",
+    "price": 133.39999999999998,
+    "barcode": "8003535089412",
+    "stock": 0,
+    "image": "images/image1033.jpeg"
+  },
+  {
+    "name": "شوكولاتة ويتورز بيانكو بالحليب والحبوب",
+    "group": "شوكولاته",
+    "weight": "125 g",
+    "pack": "12",
+    "price": 133.39999999999998,
+    "barcode": "8003535089252",
+    "stock": 0,
+    "image": "images/image1034.jpeg"
+  },
+  {
+    "name": "شوكولاتة ويتورز جولدن بالكراميل الحلو",
+    "group": "شوكولاته",
+    "weight": "125 g",
+    "pack": "12",
+    "price": 133.39999999999998,
+    "barcode": "8003535089498",
+    "stock": 0,
+    "image": "images/image1035.jpeg"
+  },
+  {
+    "name": "شوكلاته ويتورز كرسبي بالشوكلاته الدارك",
+    "group": "شوكولاته",
+    "weight": "95 g",
+    "pack": "24",
+    "price": 202.39999999999998,
+    "barcode": "8003535085858",
+    "stock": 0,
+    "image": "images/image1036.jpeg"
+  },
+  {
+    "name": "شوكلاته ويتورز كرسبي بالبندق والحبوب",
+    "group": "شوكولاته",
+    "weight": "95 g",
+    "pack": "24",
+    "price": 202.39999999999998,
+    "barcode": "8003535085773",
+    "stock": 0,
+    "image": "images/image1037.jpeg"
+  },
+  {
+    "name": "شوكولاتة ويتورز كريمي كراميل بالحليب",
+    "group": "شوكولاته",
+    "weight": "95 g",
+    "pack": "24",
+    "price": 202.39999999999998,
+    "barcode": "8003535085698",
+    "stock": 0,
+    "image": "images/image1038.jpeg"
+  },
+  {
+    "name": "شوكولاتة ويتورز كريسبي بالحليب والحبوب",
+    "group": "شوكولاته",
+    "weight": "95 g",
+    "pack": "24",
+    "price": 202.39999999999998,
+    "barcode": "8003535085810",
+    "stock": 0,
+    "image": "images/image1039.jpeg"
+  },
+  {
+    "name": "شوكولاتة ترابا بالحليب محشوة بكريمة الحليب اسباني",
+    "group": "شوكولاته",
+    "weight": "105 g",
+    "pack": "15",
+    "price": 232.29999999999998,
+    "barcode": "8410679180057",
+    "stock": 0,
+    "image": "images/image1040.jpeg"
+  },
+  {
+    "name": "أصابع بوجوتي بالشوكولاتة بالحليب",
+    "group": "شوكولاته",
+    "weight": "100 g",
+    "pack": "18",
+    "price": 117.3,
+    "barcode": "5902431567945",
+    "stock": 0,
+    "image": "images/image1041.jpeg"
+  },
+  {
+    "name": "بير بوز كفوف الدب كوكيز براون",
+    "group": "كيك",
+    "weight": "240 g",
+    "pack": "12",
+    "price": 81.64999999999999,
+    "barcode": "63348006912",
+    "stock": 0,
+    "image": "images/image1042.jpeg"
+  },
+  {
+    "name": "بير بوز كفوف الدب كوكيز",
+    "group": "كيك",
+    "weight": "240 g",
+    "pack": "12",
+    "price": 81.64999999999999,
+    "barcode": "63348006950",
+    "stock": 0,
+    "image": "images/image1043.jpeg"
+  },
+  {
+    "name": "بير بوز كفوف الدب كوكيز الشوكلاته",
+    "group": "كيك",
+    "weight": "240 g",
+    "pack": "12",
+    "price": 81.64999999999999,
+    "barcode": "63348006943",
+    "stock": 0,
+    "image": "images/image1044.jpeg"
+  },
+  {
+    "name": "بيكاديلي روكستا أصابع ويفر كراميل وشوكولاته",
+    "group": "ويفر",
+    "weight": "480 g",
+    "pack": "12*24",
+    "price": 114.99999999999999,
+    "barcode": "6291003074370",
+    "stock": 0,
+    "image": "images/image1045.jpeg"
+  },
+  {
+    "name": "شوكولا ارمادا نتي كارميل بالفول السوداني",
+    "group": "ويفر",
+    "weight": "528",
+    "pack": "12*24",
+    "price": 114.99999999999999,
+    "barcode": "6291003088094",
+    "stock": 0,
+    "image": "images/image1046.jpeg"
+  },
+  {
+    "name": "شوكولاتة بيكادبلي جو ناتس بالفول السوداني",
+    "group": "ويفر",
+    "weight": "504 g",
+    "pack": "12*24",
+    "price": 114.99999999999999,
+    "barcode": "6291003089664",
+    "stock": 0,
+    "image": "images/image1047.jpeg"
+  },
+  {
+    "name": "بيكاديلي واو ويفر بكريمة البندق",
+    "group": "ويفر",
+    "weight": "480 g",
+    "pack": "6*24",
+    "price": 0,
+    "barcode": "6291003089343",
+    "stock": 0,
+    "image": "images/image1048.jpeg"
+  },
+  {
+    "name": "بسكويت القهوة كوفي جوي",
+    "group": "ويفر",
+    "weight": "312 g",
+    "pack": "12*8",
+    "price": 134.54999999999998,
+    "barcode": "8996001301876",
+    "stock": 0,
+    "image": "images/image1049.jpeg"
+  },
+  {
+    "name": "بيسكو ساندويتش فانيلا",
+    "group": "ويفر",
+    "weight": "312 g",
+    "pack": "24",
+    "price": 114.99999999999999,
+    "barcode": "4897059115450",
+    "stock": 0,
+    "image": "images/image1050.jpeg"
+  },
+  {
+    "name": "حلاوة سمسم بولندي",
+    "group": "حلوي",
+    "weight": "432 g",
+    "pack": "14",
+    "price": 143.75,
+    "barcode": "5907751604462",
+    "stock": 0,
+    "image": "images/image1051.jpeg"
+  },
+  {
+    "name": "داديان بسكوت 9 انواع من الخضار",
+    "group": "ويفر",
+    "weight": "290 g",
+    "pack": "16",
+    "price": 78.19999999999999,
+    "barcode": "4897117960541",
+    "stock": 0,
+    "image": "images/image1052.jpeg"
+  },
+  {
+    "name": "بسكويت مونتشيز أوت كرنش بالشوكولاتة الداكنة",
+    "group": "ويفر",
+    "weight": "208 g",
+    "pack": "12",
+    "price": 86.25,
+    "barcode": "9556439885165",
+    "stock": 0,
+    "image": "images/image1053.jpeg"
+  },
+  {
+    "name": "بسكويت مونتشيز أوت كرنش بنكهه الفراوله والعنب الاسود",
+    "group": "ويفر",
+    "weight": "208 g",
+    "pack": "12",
+    "price": 86.25,
+    "barcode": "9556439885141",
+    "stock": 0,
+    "image": "images/image1054.jpeg"
+  },
+  {
+    "name": "بسكويت مونتشيز أوت كرنش بنكهه البندق",
+    "group": "ويفر",
+    "weight": "208 g",
+    "pack": "12",
+    "price": 86.25,
+    "barcode": "9556439885189",
+    "stock": 0,
+    "image": "images/image1055.jpeg"
+  },
+  {
+    "name": "رطاب شابورة اصل الرشاقه بالقمح الكامل ( بر )",
+    "group": "صحي",
+    "weight": "300 g",
+    "pack": "8",
+    "price": 37.949999999999996,
+    "barcode": "6287017752502",
+    "stock": 0,
+    "image": "images/image1056.jpeg"
+  },
+  {
+    "name": "رطاب شابورة اصل الرشاقه بالحبوب",
+    "group": "صحي",
+    "weight": "300 g",
+    "pack": "8",
+    "price": 37.949999999999996,
+    "barcode": "6287017752519",
+    "stock": 0,
+    "image": "images/image1057.jpeg"
+  },
+  {
+    "name": "رطاب شابورة اصل الرشاقه بالقمح",
+    "group": "صحي",
+    "weight": "300 g",
+    "pack": "8",
+    "price": 37.949999999999996,
+    "barcode": "6287017752533",
+    "stock": 0,
+    "image": "images/image1058.jpeg"
+  },
+  {
+    "name": "رطاب شابورة اصل الرشاقه بالحبوب مع العسل والحليب",
+    "group": "صحي",
+    "weight": "300 g",
+    "pack": "8",
+    "price": 37.949999999999996,
+    "barcode": "6287017752540",
+    "stock": 0,
+    "image": "images/image1059.jpeg"
+  },
+  {
+    "name": "نابليون بسكويت مخبوز بطعم الحليب",
+    "group": "صحي",
+    "weight": "290 g",
+    "pack": "16",
+    "price": 79.35,
+    "barcode": "4820156631066",
+    "stock": 0,
+    "image": "images/image1060.jpeg"
+  },
+  {
+    "name": "بسكويت جرونا لاز انوشكي",
+    "group": "صحي",
+    "weight": "160 g",
+    "pack": "14",
+    "price": 73.6,
+    "barcode": "4820156631219",
+    "stock": 0,
+    "image": "images/image1061.jpeg"
+  },
+  {
+    "name": "بسكويت جرونا غرونوشكي",
+    "group": "صحي",
+    "weight": "210 g",
+    "pack": "17",
+    "price": 86.25,
+    "barcode": "4820156632575",
+    "stock": 0,
+    "image": "images/image1062.jpeg"
+  },
+  {
+    "name": "حلوى جيلي تيانز بنكهة \r\nالبطيخ والمارشميلو الملتوية",
+    "group": "حلوي",
+    "weight": "120 g",
+    "pack": "40",
+    "price": 190.89999999999998,
+    "barcode": "6927262805171",
+    "stock": 0,
+    "image": "images/image1063.jpeg"
+  },
+  {
+    "name": "مارشميلو تيان المشوي",
+    "group": "مارشميلو",
+    "weight": "225 g",
+    "pack": "24",
+    "price": 117.3,
+    "barcode": "6927262800046",
+    "stock": 0,
+    "image": "images/image1064.jpeg"
+  },
+  {
+    "name": "نودلز بالدو فولكانو كاربونارا  دجاج",
+    "group": "اندومي",
+    "weight": "105 g",
+    "pack": "16",
+    "price": 80.5,
+    "barcode": "648436310715",
+    "stock": 0,
+    "image": "images/image1065.jpeg"
+  },
+  {
+    "name": "نودلز بالدو فولكانو كاربونارا  دجاج",
+    "group": "اندومي",
+    "weight": "520 g",
+    "pack": "8",
+    "price": 134.54999999999998,
+    "barcode": "648436310692",
+    "stock": 0,
+    "image": "images/image1066.jpeg"
+  },
+  {
+    "name": "ريزي أعواد الذرة شوربة الذرة",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "32",
+    "price": 155.25,
+    "barcode": "9555115909393",
+    "stock": 0,
+    "image": "images/image1067.jpeg"
+  },
+  {
+    "name": "ريزي أعواد الذرة الكاري المشوي",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "32",
+    "price": 155.25,
+    "barcode": "9555115909386",
+    "stock": 0,
+    "image": "images/image1068.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهة الافوكادو والماسترد",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "24",
+    "price": 276,
+    "barcode": "6924743935990",
+    "stock": 0,
+    "image": "images/image1069.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهه الخيار",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "24",
+    "price": 276,
+    "barcode": "6924743927940",
+    "stock": 0,
+    "image": "images/image1070.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهة الاعشاب البحرية المحمصة",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "204",
+    "price": 276,
+    "barcode": "6924743935983",
+    "stock": 0,
+    "image": "images/image1071.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهة الخبز بالثوم",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "24",
+    "price": 276,
+    "barcode": "6924743938243",
+    "stock": 0,
+    "image": "images/image1072.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهة الطماطم",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "24",
+    "price": 276,
+    "barcode": "6924743927933",
+    "stock": 0,
+    "image": "images/image1073.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهة الكمأة السوداء",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "24",
+    "price": 276,
+    "barcode": "6924743936010",
+    "stock": 0,
+    "image": "images/image1074.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهة فطيرة اللحم البقري",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "24",
+    "price": 276,
+    "barcode": "6924743938236",
+    "stock": 0,
+    "image": "images/image1075.jpeg"
+  },
+  {
+    "name": "ليز ستاكس بنكهة الكريمه الحامضه والبصل",
+    "group": "شيبس",
+    "weight": "90 g",
+    "pack": "24",
+    "price": 276,
+    "barcode": "6924743936027",
+    "stock": 0,
+    "image": "images/image1076.jpeg"
+  },
+  {
+    "name": "ويسي عيدان البطاطس نكهة الملح",
+    "group": "شيبس",
+    "weight": "37 g",
+    "pack": "24",
+    "price": 48.3,
+    "barcode": "6287014281104",
+    "stock": 0,
+    "image": "images/image1077.jpeg"
+  },
+  {
+    "name": "ويسي عيدان البطاطس نكهة الكاتشب",
+    "group": "شيبس",
+    "weight": "37 g",
+    "pack": "24",
+    "price": 48.3,
+    "barcode": "6287014281098",
+    "stock": 0,
+    "image": "images/image1078.jpeg"
+  },
+  {
+    "name": "مارسين مسحوق شوكولاتة",
+    "group": "شوكولاته",
+    "weight": "420 g",
+    "pack": "12",
+    "price": 178.25,
+    "barcode": "8684779489918",
+    "stock": 0,
+    "image": "images/image1079.jpeg"
+  },
+  {
+    "name": "سكر ناعم ابيض جوري",
+    "group": "غذائي",
+    "weight": "500 g",
+    "pack": "8",
+    "price": 41.4,
+    "barcode": "6287000910612",
+    "stock": 0,
+    "image": "images/image1080.jpeg"
+  },
+  {
+    "name": "سكر اصابع ابيض جوري",
+    "group": "غذائي",
+    "weight": "500 g",
+    "pack": "24",
+    "price": 123.05,
+    "barcode": "6287000910421",
+    "stock": 0,
+    "image": "images/image1081.jpeg"
+  },
+  {
+    "name": "دوغادان شاي اسود",
+    "group": "شاي",
+    "weight": "320 g",
+    "pack": "8",
+    "price": 75.89999999999999,
+    "barcode": "8699432220654",
+    "stock": 0,
+    "image": "images/image1082.jpeg"
+  },
+  {
+    "name": "دوغادان شاي اسود",
+    "group": "شاي",
+    "weight": "1 k",
+    "pack": "12",
+    "price": 110.39999999999999,
+    "barcode": "8699432220692",
+    "stock": 0,
+    "image": "images/image1083.jpeg"
+  },
+  {
+    "name": "محمود كابتشينو كلاسيك",
+    "group": "قهوة",
+    "weight": "500 g",
+    "pack": "12",
+    "price": 179.39999999999998,
+    "barcode": "8697449918298",
+    "stock": 0,
+    "image": "images/image1084.jpeg"
+  },
+  {
+    "name": "محمود كابتشينو كلاسيك",
+    "group": "قهوة",
+    "weight": "274 g",
+    "pack": "12",
+    "price": 179.39999999999998,
+    "barcode": "8697449112177",
+    "stock": 0,
+    "image": "images/image1085.jpeg"
+  },
+  {
+    "name": "قهوة محمود اورجينال 3*1",
+    "group": "قهوة",
+    "weight": "432 g",
+    "pack": "24*24",
+    "price": 229.99999999999997,
+    "barcode": "8697449912494",
+    "stock": 0,
+    "image": "images/image1086.jpeg"
+  },
+  {
+    "name": "قهوة محمود 3*1",
+    "group": "قهوة",
+    "weight": "416.6 g",
+    "pack": "24*24",
+    "price": 229.99999999999997,
+    "barcode": "8697449113556",
+    "stock": 0,
+    "image": "images/image1087.jpeg"
+  },
+  {
+    "name": "دريبو قهوة مقطرة برازيل",
+    "group": "قهوة",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 465.74999999999994,
+    "barcode": "4969625033229",
+    "stock": 0,
+    "image": "images/image1088.jpeg"
+  },
+  {
+    "name": "دريبو قهوة مقطرة كولومبيا",
+    "group": "قهوة",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 465.74999999999994,
+    "barcode": "4969625033267",
+    "stock": 0,
+    "image": "images/image1089.jpeg"
+  },
+  {
+    "name": "كافيه كراون كبسولات قهوة إسبريسو جوستو",
+    "group": "قهوة",
+    "weight": "52 g",
+    "pack": "12",
+    "price": 126.49999999999999,
+    "barcode": "8681571348559",
+    "stock": 0,
+    "image": "images/image1090.jpeg"
+  },
+  {
+    "name": "كافيه كراون كبسولات قهوة إسبريسو كلاسيك",
+    "group": "قهوة",
+    "weight": "52 g",
+    "pack": "12",
+    "price": 126.49999999999999,
+    "barcode": "8681571348535",
+    "stock": 0,
+    "image": "images/image1091.jpeg"
+  },
+  {
+    "name": "كافيه كراون كبسولات قهوة إسبريسو إنتينسو",
+    "group": "قهوة",
+    "weight": "52 g",
+    "pack": "12",
+    "price": 126.49999999999999,
+    "barcode": "8681571348573",
+    "stock": 0,
+    "image": "images/image1092.jpeg"
+  },
+  {
+    "name": "الرفاعي ذره بالجبن",
+    "group": "سناك",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 105.8,
+    "barcode": "6271100041864",
+    "stock": 0,
+    "image": "images/image1093.jpeg"
+  },
+  {
+    "name": "الرفاعي ذره حارة",
+    "group": "سناك",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 105.8,
+    "barcode": "6271100041871",
+    "stock": 0,
+    "image": "images/image1094.jpeg"
+  },
+  {
+    "name": "الرفاعي فول سوداني ناتشوز",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "24",
+    "price": 65.55,
+    "barcode": "6271100042069",
+    "stock": 0,
+    "image": "images/image1095.jpeg"
+  },
+  {
+    "name": "الرفاعي فواكه ومكسرات مشكلة",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "24",
+    "price": 213.89999999999998,
+    "barcode": "6271100042304",
+    "stock": 0,
+    "image": "images/image1096.jpeg"
+  },
+  {
+    "name": "الرفاعي كوكتيل مكسرات مشكلة",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "24",
+    "price": 177.1,
+    "barcode": "6271100041888",
+    "stock": 0,
+    "image": "images/image1097.jpeg"
+  },
+  {
+    "name": "الرفاعي كوكتيل لوز",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "24",
+    "price": 224.24999999999997,
+    "barcode": "6271100040041",
+    "stock": 0,
+    "image": "images/image1098.jpeg"
+  },
+  {
+    "name": "الرفاعي بذور دوار الشمس مدخن",
+    "group": "سناك",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 87.39999999999999,
+    "barcode": "6271100043295",
+    "stock": 0,
+    "image": "images/image1099.jpeg"
+  },
+  {
+    "name": "الرفاعي بذور دوار الشمس",
+    "group": "سناك",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 81.64999999999999,
+    "barcode": "6271100041277",
+    "stock": 0,
+    "image": "images/image1100.jpeg"
+  },
+  {
+    "name": "الرفاعي مكسرات مشكله",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "24",
+    "price": 134.54999999999998,
+    "barcode": "6271100040065",
+    "stock": 0,
+    "image": "images/image1101.jpeg"
+  },
+  {
+    "name": "الرفاعي بزر اليقطين",
+    "group": "سناك",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 110.39999999999999,
+    "barcode": "6271100041260",
+    "stock": 0,
+    "image": "images/image1102.jpeg"
+  },
+  {
+    "name": "الرفاعي فول سوداني مملح",
+    "group": "سناك",
+    "weight": "120 g",
+    "pack": "24",
+    "price": 86.25,
+    "barcode": "6271100040027",
+    "stock": 0,
+    "image": "images/image1103.jpeg"
+  },
+  {
+    "name": "الرفاعي بذور مصرية",
+    "group": "سناك",
+    "weight": "100 g",
+    "pack": "24",
+    "price": 119.6,
+    "barcode": "6271100041536",
+    "stock": 0,
+    "image": "images/image1104.jpeg"
+  },
+  {
+    "name": "عصير فيرتيكا توت",
+    "group": "مشروبات",
+    "weight": "240 g",
+    "pack": "24*6",
+    "price": 134.54999999999998,
+    "barcode": "6215581181527",
+    "stock": 0,
+    "image": "images/image1105.jpeg"
+  },
+  {
+    "name": "عصير فيرتيكا منجا",
+    "group": "مشروبات",
+    "weight": "240 g",
+    "pack": "24*6",
+    "price": 134.54999999999998,
+    "barcode": "6215581171528",
+    "stock": 0,
+    "image": "images/image1106.jpeg"
+  },
+  {
+    "name": "عصير فيرتيكا اناناس",
+    "group": "مشروبات",
+    "weight": "240 g",
+    "pack": "24*6",
+    "price": 134.54999999999998,
+    "barcode": "6215581211521",
+    "stock": 0,
+    "image": "images/image1107.jpeg"
+  },
+  {
+    "name": "عصير فيرتيكا برتقال",
+    "group": "مشروبات",
+    "weight": "240 g",
+    "pack": "24*6",
+    "price": 134.54999999999998,
+    "barcode": "6215581161529",
+    "stock": 0,
+    "image": "images/image1108.jpeg"
+  },
+  {
+    "name": "عصير فيرتيكا ليمون",
+    "group": "مشروبات",
+    "weight": "240 g",
+    "pack": "24*6",
+    "price": 134.54999999999998,
+    "barcode": "6215581191526",
+    "stock": 0,
+    "image": "images/image1109.jpeg"
+  },
+  {
+    "name": "اكفا مشروب فوار \r\nبنكهه التفاح الاخضر",
+    "group": "مشروبات",
+    "weight": "325 ml",
+    "pack": "24",
+    "price": 59.8,
+    "barcode": "9551011821296",
+    "stock": 0,
+    "image": "images/image1110.jpeg"
+  },
+  {
+    "name": "اكفا مشروب فوار \r\nبنكهه اليتشي والملح",
+    "group": "مشروبات",
+    "weight": "325 ml",
+    "pack": "24",
+    "price": 59.8,
+    "barcode": "9551011821289",
+    "stock": 0,
+    "image": "images/image1111.jpeg"
+  },
+  {
+    "name": "سينالكو كولا",
+    "group": "مشروبات",
+    "weight": "250 ml",
+    "pack": "30",
+    "price": 25.299999999999997,
+    "barcode": "6253505342326",
+    "stock": 0,
+    "image": "images/image1112.jpeg"
+  },
+  {
+    "name": "سينالكو برتقال",
+    "group": "مشروبات",
+    "weight": "250 ml",
+    "pack": "30",
+    "price": 25.299999999999997,
+    "barcode": "6253505342333",
+    "stock": 0,
+    "image": "images/image1113.jpeg"
   }
 ];
 const activeOffers = [];
