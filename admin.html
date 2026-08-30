@@ -108,6 +108,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
   <div class="sidebar-menu">
     <a class="menu-item active" onclick="switchSec('sec_products',this)"><i class="fa-solid fa-boxes-stacked"></i><span>الأصناف والمخزون</span></a>
+    <a class="menu-item" id="nav_shipping" onclick="switchSec('sec_shipping',this)"><i class="fa-solid fa-truck-fast"></i><span>شركات وخيارات الشحن</span></a>
     <a class="menu-item" id="nav_orders" onclick="switchSec('sec_orders',this)"><i class="fa-solid fa-truck-ramp-box"></i><span>الطلبيات والتتبع</span></a>
     <a class="menu-item" id="nav_offers" onclick="switchSec('sec_offers',this)"><i class="fa-solid fa-tags"></i><span>العروض والخصومات</span></a>
     <a class="menu-item" id="nav_customers" onclick="switchSec('sec_customers',this)"><i class="fa-solid fa-address-book"></i><span>إدارة العملاء</span></a>
@@ -147,6 +148,29 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
   </section>
 
+  <!-- قسم شركات وخيارات الشحن الجديد -->
+  <section id="sec_shipping" class="content-card" style="display:none;">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-truck-fast" style="color:var(--gold);"></i> إدارة شركات وخيارات الشحن والتوصيل</h3>
+      <button class="btn-green" onclick="openNewShippingModal()"><i class="fa-solid fa-plus"></i> إضافة خيار شحن جديد</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>طريقة / شركة الشحن</th>
+            <th>التكلفة</th>
+            <th>مدة التوصيل التقريبية</th>
+            <th>الحالة</th>
+            <th>إجراء</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyShipping"></tbody>
+      </table>
+    </div>
+  </section>
+
   <section id="sec_orders" class="content-card" style="display:none;">
     <div class="card-header">
       <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> طلبيات العملاء وتحديث التتبع</h3>
@@ -154,7 +178,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>رقم الطلب</th><th>العميل</th><th>الجوال</th><th>المدينة</th><th>الإجمالي</th><th>التاريخ</th><th>حالة الشحن والتتبع</th><th>إجراء</th></tr></thead>
+        <thead><tr><th>رقم الطلب</th><th>العميل</th><th>الجوال</th><th>المدينة</th><th>طريقة الشحن</th><th>الإجمالي</th><th>التاريخ</th><th>حالة الشحن والتتبع</th><th>إجراء</th></tr></thead>
         <tbody id="tbodyOrders"></tbody>
       </table>
     </div>
@@ -240,6 +264,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </section>
 </main>
 
+<!-- Dialogs -->
 <dialog id="dlgEdit">
   <div class="modal-head"><h3>تعديل الصنف</h3><button onclick="document.getElementById('dlgEdit').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -282,6 +307,19 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <div class="form-grp"><label>الباركود:</label><input type="text" id="n_barcode" value="-"></div>
     </div>
     <button class="btn-gold" style="margin-top:10px;" onclick="saveNewP()"><i class="fa-solid fa-check"></i> حفظ الصنف</button>
+  </div>
+</dialog>
+
+<!-- نافذة إضافة شركة شحن جديدة -->
+<dialog id="dlgNewShipping">
+  <div class="modal-head"><h3>إضافة طريقة شحن جديدة</h3><button onclick="document.getElementById('dlgNewShipping').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
+  <div class="modal-body">
+    <div class="form-grp"><label>اسم الشركة أو طريقة الشحن:</label><input type="text" id="ship_name" placeholder="مثلاً: لافاستا للنقل المبرد"></div>
+    <div class="form-row">
+      <div class="form-grp"><label>التكلفة (ر.س):</label><input type="number" step="0.01" id="ship_cost" placeholder="0"></div>
+      <div class="form-grp"><label>مدة التوصيل التقريبية:</label><input type="text" id="ship_time" placeholder="مثلاً: 1-2 يوم"></div>
+    </div>
+    <button class="btn-gold" style="margin-top:10px;" onclick="saveShippingMethod()"><i class="fa-solid fa-check"></i> حفظ طريقة الشحن سحابياً</button>
   </div>
 </dialog>
 
@@ -334,7 +372,7 @@ const SUPABASE_URL = 'https://ksfrxwdilxmltxckgwad.supabase.co';
 const SUPABASE_KEY = 'Sb_publishable_sPUbi23HorQWkwqP_zEBJQ_GcCp_ttf';
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-var prods=[], offers=[];
+var prods=[], offers=[], shippingMethods=[];
 
 var DEFAULT_APP_USERS = [
   {
@@ -388,6 +426,7 @@ function doLogin(){
     document.getElementById('loginOverlay').style.display = 'none';
     applyPerms();
     loadData();
+    loadShippingMethods();
   } else {
     alert('خطأ في اسم المستخدم أو كلمة المرور!');
   }
@@ -417,6 +456,7 @@ window.onload = function(){
   document.getElementById('loginUser').value = '';
   document.getElementById('loginPass').value = '';
   loadData(); 
+  loadShippingMethods();
   renderUsers(); 
   renderOrders(); 
   renderCustomers();
@@ -640,16 +680,81 @@ async function saveNewP(){
   alert('تمت الإضافة السحابية بنجاح!');
 }
 
+/* --- دوال إدارة شركات وخيارات الشحن السحابية --- */
+async function loadShippingMethods() {
+  try {
+    const { data, error } = await db.from('shipping_methods').select('*').order('id', { ascending: true });
+    const tb = document.getElementById('tbodyShipping');
+    if (!tb) return;
+    tb.innerHTML = '';
+    
+    if (error || !data || !data.length) {
+      tb.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:#888;">لا توجد شركات شحن مضافة بعد.</td></tr>';
+      return;
+    }
+    
+    shippingMethods = data;
+    data.forEach((s, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><b>${i + 1}</b></td>
+        <td><b>${s.name}</b></td>
+        <td><b>${parseFloat(s.cost).toFixed(2)} ر.س</b></td>
+        <td>${s.delivery_time}</td>
+        <td><span class="badge-st ${s.is_active ? 'in' : 'low'}">${s.is_active ? 'مفعل' : 'معطل'}</span></td>
+        <td>
+          <button class="btn-gold" style="padding:3px 8px;font-size:.75rem;" onclick="toggleShippingStatus(${s.id}, ${!s.is_active})">${s.is_active ? 'تعطيل' : 'تفعيل'}</button>
+          <button class="btn-danger" style="padding:3px 6px;" onclick="deleteShippingMethod(${s.id})"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      `;
+      tb.appendChild(tr);
+    });
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+function openNewShippingModal() { document.getElementById('dlgNewShipping').showModal(); }
+
+async function saveShippingMethod() {
+  const name = document.getElementById('ship_name').value.trim();
+  const cost = parseFloat(document.getElementById('ship_cost').value) || 0;
+  const delivery_time = document.getElementById('ship_time').value.trim() || '2-3 أيام';
+  if (!name) return alert('يرجى كتابة اسم شركة الشحن');
+
+  const { error } = await db.from('shipping_methods').insert([{ name, cost, delivery_time, is_active: true }]);
+  if (error) alert('حدث خطأ: ' + error.message);
+  else {
+    document.getElementById('dlgNewShipping').close();
+    document.getElementById('ship_name').value = '';
+    document.getElementById('ship_cost').value = '';
+    loadShippingMethods();
+    alert('تمت إضافة طريقة الشحن سحابياً!');
+  }
+}
+
+async function toggleShippingStatus(id, newStatus) {
+  await db.from('shipping_methods').update({ is_active: newStatus }).eq('id', id);
+  loadShippingMethods();
+}
+
+async function deleteShippingMethod(id) {
+  if (confirm('هل أنت متأكد من حذف طريقة الشحن هذه؟')) {
+    await db.from('shipping_methods').delete().eq('id', id);
+    loadShippingMethods();
+  }
+}
+
 function renderOrders(){
   var tb = document.getElementById('tbodyOrders'); if(!tb) return; tb.innerHTML = '';
   var ords = JSON.parse(localStorage.getItem('qarat_store_orders') || '[]');
   if(!ords.length){
-    tb.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:20px;color:#888;">لا توجد طلبيات بعد.</td></tr>';
+    tb.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:20px;color:#888;">لا توجد طلبيات بعد.</td></tr>';
     return;
   }
   ords.forEach(function(o){
     var tr = document.createElement('tr');
-    tr.innerHTML = '<td><b style="color:var(--gold);">#' + o.orderId + '</b></td><td><b>' + o.customerName + '</b></td><td>' + o.phone + '</td><td>' + (o.city || 'الرياض') + '</td><td><b>' + parseFloat(o.total || 0).toFixed(2) + ' ر.س</b></td><td>' + o.date + '</td><td><select class="status-sel" onchange="updOrd(\'' + o.orderId + '\',this.value)"><option value="received" ' + (o.status === 'received' ? 'selected' : '') + '>1. تم استلام الطلب وتأكيده</option><option value="preparing" ' + (o.status === 'preparing' ? 'selected' : '') + '>2. استلام المستودع والتجهيز</option><option value="shipping" ' + (o.status === 'shipping' ? 'selected' : '') + '>3. خرجت في الطريق مع المندوب</option><option value="delivered" ' + (o.status === 'delivered' ? 'selected' : '') + '>4. تم التسليم للعميل</option></select></td><td><button class="btn-danger" style="padding:3px 6px;" onclick="delOrd(\'' + o.orderId + '\')"><i class="fa-solid fa-trash"></i></button></td>';
+    tr.innerHTML = '<td><b style="color:var(--gold);">#' + o.orderId + '</b></td><td><b>' + o.customerName + '</b></td><td>' + o.phone + '</td><td>' + (o.city || 'الرياض') + '</td><td><span style="background:#f1f5f9;padding:3px 6px;border-radius:4px;font-size:11px;font-weight:bold;">' + (o.shippingMethod || 'افتراضي') + '</span></td><td><b>' + parseFloat(o.total || 0).toFixed(2) + ' ر.س</b></td><td>' + o.date + '</td><td><select class="status-sel" onchange="updOrd(\'' + o.orderId + '\',this.value)"><option value="received" ' + (o.status === 'received' ? 'selected' : '') + '>1. تم استلام الطلب وتأكيده</option><option value="preparing" ' + (o.status === 'preparing' ? 'selected' : '') + '>2. استلام المستودع والتجهيز</option><option value="shipping" ' + (o.status === 'shipping' ? 'selected' : '') + '>3. خرجت في الطريق مع المندوب</option><option value="delivered" ' + (o.status === 'delivered' ? 'selected' : '') + '>4. تم التسليم للعميل</option></select></td><td><button class="btn-danger" style="padding:3px 6px;" onclick="delOrd(\'' + o.orderId + '\')"><i class="fa-solid fa-trash"></i></button></td>';
     tb.appendChild(tr);
   });
 }
@@ -895,6 +1000,7 @@ function switchSec(id, btn){
   document.getElementById(id).style.display = 'block';
   if(btn) btn.classList.add('active');
   if(window.innerWidth <= 768) document.getElementById('sidebarNav').classList.remove('open');
+  if(id === 'sec_shipping') loadShippingMethods();
   if(id === 'sec_orders') renderOrders();
   if(id === 'sec_customers') renderCustomers();
   if(id === 'sec_import') genRaw();
