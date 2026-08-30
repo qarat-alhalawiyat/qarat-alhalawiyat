@@ -125,6 +125,16 @@
     .add-btn:hover { background: var(--primary); }
     .add-btn:disabled, .add-btn.disabled-btn { background: #e2e8f0 !important; color: #94a3b8 !important; cursor: not-allowed !important; }
 
+    /* تبويبات طرق الدفع داخل السلة */
+    .pay-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+    .pay-tab {
+      background: #fff; border: 1.5px solid #dcdfe6; border-radius: 8px; padding: 8px 4px;
+      text-align: center; cursor: pointer; font-size: 11px; font-weight: bold; color: var(--text-dark); transition: 0.2s;
+    }
+    .pay-tab.active { border-color: var(--primary); background: #f5efff; color: var(--primary); }
+    .card-input-grp { display: flex; flex-direction: column; gap: 6px; text-align: right; margin-top: 8px; }
+    .card-input-grp input { padding: 8px; border: 1px solid #ccc; border-radius: 6px; font-size: 12px; font-family: monospace; }
+
     @media (max-width: 600px) {
       .main-container { padding: 0 8px; margin-top: 10px; }
       header { padding: 10px 12px; }
@@ -346,6 +356,7 @@
     let clientGPSLocation = null;
     let clientDistanceKm = 0;
     let customDistanceShippingFee = 0;
+    let selectedPaymentCategory = 'card'; // 'card', 'bank', 'cod'
 
     window.onload = async function() {
       try {
@@ -694,17 +705,26 @@
       );
     }
 
-    function onPaymentMethodChange() {
-      const paySel = document.getElementById('cust_payment');
-      const infoBox = document.getElementById('bankDetailsBox');
-      const selectedOpt = paySel.options[paySel.selectedIndex];
-      const details = selectedOpt.getAttribute('data-details');
+    /* التبديل بين طرق الدفع */
+    function switchPaymentTab(type) {
+      selectedPaymentCategory = type;
+      document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
+      if (type === 'card') document.getElementById('tabPayCard').classList.add('active');
+      if (type === 'bank') document.getElementById('tabPayBank').classList.add('active');
+      if (type === 'cod') document.getElementById('tabPayCod').classList.add('active');
 
+      document.getElementById('payPanelCard').style.display = (type === 'card') ? 'block' : 'none';
+      document.getElementById('payPanelBank').style.display = (type === 'bank') ? 'block' : 'none';
+      document.getElementById('payPanelCod').style.display = (type === 'cod') ? 'block' : 'none';
+    }
+
+    function onBankSelectChange() {
+      const bSel = document.getElementById('bank_select');
+      const infoBox = document.getElementById('bankDetailsBox');
+      const selectedOpt = bSel.options[bSel.selectedIndex];
+      const details = selectedOpt.getAttribute('data-details');
       if (details && details.trim() !== '') {
-        infoBox.style.display = 'block';
-        infoBox.innerHTML = `💳 <b>بيانات الحساب / الدفع:</b><br>${details}`;
-      } else {
-        infoBox.style.display = 'none';
+        infoBox.innerHTML = `💳 <b>بيانات الحساب:</b><br>${details}`;
       }
     }
 
@@ -713,11 +733,11 @@
         return Swal.fire({ icon: 'info', title: 'السلة فارغة', text: 'لم تقم بإضافة أي أصناف إلى السلة بعد.', confirmButtonColor: 'var(--primary)' });
       }
       let itemsTotal = 0;
-      let itemsListHtml = `<div style="text-align: right; max-height: 150px; overflow-y: auto; padding: 5px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 12px;">`;
+      let itemsListHtml = `<div style="text-align: right; max-height: 140px; overflow-y: auto; padding: 5px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 12px;">`;
       cart.forEach((item, cIdx) => {
         let subtotal = item.qty * item.unitPrice; itemsTotal += subtotal;
         itemsListHtml += `
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f1f1; padding: 6px 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f1f1; padding: 5px 0;">
             <div><strong style="font-size: 13px; color: var(--primary);">${item.name}</strong><div style="font-size: 11px; color: #555;">${subtotal.toFixed(2)} ر.س (${item.qty} كرتون)</div></div>
             <div style="display: flex; align-items: center; gap: 6px;">
               <div style="display: flex; align-items: center; background: #eee; border-radius: 6px; padding: 1px 4px;">
@@ -749,42 +769,79 @@
         `;
       }
 
-      let paymentOptionsHtml = '';
+      let bankOptionsHtml = '';
       if (dbPaymentMethods.length > 0) {
-        paymentOptionsHtml = dbPaymentMethods.map((p) => `
+        bankOptionsHtml = dbPaymentMethods.map((p) => `
           <option value="${p.name}" data-details="${p.details || ''}">${p.name}</option>
         `).join('');
       } else {
-        paymentOptionsHtml = `
-          <option value="تحويل بنكي (حساب الراجحي)" data-details="مؤسسة قارة الحلويات | SA0380000000000000000000">تحويل بنكي (حساب الراجحي)</option>
-          <option value="تحويل بنكي (حساب الأهلي SNB)" data-details="مؤسسة قارة الحلويات | SA0410000000000000000000">تحويل بنكي (حساب الأهلي SNB)</option>
-          <option value="الدفع عند الاستلام (شبكة / كاش للمندوب)" data-details="الدفع نقداً أو عبر جهاز مدى عند وصول المندوب">الدفع عند الاستلام (شبكة / كاش)</option>
+        bankOptionsHtml = `
+          <option value="حساب بنك الراجحي" data-details="مؤسسة قارة الحلويات | SA0380000000000000000000">حساب بنك الراجحي</option>
+          <option value="حساب البنك الأهلي SNB" data-details="مؤسسة قارة الحلويات | SA0410000000000000000000">حساب البنك الأهلي SNB</option>
         `;
       }
 
       itemsListHtml += `</div>
         <div style="text-align: right; background: #fdfbf7; border: 1.5px dashed var(--accent); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
           
-          <div style="margin-bottom: 10px;">
-            <button id="btnGetLocation" type="button" onclick="detectUserGPSLocation(${itemsTotal})" style="width:100%; background:var(--primary); color:#fff; border:none; padding:9px; border-radius:8px; font-weight:bold; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+          <div style="margin-bottom: 8px;">
+            <button id="btnGetLocation" type="button" onclick="detectUserGPSLocation(${itemsTotal})" style="width:100%; background:var(--primary); color:#fff; border:none; padding:8px; border-radius:8px; font-weight:bold; font-size:11.5px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
               📍 اضغط لتحديد موقعك بالـ GPS وحساب التوصيل
             </button>
-            <div id="locationStatusBox" style="display:none; background:#e8f5e9; border:1px solid #c8e6c9; color:#2e7d32; font-size:11.5px; padding:8px; border-radius:6px; margin-top:6px; line-height:1.6;"></div>
+            <div id="locationStatusBox" style="display:none; background:#e8f5e9; border:1px solid #c8e6c9; color:#2e7d32; font-size:11px; padding:7px; border-radius:6px; margin-top:6px; line-height:1.5;"></div>
           </div>
 
-          <label style="font-size: 11.5px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 4px;">🚚 طريقة الشحن والتوصيل:</label>
-          <select id="cust_shipping" onchange="updateCartTotalWithShipping(${itemsTotal})" style="width:100%; padding:8px; margin-bottom:8px; border:1.5px solid var(--primary); border-radius:6px; font-size:12px; font-weight:bold; background:#fff;">
+          <label style="font-size: 11px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 3px;">🚚 طريقة الشحن والتوصيل:</label>
+          <select id="cust_shipping" onchange="updateCartTotalWithShipping(${itemsTotal})" style="width:100%; padding:7px; margin-bottom:8px; border:1.5px solid var(--primary); border-radius:6px; font-size:11.5px; font-weight:bold; background:#fff;">
             ${shippingOptionsHtml}
           </select>
 
-          <label style="font-size: 11.5px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 4px;">💳 طريقة الدفع وتحويل القيمة:</label>
-          <select id="cust_payment" onchange="onPaymentMethodChange()" style="width:100%; padding:8px; margin-bottom:6px; border:1.5px solid var(--primary); border-radius:6px; font-size:12px; font-weight:bold; background:#fff;">
-            ${paymentOptionsHtml}
-          </select>
-          <div id="bankDetailsBox" style="background:#f1f5f9; border:1px solid #cbd5e1; color:#334155; font-size:11px; padding:7px; border-radius:6px; margin-bottom:8px; line-height:1.5;"></div>
+          <!-- واجهة الدفع الإلكتروني المباشر بمدى والبطاقات -->
+          <label style="font-size: 11px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 4px;">💳 طريقة الدفع الإلكتروني وتأكيد الطلب:</label>
+          <div class="pay-tabs">
+            <div class="pay-tab active" id="tabPayCard" onclick="switchPaymentTab('card')">
+              💳 مدى / فيزا / Apple Pay
+            </div>
+            <div class="pay-tab" id="tabPayBank" onclick="switchPaymentTab('bank')">
+              🏦 تحويل بنكي
+            </div>
+            <div class="pay-tab" id="tabPayCod" onclick="switchPaymentTab('cod')">
+              💵 كاش / شبكة للمندوب
+            </div>
+          </div>
 
-          <input type="text" id="cust_name" placeholder="اسم المؤسسة / العميل *" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
-          <input type="tel" id="cust_phone" placeholder="رقم الجوال / الواتساب *" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
+          <!-- شاشة الدفع بالبطاقة مدى و فيزا -->
+          <div id="payPanelCard" style="background:#fff; border:1px solid #cbd5e1; padding:10px; border-radius:8px; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span style="font-size:11px; font-weight:bold; color:#333;">بوابة الدفع الآمنة (Mada / Visa)</span>
+              <span style="background:#e0f2fe; color:#0369a1; font-size:9.5px; font-weight:800; padding:2px 6px; border-radius:4px;">تجريبي موثق 🔒</span>
+            </div>
+            <div class="card-input-grp">
+              <input type="text" id="card_holder" placeholder="الاسم المطبوع على البطاقة" value="Maged Samir" />
+              <input type="text" id="card_number" placeholder="رقم بطاقة مدى / فيزا (16 رقم)" value="4111 2222 3333 4444" maxlength="19" />
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
+                <input type="text" id="card_expiry" placeholder="MM/YY" value="08/28" maxlength="5" />
+                <input type="password" id="card_cvv" placeholder="CVV" value="123" maxlength="3" />
+              </div>
+            </div>
+          </div>
+
+          <!-- شاشة التحويل البنكي -->
+          <div id="payPanelBank" style="display:none; background:#fff; border:1px solid #cbd5e1; padding:10px; border-radius:8px; margin-bottom:8px;">
+            <label style="font-size:11px; font-weight:bold; margin-bottom:3px; display:block;">اختر الحساب البنكي:</label>
+            <select id="bank_select" onchange="onBankSelectChange()" style="width:100%; padding:6px; border:1px solid #ccc; border-radius:6px; font-size:11.5px; margin-bottom:6px;">
+              ${bankOptionsHtml}
+            </select>
+            <div id="bankDetailsBox" style="background:#f8fafc; border:1px solid #e2e8f0; color:#334155; font-size:11px; padding:6px; border-radius:6px; line-height:1.5;"></div>
+          </div>
+
+          <!-- شاشة الدفع عند الاستلام -->
+          <div id="payPanelCod" style="display:none; background:#ecfdf5; border:1px solid #a7f3d0; padding:8px; border-radius:8px; margin-bottom:8px; font-size:11px; color:#065f46; font-weight:600;">
+            ✔ يتم الدفع نقداً أو عبر جهاز نقاط البيع (شبكة مدى) مباشرة لمندوب التوصيل أو عند الاستلام من المستودع.
+          </div>
+
+          <input type="text" id="cust_name" placeholder="اسم المؤسسة / العميل *" style="width:100%; padding:8px; margin-bottom:6px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
+          <input type="tel" id="cust_phone" placeholder="رقم الجوال / الواتساب *" style="width:100%; padding:8px; margin-bottom:6px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
           <input type="text" id="cust_city" placeholder="المدينة / الحي / العنوان بالتفصيل" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; background: #faf5ff; padding: 10px; border-radius: 8px;">
@@ -793,11 +850,11 @@
         </div>`;
 
       Swal.fire({
-        title: '🛒 سلة الطلبات وتأكيد الشراء', html: itemsListHtml, showCancelButton: true,
-        confirmButtonText: '📄 إصدار الفاتورة PDF وإرسال الطلب', cancelButtonText: 'متابعة التسوق',
-        confirmButtonColor: '#25D366', cancelButtonColor: '#64748b', width: '530px',
+        title: '🛒 سلة الطلبات والدفع الإلكتروني', html: itemsListHtml, showCancelButton: true,
+        confirmButtonText: '💳 إتمام الدفع وإصدار الفاتورة PDF', cancelButtonText: 'متابعة التسوق',
+        confirmButtonColor: '#10b981', cancelButtonColor: '#64748b', width: '530px',
         didOpen: () => {
-          onPaymentMethodChange();
+          onBankSelectChange();
         }
       }).then(res => {
         if (res.isConfirmed) {
@@ -805,8 +862,6 @@
           const cPhone = document.getElementById('cust_phone').value.trim();
           const cCity = document.getElementById('cust_city').value.trim() || 'الرياض';
           const shipSel = document.getElementById('cust_shipping');
-          const paySel = document.getElementById('cust_payment');
-          const paymentName = paySel.value;
           
           let shipCost = 0;
           let shipName = '';
@@ -819,10 +874,33 @@
             shipName = shipSel.options[shipSel.selectedIndex].getAttribute('data-name');
           }
 
+          let finalPaymentLabel = '';
+          if (selectedPaymentCategory === 'card') {
+            const cardNum = document.getElementById('card_number').value.trim();
+            const last4 = cardNum.slice(-4) || '4444';
+            finalPaymentLabel = `بطاقة مدى / فيزا إلكتروني (منتهية بـ ${last4}) [مدفوع]`;
+          } else if (selectedPaymentCategory === 'bank') {
+            finalPaymentLabel = document.getElementById('bank_select').value;
+          } else {
+            finalPaymentLabel = 'الدفع عند الاستلام (شبكة / كاش)';
+          }
+
           if (!cName || !cPhone) {
             return Swal.fire({ icon: 'error', title: 'بيانات ناقصة', text: 'يرجى كتابة اسم العميل ورقم الجوال.' }).then(() => viewCart());
           }
-          processOrderSubmission(itemsTotal, shipCost, shipName, paymentName, cName, cPhone, cCity);
+
+          // محاكاة معالجة الدفع الآمن
+          Swal.fire({
+            title: '💳 جاري تأكيد الدفع الإلكتروني...',
+            text: 'يرجى الانتظار ثوانٍ للتحقق من العملية وإصدار الفاتورة الضريبية...',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+          });
+
+          setTimeout(() => {
+            Swal.close();
+            processOrderSubmission(itemsTotal, shipCost, shipName, finalPaymentLabel, cName, cPhone, cCity);
+          }, 1200);
         }
       });
     }
@@ -892,6 +970,7 @@
       document.getElementById('pdf_inv_date').textContent = orderDate;
       document.getElementById('pdf_cust_name').textContent = cName;
       document.getElementById('pdf_cust_phone').textContent = cPhone;
+      document.getElementById('pdf_cust_city').textContent = cCity;
       document.getElementById('pdf_cust_shipping').textContent = shipName + ' (' + shipCost.toFixed(2) + ' ر.س)';
       document.getElementById('pdf_cust_payment').textContent = paymentName;
       document.getElementById('pdf_subtotal').textContent = subtotal.toFixed(2) + ' ر.س';
