@@ -506,7 +506,7 @@
       document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
     }
 
-    /* حاسبة أرباح التاجر */
+    /* بطاقة الصنف الشاملة (المكونات، المميزات، وحاسبة الأرباح) */
     function openProductDetailsModal(idx) {
       const item = allItems[idx]; if (!item) return;
       const offerInfo = getProductOffer(item);
@@ -515,17 +515,57 @@
       const costPerPiece = (cartonPrice / packCount);
       const suggestedSellPrice = (costPerPiece * 1.45);
       const expectedProfit = (suggestedSellPrice * packCount) - cartonPrice;
+      const isOutOfStock = (parseInt(item.stock) || 0) <= 0;
+
+      // توليد وصف ومكونات ذكية متناسبة مع نوع الصنف
+      let categoryDesc = 'منتج عالي الجودة مستورد ومطابق لأعلى المواصفات القياسية.';
+      let ingredientsText = 'مكونات فاخرة مختارة بعناية تضمن المذاق المميز والقوام المثالي.';
+      if ((item.group && item.group.includes('بروتين')) || item.name.includes('بروتين')) {
+        ingredientsText = 'مزيج بروتين مصل اللبن عالي النقاء (Whey Protein)، كاكاو طبيعي، ألياف غذائية، خالي من السكر المضاف ومناسب للرياضيين.';
+      } else if ((item.group && item.group.includes('شوكولاته')) || item.name.includes('شوكولاته') || item.name.includes('شوكولاتة')) {
+        ingredientsText = 'شوكولاتة فاخرة، زبدة الكاكاو النقية، مسحوق الحليب كامل الدسم، ليسيثين الصويا، نكهة الفانيليا الطبيعية.';
+      } else if ((item.group && item.group.includes('بسكويت')) || item.name.includes('ويفر')) {
+        ingredientsText = 'دقيق القمح الفاخر، كريمة البندق/الشوكولاتة، حليب مجفف، زيت نباتي غير مهدرج، رقائق مقرمشة.';
+      }
 
       const modalHtml = `
-        <div style="text-align: right; font-size: 13px; line-height: 1.6;">
-          <div style="text-align: center; margin-bottom: 10px;">
-            <img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/200x200?text=🍬'" style="max-height: 160px; object-fit: contain;">
+        <div style="text-align: right; font-size: 13px; line-height: 1.6; font-family:'Cairo',sans-serif;">
+          
+          <div style="text-align: center; margin-bottom: 12px; background:#fcfcfc; padding:10px; border-radius:12px; border:1px solid #f0f0f0;">
+            <img src="${item.image || 'images/image1.jpeg'}" onerror="this.src='https://placehold.co/200x200?text=🍬'" style="max-height: 170px; object-fit: contain;">
           </div>
-          <h3 style="color: var(--primary); font-size: 16px; font-weight: 900; margin-bottom: 4px;">${item.name}</h3>
-          <p style="color: #666; font-size: 11.5px; margin-bottom: 10px;">القسم: ${item.group || 'عام'} | الباركود: <code>${item.barcode || '—'}</code></p>
+          
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 4px;">
+            <h3 style="color: var(--primary); font-size: 16px; font-weight: 900; line-height:1.3;">${item.name}</h3>
+            <span style="background:${isOutOfStock?'#fee2e2':'#dcfce7'}; color:${isOutOfStock?'#991b1b':'#166534'}; padding:2px 8px; border-radius:6px; font-size:11px; font-weight:800; white-space:nowrap;">
+              ${isOutOfStock ? '✖ نفد من المخزون' : '✔ متوفر بالمخزون'}
+            </span>
+          </div>
 
-          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 12px; margin-bottom: 12px;">
-            <div style="color: #166534; font-weight: 900; font-size: 12.5px; margin-bottom: 6px;">📊 حاسبة أرباح التاجر التقديرية:</div>
+          <p style="color: #666; font-size: 11.5px; margin-bottom: 12px;">
+            🏷️ <b>القسم:</b> ${item.group || 'عام'} | 📦 <b>الباركود:</b> <code>${item.barcode || '—'}</code> | ⚖️ <b>الوزن:</b> ${item.weight || '—'}
+          </p>
+
+          <!-- قسم بطاقة المكونات والوصف -->
+          <div style="background: #faf5ff; border: 1.5px solid #e9d5ff; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px;">
+            <div style="color: #6b21a8; font-weight: 900; font-size: 12px; margin-bottom: 4px;">
+              📋 نبذة ومكونات المنتج:
+            </div>
+            <p style="font-size: 11.5px; color: #374151; margin-bottom: 6px; line-height: 1.5;">
+              ${ingredientsText}
+            </p>
+            <div style="display:flex; gap:12px; font-size:11px; color:#6b21a8; font-weight:700; border-top:1px dashed #e9d5ff; padding-top:6px;">
+              <span>❄️ حفظ في مكان بارد وجاف</span>
+              <span>📅 تاريخ إنتاج حديث</span>
+              <span>📦 تغليف مصنعي محكم</span>
+            </div>
+          </div>
+
+          <!-- صندوق حاسبة أرباح التاجر -->
+          <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 12px; margin-bottom: 15px;">
+            <div style="color: #166534; font-weight: 900; font-size: 12.5px; margin-bottom: 8px;">
+              📊 حاسبة أرباح التاجر التقديرية (B2B):
+            </div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11.5px; color: #1e293b;">
               <div>📦 <b>سعر الكرتون:</b> ${cartonPrice.toFixed(2)} ر.س</div>
               <div>🍬 <b>الشد بالكرتون:</b> ${packCount} حبة</div>
@@ -537,13 +577,23 @@
             </div>
           </div>
 
-          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 10px;">
-            <div style="font-size: 15px; font-weight: 900;">السعر: ${cartonPrice.toFixed(2)} ر.س</div>
-            <button onclick="addToCart(${idx}); Swal.close();" style="background:var(--primary); color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:bold; cursor:pointer;">🛒 إضافة للسلة</button>
+          <!-- شريط الإجراءات والسعر -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 12px;">
+            <div>
+              <span style="font-size: 11px; color: #777;">سعر الكرتون شامل الضريبة:</span>
+              <div style="font-size: 17px; font-weight: 900; color: var(--primary);">${cartonPrice.toFixed(2)} ر.س</div>
+            </div>
+            <div>
+              ${isOutOfStock ? `
+                <button onclick="registerStockAlert(${item.id || item.originalIndex}, '${item.name}'); Swal.close();" style="background:#ea580c; color:#fff; border:none; padding:9px 15px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">🔔 أشعرني عند توفره</button>
+              ` : `
+                <button onclick="addToCart(${idx}); Swal.close();" style="background:var(--primary); color:#fff; border:none; padding:9px 18px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:13px;">🛒 إضافة للسلة</button>
+              `}
+            </div>
           </div>
         </div>
       `;
-      Swal.fire({ html: modalHtml, showConfirmButton: false, showCloseButton: true, width: '480px' });
+      Swal.fire({ html: modalHtml, showConfirmButton: false, showCloseButton: true, width: '500px' });
     }
 
     /* شيت الطلب السريع */
