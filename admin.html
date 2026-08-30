@@ -449,7 +449,6 @@ var currentUser = DEFAULT_APP_USERS[0];
 
 function toggleSidebar(){ document.getElementById('sidebarNav').classList.toggle('open'); }
 
-/* دالة ضغط ورفع الصور من الجهاز */
 function handleImageUpload(e, inputId, previewId) {
   const file = e.target.files[0];
   if (!file) return;
@@ -722,6 +721,7 @@ function openNewP(){
   document.getElementById('dlgNewP').showModal(); 
 }
 
+/* التعديل هنا: استخدام push ليأخذ الصنف الجديد آخر تسلسل */
 async function saveNewP(){
   var n = document.getElementById('n_name').value.trim();
   if(!n) return alert('يرجى كتابة اسم الصنف');
@@ -740,13 +740,13 @@ async function saveNewP(){
   const { data } = await db.from('products').insert([newProd]).select();
   if (data && data[0]) newProd.id = data[0].id;
 
-  prods.unshift(newProd);
+  prods.push(newProd); // الإضافة في نهاية الجدول
   saveLocal();
   renderTable(prods);
   updateStats();
   popDropdowns();
   document.getElementById('dlgNewP').close();
-  alert('تمت إضافة الصنف وحفظ الصورة من الجهاز سحابياً بنجاح!');
+  alert('تمت إضافة الصنف في نهاية القائمة بنجاح!');
 }
 
 /* الطلبيات والمانيفست */
