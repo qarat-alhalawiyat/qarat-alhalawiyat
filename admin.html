@@ -308,7 +308,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     </div>
     <div class="form-row">
       <div class="form-grp"><label>الشد بالكرتون:</label><input type="text" id="e_pack"></div>
-      <div class="form-grp"><label>المخزون:</label><input type="number" id="e_stock"></div>
+      <div class="form-grp"><label>المخزون (كرتون):</label><input type="number" id="e_stock"></div>
     </div>
     <div class="form-row">
       <div class="form-grp"><label>السعر شامل الضريبة:</label><input type="number" step="0.01" id="e_price"></div>
@@ -317,7 +317,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <div class="form-grp"><label>مسار / رابط الصورة:</label><input type="text" id="e_img" placeholder="images/image1.jpeg أو رابط صورة"></div>
     <div style="display:flex;justify-content:space-between;margin-top:10px;">
       <button class="btn-danger" id="btnDelP" onclick="delP()"><i class="fa-solid fa-trash"></i> حذف الصنف</button>
-      <button class="btn-gold" onclick="saveP()"><i class="fa-solid fa-check"></i> حفظ التعديلات</button>
+      <button class="btn-gold" onclick="saveP()"><i class="fa-solid fa-check"></i> حفظ التعديلات سحابياً</button>
     </div>
   </div>
 </dialog>
@@ -489,7 +489,8 @@ function loadAllAdminData() {
 
 async function loadData(){
   try {
-    const { data, error } = await db.from('products').select('*').order('id', { ascending: true });
+    // جلب كافة الأصناف دون التقيد بحد الـ 1000
+    const { data, error } = await db.from('products').select('*').range(0, 4999).order('id', { ascending: true });
     if (!error && data && data.length > 0) {
       prods = data.map(item => ({
         ...item,
@@ -507,16 +508,21 @@ async function loadData(){
 }
 
 function fallbackLocalData() {
-  try{
-    var s = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
-    if(s) prods = JSON.parse(s);
-  }catch(e){}
+  var localSaved = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
+  if (localSaved) {
+    try { prods = JSON.parse(localSaved); } catch(e){}
+  }
   if(!prods || !prods.length){
     if(typeof window.STORE_PRODUCTS !== 'undefined' && window.STORE_PRODUCTS.length) prods = window.STORE_PRODUCTS;
     else if(typeof products !== 'undefined' && products.length) prods = products;
   }
   if(!prods) prods = [];
   prods.forEach(function(p){ if(p.stock === undefined) p.stock = 0; });
+}
+
+function saveLocal(){
+  localStorage.setItem('qarat_main_prods', JSON.stringify(prods));
+  localStorage.setItem('qarat_products', JSON.stringify(prods));
 }
 
 function updateStats(){
@@ -535,11 +541,12 @@ function updateStats(){
 function renderTable(list){
   var tb = document.getElementById('tbodyProds'); if(!tb) return; tb.innerHTML = '';
   list.forEach(function(p, idx){
+    var realIdx = prods.indexOf(p);
     var s = p.stock || 0;
-    var img = p.image || ('images/image' + (idx + 1) + '.jpeg');
+    var img = p.image || ('images/image' + (realIdx + 1) + '.jpeg');
     if(!img.startsWith('http') && !img.startsWith('images/')) img = 'images/' + img;
     var tr = document.createElement('tr');
-    tr.innerHTML = '<td><b>' + (idx + 1) + '</b></td><td><img class="p-thumb" src="' + img + '" onerror="this.src=\'https://placehold.co/80x80?text=🍬\'"></td><td><b>' + p.name + '</b></td><td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;">' + (p.group || 'عام') + '</span></td><td>' + (p.weight || '-') + ' | ' + (p.pack || 1) + ' حبة</td><td><span class="badge-st ' + (s <= 3 ? 'low' : 'in') + '">' + s + ' كرتون</span></td><td><b>' + (parseFloat(p.price) || 0).toFixed(2) + ' ر.س</b></td><td><code>' + (p.barcode || '-') + '</code></td><td><button class="btn-gold" style="padding:4px 8px;" onclick="openEdit(' + idx + ')"><i class="fa-solid fa-pen"></i> تعديل</button></td>';
+    tr.innerHTML = '<td><b>' + (realIdx + 1) + '</b></td><td><img class="p-thumb" src="' + img + '" onerror="this.src=\'https://placehold.co/80x80?text=🍬\'"></td><td><b>' + p.name + '</b></td><td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;">' + (p.group || 'عام') + '</span></td><td>' + (p.weight || '-') + ' | ' + (p.pack || 1) + ' حبة</td><td><span class="badge-st ' + (s <= 3 ? 'low' : 'in') + '">' + s + ' كرتون</span></td><td><b>' + (parseFloat(p.price) || 0).toFixed(2) + ' ر.س</b></td><td><code>' + (p.barcode || '-') + '</code></td><td><button class="btn-gold" style="padding:4px 8px;" onclick="openEdit(' + realIdx + ')"><i class="fa-solid fa-pen"></i> تعديل</button></td>';
     tb.appendChild(tr);
   });
 }
@@ -567,13 +574,13 @@ function toggleLow(){
 
 async function fillStock(v){
   prods.forEach(function(p){ p.stock = v; });
+  saveLocal();
   renderTable(prods);
   updateStats();
+  
   for (let p of prods) {
     if (p.id) {
       await db.from('products').update({ stock: v }).eq('id', p.id);
-    } else {
-      await db.from('products').update({ stock: v }).eq('name', p.name);
     }
   }
   alert(v === 0 ? 'تم تصفير المخزون.' : 'تمت التعبئة إلى ' + v);
@@ -605,25 +612,33 @@ async function saveP(){
   p.price = parseFloat(document.getElementById('e_price').value) || 0;
   p.stock = parseInt(document.getElementById('e_stock').value) || 0;
   
+  saveLocal();
   renderTable(prods);
   updateStats();
   popDropdowns();
   document.getElementById('dlgEdit').close();
 
-  const updateData = {
+  const payload = {
     name: p.name, group: p.group, weight: p.weight, pack: p.pack, stock: p.stock, price: p.price, barcode: p.barcode, image: p.image
   };
 
-  if (p.id) {
-    await db.from('products').update(updateData).eq('id', p.id);
-  } else {
-    const { data } = await db.from('products').update(updateData).eq('name', p.name).select();
-    if (data && data[0]) p.id = data[0].id;
-    else {
-      const { data: ins } = await db.from('products').insert([updateData]).select();
-      if (ins && ins[0]) p.id = ins[0].id;
+  try {
+    if (p.id) {
+      await db.from('products').update(payload).eq('id', p.id);
+    } else {
+      // إذا لم يكن الصنف مسجل برقم id سحابي نقوم بالبحث عنه بالاسم أو إدراجه فوراً
+      const { data: existing } = await db.from('products').select('id').eq('name', p.name);
+      if (existing && existing.length > 0) {
+        p.id = existing[0].id;
+        await db.from('products').update(payload).eq('id', p.id);
+      } else {
+        const { data: ins } = await db.from('products').insert([payload]).select();
+        if (ins && ins[0]) p.id = ins[0].id;
+      }
+      saveLocal();
     }
-  }
+  } catch(e) { console.error(e); }
+
   alert('تم الحفظ والتحديث سحابياً بنجاح!');
 }
 
@@ -633,6 +648,7 @@ async function delP(){
     if (p && p.id) await db.from('products').delete().eq('id', p.id);
     else if (p) await db.from('products').delete().eq('name', p.name);
     prods.splice(i, 1);
+    saveLocal();
     renderTable(prods);
     updateStats();
     popDropdowns();
@@ -672,6 +688,7 @@ async function saveNewP(){
   if (data && data[0]) newProd.id = data[0].id;
 
   prods.unshift(newProd);
+  saveLocal();
   renderTable(prods);
   updateStats();
   popDropdowns();
@@ -682,7 +699,7 @@ async function saveNewP(){
 /* الطلبيات والمانيفست */
 async function loadOrders() {
   try {
-    const { data } = await db.from('orders').select('*').order('id', { ascending: false });
+    const { data } = await db.from('orders').select('*').range(0, 1000).order('id', { ascending: false });
     const tb = document.getElementById('tbodyOrders');
     if (!tb) return;
     tb.innerHTML = '';
