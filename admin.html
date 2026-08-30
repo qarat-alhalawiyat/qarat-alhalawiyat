@@ -1,70 +1,282 @@
--- 1. جدول الطلبات السحابي الكامل
-create table if not exists orders (
-  id bigint primary key generated always as identity,
-  order_id text not null unique,
-  customer_name text not null,
-  phone text not null,
-  city text default 'الرياض',
-  shipping_method text default 'مندوب توصيل',
-  shipping_cost numeric default 0,
-  payment_method text default 'تحويل بنكي',
-  gps_map_url text default '',
-  distance_km numeric default 0,
-  total numeric not null default 0,
-  status text default 'received',
-  items jsonb default '[]'::jsonb,
-  created_at timestamp with time zone default timezone('utc'::text, now())
-);
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>لوحة التحكم السحابية المتقدمة | قارة الحلويات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--dark:#2B170D;--mid:#4A2E1B;--gold:#C5A059;--cream:#FAF6F0;--danger:#e11d48;--success:#16a34a;--border:#EBDDCF}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
+body{background:var(--cream);color:#222;display:flex;min-height:100vh;flex-direction:row}
+#loginOverlay{position:fixed;inset:0;background:rgba(43,23,13,.96);z-index:999999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:#fff;width:100%;max-width:360px;padding:25px;border-radius:14px;border:2px solid var(--gold);text-align:center}
+.sidebar{width:260px;background:var(--dark);color:#fff;min-height:100vh;display:flex;flex-direction:column;border-left:3px solid var(--gold);position:fixed;right:0;top:0;bottom:0;z-index:100;}
+.sidebar-brand{padding:1.2rem;text-align:center;border-bottom:1px solid rgba(197,160,89,.2)}
+.sidebar-brand h2{font-size:1.2rem;color:#E5C383;font-weight:900}
+.sidebar-menu{padding:.5rem 0;flex:1;display:flex;flex-direction:column;gap:3px;overflow-y:auto}
+.menu-item{padding:12px 18px;color:#ddd;font-weight:700;font-size:.9rem;display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none}
+.menu-item:hover,.menu-item.active{background:var(--mid);color:#E5C383;border-right:4px solid var(--gold)}
+.main-content{margin-right:260px;flex:1;padding:1.5rem;width:calc(100% - 260px);}
+.content-card{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:1.2rem;box-shadow:0 4px 14px rgba(43,23,13,.06);margin-bottom:1.5rem}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:.8rem}
+.btn-gold{background:var(--dark);color:#E5C383;border:none;padding:8px 14px;border-radius:7px;font-weight:800;cursor:pointer;font-size:.8rem;display:inline-flex;align-items:center;gap:6px}
+.btn-green{background:var(--success);color:#fff;border:none;padding:8px 14px;border-radius:7px;font-weight:800;cursor:pointer;font-size:.8rem;display:inline-flex;align-items:center;gap:6px}
+.btn-danger{background:var(--danger);color:#fff;border:none;padding:8px 14px;border-radius:7px;font-weight:800;cursor:pointer;font-size:.8rem;display:inline-flex;align-items:center;gap:6px}
+.table-wrap{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:10px;max-height:650px}
+table{width:100%;border-collapse:collapse;min-width:850px;text-align:right}
+th{background:#f6ede3;color:var(--dark);padding:10px;font-weight:800;font-size:.85rem;border-bottom:2px solid var(--border);position:sticky;top:0;z-index:5}
+td{padding:10px;border-bottom:1px solid var(--border);font-size:.85rem;vertical-align:middle}
+.badge-st{padding:3px 6px;border-radius:5px;font-weight:800;font-size:.75rem}
+.badge-st.in{background:#dcfce7;color:#166534}
+.badge-st.low{background:#fee2e2;color:#991b1b}
+</style>
+</head>
+<body>
 
--- 2. جدول العملاء السحابي
-create table if not exists customers (
-  id bigint primary key generated always as identity,
-  name text not null,
-  phone text not null unique,
-  city text default 'الرياض',
-  orders_count int default 1,
-  created_at timestamp with time zone default timezone('utc'::text, now())
-);
+<div id="loginOverlay">
+  <div class="login-box">
+    <h2 style="color:var(--dark);margin-bottom:6px;"><i class="fa-solid fa-lock" style="color:var(--gold);"></i> تسجيل الدخول السحابي</h2>
+    <div style="margin-bottom:10px; text-align:right;"><label style="font-size:12px; font-weight:bold;">اسم المستخدم:</label><input type="text" id="loginUser" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" /></div>
+    <div style="margin-bottom:15px; text-align:right;"><label style="font-size:12px; font-weight:bold;">كلمة المرور:</label><input type="password" id="loginPass" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" onkeydown="if(event.key==='Enter')doLogin()" /></div>
+    <button class="btn-gold" style="width:100%; justify-content:center; padding:10px;" onclick="doLogin()">دخول لوحة التحكم</button>
+  </div>
+</div>
 
--- 3. جدول العروض والخصومات السحابي
-create table if not exists offers (
-  id bigint primary key generated always as identity,
-  type text not null,
-  target text not null,
-  percent numeric default 0,
-  old_price numeric default 0,
-  new_price numeric default 0,
-  buy_qty int default 0,
-  free_qty int default 0,
-  label text not null,
-  is_active boolean default true,
-  created_at timestamp with time zone default timezone('utc'::text, now())
-);
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <h2>🍬 قارة الحلويات</h2>
+    <span style="font-size:.75rem;color:#aaa;">الإدارة السحابية المتقدمة ☁️</span>
+  </div>
+  <div class="sidebar-menu">
+    <a class="menu-item active" onclick="switchSec('sec_products',this)"><i class="fa-solid fa-boxes-stacked"></i><span>الأصناف والمخزون</span></a>
+    <a class="menu-item" onclick="switchSec('sec_orders',this)"><i class="fa-solid fa-truck-ramp-box"></i><span>الطلبيات والمانيفست</span></a>
+    <a class="menu-item" onclick="switchSec('sec_reps',this)"><i class="fa-solid fa-users-viewfinder"></i><span>المناديب والعمولات</span></a>
+    <a class="menu-item" onclick="switchSec('sec_alerts',this)"><i class="fa-solid fa-bell"></i><span>تنبيهات النواقص</span></a>
+    <a class="menu-item" onclick="switchSec('sec_customers',this)"><i class="fa-solid fa-address-book"></i><span>العملاء</span></a>
+  </div>
+</aside>
 
--- 4. جدول المستخدمين والصلاحيات السحابي
-create table if not exists app_users (
-  id bigint primary key generated always as identity,
-  username text not null unique,
-  password text not null,
-  role text default 'مستخدم',
-  perms jsonb default '{"add": true, "price": true, "stock": true, "reset": false, "del": false, "offers": false, "xl": false, "mgr": false}'::jsonb,
-  created_at timestamp with time zone default timezone('utc'::text, now())
-);
+<main class="main-content">
+  <!-- الأصناف -->
+  <section id="sec_products" class="content-card">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-list-check" style="color:var(--gold);"></i> إدارة الأصناف والمخزون السحابي</h3>
+      <button class="btn-green" onclick="loadProducts()"><i class="fa-solid fa-rotate"></i> تحديث</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>الصنف</th><th>المجموعة</th><th>الشد</th><th>المخزون (كرتون)</th><th>السعر</th><th>الباركود</th><th>تعديل المخزون</th></tr></thead>
+        <tbody id="tbodyProds"></tbody>
+      </table>
+    </div>
+  </section>
 
--- ضبط صلاحيات الأمان والوصول للجداول
-alter table orders enable row level security;
-alter table customers enable row level security;
-alter table offers enable row level security;
-alter table app_users enable row level security;
+  <!-- الطلبيات ومانيفست الرحلات -->
+  <section id="sec_orders" class="content-card" style="display:none;">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold);"></i> الطلبيات وخط سير سيارات التوزيع</h3>
+      <button class="btn-gold" onclick="generateDeliveryManifest()"><i class="fa-solid fa-route"></i> 🗺️ إنشاء مانيفست الرحلة للمندوب</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>اختيار</th><th>رقم الطلب</th><th>العميل</th><th>الجوال</th><th>المدينة/الموقع</th><th>الإجمالي</th><th>الحالة</th></tr></thead>
+        <tbody id="tbodyOrders"></tbody>
+      </table>
+    </div>
+  </section>
 
-create policy "orders_all_access" on orders for all using (true) with check (true);
-create policy "customers_all_access" on customers for all using (true) with check (true);
-create policy "offers_all_access" on offers for all using (true) with check (true);
-create policy "users_all_access" on app_users for all using (true) with check (true);
+  <!-- المناديب والعمولات -->
+  <section id="sec_reps" class="content-card" style="display:none;">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-users-viewfinder" style="color:var(--gold);"></i> إدارة المناديب والمسوقين والعمولات</h3>
+      <button class="btn-green" onclick="openNewRepModal()"><i class="fa-solid fa-plus"></i> إضافة مندوب جديد</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>اسم المندوب</th><th>كود الخصم</th><th>نسبة العمولة</th><th>إجمالي المبيعات</th><th>العمولة المستحقة</th></tr></thead>
+        <tbody id="tbodyReps"></tbody>
+      </table>
+    </div>
+  </section>
 
--- إضافة المستخدمين الأساسيين إلى السحابة
-insert into app_users (username, password, role, perms) values
-('magedsamir', '101090', 'المدير العام', '{"add": true, "price": true, "stock": true, "reset": true, "del": true, "offers": true, "xl": true, "mgr": true}'::jsonb),
-('maged', '147852', 'المدير العام', '{"add": true, "price": true, "stock": true, "reset": true, "del": true, "offers": true, "xl": true, "mgr": true}'::jsonb),
-('شجاع', '123456', 'مسؤول مستودع', '{"add": true, "price": true, "stock": true, "reset": false, "del": false, "offers": false, "xl": false, "mgr": false}'::jsonb)
-on conflict (username) do nothing;
+  <!-- تنبيهات النواقص -->
+  <section id="sec_alerts" class="content-card" style="display:none;">
+    <div class="card-header">
+      <h3><i class="fa-solid fa-bell" style="color:var(--gold);"></i> العملاء المنتظرين لتوفر النواقص</h3>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>اسم الصنف المطلوب</th><th>جوال العميل</th><th>إجراء</th></tr></thead>
+        <tbody id="tbodyAlerts"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- العملاء -->
+  <section id="sec_customers" class="content-card" style="display:none;">
+    <div class="card-header"><h3><i class="fa-solid fa-address-book" style="color:var(--gold);"></i> قائمة العملاء</h3></div>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>الاسم</th><th>الجوال</th><th>المدينة</th><th>الطلبات</th></tr></thead><tbody id="tbodyCust"></tbody></table></div>
+  </section>
+</main>
+
+<script>
+const SUPABASE_URL = 'https://ksfrxwdilxmltxckgwad.supabase.co';
+const SUPABASE_KEY = 'Sb_publishable_sPUbi23HorQWkwqP_zEBJQ_GcCp_ttf';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+var prods=[], orders=[], reps=[], alertsList=[];
+
+function doLogin(){
+  var u = (document.getElementById('loginUser').value || '').trim();
+  var p = (document.getElementById('loginPass').value || '').trim();
+  if ((u==='magedsamir' && p==='101090') || (u==='maged' && p==='147852')) {
+    document.getElementById('loginOverlay').style.display = 'none';
+    loadAllAdminData();
+  } else { alert('خطأ في بيانات الدخول'); }
+}
+
+function loadAllAdminData() {
+  loadProducts(); loadOrders(); loadReps(); loadAlerts(); loadCustomers();
+}
+
+async function loadProducts() {
+  const { data } = await db.from('products').select('*').order('id', { ascending: true });
+  if (data) {
+    prods = data;
+    document.getElementById('tbodyProds').innerHTML = data.map((p, i) => `
+      <tr>
+        <td>${i+1}</td><td><b>${p.name}</b></td><td>${p.group||'عام'}</td><td>${p.pack||1} حبة</td>
+        <td><span class="badge-st ${(p.stock||0)<=3?'low':'in'}">${p.stock||0} كرتون</span></td>
+        <td><b>${(parseFloat(p.price)||0).toFixed(2)} ر.س</b></td><td><code>${p.barcode||'—'}</code></td>
+        <td><button class="btn-gold" style="padding:3px 8px; font-size:11px;" onclick="quickUpdateStock(${p.id}, ${p.stock||0})">تعديل المخزون</button></td>
+      </tr>
+    `).join('');
+  }
+}
+
+async function quickUpdateStock(id, oldStock) {
+  const { value: newStock } = await Swal.fire({ title: 'تعديل كمية المخزون', input: 'number', inputValue: oldStock, showCancelButton: true });
+  if (newStock !== null) {
+    await db.from('products').update({ stock: parseInt(newStock) }).eq('id', id);
+    loadProducts();
+  }
+}
+
+async function loadOrders() {
+  const { data } = await db.from('orders').select('*').order('id', { ascending: false });
+  if (data) {
+    orders = data;
+    document.getElementById('tbodyOrders').innerHTML = data.map(o => `
+      <tr>
+        <td><input type="checkbox" class="manifest-check" value="${o.order_id}" /></td>
+        <td><b style="color:var(--gold);">#${o.order_id}</b></td>
+        <td><b>${o.customer_name}</b></td><td>${o.phone}</td>
+        <td>${o.city} ${o.gps_map_url ? `<a href="${o.gps_map_url}" target="_blank">🗺️</a>`:''}</td>
+        <td><b>${(parseFloat(o.total)||0).toFixed(2)} ر.س</b></td>
+        <td><span style="background:#e0f2fe; padding:2px 6px; border-radius:4px; font-weight:bold; font-size:11px;">${o.status}</span></td>
+      </tr>
+    `).join('');
+  }
+}
+
+/* 6. توليد مانيفست الرحلة وقائمة تسليم سيارات التوزيع */
+function generateDeliveryManifest() {
+  const selected = Array.from(document.querySelectorAll('.manifest-check:checked')).map(c => c.value);
+  if (!selected.length) return Swal.fire('تنبيه', 'يرجى تحديد طلبية واحدة على الأقل لإنشاء خط السير', 'warning');
+
+  const manifestOrders = orders.filter(o => selected.includes(o.order_id));
+  let totalCash = manifestOrders.reduce((sum, o) => sum + (parseFloat(o.total)||0), 0);
+
+  let printHtml = `
+    <div style="text-align:right; font-family:'Tajawal',sans-serif; padding:15px; direction:rtl;">
+      <h2 style="color:#2B170D; text-align:center; border-bottom:2px solid #C5A059; padding-bottom:8px;">🚚 مانيفست رحلة سيارة التوزيع - قارة الحلويات</h2>
+      <p style="margin-top:10px; font-size:12px;"><b>تاريخ الرحلة:</b> ${new Date().toLocaleDateString('ar-SA')} | <b>عدد الشحنات:</b> ${manifestOrders.length}</p>
+      <table style="width:100%; border-collapse:collapse; margin-top:15px; font-size:12px; text-align:right;" border="1">
+        <thead><tr style="background:#f6ede3;"><th>#</th><th>رقم الطلب</th><th>العميل</th><th>الجوال</th><th>العنوان / اللوكيشن</th><th>المبلغ المطلوب تحصيله</th></tr></thead>
+        <tbody>
+          ${manifestOrders.map((o, i) => `<tr><td>${i+1}</td><td>#${o.order_id}</td><td>${o.customer_name}</td><td>${o.phone}</td><td>${o.city} ${o.gps_map_url?`<a href="${o.gps_map_url}">[خريطة]</a>`:''}</td><td><b>${(parseFloat(o.total)||0).toFixed(2)} ر.س</b></td></tr>`).join('')}
+        </tbody>
+      </table>
+      <div style="margin-top:15px; text-align:left; font-size:14px; font-weight:bold;">إجمالي المبالغ المطلوب تحصيلها: ${totalCash.toFixed(2)} ر.س</div>
+    </div>
+  `;
+
+  const win = window.open('', '_blank');
+  win.document.write(printHtml);
+  win.document.close();
+  win.print();
+}
+
+/* 7. المناديب والعمولات */
+async function loadReps() {
+  const { data } = await db.from('affiliate_reps').select('*').order('id', { ascending: true });
+  if (data) {
+    reps = data;
+    document.getElementById('tbodyReps').innerHTML = data.map((r, i) => `
+      <tr>
+        <td>${i+1}</td><td><b>${r.rep_name}</b></td><td><code style="background:#eee; padding:2px 6px;">${r.rep_code}</code></td>
+        <td>${r.commission_percent}%</td><td><b>${(parseFloat(r.total_sales)||0).toFixed(2)} ر.س</b></td>
+        <td><b style="color:var(--success);">${(parseFloat(r.total_commission)||0).toFixed(2)} ر.س</b></td>
+      </tr>
+    `).join('');
+  }
+}
+
+function openNewRepModal() {
+  Swal.fire({
+    title: 'إضافة مندوب جديد',
+    html: `
+      <input type="text" id="r_name" placeholder="اسم المندوب" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px;" />
+      <input type="text" id="r_code" placeholder="كود الخصم (مثلاً REP30)" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; text-transform:uppercase;" />
+      <input type="number" id="r_comm" placeholder="نسبة العمولة (%) مثلاً 3" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;" />
+    `,
+    confirmButtonText: 'حفظ سحابياً',
+    showCancelButton: true
+  }).then(async res => {
+    if (res.isConfirmed) {
+      const name = document.getElementById('r_name').value.trim();
+      const code = document.getElementById('r_code').value.trim().toUpperCase();
+      const comm = parseFloat(document.getElementById('r_comm').value) || 2.5;
+      if (name && code) {
+        await db.from('affiliate_reps').insert([{ rep_name: name, rep_code: code, commission_percent: comm }]);
+        loadReps();
+      }
+    }
+  });
+}
+
+/* تنبيهات النواقص */
+async function loadAlerts() {
+  const { data } = await db.from('stock_alerts').select('*').order('id', { ascending: false });
+  if (data) {
+    alertsList = data;
+    document.getElementById('tbodyAlerts').innerHTML = data.map((a, i) => `
+      <tr>
+        <td>${i+1}</td><td><b>${a.product_name}</b></td><td>${a.phone}</td>
+        <td><a href="https://api.whatsapp.com/send?phone=${a.phone}&text=${encodeURIComponent('مرحباً بك من قارة الحلويات، تم توفير الصنف الذي طلبته: ' + a.product_name)}" target="_blank" style="background:#25D366; color:#fff; padding:3px 8px; border-radius:4px; text-decoration:none; font-size:11px; font-weight:bold;">💬 إشعار واتساب</a></td>
+      </tr>
+    `).join('');
+  }
+}
+
+async function loadCustomers() {
+  const { data } = await db.from('customers').select('*').order('orders_count', { ascending: false });
+  if (data) {
+    document.getElementById('tbodyCust').innerHTML = data.map((c, i) => `
+      <tr><td>${i+1}</td><td><b>${c.name}</b></td><td>${c.phone}</td><td>${c.city}</td><td>${c.orders_count} طلبات</td></tr>
+    `).join('');
+  }
+}
+
+function switchSec(id, btn){
+  document.querySelectorAll('.main-content > section').forEach(s => s.style.display = 'none');
+  document.querySelectorAll('.sidebar-menu .menu-item').forEach(m => m.classList.remove('active'));
+  document.getElementById(id).style.display = 'block';
+  if(btn) btn.classList.add('active');
+}
+</script>
+</body>
+</html>
