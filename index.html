@@ -125,7 +125,7 @@
     .add-btn:hover { background: var(--primary); }
     .add-btn:disabled, .add-btn.disabled-btn { background: #e2e8f0 !important; color: #94a3b8 !important; cursor: not-allowed !important; }
 
-    /* تبويبات طرق الدفع داخل السلة */
+    /* تبويبات الدفع */
     .pay-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
     .pay-tab {
       background: #fff; border: 1.5px solid #dcdfe6; border-radius: 8px; padding: 8px 4px;
@@ -348,7 +348,7 @@
     let currentFilter = 'all';
     let selectedCategory = '';
     let cart = JSON.parse(localStorage.getItem('qarat_cart')) || [];
-    let offersList = JSON.parse(localStorage.getItem('qarat_offers')) || (typeof activeOffers !== 'undefined' ? activeOffers : []);
+    let offersList = [];
     let allItems = [];
     let dbShippingMethods = [];
     let dbPaymentMethods = [];
@@ -356,9 +356,10 @@
     let clientGPSLocation = null;
     let clientDistanceKm = 0;
     let customDistanceShippingFee = 0;
-    let selectedPaymentCategory = 'card'; // 'card', 'bank', 'cod'
+    let selectedPaymentCategory = 'card';
 
     window.onload = async function() {
+      // 1. جلب الأصناف سحابياً
       try {
         const { data, error } = await db.from('products').select('*').order('id', { ascending: true });
         if (!error && data && data.length > 0) {
@@ -368,37 +369,31 @@
             stock: parseInt(item.stock) || 0
           }));
         }
-      } catch (e) {
-        console.error("خطأ في جلب الأصناف:", e);
-      }
+      } catch (e) { console.error("خطأ في جلب الأصناف:", e); }
 
+      // 2. جلب العروض سحابياً
+      try {
+        const { data: oData, error: oErr } = await db.from('offers').select('*').eq('is_active', true);
+        if (!oErr && oData) offersList = oData;
+      } catch (e) { console.error("خطأ في جلب العروض:", e); }
+
+      // 3. جلب شركات الشحن سحابياً
       try {
         const { data: sData, error: sErr } = await db.from('shipping_methods').select('*').eq('is_active', true).order('id', { ascending: true });
-        if (!sErr && sData && sData.length > 0) {
-          dbShippingMethods = sData;
-        }
-      } catch (e) {
-        console.error("خطأ في جلب شركات الشحن:", e);
-      }
+        if (!sErr && sData && sData.length > 0) dbShippingMethods = sData;
+      } catch (e) { console.error("خطأ في جلب شركات الشحن:", e); }
 
+      // 4. جلب طرق الدفع سحابياً
       try {
         const { data: pData, error: pErr } = await db.from('payment_methods').select('*').eq('is_active', true).order('id', { ascending: true });
-        if (!pErr && pData && pData.length > 0) {
-          dbPaymentMethods = pData;
-        }
-      } catch (e) {
-        console.error("خطأ في جلب طرق الدفع:", e);
-      }
+        if (!pErr && pData && pData.length > 0) dbPaymentMethods = pData;
+      } catch (e) { console.error("خطأ في جلب طرق الدفع:", e); }
 
       if (allItems.length === 0) {
         const savedProducts = localStorage.getItem('qarat_products') || localStorage.getItem('qarat_main_prods');
-        if (savedProducts) {
-          allItems = JSON.parse(savedProducts);
-        } else if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) {
-          allItems = window.STORE_PRODUCTS;
-        } else if (typeof products !== 'undefined') {
-          allItems = [...products];
-        }
+        if (savedProducts) allItems = JSON.parse(savedProducts);
+        else if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) allItems = window.STORE_PRODUCTS;
+        else if (typeof products !== 'undefined') allItems = [...products];
       }
 
       document.getElementById('totalItemsCount').innerText = `(${allItems.length})`;
@@ -479,7 +474,7 @@
           `;
           offerBadge = `<div class="offer-tag">خصم ${offerInfo.discountPercent}%</div>`;
         } else if (offerInfo.bxgy) {
-          offerBadge = `<div class="offer-tag">اشترِ ${offerInfo.bxgy.buyQty} + ${offerInfo.bxgy.freeQty} مجاناً</div>`;
+          offerBadge = `<div class="offer-tag">اشترِ ${offerInfo.bxgy.buy_qty || offerInfo.bxgy.buyQty} + ${offerInfo.bxgy.free_qty || offerInfo.bxgy.freeQty} مجاناً</div>`;
         }
 
         const stockCount = item.stock !== undefined ? parseInt(item.stock) : 0;
@@ -527,8 +522,17 @@
       const bxgy = offersList.find(o => o.type === 'bxgy' && o.target === p.name);
       
       const disc = pDisc || gDisc;
-      if (disc) { res.hasDiscount = true; res.discountPercent = disc.percent; res.finalPrice = priceVal * (1 - disc.percent / 100); }
-      else if (pCut) { res.hasDiscount = true; res.finalPrice = pCut.newPrice; res.discountPercent = Math.round((1 - pCut.newPrice / pCut.oldPrice) * 100); }
+      if (disc) { 
+        res.hasDiscount = true; 
+        res.discountPercent = disc.percent; 
+        res.finalPrice = priceVal * (1 - disc.percent / 100); 
+      }
+      else if (pCut) { 
+        res.hasDiscount = true; 
+        res.finalPrice = parseFloat(pCut.new_price || pCut.newPrice); 
+        const oldP = parseFloat(pCut.old_price || pCut.oldPrice);
+        res.discountPercent = Math.round((1 - res.finalPrice / oldP) * 100); 
+      }
       if (bxgy) res.bxgy = bxgy;
       return res;
     }
@@ -705,7 +709,6 @@
       );
     }
 
-    /* التبديل بين طرق الدفع */
     function switchPaymentTab(type) {
       selectedPaymentCategory = type;
       document.querySelectorAll('.pay-tab').forEach(t => t.classList.remove('active'));
@@ -889,10 +892,9 @@
             return Swal.fire({ icon: 'error', title: 'بيانات ناقصة', text: 'يرجى كتابة اسم العميل ورقم الجوال.' }).then(() => viewCart());
           }
 
-          // محاكاة معالجة الدفع الآمن
           Swal.fire({
-            title: '💳 جاري تأكيد الدفع الإلكتروني...',
-            text: 'يرجى الانتظار ثوانٍ للتحقق من العملية وإصدار الفاتورة الضريبية...',
+            title: '💳 جاري تأكيد الطلب وحفظه سحابياً...',
+            text: 'يرجى الانتظار ثوانٍ لإصدار الفاتورة الضريبية ZATCA...',
             allowOutsideClick: false,
             didOpen: () => { Swal.showLoading(); }
           });
@@ -938,31 +940,58 @@
       return btoa(String.fromCharCode.apply(null, result));
     }
 
-    function processOrderSubmission(itemsTotal, shipCost, shipName, paymentName, cName, cPhone, cCity) {
+    /* معالجة الطلب وحفظه في Supabase وخصم المخزون سحابياً */
+    async function processOrderSubmission(itemsTotal, shipCost, shipName, paymentName, cName, cPhone, cCity) {
       const orderId = 'QAR-' + Math.floor(1000 + Math.random() * 9000);
       const orderDate = new Date().toLocaleDateString('ar-SA') + ' ' + new Date().toLocaleTimeString('ar-SA');
       const grandTotal = itemsTotal + shipCost;
 
-      const newOrder = { 
-        orderId, 
-        customerName: cName, 
+      const orderPayload = { 
+        order_id: orderId, 
+        customer_name: cName, 
         phone: cPhone, 
         city: cCity, 
-        shippingMethod: shipName,
-        shippingCost: shipCost,
-        paymentMethod: paymentName,
-        gpsMapUrl: clientGPSLocation ? clientGPSLocation.mapUrl : '',
-        distanceKm: clientDistanceKm,
+        shipping_method: shipName,
+        shipping_cost: shipCost,
+        payment_method: paymentName,
+        gps_map_url: clientGPSLocation ? clientGPSLocation.mapUrl : '',
+        distance_km: clientDistanceKm,
         total: grandTotal, 
-        date: orderDate, 
         status: 'received', 
-        items: [...cart] 
+        items: cart 
       };
       
-      let existingOrders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
-      existingOrders.unshift(newOrder);
-      localStorage.setItem('qarat_store_orders', JSON.stringify(existingOrders));
+      // 1. حفظ الطلب في جدول orders السحابي
+      try {
+        await db.from('orders').insert([orderPayload]);
+      } catch (e) { console.error("خطأ حفظ الطلب:", e); }
 
+      // 2. تحديث / إضافة العميل في جدول customers السحابي
+      try {
+        const { data: custData } = await db.from('customers').select('*').eq('phone', cPhone);
+        if (custData && custData.length > 0) {
+          await db.from('customers').update({ 
+            name: cName, 
+            city: cCity, 
+            orders_count: (custData[0].orders_count || 1) + 1 
+          }).eq('phone', cPhone);
+        } else {
+          await db.from('customers').insert([{ name: cName, phone: cPhone, city: cCity, orders_count: 1 }]);
+        }
+      } catch (e) { console.error("خطأ تحديث العميل:", e); }
+
+      // 3. خصم المخزون التلقائي من قاعدة البيانات لكل صنف
+      try {
+        for (const item of cart) {
+          if (item.id) {
+            const currentStock = parseInt(item.stock) || 0;
+            const newStock = Math.max(0, currentStock - (parseInt(item.qty) || 1));
+            await db.from('products').update({ stock: newStock }).eq('id', item.id);
+          }
+        }
+      } catch (e) { console.error("خطأ خصم المخزون:", e); }
+
+      // 4. توليد الفاتورة PDF
       const vat = grandTotal * 0.15;
       const subtotal = grandTotal - vat;
 
@@ -1012,7 +1041,6 @@
       });
 
       let locationText = clientGPSLocation ? `\n📍 موقع التسليم GPS:\n${clientGPSLocation.mapUrl}` : '';
-
       let msg = `*🧾 طلبية جديدة - قارة الحلويات التجارية* 🍬\n📄 رقم الفاتورة: #${orderId}\n👤 العميل: ${cName}\n📱 الجوال: ${cPhone}\n📍 المدينة/الحي: ${cCity}${locationText}\n🚚 طريقة التوصيل: ${shipName} (${shipCost.toFixed(2)} ر.س)\n💳 طريقة الدفع: ${paymentName}\n💰 الإجمالي شامل الضريبة والتوصيل: ${grandTotal.toFixed(2)} ر.س`;
       
       cart = []; 
@@ -1025,19 +1053,29 @@
       window.open(`https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    function openOrderTracker() {
+    /* تتبع الطلب سحابياً برقم الفاتورة */
+    async function openOrderTracker() {
       Swal.fire({
         title: '📍 تتبع حالة الطلبية',
         html: `<input type="text" id="track_order_id" placeholder="مثال: QAR-8492" style="width: 100%; padding: 10px; border: 1.5px solid var(--primary); border-radius: 8px; text-align: center; font-weight:bold;" />`,
         showCancelButton: true, confirmButtonText: '🔍 تتبع الآن', cancelButtonText: 'إغلاق', confirmButtonColor: 'var(--primary)'
-      }).then(res => {
+      }).then(async (res) => {
         if (res.isConfirmed) {
           const inputId = document.getElementById('track_order_id').value.trim().toUpperCase().replace('#', '');
           if (!inputId) return;
-          const allOrders = JSON.parse(localStorage.getItem('qarat_store_orders')) || [];
-          const found = allOrders.find(o => o.orderId.toUpperCase() === inputId);
-          if (found) displayTrackResult(found);
-          else Swal.fire('غير موجود', 'رقم الطلب غير صحيح', 'error');
+          
+          Swal.fire({ title: 'جاري البحث عن الطلب...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+          
+          try {
+            const { data, error } = await db.from('orders').select('*').ilike('order_id', inputId);
+            if (!error && data && data.length > 0) {
+              displayTrackResult(data[0]);
+            } else {
+              Swal.fire('غير موجود', 'رقم الطلب غير مسجل في السحابة', 'error');
+            }
+          } catch (e) {
+            Swal.fire('خطأ', 'تعذر الاتصال بالسحابة', 'error');
+          }
         }
       });
     }
@@ -1045,14 +1083,14 @@
     function displayTrackResult(order) {
       let s2 = '⏳ 2. استلام المستودع', s3 = '⏳ 3. مع المندوب', s4 = '⏳ 4. تم التسليم';
       if (['preparing', 'shipping', 'delivered'].includes(order.status)) s2 = '✔ 2. جاري التجهيز بالمستودع';
-      if (['shipping', 'delivered'].includes(order.status)) s3 = '✔ 3. خرجت في الطريق (' + (order.shippingMethod || 'مندوب') + ')';
+      if (['shipping', 'delivered'].includes(order.status)) s3 = '✔ 3. خرجت في الطريق (' + (order.shipping_method || 'مندوب') + ')';
       if (order.status === 'delivered') s4 = '✔ 4. تم التسليم للعميل';
       
-      let locLink = order.gpsMapUrl ? `<p style="margin-top:6px;"><a href="${order.gpsMapUrl}" target="_blank" style="color:var(--primary); font-weight:bold; font-size:12px;">🗺️ موقع التسليم على الخريطة</a></p>` : '';
+      let locLink = order.gps_map_url ? `<p style="margin-top:6px;"><a href="${order.gps_map_url}" target="_blank" style="color:var(--primary); font-weight:bold; font-size:12px;">🗺️ موقع التسليم على الخريطة</a></p>` : '';
 
       Swal.fire({
-        title: `📦 حالة الطلب #${order.orderId}`,
-        html: `<div style="text-align:right; background:#faf5ff; padding:15px; border-radius:10px;"><p><b>العميل:</b> ${order.customerName}</p><p><b>طريقة التوصيل:</b> ${order.shippingMethod || 'افتراضي'}</p><p><b>طريقة الدفع:</b> ${order.paymentMethod || 'تحويل بنكي'}</p>${locLink}<hr style="margin:10px 0;"><div>✔ 1. تم استلام الطلب<br>${s2}<br>${s3}<br>${s4}</div></div>`,
+        title: `📦 حالة الطلب #${order.order_id}`,
+        html: `<div style="text-align:right; background:#faf5ff; padding:15px; border-radius:10px;"><p><b>العميل:</b> ${order.customer_name}</p><p><b>طريقة التوصيل:</b> ${order.shipping_method || 'افتراضي'}</p><p><b>طريقة الدفع:</b> ${order.payment_method || 'تحويل بنكي'}</p>${locLink}<hr style="margin:10px 0;"><div>✔ 1. تم استلام الطلب<br>${s2}<br>${s3}<br>${s4}</div></div>`,
         confirmButtonColor: 'var(--primary)'
       });
     }
