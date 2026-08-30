@@ -100,7 +100,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <h2>🍬 قارة الحلويات</h2>
       <button onclick="toggleSidebar()" style="display:none;background:none;border:none;color:#fff;font-size:1.3rem;" class="mobile-close-btn">&times;</button>
     </div>
-    <span style="font-size:.75rem;color:#aaa;">الإدارة العامة</span>
+    <span style="font-size:.75rem;color:#aaa;">الإدارة العامة السحابية ☁️</span>
   </div>
   <div class="user-badge">
     <div><b id="currentUserName" style="color:#E5C383;">المدير العام</b><br><span id="currentUserRole" style="font-size:.7rem;color:#aaa;">صلاحيات كاملة</span></div>
@@ -281,7 +281,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   <!-- إدارة المستخدمين -->
   <section id="sec_users" class="content-card" style="display:none;">
     <div class="card-header">
-      <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين والصلاحيات</h3>
+      <h3><i class="fa-solid fa-users-gear" style="color:var(--gold);"></i> إدارة المستخدمين والصلاحيات (سحابياً)</h3>
       <button class="btn-green" onclick="openNewU()"><i class="fa-solid fa-user-plus"></i> إضافة مستخدم جديد</button>
     </div>
     <div class="table-wrap">
@@ -322,7 +322,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
-<!-- نافذة إضافة صنف جديد (مع استعراض المجموعات والصورة) -->
 <dialog id="dlgNewP">
   <div class="modal-head"><h3>إضافة صنف جديد</h3><button onclick="document.getElementById('dlgNewP').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -383,7 +382,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 </dialog>
 
 <dialog id="dlgNewU">
-  <div class="modal-head"><h3>إضافة مستخدم جديد</h3><button onclick="document.getElementById('dlgNewU').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
+  <div class="modal-head"><h3>إضافة مستخدم سحابي جديد</h3><button onclick="document.getElementById('dlgNewU').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
     <div class="form-row">
       <div class="form-grp"><label>اسم المستخدم:</label><input type="text" id="nu_name"></div>
@@ -401,7 +400,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
         <label class="perm-lbl"><input type="checkbox" id="p_mgr"> إدارة المستخدمين</label>
       </div>
     </div>
-    <button class="btn-gold" style="margin-top:10px;" onclick="saveNewU()"><i class="fa-solid fa-check"></i> حفظ المستخدم</button>
+    <button class="btn-gold" style="margin-top:10px;" onclick="saveNewU()"><i class="fa-solid fa-check"></i> حفظ المستخدم سحابياً</button>
   </div>
 </dialog>
 
@@ -411,7 +410,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <input type="hidden" id="eu_id">
     <div class="form-grp"><label>اسم المستخدم الجديد:</label><input type="text" id="eu_name"></div>
     <div class="form-grp"><label>كلمة المرور الجديدة:</label><input type="text" id="eu_pass"></div>
-    <button class="btn-gold" style="margin-top:10px;" onclick="saveUserEdit()"><i class="fa-solid fa-check"></i> حفظ البيانات الجديدة</button>
+    <button class="btn-gold" style="margin-top:10px;" onclick="saveUserEdit()"><i class="fa-solid fa-check"></i> حفظ البيانات سحابياً</button>
   </div>
 </dialog>
 
@@ -421,7 +420,7 @@ const SUPABASE_URL = 'https://ksfrxwdilxmltxckgwad.supabase.co';
 const SUPABASE_KEY = 'Sb_publishable_sPUbi23HorQWkwqP_zEBJQ_GcCp_ttf';
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-var prods=[], ordersList=[], repsList=[], alertsList=[], customersList=[], offersList=[], shippingMethods=[], paymentMethods=[];
+var prods=[], ordersList=[], repsList=[], alertsList=[], customersList=[], offersList=[], shippingMethods=[], paymentMethods=[], appUsersList=[];
 
 var DEFAULT_APP_USERS = [
   { id: 'root', user: 'magedsamir', pass: '101090', role: 'المدير العام', perms: { add: true, price: true, stock: true, reset: true, del: true, offers: true, xl: true, mgr: true } },
@@ -429,27 +428,29 @@ var DEFAULT_APP_USERS = [
   { id: 'u_shojaa', user: 'شجاع', pass: '123456', role: 'مسؤول مستودع', perms: { add: true, price: true, stock: true, reset: false, del: false, offers: false, xl: false, mgr: false } }
 ];
 
-function getAppUsers() {
-  var stored = JSON.parse(localStorage.getItem('qarat_users_list') || '[]');
-  DEFAULT_APP_USERS.forEach(function(defU) {
-    var exists = stored.find(function(s) { return s.user.toLowerCase() === defU.user.toLowerCase(); });
-    if (!exists) { stored.push(defU); }
-  });
-  return stored;
-}
-
-var allUsers = getAppUsers();
-var currentUser = allUsers[0];
+var currentUser = DEFAULT_APP_USERS[0];
 
 function toggleSidebar(){ document.getElementById('sidebarNav').classList.toggle('open'); }
 
-function doLogin(){
+/* تسجيل دخول سحابي مع دعم محلي للطوارئ */
+async function doLogin(){
   var u = (document.getElementById('loginUser').value || '').trim();
   var p = (document.getElementById('loginPass').value || '').trim();
-  var list = getAppUsers();
-  var match = list.find(x => x.user.toLowerCase() === u.toLowerCase() && String(x.pass) === String(p));
-  if (match) {
-    currentUser = match;
+  
+  try {
+    const { data, error } = await db.from('app_users').select('*').ilike('username', u).eq('password', p);
+    if (!error && data && data.length > 0) {
+      currentUser = { id: data[0].id, user: data[0].username, pass: data[0].password, role: data[0].role, perms: data[0].perms };
+      document.getElementById('loginOverlay').style.display = 'none';
+      applyPerms();
+      loadAllAdminData();
+      return;
+    }
+  } catch(e) {}
+
+  var defMatch = DEFAULT_APP_USERS.find(x => x.user.toLowerCase() === u.toLowerCase() && String(x.pass) === String(p));
+  if (defMatch) {
+    currentUser = defMatch;
     document.getElementById('loginOverlay').style.display = 'none';
     applyPerms();
     loadAllAdminData();
@@ -954,13 +955,26 @@ async function saveNewCustomerManually() {
   loadCustomers();
 }
 
-/* المستخدمين والصلاحيات */
-function loadUsers() {
+/* المستخدمين والصلاحيات (سحابي بالكامل) */
+async function loadUsers() {
   const tb = document.getElementById('tbodyUsers');
   if (!tb) return;
   tb.innerHTML = '';
-  const users = getAppUsers();
-  users.forEach((u, i) => {
+  
+  let usersToDisplay = [];
+  try {
+    const { data, error } = await db.from('app_users').select('*').order('id', { ascending: true });
+    if (!error && data && data.length > 0) {
+      usersToDisplay = data.map(u => ({ id: u.id, user: u.username, pass: u.password, role: u.role, perms: u.perms }));
+    }
+  } catch(e) {}
+
+  if (usersToDisplay.length === 0) {
+    usersToDisplay = DEFAULT_APP_USERS;
+  }
+
+  appUsersList = usersToDisplay;
+  usersToDisplay.forEach((u, i) => {
     var isMgr = u.perms && u.perms.mgr;
     tb.innerHTML += `
       <tr>
@@ -970,7 +984,7 @@ function loadUsers() {
         <td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;font-size:11px;">${isMgr ? 'المدير العام (كاملة)' : (u.role || 'مستخدم')}</span></td>
         <td>
           <button class="btn-gold" style="padding:2px 8px;font-size:11px;" onclick="openEditUserModal('${u.id}')"><i class="fa-solid fa-user-pen"></i> تعديل</button>
-          ${u.id !== 'root' ? `<button class="btn-danger" style="padding:2px 6px;font-size:11px;" onclick="delU('${u.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
+          ${u.user !== 'magedsamir' ? `<button class="btn-danger" style="padding:2px 6px;font-size:11px;" onclick="delU('${u.id}')"><i class="fa-solid fa-trash"></i></button>` : ''}
         </td>
       </tr>
     `;
@@ -978,8 +992,7 @@ function loadUsers() {
 }
 
 function openEditUserModal(id){
-  var all = getAppUsers();
-  var target = all.find(x => x.id === id);
+  var target = appUsersList.find(x => String(x.id) === String(id));
   if(!target) return;
   document.getElementById('eu_id').value = target.id;
   document.getElementById('eu_name').value = target.user;
@@ -987,58 +1000,68 @@ function openEditUserModal(id){
   document.getElementById('dlgEditUser').showModal();
 }
 
-function saveUserEdit(){
+async function saveUserEdit(){
   var id = document.getElementById('eu_id').value;
   var newU = document.getElementById('eu_name').value.trim();
   var newP = document.getElementById('eu_pass').value.trim();
   if(!newU || !newP) return alert('اكتب اسم المستخدم وكلمة المرور');
   
-  var list = getAppUsers();
-  var target = list.find(x => x.id === id);
-  if(target){
-    target.user = newU;
-    target.pass = newP;
-    localStorage.setItem('qarat_users_list', JSON.stringify(list));
-    loadUsers();
-    document.getElementById('dlgEditUser').close();
-    alert('تم تعديل بيانات المستخدم بنجاح!');
+  try {
+    if (!isNaN(id)) {
+      await db.from('app_users').update({ username: newU, password: newP }).eq('id', id);
+    } else {
+      await db.from('app_users').insert([{ username: newU, password: newP, role: 'المدير العام', perms: { add: true, price: true, stock: true, reset: true, del: true, offers: true, xl: true, mgr: true } }]);
+    }
+  } catch(e) {}
+
+  if (currentUser.id == id || currentUser.user == newU) {
+    currentUser.user = newU;
+    currentUser.pass = newP;
+    applyPerms();
   }
+  loadUsers();
+  document.getElementById('dlgEditUser').close();
+  alert('تم تعديل بيانات المستخدم سحابياً بنجاح!');
 }
 
 function openNewU() { document.getElementById('dlgNewU').showModal(); }
 
-function saveNewU() {
+async function saveNewU() {
   var un = (document.getElementById('nu_name').value || '').trim();
   var pw = (document.getElementById('nu_pass').value || '').trim();
   if(!un || !pw) return alert('اكتب الاسم وكلمة المرور');
   
-  var uList = getAppUsers();
-  uList.push({
-    id: 'u_' + Date.now(),
-    user: un,
-    pass: pw,
-    role: document.getElementById('p_mgr').checked ? 'المدير العام' : 'مستخدم',
-    perms: {
-      add: document.getElementById('p_add').checked,
-      price: document.getElementById('p_price').checked,
-      stock: document.getElementById('p_stock').checked,
-      reset: document.getElementById('p_reset').checked,
-      del: document.getElementById('p_del').checked,
-      offers: document.getElementById('p_offers').checked,
-      xl: document.getElementById('p_xl').checked,
-      mgr: document.getElementById('p_mgr').checked
-    }
-  });
-  localStorage.setItem('qarat_users_list', JSON.stringify(uList));
-  loadUsers();
-  document.getElementById('dlgNewU').close();
-  alert('تم حفظ المستخدم بنجاح!');
+  const perms = {
+    add: document.getElementById('p_add').checked,
+    price: document.getElementById('p_price').checked,
+    stock: document.getElementById('p_stock').checked,
+    reset: document.getElementById('p_reset').checked,
+    del: document.getElementById('p_del').checked,
+    offers: document.getElementById('p_offers').checked,
+    xl: document.getElementById('p_xl').checked,
+    mgr: document.getElementById('p_mgr').checked
+  };
+
+  const { error } = await db.from('app_users').insert([{
+    username: un,
+    password: pw,
+    role: perms.mgr ? 'المدير العام' : 'مستخدم',
+    perms: perms
+  }]);
+
+  if (error) alert('حدث خطأ: ' + error.message);
+  else {
+    loadUsers();
+    document.getElementById('dlgNewU').close();
+    alert('تم حفظ المستخدم سحابياً بنجاح!');
+  }
 }
 
-function delU(id) {
-  if (confirm('حذف المستخدم؟')) {
-    var uList = getAppUsers().filter(x => String(x.id) !== String(id));
-    localStorage.setItem('qarat_users_list', JSON.stringify(uList));
+async function delU(id) {
+  if (confirm('حذف المستخدم نهائياً من السحابة؟')) {
+    if (!isNaN(id)) {
+      await db.from('app_users').delete().eq('id', id);
+    }
     loadUsers();
   }
 }
