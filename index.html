@@ -506,14 +506,14 @@
       document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
     }
 
-    /* بطاقة الصنف الشاملة (المكونات، المميزات، وحاسبة الأرباح بهامش 25%) */
+    /* بطاقة الصنف الشاملة (المكونات، المميزات، وحاسبة الأرباح) */
     function openProductDetailsModal(idx) {
       const item = allItems[idx]; if (!item) return;
       const offerInfo = getProductOffer(item);
       const cartonPrice = offerInfo.hasDiscount ? offerInfo.finalPrice : (parseFloat(item.price) || 0);
       const packCount = parseInt(item.pack) || 12;
       const costPerPiece = (cartonPrice / packCount);
-      const suggestedSellPrice = (costPerPiece * 1.25); // تطبيق نسبة هامش الربح 25%
+      const suggestedSellPrice = (costPerPiece * 1.25);
       const expectedProfit = (suggestedSellPrice * packCount) - cartonPrice;
       const isOutOfStock = (parseInt(item.stock) || 0) <= 0;
 
@@ -569,7 +569,7 @@
               <div>💰 <b>سعر البيع المقترح:</b> ${suggestedSellPrice.toFixed(2)} ر.س</div>
             </div>
             <div style="margin-top: 8px; padding-top: 6px; border-top: 1px dashed #86efac; color: #15803d; font-weight: 800; font-size: 12px;">
-              ✨ صافي ربحك المتوقع بالكرتون: +${expectedProfit.toFixed(2)} ر.س (~25%)
+              ✨ صافي ربحك المتوقع بالكرتون: +${expectedProfit.toFixed(2)} ر.س (ربح 25%)
             </div>
           </div>
 
