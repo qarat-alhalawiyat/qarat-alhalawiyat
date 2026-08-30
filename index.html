@@ -24,21 +24,32 @@
       --danger: #ef4444;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
-    body { background-color: var(--bg); color: var(--text-dark); }
+    body { background-color: var(--bg); color: var(--text-dark); padding-bottom: 0; }
 
     .top-announcement { background: #2b0f47; color: #ffd166; text-align: center; padding: 7px 15px; font-size: 13px; font-weight: 700; }
 
     header {
-      background: #fff; border-bottom: 1px solid var(--border); padding: 12px 25px;
+      background: #fff; border-bottom: 1px solid var(--border); padding: 10px 25px;
       display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03); gap: 15px;
     }
-    .brand-area { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .brand-area { display: flex; align-items: center; gap: 10px; cursor: pointer; flex-shrink: 0; }
     .brand-icon { background: #ede7f6; padding: 8px 10px; border-radius: 12px; font-size: 20px; }
     .brand-text h1 { font-size: 18px; font-weight: 900; color: var(--primary); }
     .brand-text span { font-size: 10px; color: var(--text-muted); }
 
-    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    /* استغلال منتصف الهيدر بشريط البحث الاحترافي */
+    .header-center-search {
+      flex: 1; max-width: 480px; position: relative; margin: 0 10px;
+    }
+    .header-center-search input {
+      width: 100%; padding: 10px 20px; padding-right: 40px; border-radius: 25px;
+      border: 1.5px solid #dcdfe6; font-size: 13px; outline: none; background: #fdfbf7; transition: border 0.2s;
+    }
+    .header-center-search input:focus { border-color: var(--primary); background: #fff; }
+    .header-center-search .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888; font-size: 14px; }
+
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .btn-action-head {
       background: #fff; color: var(--primary); border: 1.5px solid var(--primary);
       padding: 7px 12px; border-radius: 20px; font-weight: 700; cursor: pointer; font-size: 12px;
@@ -53,28 +64,36 @@
     }
     .cart-badge { background: var(--accent); color: white; border-radius: 50%; padding: 2px 7px; font-size: 11px; }
 
-    .main-container { max-width: 1250px; margin: 15px auto 40px; padding: 0 15px; }
-
-    .search-wrapper { margin-bottom: 15px; position: relative; }
-    .search-input {
-      width: 100%; padding: 12px 20px; padding-right: 42px; border-radius: 30px;
-      border: 1px solid #dcdfe6; font-size: 14px; outline: none; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-    }
-    .search-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: #999; }
+    .main-container { max-width: 1250px; margin: 20px auto 40px; padding: 0 15px; }
 
     .filters-nav { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
     .filter-btn {
-      background: #fff; border: 1px solid #dcdfe6; color: var(--text-dark); padding: 7px 14px;
-      border-radius: 25px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px;
+      background: #fff; border: 1px solid #dcdfe6; color: var(--text-dark); padding: 8px 15px;
+      border-radius: 25px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: 0.2s;
     }
     .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+    /* القائمة المنسدلة للتصنيفات */
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-btn {
+      background: #fff; border: 1px solid #dcdfe6; color: var(--text-dark); padding: 8px 15px;
+      border-radius: 25px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px;
+    }
+    .dropdown-menu {
+      display: none; position: absolute; top: 115%; right: 0; background: #fff; min-width: 220px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12); border-radius: 12px; border: 1px solid var(--border); z-index: 50; padding: 6px 0; max-height: 320px; overflow-y: auto;
+    }
+    .dropdown.show .dropdown-menu { display: block; }
+    .dropdown-item { padding: 9px 15px; display: flex; justify-content: space-between; align-items: center; color: var(--text-dark); text-decoration: none; font-size: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .dropdown-item:hover { background: #f5efff; color: var(--primary); }
+    .dropdown-count { background: #ede7f6; color: var(--primary); font-size: 10px; padding: 2px 7px; border-radius: 10px; font-weight: 700; }
 
     .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
     .product-card {
       background: #fff; border-radius: 14px; border: 1px solid var(--border); padding: 14px;
-      display: flex; flex-direction: column; position: relative; transition: transform 0.2s;
+      display: flex; flex-direction: column; position: relative; transition: transform 0.2s, box-shadow 0.2s;
     }
-    .product-card:hover { transform: translateY(-3px); }
+    .product-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.06); }
     .product-img-wrap {
       width: 100%; height: 170px; display: flex; align-items: center; justify-content: center;
       background: #fdfdfd; border-radius: 10px; overflow: hidden; margin-bottom: 10px; position: relative; cursor: pointer;
@@ -112,37 +131,53 @@
     .add-btn:hover { background: var(--primary); }
     .btn-notify-stock { background: #ea580c; color: #fff; border: none; border-radius: 8px; font-size: 11.5px; font-weight: bold; width: 100%; padding: 6px; cursor: pointer; }
 
-    /* تبويبات الدفع */
-    .pay-tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
-    .pay-tab {
-      background: #fff; border: 1.5px solid #dcdfe6; border-radius: 8px; padding: 7px 4px;
-      text-align: center; cursor: pointer; font-size: 11px; font-weight: bold;
-    }
-    .pay-tab.active { border-color: var(--primary); background: #f5efff; color: var(--primary); }
-
-    /* جدول شيت الطلب السريع */
+    /* شيت الطلب السريع */
     .quick-sheet-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; }
     .quick-sheet-table th { background: var(--primary); color: #fff; padding: 8px; font-weight: 800; }
     .quick-sheet-table td { padding: 8px; border-bottom: 1px solid #eee; vertical-align: middle; }
     .quick-sheet-input { width: 60px; padding: 5px; text-align: center; border: 1.5px solid #ccc; border-radius: 6px; font-weight: bold; }
 
+    /* قالب الفاتورة الضريبية ZATCA */
     #pdfInvoiceTemplate {
       display: none; background: #ffffff; width: 210mm; min-height: 297mm; padding: 15mm;
       color: #111111; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right;
     }
-    .inv-header { display: flex; justify-content: space-between; border-bottom: 3px solid #4a1d75; padding-bottom: 15px; margin-bottom: 20px; }
-    .inv-company-info h2 { color: #4a1d75; font-size: 20px; font-weight: 900; }
+    .inv-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #4a1d75; padding-bottom: 15px; margin-bottom: 20px; }
+    .inv-company-info h2 { color: #4a1d75; font-size: 20px; font-weight: 900; margin-bottom: 4px; }
+    .inv-company-info p { font-size: 11px; color: #555; line-height: 1.5; }
     .inv-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; text-align: right; font-size: 11.5px; }
-    .inv-table th { background: #4a1d75; color: #ffffff; padding: 8px; border: 1px solid #4a1d75; text-align: center; }
-    .inv-table td { padding: 8px; border: 1px solid #dcdfe6; text-align: center; }
+    .inv-table th { background: #4a1d75; color: #ffffff; padding: 9px 8px; font-weight: 800; border: 1px solid #4a1d75; text-align: center; }
+    .inv-table td { padding: 8px; border: 1.5px solid #dcdfe6; text-align: center; }
 
-    footer { background: linear-gradient(135deg, #1f0b35, #2b0f47); color: #e2e8f0; padding: 35px 15px 20px; margin-top: 40px; border-top: 3px solid var(--accent); }
-    .footer-container { max-width: 1250px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+    /* فوتر المتجر المتكامل والشامل */
+    footer {
+      background: linear-gradient(135deg, #1f0b35, #2b0f47); color: #e2e8f0; padding: 40px 15px 20px;
+      border-top: 3px solid var(--accent); margin-top: 40px;
+    }
+    .footer-container { max-width: 1250px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; padding-bottom: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+    .footer-col h4 { color: #ffd166; font-size: 15px; font-weight: 800; margin-bottom: 15px; position: relative; }
+    .footer-col h4::after { content: ''; position: absolute; bottom: -5px; right: 0; width: 30px; height: 2px; background: var(--accent); }
+    .footer-col p { font-size: 12px; line-height: 1.7; color: #cbd5e1; }
+    .footer-links { list-style: none; padding: 0; }
+    .footer-links li { margin-bottom: 8px; }
+    .footer-links a, .footer-links button { color: #cbd5e1; text-decoration: none; font-size: 12px; background: none; border: none; cursor: pointer; font-family: inherit; padding: 0; transition: color 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+    .footer-links a:hover, .footer-links button:hover { color: #ffd166; }
+    .footer-contact-item { display: flex; align-items: center; gap: 8px; font-size: 12px; margin-bottom: 10px; color: #cbd5e1; }
+    .vat-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.08); padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.15); margin-top: 8px; font-size: 11px; }
+    .footer-bottom { max-width: 1250px; margin: 15px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 11px; color: #94a3b8; }
+
+    @media (max-width: 800px) {
+      header { flex-direction: column; gap: 10px; }
+      .header-center-search { width: 100%; max-width: 100%; margin: 5px 0; }
+      .header-actions { width: 100%; justify-content: space-between; overflow-x: auto; }
+    }
   </style>
 </head>
 <body>
 
-  <div class="top-announcement">✨ شركة قارة الحلويات التجارية - عروض حصرية على أسعار الجملة للكرتون</div>
+  <div class="top-announcement">
+    ✨ شركة قارة الحلويات التجارية - عروض حصرية على أسعار الجملة للكرتون
+  </div>
 
   <header>
     <div class="brand-area" onclick="location.reload()">
@@ -151,6 +186,12 @@
         <h1>قارة الحلويات</h1>
         <span>QARAT AL-HALAWIYAT</span>
       </div>
+    </div>
+
+    <!-- شريط البحث في منتصف الهيدر لاستغلال المساحة -->
+    <div class="header-center-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchInput" placeholder="ابحث باسم الصنف، الباركود، أو القسم..." onkeyup="handleSearch()" />
     </div>
 
     <div class="header-actions">
@@ -162,15 +203,16 @@
   </header>
 
   <div class="main-container">
-    <div class="search-wrapper">
-      <span class="search-icon">🔍</span>
-      <input type="text" id="searchInput" class="search-input" placeholder="ابحث باسم الصنف أو امسح الباركود..." onkeyup="handleSearch()" />
-    </div>
-
     <div class="filters-nav">
       <button id="btnAll" class="filter-btn active" onclick="setFilter('all')">📦 جميع الأصناف <span id="totalItemsCount">(0)</span></button>
       <button id="btnBestseller" class="filter-btn" onclick="setFilter('bestseller')">🔥 الأكثر مبيعاً</button>
       <button id="btnOffers" class="filter-btn" onclick="setFilter('offers')">🏷️ العروض والتخفيضات</button>
+      
+      <!-- قائمة التصنيفات المنسدلة -->
+      <div class="dropdown" id="categoryDropdown">
+        <button class="dropdown-btn" onclick="toggleDropdown(event)">📂 التصنيفات <span style="font-size: 9px;">▼</span></button>
+        <div class="dropdown-menu" id="dropdownMenuList"></div>
+      </div>
     </div>
 
     <div class="products-grid" id="productsGrid"></div>
@@ -181,44 +223,88 @@
     <div class="inv-header">
       <div class="inv-company-info">
         <h2>شركة قارة الحلويات التجارية</h2>
-        <p>الرياض - حي المصانع - مستودع رقم 72 | الرقم الضريبي: <b>312473488800003</b></p>
+        <p>المملكة العربية السعودية - الرياض - العزيزية - حي المصانع - مستودع رقم 72</p>
+        <p>الرقم الضريبي: <b>312473488800003</b> | السجل التجاري: 1010000000</p>
       </div>
       <div>
-        <h3 style="color:#ff7a00;">فاتورة مبيعات ضريبية</h3>
+        <h3 style="color:#ff7a00; font-size:18px; font-weight:900;">فاتورة مبيعات ضريبية</h3>
         <p>رقم الفاتورة: <b id="pdf_inv_id" style="color:#4a1d75;">#QAR-0000</b></p>
-        <p>التاريخ: <span id="pdf_inv_date"></span></p>
+        <p>تاريخ الإصدار: <span id="pdf_inv_date"></span></p>
       </div>
     </div>
-    <div style="background:#f8f6fc; padding:10px; border-radius:6px; margin-bottom:15px; font-size:12px;">
-      <p><b>العميل:</b> <span id="pdf_cust_name"></span> | <b>الجوال:</b> <span id="pdf_cust_phone"></span> | <b>العنوان:</b> <span id="pdf_cust_city"></span></p>
-      <p><b>التوصيل:</b> <span id="pdf_cust_shipping"></span> | <b>طريقة الدفع:</b> <span id="pdf_cust_payment"></span></p>
+
+    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; background:#f8f6fc; border:1.5px solid #ebdcfc; padding:10px; border-radius:6px; margin-bottom:15px; font-size:11.5px;">
+      <div>
+        <p><b>اسم العميل / المؤسسة:</b> <span id="pdf_cust_name"></span></p>
+        <p><b>رقم الجوال:</b> <span id="pdf_cust_phone"></span></p>
+      </div>
+      <div>
+        <p><b>المدينة / العنوان:</b> <span id="pdf_cust_city"></span></p>
+        <p><b>طريقة التوصيل:</b> <span id="pdf_cust_shipping"></span></p>
+      </div>
     </div>
+
     <table class="inv-table">
       <thead>
-        <tr><th>#</th><th>الباركود</th><th>اسم الصنف</th><th>الكمية</th><th>سعر الكرتون</th><th>الإجمالي</th></tr>
+        <tr><th style="width:5%;">#</th><th style="width:22%;">الباركود</th><th style="width:33%;">اسم الصنف</th><th style="width:10%;">الكمية</th><th style="width:15%;">سعر الكرتون</th><th style="width:15%;">الإجمالي</th></tr>
       </thead>
       <tbody id="pdf_items_tbody"></tbody>
     </table>
+
     <div style="display:flex; justify-content:space-between; align-items:center; border-top:2px solid #ddd; padding-top:15px;">
-      <div id="qrcodeContainer" style="width:84px; height:84px;"></div>
-      <div style="text-align:right; font-size:13px; font-weight:bold; line-height:1.7;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div id="qrcodeContainer" style="width:84px; height:84px; background:#fff; padding:2px; border:1px solid #ccc; border-radius:6px;"></div>
+        <div style="font-size:11px; color:#555; line-height:1.5;">
+          <b>فاتورة إلكترونية معتمدة</b><br>
+          شركة قارة الحلويات التجارية<br>
+          مطابقة لاشتراطات هيئة الزكاة والضريبة والجمارك (ZATCA)
+        </div>
+      </div>
+      <div style="text-align:right; font-size:12.5px; font-weight:bold; line-height:1.6; background:#faf5ff; border:1.5px solid #4a1d75; padding:10px 14px; border-radius:8px; min-width:240px;">
+        <div>المجموع الخاضع للضريبة: <span id="pdf_subtotal">0.00</span> ر.س</div>
         <div>رسوم التوصيل: <span id="pdf_ship_fee">0.00</span> ر.س</div>
         <div>ضريبة القيمة المضافة (15%): <span id="pdf_vat">0.00</span> ر.س</div>
-        <div style="font-size:16px; color:#4a1d75; font-weight:900; border-top:1px dashed #4a1d75; margin-top:4px;">الإجمالي النهائي: <span id="pdf_total_val">0.00</span> ر.س</div>
+        <div style="font-size:15px; color:#4a1d75; font-weight:900; border-top:1px dashed #4a1d75; margin-top:4px; padding-top:4px;">الإجمالي النهائي: <span id="pdf_total_val">0.00</span> ر.س</div>
       </div>
     </div>
   </div>
 
+  <!-- الفوتر المتكامل والشامل -->
   <footer>
     <div class="footer-container">
-      <div>
-        <h4 style="color:#ffd166; margin-bottom:10px;">🍬 شركة قارة الحلويات</h4>
-        <p style="font-size:12px; line-height:1.6;">توريد وتوزيع الحلويات والشوكولاتة والبروتين المستورد بأسعار الجملة للكرتون.</p>
+      <div class="footer-col">
+        <h4>🍬 شركة قارة الحلويات التجارية</h4>
+        <p>وجهتك الأولى لتوريد أجود أنواع الحلويات والشوكولاتة ومنتجات البروتين المستوردة بأسعار الجملة التنافسية للكرتون.</p>
+        <div class="vat-badge"><span>🧾 الرقم الضريبي: <b>312473488800003</b></span></div>
       </div>
-      <div>
-        <h4 style="color:#ffd166; margin-bottom:10px;">📞 المبيعات والتواصل</h4>
-        <p style="font-size:12px;">الرياض - العزيزية - حي المصانع</p>
-        <p style="font-size:12px;">واتساب: 0578384009</p>
+      <div class="footer-col">
+        <h4>🔗 روابط تهمك</h4>
+        <ul class="footer-links">
+          <li><a href="javascript:void(0)" onclick="setFilter('all')">📦 جميع المنتجات</a></li>
+          <li><a href="javascript:void(0)" onclick="setFilter('bestseller')">🔥 الأكثر طلباً ومبيعاً</a></li>
+          <li><a href="javascript:void(0)" onclick="setFilter('offers')">🏷️ عروض وتخفيضات الكرتون</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>🛡️ السياسات والخدمات</h4>
+        <ul class="footer-links">
+          <li><button onclick="showPolicy('returns')">🔄 سياسة الاسترجاع والاستبدال</button></li>
+          <li><button onclick="showPolicy('shipping')">🚚 الشحن والتوصيل المبرد</button></li>
+          <li><button onclick="showPolicy('wholesale')">💼 طلبات الجملة والتوريد</button></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>📞 تواصل معنا</h4>
+        <div class="footer-contact-item"><span>📍</span><span>المملكة العربية السعودية - الرياض - العزيزية - حي المصانع - مستودع رقم 72</span></div>
+        <div class="footer-contact-item"><span>📱</span><button onclick="openContactOptions()" style="color:#ffd166; font-weight:bold; cursor:pointer; text-decoration:underline; background:none; border:none; padding:0; font-family:inherit; font-size:12.5px;">واتساب / اتصال المبيعات: 0578384009</button></div>
+        <div class="footer-contact-item"><span>✉️</span><span>info@qarat-alhalawiyat.com</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>جميع الحقوق محفوظة © 2026 شركة قارة الحلويات التجارية</div>
+      <div style="display: flex; gap: 6px; align-items: center;">
+        <span>جميع الأسعار تشمل ضريبة القيمة المضافة</span>
+        <span style="background: #fff; color: #1f0b35; padding: 2px 5px; border-radius: 4px; font-weight: 800; font-size: 9px;">15% VAT</span>
       </div>
     </div>
   </footer>
@@ -233,6 +319,7 @@
     const WAREHOUSE_LNG = 46.7830;
 
     let currentFilter = 'all';
+    let selectedCategory = '';
     let cart = JSON.parse(localStorage.getItem('qarat_cart')) || [];
     let offersList = [];
     let allItems = [];
@@ -269,16 +356,44 @@
       if (allItems.length === 0 && typeof window.STORE_PRODUCTS !== 'undefined') allItems = window.STORE_PRODUCTS;
       
       document.getElementById('totalItemsCount').innerText = `(${allItems.length})`;
+      buildCategoriesMenu();
       renderProducts();
       updateCartBadge();
     };
 
+    function toggleDropdown(e) { e.stopPropagation(); document.getElementById('categoryDropdown').classList.toggle('show'); }
+    window.onclick = function() { document.getElementById('categoryDropdown').classList.remove('show'); };
+
+    function buildCategoriesMenu() {
+      const menu = document.getElementById('dropdownMenuList');
+      if (!menu) return;
+      const groupCounts = {};
+      allItems.forEach(p => {
+        const g = (p.group && p.group.trim() !== '') ? p.group.trim() : 'عام';
+        groupCounts[g] = (groupCounts[g] || 0) + 1;
+      });
+      menu.innerHTML = Object.entries(groupCounts).map(([groupName, count]) => `
+        <div class="dropdown-item" onclick="filterByCategory('${groupName}')">
+          <span>🏷️ ${groupName}</span>
+          <span class="dropdown-count">${count}</span>
+        </div>
+      `).join('');
+    }
+
     function setFilter(type) {
-      currentFilter = type;
+      currentFilter = type; selectedCategory = '';
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.dropdown-btn').style.borderColor = '#dcdfe6';
       if (type === 'all') document.getElementById('btnAll').classList.add('active');
       if (type === 'bestseller') document.getElementById('btnBestseller').classList.add('active');
       if (type === 'offers') document.getElementById('btnOffers').classList.add('active');
+      renderProducts();
+    }
+
+    function filterByCategory(cat) {
+      currentFilter = 'category'; selectedCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.dropdown-btn').style.borderColor = 'var(--primary)';
       renderProducts();
     }
 
@@ -294,6 +409,7 @@
       }
       if (currentFilter === 'bestseller') filtered = filtered.filter((_, idx) => idx % 3 === 0);
       else if (currentFilter === 'offers') filtered = filtered.filter(p => hasOffer(p));
+      else if (currentFilter === 'category' && selectedCategory) filtered = filtered.filter(p => ((p.group && p.group.trim() !== '') ? p.group.trim() : 'عام') === selectedCategory);
 
       grid.innerHTML = filtered.map(item => {
         const offerInfo = getProductOffer(item);
@@ -374,14 +490,14 @@
       document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
     }
 
-    /* 1. حاسبة أرباح التاجر التلقائية في نافذة الصنف */
+    /* حاسبة أرباح التاجر */
     function openProductDetailsModal(idx) {
       const item = allItems[idx]; if (!item) return;
       const offerInfo = getProductOffer(item);
       const cartonPrice = offerInfo.hasDiscount ? offerInfo.finalPrice : (parseFloat(item.price) || 0);
       const packCount = parseInt(item.pack) || 12;
       const costPerPiece = (cartonPrice / packCount);
-      const suggestedSellPrice = (costPerPiece * 1.45); // هامش 45% مقترح
+      const suggestedSellPrice = (costPerPiece * 1.45);
       const expectedProfit = (suggestedSellPrice * packCount) - cartonPrice;
 
       const modalHtml = `
@@ -392,7 +508,6 @@
           <h3 style="color: var(--primary); font-size: 16px; font-weight: 900; margin-bottom: 4px;">${item.name}</h3>
           <p style="color: #666; font-size: 11.5px; margin-bottom: 10px;">القسم: ${item.group || 'عام'} | الباركود: <code>${item.barcode || '—'}</code></p>
 
-          <!-- صندوق حاسبة أرباح التاجر -->
           <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 12px; margin-bottom: 12px;">
             <div style="color: #166534; font-weight: 900; font-size: 12.5px; margin-bottom: 6px;">📊 حاسبة أرباح التاجر التقديرية:</div>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11.5px; color: #1e293b;">
@@ -415,16 +530,14 @@
       Swal.fire({ html: modalHtml, showConfirmButton: false, showCloseButton: true, width: '480px' });
     }
 
-    /* 2. وضع جدول وشيت الطلب السريع (Quick B2B Order Sheet) */
+    /* شيت الطلب السريع */
     function openQuickOrderSheet() {
       let rows = allItems.map((p, i) => `
         <tr>
           <td><b style="color:var(--primary);">${p.name}</b><br><small style="color:#666;">${p.barcode || '—'}</small></td>
           <td><b>${(parseFloat(p.price)||0).toFixed(2)}</b> ر.س</td>
           <td>${p.pack || '—'} حبة</td>
-          <td>
-            <input type="number" min="0" id="qs_qty_${i}" class="quick-sheet-input" placeholder="0" />
-          </td>
+          <td><input type="number" min="0" id="qs_qty_${i}" class="quick-sheet-input" placeholder="0" /></td>
         </tr>
       `).join('');
 
@@ -456,7 +569,7 @@
       });
     }
 
-    /* 3. إعادة الطلب بنقرة واحدة (1-Click Re-order) */
+    /* تكرار آخر طلبية */
     function openReorderModal() {
       Swal.fire({
         title: '🔁 تكرار طلبيتي السابقة',
@@ -478,20 +591,20 @@
               cart = prev.items;
               localStorage.setItem('qarat_cart', JSON.stringify(cart));
               updateCartBadge();
-              Swal.fire('تم جلب الطلبية', `تم استرجاع (${cart.length}) أصناف من آخر طلب لك وإضافتها للسلة بنجاح!`, 'success').then(() => viewCart());
+              Swal.fire('تم جلب الطلبية', `تم استرجاع (${cart.length}) أصناف وإضافتها للسلة!`, 'success').then(() => viewCart());
             }
           } else {
-            Swal.fire('لم يتم العثور على طلبات', 'لا يوجد طلبات سابقة مسجلة بهذا الرقم.', 'info');
+            Swal.fire('لم يتم العثور على طلبات', 'لا يوجد طلبات مسجلة بهذا الرقم.', 'info');
           }
         }
       });
     }
 
-    /* 4. تنبيهات توفر المخزون (Back in Stock Alert) */
+    /* تنبيهات النواقص */
     function registerStockAlert(pId, pName) {
       Swal.fire({
         title: '🔔 أشعرني عند توفر الصنف',
-        html: `<p style="font-size:12px; color:#555; margin-bottom:10px;">سيصلك إشعار واتساب فور وصول كراتين جديدة من (${pName}):</p>
+        html: `<p style="font-size:12px; color:#555; margin-bottom:10px;">سيصلك إشعار واتساب فور توفر كراتين جديدة من (${pName}):</p>
                <input type="tel" id="alert_phone" placeholder="05xxxxxxxx" style="width:100%; padding:10px; border:1.5px solid var(--primary); border-radius:8px; text-align:center; font-weight:bold;" />`,
         confirmButtonText: 'تسجيل التنبيه',
         confirmButtonColor: 'var(--accent)',
@@ -502,19 +615,19 @@
           const phone = document.getElementById('alert_phone').value.trim();
           if (!phone) return;
           await db.from('stock_alerts').insert([{ product_id: pId, product_name: pName, phone: phone }]);
-          Swal.fire('تم التسجيل بنجاح', 'سنقوم بإشعارك تلقائياً عبر الواتساب فور تعبئة المخزون.', 'success');
+          Swal.fire('تم التسجيل بنجاح', 'سنقوم بإشعارك عبر الواتساب فور تعبئة المخزون.', 'success');
         }
       });
     }
 
-    /* 5. التحقق من كود المندوب والعمولة */
+    /* كود المندوب */
     async function applyRepCode() {
       const code = document.getElementById('rep_code_input').value.trim().toUpperCase();
       if (!code) return;
       const { data } = await db.from('affiliate_reps').select('*').eq('rep_code', code);
       if (data && data.length > 0) {
         appliedRepCode = code;
-        appliedRepDiscount = 5; // خصم تشجيعي 5 ر.س للعميل
+        appliedRepDiscount = 5;
         document.getElementById('repCodeStatus').innerHTML = `✔ تم تفعيل كود المندوب: <b>${data[0].rep_name}</b>`;
         document.getElementById('repCodeStatus').style.color = '#15803d';
       } else {
@@ -523,7 +636,7 @@
       }
     }
 
-    /* عرض السلة والدفع وحساب GPS */
+    /* السلة والدفع */
     function viewCart() {
       if (cart.length === 0) return Swal.fire('السلة فارغة', 'أضف منتجات إلى السلة أولاً', 'info');
       let itemsTotal = cart.reduce((sum, item) => sum + (item.qty * item.unitPrice), 0);
@@ -543,17 +656,13 @@
         html: `
           <div style="text-align:right; max-height:140px; overflow-y:auto; margin-bottom:10px; border:1px solid #eee; padding:6px; border-radius:8px;">${itemsHtml}</div>
           <div style="text-align:right; background:#fdfbf7; border:1.5px dashed var(--accent); padding:10px; border-radius:8px; font-size:12px;">
-            
-            <!-- كود المندوب -->
             <div style="display:flex; gap:6px; margin-bottom:8px;">
               <input type="text" id="rep_code_input" placeholder="كود المندوب / الخصم (اختياري)" style="flex:1; padding:6px; border:1px solid #ccc; border-radius:6px; text-transform:uppercase;" />
               <button onclick="applyRepCode()" style="background:var(--primary); color:#fff; border:none; padding:0 10px; border-radius:6px; font-weight:bold; cursor:pointer;">تطبيق</button>
             </div>
             <div id="repCodeStatus" style="font-size:11px; margin-bottom:8px;"></div>
-
             <button type="button" onclick="detectGPS(${itemsTotal})" style="width:100%; background:var(--primary); color:#fff; border:none; padding:8px; border-radius:6px; font-weight:bold; cursor:pointer; margin-bottom:6px;">📍 تحديد موقعي عبر GPS لحساب التوصيل</button>
             <div id="gpsBox" style="display:none; background:#e8f5e9; color:#2e7d32; padding:6px; border-radius:6px; margin-bottom:6px;"></div>
-
             <input type="text" id="c_name" placeholder="اسم المؤسسة / العميل *" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-bottom:6px;" />
             <input type="tel" id="c_phone" placeholder="رقم الجوال / الواتساب *" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px; margin-bottom:6px;" />
             <input type="text" id="c_city" placeholder="المدينة / الحي / العنوان" style="width:100%; padding:7px; border:1px solid #ccc; border-radius:6px;" />
@@ -602,7 +711,6 @@
       const grandTotal = subtotal + shipFee - appliedRepDiscount;
       const orderDate = new Date().toLocaleDateString('ar-SA') + ' ' + new Date().toLocaleTimeString('ar-SA');
 
-      // حفظ الطلب سحابياً
       await db.from('orders').insert([{
         order_id: orderId, customer_name: name, phone: phone, city: city,
         shipping_method: 'مندوب توصيل', shipping_cost: shipFee, payment_method: 'مدفوع إلكتروني / مدى',
@@ -610,7 +718,6 @@
         total: grandTotal, status: 'received', items: cart
       }]);
 
-      // تحديث مبيعات المندوب
       if (appliedRepCode) {
         const { data: rep } = await db.from('affiliate_reps').select('*').eq('rep_code', appliedRepCode);
         if (rep && rep.length) {
@@ -622,7 +729,6 @@
         }
       }
 
-      // خصم المخزون
       for (const item of cart) {
         if (item.id) {
           const current = parseInt(item.stock) || 0;
@@ -630,15 +736,15 @@
         }
       }
 
-      // تجهيز الفاتورة PDF
       const vat = grandTotal * 0.15;
+      const sub = grandTotal - vat;
       document.getElementById('pdf_inv_id').innerText = '#' + orderId;
       document.getElementById('pdf_inv_date').innerText = orderDate;
       document.getElementById('pdf_cust_name').innerText = name;
       document.getElementById('pdf_cust_phone').innerText = phone;
       document.getElementById('pdf_cust_city').innerText = city;
       document.getElementById('pdf_cust_shipping').innerText = `مندوب (${shipFee.toFixed(2)} ر.س)`;
-      document.getElementById('pdf_cust_payment').innerText = 'مدى / دفع إلكتروني';
+      document.getElementById('pdf_subtotal').innerText = sub.toFixed(2);
       document.getElementById('pdf_ship_fee').innerText = shipFee.toFixed(2);
       document.getElementById('pdf_vat').innerText = vat.toFixed(2);
       document.getElementById('pdf_total_val').innerText = grandTotal.toFixed(2);
@@ -669,6 +775,22 @@
           Swal.fire(`📦 حالة الطلب #${data[0].order_id}`, `العميل: ${data[0].customer_name}\nالحالة: ${data[0].status}`, 'info');
         } else Swal.fire('غير موجود', 'رقم الطلب غير صحيح', 'error');
       }
+    }
+
+    function showPolicy(type) {
+      let t = '', txt = '';
+      if (type === 'returns') { t = '🔄 الاسترجاع'; txt = 'يقبل الاسترجاع خلال 48 ساعة من الاستلام في حال وجود تلف مصنعي.'; }
+      else if (type === 'shipping') { t = '🚚 الشحن'; txt = 'توصيل سريع داخل الرياض، ولجميع مناطق المملكة عبر شركات الشحن المعتمدة خلال 2-4 أيام.'; }
+      else if (type === 'wholesale') { t = '💼 الجملة'; txt = 'أسعار خاصة للكميات الكبيرة والسوبرماركت والمقاهي.'; }
+      Swal.fire({ title: t, text: txt, confirmButtonColor: 'var(--primary)' });
+    }
+    
+    function openContactOptions() {
+      Swal.fire({
+        title: '📞 تواصل مع المبيعات',
+        html: `<div style="display:flex; flex-direction:column; gap:10px;"><a href="https://api.whatsapp.com/send?phone=966578384009" target="_blank" style="background:#25D366; color:#fff; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold;">💬 واتساب (0578384009)</a><a href="tel:0578384009" style="background:#4a1d75; color:#fff; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold;">📞 اتصال مباشر</a></div>`,
+        showConfirmButton: false, showCloseButton: true
+      });
     }
   </script>
 </body>
