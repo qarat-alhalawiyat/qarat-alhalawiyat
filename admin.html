@@ -9,6 +9,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--dark:#2B170D;--mid:#4A2E1B;--gold:#C5A059;--cream:#FAF6F0;--danger:#e11d48;--success:#16a34a;--border:#EBDDCF}
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}
@@ -163,7 +164,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <div class="card-header"><h3><i class="fa-solid fa-tags" style="color:var(--gold);"></i> محرك العروض والخصومات الذكية</h3></div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:15px;margin-bottom:15px;">
       
-      <!-- 1. خصم مئوي -->
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
         <h4 style="margin-bottom:10px;color:var(--dark);">خصم نسبة مئوية (%)</h4>
         <div class="form-grp" style="margin-bottom:8px;"><label>باركود الصنف (اختياري):</label><input type="text" id="discBarcode" placeholder="امسح أو اكتب الباركود"></div>
@@ -172,7 +172,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
         <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addDisc()"><i class="fa-solid fa-check"></i> حفظ وإرسال للعملاء</button>
       </div>
 
-      <!-- 2. السعر سابقاً والسعر حالياً -->
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
         <h4 style="margin-bottom:10px;color:var(--dark);">خصم مبلغ (السعر سابقاً وحالياً)</h4>
         <div class="form-grp" style="margin-bottom:8px;"><label>باركود الصنف:</label><input type="text" id="priceBarcode" placeholder="امسح أو اكتب الباركود"></div>
@@ -183,7 +182,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
         <button class="btn-gold" style="width:100%;justify-content:center;" onclick="addPriceCut()"><i class="fa-solid fa-tag"></i> حفظ وإرسال للعملاء</button>
       </div>
 
-      <!-- 3. عروض الكميات -->
       <div style="background:var(--cream);padding:15px;border-radius:10px;border:1px solid var(--border);">
         <h4 style="margin-bottom:10px;color:var(--dark);">عرض كمية مجانية (BXGY)</h4>
         <div class="form-grp" style="margin-bottom:8px;"><label>باركود الصنف:</label><input type="text" id="bxgyBarcode" placeholder="امسح أو اكتب الباركود"></div>
@@ -242,7 +240,6 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </section>
 </main>
 
-<!-- Dialogs -->
 <dialog id="dlgEdit">
   <div class="modal-head"><h3>تعديل الصنف</h3><button onclick="document.getElementById('dlgEdit').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
@@ -333,9 +330,12 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
 
 <script src="products_data.js"></script>
 <script>
-var prods=[],offers=[];
+const SUPABASE_URL = 'https://ksfrxwdilxmltxckgwad.supabase.co';
+const SUPABASE_KEY = 'Sb_publishable_sPUbi23HorQWkwqP_zEBJQ_GcCp_ttf';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// قائمة المستخدمين الافتراضية مع الصلاحيات المحددة
+var prods=[], offers=[];
+
 var DEFAULT_APP_USERS = [
   {
     id: 'root',
@@ -357,7 +357,6 @@ var DEFAULT_APP_USERS = [
   }
 ];
 
-// دمج وتحديث قائمة المستخدمين في الذاكرة
 function getAppUsers() {
   var stored = JSON.parse(localStorage.getItem('qarat_users_list') || '[]');
   DEFAULT_APP_USERS.forEach(function(defU) {
@@ -423,7 +422,31 @@ window.onload = function(){
   renderCustomers();
 };
 
-function loadData(){
+async function loadData(){
+  try {
+    const { data, error } = await db.from('products').select('*').order('id', { ascending: true });
+    if (!error && data && data.length > 0) {
+      prods = data.map(item => ({
+        ...item,
+        price: parseFloat(item.price) || 0,
+        stock: parseInt(item.stock) || 0
+      }));
+    } else {
+      fallbackLocalData();
+    }
+  } catch(e) {
+    fallbackLocalData();
+  }
+  
+  updateStats(); 
+  renderTable(prods); 
+  popDropdowns(); 
+  renderUsers(); 
+  renderOrders(); 
+  renderCustomers();
+}
+
+function fallbackLocalData() {
   try{
     var s = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
     if(s) prods = JSON.parse(s);
@@ -436,12 +459,6 @@ function loadData(){
   }
   if(!prods) prods = [];
   prods.forEach(function(p){ if(p.stock === undefined) p.stock = 0; });
-  updateStats(); 
-  renderTable(prods); 
-  popDropdowns(); 
-  renderUsers(); 
-  renderOrders(); 
-  renderCustomers();
 }
 
 function saveLocal(){
@@ -496,12 +513,19 @@ function toggleLow(){
   renderTable(isLow ? prods.filter(function(p){ return (p.stock || 0) <= 3; }) : prods);
 }
 
-function fillStock(v){
+async function fillStock(v){
   if(!hasP('reset')) return alert('ليس لديك صلاحية.');
   prods.forEach(function(p){ p.stock = v; });
   saveLocal();
   renderTable(prods);
   updateStats();
+  
+  try {
+    for (let p of prods) {
+      if (p.id) await db.from('products').update({ stock: v }).eq('id', p.id);
+    }
+  } catch(e) { console.error(e); }
+  
   alert(v === 0 ? 'تم تصفير المخزون (0 كرتون).' : 'تمت التعبئة إلى ' + v);
 }
 
@@ -522,7 +546,7 @@ function openEdit(idx){
   document.getElementById('dlgEdit').showModal();
 }
 
-function saveP(){
+async function saveP(){
   var i = document.getElementById('e_idx').value, p = prods[i]; if(!p) return;
   p.name = document.getElementById('e_name').value.trim();
   p.group = document.getElementById('e_grp').value.trim();
@@ -532,22 +556,53 @@ function saveP(){
   p.image = document.getElementById('e_img').value.trim();
   if(hasP('price')) p.price = parseFloat(document.getElementById('e_price').value) || 0;
   if(hasP('stock')) p.stock = parseInt(document.getElementById('e_stock').value) || 0;
+  
   saveLocal();
   renderTable(prods);
   updateStats();
   document.getElementById('dlgEdit').close();
-  alert('تم الحفظ بنجاح!');
+
+  if (p.id) {
+    await db.from('products').update({
+      name: p.name,
+      group: p.group,
+      weight: p.weight,
+      pack: p.pack,
+      stock: p.stock,
+      price: p.price,
+      barcode: p.barcode,
+      image: p.image
+    }).eq('id', p.id);
+  } else {
+    const { data } = await db.from('products').insert([{
+      name: p.name,
+      group: p.group,
+      weight: p.weight,
+      pack: p.pack,
+      stock: p.stock,
+      price: p.price,
+      barcode: p.barcode,
+      image: p.image
+    }]).select();
+    if (data && data[0]) p.id = data[0].id;
+  }
+  
+  alert('تم الحفظ سحابياً بنجاح!');
 }
 
-function delP(){
+async function delP(){
   if(!hasP('del')) return alert('ليس لديك صلاحية.');
-  var i = document.getElementById('e_idx').value;
-  if(confirm('حذف هذا الصنف؟')){
+  var i = document.getElementById('e_idx').value, p = prods[i];
+  if(confirm('حذف هذا الصنف نهائياً من المتجر والسحابة؟')){
+    if (p && p.id) {
+      await db.from('products').delete().eq('id', p.id);
+    }
     prods.splice(i, 1);
     saveLocal();
     renderTable(prods);
     updateStats();
     document.getElementById('dlgEdit').close();
+    alert('تم الحذف بنجاح!');
   }
 }
 
@@ -556,10 +611,11 @@ function openNewP(){
   document.getElementById('dlgNewP').showModal(); 
 }
 
-function saveNewP(){
+async function saveNewP(){
   var n = document.getElementById('n_name').value.trim();
   if(!n) return alert('اكتب اسم الصنف');
-  prods.unshift({
+  
+  var newProd = {
     name: n,
     group: document.getElementById('n_grp').value.trim() || 'عام',
     weight: document.getElementById('n_weight').value.trim() || '-',
@@ -568,13 +624,20 @@ function saveNewP(){
     price: parseFloat(document.getElementById('n_price').value) || 0,
     barcode: document.getElementById('n_barcode').value.trim() || '-',
     image: 'images/image1.jpeg'
-  });
+  };
+
+  const { data, error } = await db.from('products').insert([newProd]).select();
+  if (!error && data && data[0]) {
+    newProd.id = data[0].id;
+  }
+
+  prods.unshift(newProd);
   saveLocal();
   renderTable(prods);
   updateStats();
   popDropdowns();
   document.getElementById('dlgNewP').close();
-  alert('تمت الإضافة!');
+  alert('تمت الإضافة السحابية بنجاح!');
 }
 
 function renderOrders(){
@@ -843,18 +906,18 @@ function popDropdowns(){
   grpSel.innerHTML = grps.map(function(g){ return '<option value="' + g + '">' + g + '</option>'; }).join('');
 }
 
-function importXLSX(e){
+async function importXLSX(e){
   if(!hasP('xl')) return alert('ليس لديك صلاحية.');
   var file = e.target.files[0]; if(!file) return;
   var r = new FileReader();
-  r.onload = function(ev){
+  r.onload = async function(ev){
     var wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' });
     var rows = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
-    prods = [];
+    var newRows = [];
     rows.forEach(function(row, idx){
       var nm = row['اسم الصنف'] || row['Name'] || row['الاسم'] || row['الصنف'] || '';
       if(nm) {
-        prods.push({
+        newRows.push({
           name: String(nm).trim(),
           group: String(row['المجموعة'] || row['Group'] || 'عام').trim(),
           weight: String(row['الحجم'] || row['الوزن'] || '-').trim(),
@@ -866,10 +929,12 @@ function importXLSX(e){
         });
       }
     });
-    saveLocal();
-    updateStats();
-    renderTable(prods);
-    alert('تم استيراد ' + prods.length + ' صنف بنجاح!');
+    
+    if (newRows.length > 0) {
+      await db.from('products').insert(newRows);
+      loadData();
+      alert('تم رفع ' + newRows.length + ' صنف سحابياً بنجاح!');
+    }
   };
   r.readAsArrayBuffer(file);
 }
