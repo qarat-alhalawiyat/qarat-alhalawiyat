@@ -239,7 +239,7 @@
       </div>
       <div>
         <p><b>المدينة / العنوان:</b> <span id="pdf_cust_city"></span></p>
-        <p><b>طريقة الشحن والتوصيل:</b> <span id="pdf_cust_shipping"></span></p>
+        <p><b>طريقة التوصيل:</b> <span id="pdf_cust_shipping"></span></p>
       </div>
     </div>
 
@@ -332,6 +332,10 @@
     const SUPABASE_KEY = 'Sb_publishable_sPUbi23HorQWkwqP_zEBJQ_GcCp_ttf';
     const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    // إحداثيات مستودع قارة الحلويات بالرياض (حي المصانع / العزيزية)
+    const WAREHOUSE_LAT = 24.5825;
+    const WAREHOUSE_LNG = 46.7830;
+
     let currentFilter = 'all';
     let selectedCategory = '';
     let cart = JSON.parse(localStorage.getItem('qarat_cart')) || [];
@@ -339,8 +343,12 @@
     let allItems = [];
     let dbShippingMethods = [];
 
+    // متغيرات اللوكيشن للعميل
+    let clientGPSLocation = null;
+    let clientDistanceKm = 0;
+    let customDistanceShippingFee = 0;
+
     window.onload = async function() {
-      // 1. جلب المنتجات سحابياً
       try {
         const { data, error } = await db.from('products').select('*').order('id', { ascending: true });
         if (!error && data && data.length > 0) {
@@ -354,7 +362,6 @@
         console.error("خطأ في جلب الأصناف:", e);
       }
 
-      // 2. جلب شركات وخيارات الشحن سحابياً
       try {
         const { data: sData, error: sErr } = await db.from('shipping_methods').select('*').eq('is_active', true).order('id', { ascending: true });
         if (!sErr && sData && sData.length > 0) {
@@ -616,18 +623,85 @@
 
     function addToCartFromModal(idx) { addToCart(idx); Swal.close(); }
 
+    /* --- دوال حساب المسافة وتحديد الموقع الذكي GPS --- */
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; // نصف قطر الأرض بالكيلومتر
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      let dist = R * c;
+      return Math.round(dist * 1.25); // معامل 1.25 لمسار الشوارع الفعلي
+    }
+
+    function detectUserGPSLocation(itemsTotal) {
+      const btn = document.getElementById('btnGetLocation');
+      const statusBox = document.getElementById('locationStatusBox');
+      
+      if (!navigator.geolocation) {
+        return Swal.fire('غير مدعوم', 'متصفحك لا يدعم تحديد الموقع التلقائي.', 'warning');
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '⏳ جاري التقاط اللوكيشن...';
+
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          clientGPSLocation = { lat, lng, mapUrl: `https://www.google.com/maps?q=${lat},${lng}` };
+
+          // حساب المسافة عن مستودع العزيزية
+          clientDistanceKm = calculateDistance(WAREHOUSE_LAT, WAREHOUSE_LNG, lat, lng);
+          if (clientDistanceKm < 1) clientDistanceKm = 1;
+
+          // معادلة التسعير بالكيلومتر: أول 10 كم بـ 25 ر.س، وكل كم إضافي بـ 1.5 ر.س
+          if (clientDistanceKm <= 10) {
+            customDistanceShippingFee = 25;
+          } else {
+            customDistanceShippingFee = 25 + ((clientDistanceKm - 10) * 1.5);
+          }
+
+          btn.disabled = false;
+          btn.innerHTML = '✔ تم تحديد اللوكيشن بنجاح';
+          btn.style.background = '#10b981';
+
+          statusBox.style.display = 'block';
+          statusBox.innerHTML = `
+            📍 <b>المسافة عن المستودع:</b> ${clientDistanceKm} كم تقريباً<br>
+            🚚 <b>تكلفة التوصيل المحسوبة:</b> ${customDistanceShippingFee.toFixed(2)} ر.س<br>
+            <a href="${clientGPSLocation.mapUrl}" target="_blank" style="color:var(--primary); font-size:11px; font-weight:bold;">عرض موقعك على الخريطة 🗺️</a>
+          `;
+
+          // اختيار خيار "مندوب حسب المسافة" تلقائياً
+          const shipSel = document.getElementById('cust_shipping');
+          shipSel.value = 'gps_dynamic';
+          updateCartTotalWithShipping(itemsTotal);
+        },
+        function(error) {
+          btn.disabled = false;
+          btn.innerHTML = '📍 اضغط لتحديد موقعك الحالي بالـ GPS';
+          Swal.fire('تعذر التحديد', 'يرجى تفعيل الـ GPS والسماح للمتصفح بالوصول لموقعك.', 'error');
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    }
+
     /* --- عرض السلة وحساب الشحن والتكلفة --- */
     function viewCart() {
       if (cart.length === 0) {
         return Swal.fire({ icon: 'info', title: 'السلة فارغة', text: 'لم تقم بإضافة أي أصناف إلى السلة بعد.', confirmButtonColor: 'var(--primary)' });
       }
       let itemsTotal = 0;
-      let itemsListHtml = `<div style="text-align: right; max-height: 180px; overflow-y: auto; padding: 5px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 15px;">`;
+      let itemsListHtml = `<div style="text-align: right; max-height: 160px; overflow-y: auto; padding: 5px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 12px;">`;
       cart.forEach((item, cIdx) => {
         let subtotal = item.qty * item.unitPrice; itemsTotal += subtotal;
         itemsListHtml += `
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f1f1; padding: 8px 0;">
-            <div><strong style="font-size: 13px; color: var(--primary);">${item.name}</strong><div style="font-size: 12px; color: #555;">${subtotal.toFixed(2)} ر.س</div></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f1f1; padding: 6px 0;">
+            <div><strong style="font-size: 13px; color: var(--primary);">${item.name}</strong><div style="font-size: 11px; color: #555;">${subtotal.toFixed(2)} ر.س (${item.qty} كرتون)</div></div>
             <div style="display: flex; align-items: center; gap: 6px;">
               <div style="display: flex; align-items: center; background: #eee; border-radius: 6px; padding: 1px 4px;">
                 <button style="border:none;background:none;font-weight:900;padding:2px 6px;cursor:pointer;" onclick="changeCartItemQty(${cIdx}, 1)">+</button>
@@ -640,17 +714,19 @@
         `;
       });
 
-      // بناء قائمة خيارات شركات الشحن
-      let shippingOptionsHtml = '';
+      let shippingOptionsHtml = `
+        <option value="gps_dynamic" data-name="مندوب التوصيل (حسب الكيلومترات GPS)">📍 مندوب توصيل (تسعير دقيق بالكيلومتر عبر GPS)</option>
+      `;
+
       if (dbShippingMethods.length > 0) {
-        shippingOptionsHtml = dbShippingMethods.map((s, idx) => `
-          <option value="${s.cost}" data-name="${s.name}" ${idx === 0 ? 'selected' : ''}>
+        shippingOptionsHtml += dbShippingMethods.map((s) => `
+          <option value="${s.cost}" data-name="${s.name}">
             ${s.name} (${parseFloat(s.cost) === 0 ? 'مجاناً' : parseFloat(s.cost).toFixed(2) + ' ر.س'} - ${s.delivery_time})
           </option>
         `).join('');
       } else {
-        shippingOptionsHtml = `
-          <option value="30" data-name="مندوب التوصيل المبرد (الرياض)">مندوب التوصيل المبرد - الرياض (30.00 ر.س)</option>
+        shippingOptionsHtml += `
+          <option value="30" data-name="مندوب الرياض المبرد (ثابت)">مندوب التوصيل المبرد - الرياض (30.00 ر.س)</option>
           <option value="0" data-name="استلام من المستودع (العزيزية)">استلام مباشر من المستودع (مجاناً)</option>
           <option value="45" data-name="سمسا إكسبريس">سمسا إكسبريس (45.00 ر.س)</option>
         `;
@@ -658,21 +734,29 @@
 
       itemsListHtml += `</div>
         <div style="text-align: right; background: #fdfbf7; border: 1.5px dashed var(--accent); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-          <label style="font-size: 12px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 4px;">🚚 اختر طريقة وشركة الشحن:</label>
+          
+          <div style="margin-bottom: 10px;">
+            <button id="btnGetLocation" type="button" onclick="detectUserGPSLocation(${itemsTotal})" style="width:100%; background:var(--primary); color:#fff; border:none; padding:10px; border-radius:8px; font-weight:bold; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px;">
+              📍 اضغط هنا لتحديد موقعك بالـ GPS وحساب المسافة بدقة
+            </button>
+            <div id="locationStatusBox" style="display:none; background:#e8f5e9; border:1px solid #c8e6c9; color:#2e7d32; font-size:11.5px; padding:8px; border-radius:6px; margin-top:6px; line-height:1.6;"></div>
+          </div>
+
+          <label style="font-size: 11.5px; font-weight: bold; color: var(--primary); display: block; margin-bottom: 4px;">🚚 طريقة الشحن المختارة:</label>
           <select id="cust_shipping" onchange="updateCartTotalWithShipping(${itemsTotal})" style="width:100%; padding:8px; margin-bottom:8px; border:1.5px solid var(--primary); border-radius:6px; font-size:12px; font-weight:bold; background:#fff;">
             ${shippingOptionsHtml}
           </select>
           <input type="text" id="cust_name" placeholder="اسم المؤسسة / العميل *" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
           <input type="tel" id="cust_phone" placeholder="رقم الجوال / الواتساب *" style="width:100%; padding:8px; margin-bottom:8px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
-          <input type="text" id="cust_city" placeholder="المدينة / العنوان بالتفصيل" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
+          <input type="text" id="cust_city" placeholder="المدينة / الحي / العنوان بالتفصيل" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px; font-size:12px;" />
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; background: #faf5ff; padding: 10px; border-radius: 8px;">
           <button style="border:none; background:#ef4444; color:#fff; border-radius:6px; padding:6px 12px; font-weight:bold; cursor:pointer;" onclick="clearEntireCart()">🗑️ تفريغ</button>
-          <div id="cartTotalSummaryDisplay" style="font-size:14px; font-weight:900; color:var(--primary);">المجموع: ${(itemsTotal + (dbShippingMethods.length > 0 ? parseFloat(dbShippingMethods[0].cost) : 30)).toFixed(2)} ر.س</div>
+          <div id="cartTotalSummaryDisplay" style="font-size:14px; font-weight:900; color:var(--primary);">المجموع: ${(itemsTotal + (customDistanceShippingFee || 25)).toFixed(2)} ر.س</div>
         </div>`;
 
       Swal.fire({
-        title: '🛒 سلة الطلبات وتأكيد الشراء', html: itemsListHtml, showCancelButton: true,
+        title: '🛒 سلة الطلبات وحساب التوصيل الدقيق', html: itemsListHtml, showCancelButton: true,
         confirmButtonText: '📄 إصدار الفاتورة PDF وإرسال الطلب', cancelButtonText: 'متابعة التسوق',
         confirmButtonColor: '#25D366', cancelButtonColor: '#64748b', width: '520px'
       }).then(res => {
@@ -681,8 +765,17 @@
           const cPhone = document.getElementById('cust_phone').value.trim();
           const cCity = document.getElementById('cust_city').value.trim() || 'الرياض';
           const shipSel = document.getElementById('cust_shipping');
-          const shipCost = parseFloat(shipSel.value) || 0;
-          const shipName = shipSel.options[shipSel.selectedIndex].getAttribute('data-name');
+          
+          let shipCost = 0;
+          let shipName = '';
+
+          if (shipSel.value === 'gps_dynamic') {
+            shipCost = customDistanceShippingFee || 25;
+            shipName = `مندوب توصيل (${clientDistanceKm > 0 ? clientDistanceKm + ' كم' : 'داخل الرياض'})`;
+          } else {
+            shipCost = parseFloat(shipSel.value) || 0;
+            shipName = shipSel.options[shipSel.selectedIndex].getAttribute('data-name');
+          }
 
           if (!cName || !cPhone) {
             return Swal.fire({ icon: 'error', title: 'بيانات ناقصة', text: 'يرجى كتابة اسم العميل ورقم الجوال.' }).then(() => viewCart());
@@ -693,14 +786,20 @@
     }
 
     function updateCartTotalWithShipping(itemsTotal) {
-      const shipCost = parseFloat(document.getElementById('cust_shipping').value) || 0;
+      const shipSel = document.getElementById('cust_shipping');
+      let shipCost = 0;
+      if (shipSel.value === 'gps_dynamic') {
+        shipCost = customDistanceShippingFee || 25;
+      } else {
+        shipCost = parseFloat(shipSel.value) || 0;
+      }
       const total = itemsTotal + shipCost;
       document.getElementById('cartTotalSummaryDisplay').innerText = `المجموع: ${total.toFixed(2)} ر.س`;
     }
 
     function changeCartItemQty(idx, delta) { cart[idx].qty += delta; if (cart[idx].qty <= 0) cart.splice(idx, 1); localStorage.setItem('qarat_cart', JSON.stringify(cart)); updateCartBadge(); viewCart(); }
     function removeCartItem(idx) { cart.splice(idx, 1); localStorage.setItem('qarat_cart', JSON.stringify(cart)); updateCartBadge(); viewCart(); }
-    function clearEntireCart() { cart = []; localStorage.removeItem('qarat_cart'); updateCartBadge(); Swal.fire('تم التفريغ', '', 'success'); }
+    function clearEntireCart() { cart = []; clientGPSLocation = null; clientDistanceKm = 0; customDistanceShippingFee = 0; localStorage.removeItem('qarat_cart'); updateCartBadge(); Swal.fire('تم التفريغ', '', 'success'); }
 
     function generateZatcaQRCode(sellerName, vatNumber, timestamp, totalWithVat, vatTotal) {
       function toTLV(tag, val) {
@@ -731,6 +830,8 @@
         city: cCity, 
         shippingMethod: shipName,
         shippingCost: shipCost,
+        gpsMapUrl: clientGPSLocation ? clientGPSLocation.mapUrl : '',
+        distanceKm: clientDistanceKm,
         total: grandTotal, 
         date: orderDate, 
         status: 'received', 
@@ -788,8 +889,17 @@
         pdfElement.style.display = 'none';
       });
 
-      let msg = `*🧾 طلبية جديدة - قارة الحلويات التجارية* 🍬\n📄 رقم الفاتورة: #${orderId}\n👤 العميل: ${cName}\n📱 الجوال: ${cPhone}\n📍 المدينة: ${cCity}\n🚚 الشحن: ${shipName} (${shipCost.toFixed(2)} ر.س)\n💰 الإجمالي شامل الضريبة والشحن: ${grandTotal.toFixed(2)} ر.س`;
-      cart = []; localStorage.removeItem('qarat_cart'); updateCartBadge();
+      let locationText = clientGPSLocation ? `\n📍 موقع العميل GPS:\n${clientGPSLocation.mapUrl} (يبعد ${clientDistanceKm} كم)` : '';
+
+      let msg = `*🧾 طلبية جديدة - قارة الحلويات التجارية* 🍬\n📄 رقم الفاتورة: #${orderId}\n👤 العميل: ${cName}\n📱 الجوال: ${cPhone}\n📍 المدينة/الحي: ${cCity}${locationText}\n🚚 التوصيل: ${shipName} (${shipCost.toFixed(2)} ر.س)\n💰 الإجمالي شامل الضريبة والتوصيل: ${grandTotal.toFixed(2)} ر.س`;
+      
+      cart = []; 
+      clientGPSLocation = null;
+      clientDistanceKm = 0;
+      customDistanceShippingFee = 0;
+      localStorage.removeItem('qarat_cart'); 
+      updateCartBadge();
+      
       window.open(`https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
@@ -812,12 +922,15 @@
 
     function displayTrackResult(order) {
       let s2 = '⏳ 2. استلام المستودع', s3 = '⏳ 3. مع المندوب', s4 = '⏳ 4. تم التسليم';
-      if (['preparing', 'shipping', 'delivered'].includes(order.status)) s2 = '✔ 2. جاري التجهيز';
+      if (['preparing', 'shipping', 'delivered'].includes(order.status)) s2 = '✔ 2. جاري التجهيز بالمستودع';
       if (['shipping', 'delivered'].includes(order.status)) s3 = '✔ 3. خرجت في الطريق (' + (order.shippingMethod || 'مندوب') + ')';
-      if (order.status === 'delivered') s4 = '✔ 4. تم التسليم';
+      if (order.status === 'delivered') s4 = '✔ 4. تم التسليم للعميل';
+      
+      let locLink = order.gpsMapUrl ? `<p style="margin-top:6px;"><a href="${order.gpsMapUrl}" target="_blank" style="color:var(--primary); font-weight:bold; font-size:12px;">🗺️ موقع التسليم على الخريطة</a></p>` : '';
+
       Swal.fire({
         title: `📦 حالة الطلب #${order.orderId}`,
-        html: `<div style="text-align:right; background:#faf5ff; padding:15px; border-radius:10px;"><p><b>العميل:</b> ${order.customerName}</p><p><b>شركة الشحن:</b> ${order.shippingMethod || 'افتراضي'}</p><hr style="margin:10px 0;"><div>✔ 1. تم استلام الطلب<br>${s2}<br>${s3}<br>${s4}</div></div>`,
+        html: `<div style="text-align:right; background:#faf5ff; padding:15px; border-radius:10px;"><p><b>العميل:</b> ${order.customerName}</p><p><b>طريقة التوصيل:</b> ${order.shippingMethod || 'افتراضي'}</p>${locLink}<hr style="margin:10px 0;"><div>✔ 1. تم استلام الطلب<br>${s2}<br>${s3}<br>${s4}</div></div>`,
         confirmButtonColor: 'var(--primary)'
       });
     }
@@ -825,7 +938,7 @@
     function showPolicy(type) {
       let t = '', txt = '';
       if (type === 'returns') { t = '🔄 الاسترجاع'; txt = 'يقبل الاسترجاع خلال 48 ساعة من الاستلام في حال وجود تلف مصنعي.'; }
-      else if (type === 'shipping') { t = '🚚 الشحن'; txt = 'توصيل خلال 24-48 ساعة بالرياض، ولجميع مناطق المملكة عبر شركات الشحن المعتمدة خلال 2-4 أيام.'; }
+      else if (type === 'shipping') { t = '🚚 الشحن'; txt = 'توصيل سريع داخل الرياض، ولجميع مناطق المملكة عبر شركات الشحن المعتمدة خلال 2-4 أيام.'; }
       else if (type === 'wholesale') { t = '💼 الجملة'; txt = 'أسعار خاصة للكميات الكبيرة والسوبرماركت والمقاهي.'; }
       Swal.fire({ title: t, text: txt, confirmButtonColor: 'var(--primary)' });
     }
