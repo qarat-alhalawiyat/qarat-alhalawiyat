@@ -432,7 +432,6 @@ var currentUser = DEFAULT_APP_USERS[0];
 
 function toggleSidebar(){ document.getElementById('sidebarNav').classList.toggle('open'); }
 
-/* تسجيل دخول سحابي مع دعم محلي للطوارئ */
 async function doLogin(){
   var u = (document.getElementById('loginUser').value || '').trim();
   var p = (document.getElementById('loginPass').value || '').trim();
@@ -571,7 +570,11 @@ async function fillStock(v){
   renderTable(prods);
   updateStats();
   for (let p of prods) {
-    if (p.id) await db.from('products').update({ stock: v }).eq('id', p.id);
+    if (p.id) {
+      await db.from('products').update({ stock: v }).eq('id', p.id);
+    } else {
+      await db.from('products').update({ stock: v }).eq('name', p.name);
+    }
   }
   alert(v === 0 ? 'تم تصفير المخزون.' : 'تمت التعبئة إلى ' + v);
 }
@@ -607,18 +610,28 @@ async function saveP(){
   popDropdowns();
   document.getElementById('dlgEdit').close();
 
+  const updateData = {
+    name: p.name, group: p.group, weight: p.weight, pack: p.pack, stock: p.stock, price: p.price, barcode: p.barcode, image: p.image
+  };
+
   if (p.id) {
-    await db.from('products').update({
-      name: p.name, group: p.group, weight: p.weight, pack: p.pack, stock: p.stock, price: p.price, barcode: p.barcode, image: p.image
-    }).eq('id', p.id);
+    await db.from('products').update(updateData).eq('id', p.id);
+  } else {
+    const { data } = await db.from('products').update(updateData).eq('name', p.name).select();
+    if (data && data[0]) p.id = data[0].id;
+    else {
+      const { data: ins } = await db.from('products').insert([updateData]).select();
+      if (ins && ins[0]) p.id = ins[0].id;
+    }
   }
-  alert('تم الحفظ سحابياً بنجاح!');
+  alert('تم الحفظ والتحديث سحابياً بنجاح!');
 }
 
 async function delP(){
   var i = document.getElementById('e_idx').value, p = prods[i];
   if(confirm('حذف هذا الصنف نهائياً؟')){
     if (p && p.id) await db.from('products').delete().eq('id', p.id);
+    else if (p) await db.from('products').delete().eq('name', p.name);
     prods.splice(i, 1);
     renderTable(prods);
     updateStats();
@@ -955,7 +968,7 @@ async function saveNewCustomerManually() {
   loadCustomers();
 }
 
-/* المستخدمين والصلاحيات (سحابي بالكامل) */
+/* المستخدمين والصلاحيات */
 async function loadUsers() {
   const tb = document.getElementById('tbodyUsers');
   if (!tb) return;
