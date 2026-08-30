@@ -314,7 +314,17 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <div class="form-grp"><label>السعر شامل الضريبة:</label><input type="number" step="0.01" id="e_price"></div>
       <div class="form-grp"><label>الباركود:</label><input type="text" id="e_barcode"></div>
     </div>
-    <div class="form-grp"><label>مسار / رابط الصورة:</label><input type="text" id="e_img" placeholder="images/image1.jpeg أو رابط صورة"></div>
+    <div class="form-grp">
+      <label>صورة المنتج (رفع من جهازك أو الرابط):</label>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <input type="file" id="e_file" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'e_img', 'e_preview')">
+        <button type="button" class="btn-gold" style="padding:7px 10px;" onclick="document.getElementById('e_file').click()"><i class="fa-solid fa-upload"></i> اختر صورة من جهازك</button>
+        <input type="text" id="e_img" placeholder="images/image1.jpeg أو رابط" style="flex:1;">
+      </div>
+      <div style="margin-top:6px; text-align:center;">
+        <img id="e_preview" src="images/image1.jpeg" style="max-height:80px; border-radius:6px; border:1px solid #ccc; object-fit:contain;">
+      </div>
+    </div>
     <div style="display:flex;justify-content:space-between;margin-top:10px;">
       <button class="btn-danger" id="btnDelP" onclick="delP()"><i class="fa-solid fa-trash"></i> حذف الصنف</button>
       <button class="btn-gold" onclick="saveP()"><i class="fa-solid fa-check"></i> حفظ التعديلات سحابياً</button>
@@ -343,8 +353,15 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <div class="form-grp"><label>الباركود:</label><input type="text" id="n_barcode" value="-"></div>
     </div>
     <div class="form-grp">
-      <label>مسار / رابط صورة المنتج:</label>
-      <input type="text" id="n_img" placeholder="مثلاً: images/image1.jpeg أو رابط إنترنت للصورة" value="images/image1.jpeg">
+      <label>صورة المنتج (رفع من جهازك أو رابط):</label>
+      <div style="display:flex; gap:6px; align-items:center;">
+        <input type="file" id="n_file" accept="image/*" style="display:none;" onchange="handleImageUpload(event, 'n_img', 'n_preview')">
+        <button type="button" class="btn-gold" style="padding:7px 10px;" onclick="document.getElementById('n_file').click()"><i class="fa-solid fa-upload"></i> اختر صورة من جهازك</button>
+        <input type="text" id="n_img" placeholder="images/image1.jpeg أو رابط" style="flex:1;" value="images/image1.jpeg">
+      </div>
+      <div style="margin-top:6px; text-align:center;">
+        <img id="n_preview" src="images/image1.jpeg" style="max-height:80px; border-radius:6px; border:1px solid #ccc; object-fit:contain;">
+      </div>
     </div>
     <button class="btn-gold" style="margin-top:10px;" onclick="saveNewP()"><i class="fa-solid fa-check"></i> حفظ الصنف سحابياً</button>
   </div>
@@ -432,6 +449,42 @@ var currentUser = DEFAULT_APP_USERS[0];
 
 function toggleSidebar(){ document.getElementById('sidebarNav').classList.toggle('open'); }
 
+/* دالة ضغط ورفع الصور من الجهاز */
+function handleImageUpload(e, inputId, previewId) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const img = new Image();
+    img.onload = function() {
+      const canvas = document.createElement('canvas');
+      let width = img.width;
+      let height = img.height;
+      const maxDim = 600;
+
+      if (width > height && width > maxDim) {
+        height = Math.round((height * maxDim) / width);
+        width = maxDim;
+      } else if (height > maxDim) {
+        width = Math.round((width * maxDim) / height);
+        height = maxDim;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      const optimizedBase64 = canvas.toDataURL('image/jpeg', 0.8);
+      document.getElementById(inputId).value = optimizedBase64;
+      if (previewId) document.getElementById(previewId).src = optimizedBase64;
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
 async function doLogin(){
   var u = (document.getElementById('loginUser').value || '').trim();
   var p = (document.getElementById('loginPass').value || '').trim();
@@ -489,7 +542,6 @@ function loadAllAdminData() {
 
 async function loadData(){
   try {
-    // جلب كافة الأصناف دون التقيد بحد الـ 1000
     const { data, error } = await db.from('products').select('*').range(0, 4999).order('id', { ascending: true });
     if (!error && data && data.length > 0) {
       prods = data.map(item => ({
@@ -544,7 +596,7 @@ function renderTable(list){
     var realIdx = prods.indexOf(p);
     var s = p.stock || 0;
     var img = p.image || ('images/image' + (realIdx + 1) + '.jpeg');
-    if(!img.startsWith('http') && !img.startsWith('images/')) img = 'images/' + img;
+    if(!img.startsWith('http') && !img.startsWith('images/') && !img.startsWith('data:image')) img = 'images/' + img;
     var tr = document.createElement('tr');
     tr.innerHTML = '<td><b>' + (realIdx + 1) + '</b></td><td><img class="p-thumb" src="' + img + '" onerror="this.src=\'https://placehold.co/80x80?text=🍬\'"></td><td><b>' + p.name + '</b></td><td><span style="background:#ede7f6;padding:2px 6px;border-radius:4px;">' + (p.group || 'عام') + '</span></td><td>' + (p.weight || '-') + ' | ' + (p.pack || 1) + ' حبة</td><td><span class="badge-st ' + (s <= 3 ? 'low' : 'in') + '">' + s + ' كرتون</span></td><td><b>' + (parseFloat(p.price) || 0).toFixed(2) + ' ر.س</b></td><td><code>' + (p.barcode || '-') + '</code></td><td><button class="btn-gold" style="padding:4px 8px;" onclick="openEdit(' + realIdx + ')"><i class="fa-solid fa-pen"></i> تعديل</button></td>';
     tb.appendChild(tr);
@@ -597,6 +649,7 @@ function openEdit(idx){
   document.getElementById('e_price').value = p.price || 0;
   document.getElementById('e_barcode').value = p.barcode || '';
   document.getElementById('e_img').value = p.image || '';
+  document.getElementById('e_preview').src = p.image || 'images/image1.jpeg';
   popDropdowns();
   document.getElementById('dlgEdit').showModal();
 }
@@ -626,7 +679,6 @@ async function saveP(){
     if (p.id) {
       await db.from('products').update(payload).eq('id', p.id);
     } else {
-      // إذا لم يكن الصنف مسجل برقم id سحابي نقوم بالبحث عنه بالاسم أو إدراجه فوراً
       const { data: existing } = await db.from('products').select('id').eq('name', p.name);
       if (existing && existing.length > 0) {
         p.id = existing[0].id;
@@ -666,6 +718,7 @@ function openNewP(){
   document.getElementById('n_price').value = '0';
   document.getElementById('n_barcode').value = '-';
   document.getElementById('n_img').value = 'images/image1.jpeg';
+  document.getElementById('n_preview').src = 'images/image1.jpeg';
   document.getElementById('dlgNewP').showModal(); 
 }
 
@@ -693,7 +746,7 @@ async function saveNewP(){
   updateStats();
   popDropdowns();
   document.getElementById('dlgNewP').close();
-  alert('تمت إضافة الصنف وحفظ الصورة والمجموعة سحابياً بنجاح!');
+  alert('تمت إضافة الصنف وحفظ الصورة من الجهاز سحابياً بنجاح!');
 }
 
 /* الطلبيات والمانيفست */
