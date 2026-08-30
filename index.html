@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
       --primary: #4a1d75;
@@ -134,7 +135,6 @@
       .product-img-wrap { height: 125px; margin-bottom: 6px; }
     }
 
-    /* قالب الفاتورة PDF */
     #pdfInvoiceTemplate {
       display: none; background: #ffffff; width: 210mm; min-height: 297mm; padding: 15mm;
       color: #111111; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right;
@@ -218,7 +218,6 @@
     <div class="products-grid" id="productsGrid"></div>
   </div>
 
-  <!-- قالب الفاتورة PDF -->
   <div id="pdfInvoiceTemplate">
     <div class="inv-header">
       <div class="inv-company-info">
@@ -325,20 +324,41 @@
 
   <script src="products_data.js"></script>
   <script>
+    const SUPABASE_URL = 'https://ksfrxwdilxmltxckgwad.supabase.co';
+    const SUPABASE_KEY = 'Sb_publishable_sPUbi23HorQWkwqP_zEBJQ_GcCp_ttf';
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
     let currentFilter = 'all';
     let selectedCategory = '';
     let cart = JSON.parse(localStorage.getItem('qarat_cart')) || [];
     let offersList = JSON.parse(localStorage.getItem('qarat_offers')) || (typeof activeOffers !== 'undefined' ? activeOffers : []);
     let allItems = [];
 
-    window.onload = function() {
-      const savedProducts = localStorage.getItem('qarat_products') || localStorage.getItem('qarat_main_prods');
-      if (savedProducts) {
-        allItems = JSON.parse(savedProducts);
-      } else if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) {
-        allItems = window.STORE_PRODUCTS;
-      } else if (typeof products !== 'undefined') {
-        allItems = [...products];
+    window.onload = async function() {
+      // 1. محاولة جلب المنتجات سحابياً من Supabase
+      try {
+        const { data, error } = await db.from('products').select('*').order('id', { ascending: true });
+        if (!error && data && data.length > 0) {
+          allItems = data.map(item => ({
+            ...item,
+            price: parseFloat(item.price) || 0,
+            stock: parseInt(item.stock) || 0
+          }));
+        }
+      } catch (e) {
+        console.error("خطأ في الاتصال بقاعدة البيانات السحابية", e);
+      }
+
+      // 2. إذا كانت السحابة لا زالت فارغة نستخدم البيانات المحلية القديمة
+      if (allItems.length === 0) {
+        const savedProducts = localStorage.getItem('qarat_products') || localStorage.getItem('qarat_main_prods');
+        if (savedProducts) {
+          allItems = JSON.parse(savedProducts);
+        } else if (typeof window.STORE_PRODUCTS !== 'undefined' && Array.isArray(window.STORE_PRODUCTS)) {
+          allItems = window.STORE_PRODUCTS;
+        } else if (typeof products !== 'undefined') {
+          allItems = [...products];
+        }
       }
 
       document.getElementById('totalItemsCount').innerText = `(${allItems.length})`;
@@ -408,13 +428,14 @@
 
       grid.innerHTML = filtered.map(item => {
         const offerInfo = getProductOffer(item);
-        let priceHtml = `<span class="current-price">${item.price.toFixed(2)}</span> <span class="currency">ر.س</span>`;
+        let priceVal = parseFloat(item.price) || 0;
+        let priceHtml = `<span class="current-price">${priceVal.toFixed(2)}</span> <span class="currency">ر.س</span>`;
         let offerBadge = '';
 
         if (offerInfo.hasDiscount) {
           priceHtml = `
             <span class="current-price" style="color: var(--accent);">${offerInfo.finalPrice.toFixed(2)}</span> <span class="currency">ر.س</span>
-            <span class="old-price">${item.price.toFixed(2)} ر.س</span>
+            <span class="old-price">${priceVal.toFixed(2)} ر.س</span>
           `;
           offerBadge = `<div class="offer-tag">خصم ${offerInfo.discountPercent}%</div>`;
         } else if (offerInfo.bxgy) {
@@ -458,14 +479,15 @@
     }
 
     function getProductOffer(p) {
-      let res = { hasDiscount: false, finalPrice: p.price, discountPercent: 0, bxgy: null };
+      let priceVal = parseFloat(p.price) || 0;
+      let res = { hasDiscount: false, finalPrice: priceVal, discountPercent: 0, bxgy: null };
       const pDisc = offersList.find(o => o.type === 'product_discount' && o.target === p.name);
       const gDisc = offersList.find(o => o.type === 'group_discount' && o.target === p.group);
       const pCut = offersList.find(o => o.type === 'price_cut' && o.target === p.name);
       const bxgy = offersList.find(o => o.type === 'bxgy' && o.target === p.name);
       
       const disc = pDisc || gDisc;
-      if (disc) { res.hasDiscount = true; res.discountPercent = disc.percent; res.finalPrice = p.price * (1 - disc.percent / 100); }
+      if (disc) { res.hasDiscount = true; res.discountPercent = disc.percent; res.finalPrice = priceVal * (1 - disc.percent / 100); }
       else if (pCut) { res.hasDiscount = true; res.finalPrice = pCut.newPrice; res.discountPercent = Math.round((1 - pCut.newPrice / pCut.oldPrice) * 100); }
       if (bxgy) res.bxgy = bxgy;
       return res;
@@ -488,9 +510,10 @@
       const qty = qtyEl ? (parseInt(qtyEl.innerText) || 1) : 1;
       const offerInfo = getProductOffer(product);
       const existing = cart.find(c => c.name === product.name);
+      const basePrice = parseFloat(product.price) || 0;
       if (existing) { existing.qty += qty; }
       else {
-        cart.push({ ...product, qty: qty, unitPrice: offerInfo.hasDiscount ? offerInfo.finalPrice : product.price, bxgy: offerInfo.bxgy });
+        cart.push({ ...product, qty: qty, unitPrice: offerInfo.hasDiscount ? offerInfo.finalPrice : basePrice, bxgy: offerInfo.bxgy });
       }
       localStorage.setItem('qarat_cart', JSON.stringify(cart));
       updateCartBadge();
@@ -502,7 +525,6 @@
       document.getElementById('cartCount').innerText = total;
     }
 
-    /* --- تفاصيل الصنف الفخمة بالذكاء الاصطناعي --- */
     function generateAIDetails(product) {
       const name = (product.name || '').toLowerCase();
       const group = (product.group || '').toLowerCase();
@@ -526,10 +548,11 @@
       const offerInfo = getProductOffer(item);
       const stockCount = item.stock !== undefined ? parseInt(item.stock) : 0;
       const isOutOfStock = stockCount <= 0;
+      const basePrice = parseFloat(item.price) || 0;
 
-      let priceDisplay = `${item.price.toFixed(2)} ر.س`;
+      let priceDisplay = `${basePrice.toFixed(2)} ر.س`;
       if (offerInfo.hasDiscount) {
-        priceDisplay = `<span style="color:var(--accent); font-weight:900;">${offerInfo.finalPrice.toFixed(2)} ر.س</span> <span style="text-decoration:line-through; color:#999; font-size:12px;">${item.price.toFixed(2)} ر.س</span>`;
+        priceDisplay = `<span style="color:var(--accent); font-weight:900;">${offerInfo.finalPrice.toFixed(2)} ر.س</span> <span style="text-decoration:line-through; color:#999; font-size:12px;">${basePrice.toFixed(2)} ر.س</span>`;
       }
 
       const modalHtml = `
@@ -709,7 +732,6 @@
       window.open(`https://api.whatsapp.com/send?phone=966578384009&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
-    /* --- Order Tracker System --- */
     function openOrderTracker() {
       Swal.fire({
         title: '📍 تتبع حالة الطلبية',
