@@ -324,20 +324,36 @@
     let appliedRepCode = '';
 
     window.onload = async function() {
+      // 1. القراءة الفورية من التخزين المحلي لتفادي أي وميض
+      var localSaved = localStorage.getItem('qarat_main_prods') || localStorage.getItem('qarat_products');
+      if (localSaved) {
+        try { allItems = JSON.parse(localSaved); } catch(e){}
+      }
+      if (!allItems || !allItems.length) {
+        loadFallbackProducts();
+      }
+
+      document.getElementById('totalItemsCount').innerText = `(${allItems.length})`;
+      buildCategoriesMenu();
+      renderProducts();
+      updateCartBadge();
+
+      // 2. المزامنة المباشرة مع قاعدة البيانات السحابية Supabase
       try {
-        const { data, error } = await db.from('products').select('*').order('id', { ascending: true });
+        const { data, error } = await db.from('products').select('*').range(0, 4999).order('id', { ascending: true });
         if (!error && data && data.length > 0) {
           allItems = data.map(item => ({
             ...item,
             price: parseFloat(item.price) || 0,
             stock: parseInt(item.stock) || 0
           }));
-        } else {
-          loadFallbackProducts();
+          localStorage.setItem('qarat_main_prods', JSON.stringify(allItems));
+          localStorage.setItem('qarat_products', JSON.stringify(allItems));
+          document.getElementById('totalItemsCount').innerText = `(${allItems.length})`;
+          buildCategoriesMenu();
+          renderProducts();
         }
-      } catch (e) {
-        loadFallbackProducts();
-      }
+      } catch (e) {}
 
       try {
         const { data: oData } = await db.from('offers').select('*').eq('is_active', true);
@@ -353,11 +369,6 @@
         const { data: pData } = await db.from('payment_methods').select('*').eq('is_active', true);
         if (pData) dbPaymentMethods = pData;
       } catch (e) {}
-
-      document.getElementById('totalItemsCount').innerText = `(${allItems.length})`;
-      buildCategoriesMenu();
-      renderProducts();
-      updateCartBadge();
     };
 
     function loadFallbackProducts() {
