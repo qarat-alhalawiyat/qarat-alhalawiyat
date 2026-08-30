@@ -300,7 +300,10 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
     <input type="hidden" id="e_idx">
     <div class="form-grp"><label>اسم الصنف:</label><input type="text" id="e_name"></div>
     <div class="form-row">
-      <div class="form-grp"><label>المجموعة:</label><input type="text" id="e_grp"></div>
+      <div class="form-grp">
+        <label>المجموعة:</label>
+        <input type="text" id="e_grp" list="groupsDataList" placeholder="اختر أو اكتب مجموعة">
+      </div>
       <div class="form-grp"><label>الوزن/الحجم:</label><input type="text" id="e_weight"></div>
     </div>
     <div class="form-row">
@@ -311,7 +314,7 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
       <div class="form-grp"><label>السعر شامل الضريبة:</label><input type="number" step="0.01" id="e_price"></div>
       <div class="form-grp"><label>الباركود:</label><input type="text" id="e_barcode"></div>
     </div>
-    <div class="form-grp"><label>مسار الصورة:</label><input type="text" id="e_img"></div>
+    <div class="form-grp"><label>مسار / رابط الصورة:</label><input type="text" id="e_img" placeholder="images/image1.jpeg أو رابط صورة"></div>
     <div style="display:flex;justify-content:space-between;margin-top:10px;">
       <button class="btn-danger" id="btnDelP" onclick="delP()"><i class="fa-solid fa-trash"></i> حذف الصنف</button>
       <button class="btn-gold" onclick="saveP()"><i class="fa-solid fa-check"></i> حفظ التعديلات</button>
@@ -319,21 +322,30 @@ dialog::backdrop{background:rgba(0,0,0,.6)}
   </div>
 </dialog>
 
+<!-- نافذة إضافة صنف جديد (مع استعراض المجموعات والصورة) -->
 <dialog id="dlgNewP">
   <div class="modal-head"><h3>إضافة صنف جديد</h3><button onclick="document.getElementById('dlgNewP').close()" style="background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;">&times;</button></div>
   <div class="modal-body">
-    <div class="form-grp"><label>اسم الصنف:</label><input type="text" id="n_name"></div>
+    <div class="form-grp"><label>اسم الصنف:</label><input type="text" id="n_name" placeholder="مثلاً: كندر بوينو أصابع"></div>
     <div class="form-row">
-      <div class="form-grp"><label>المجموعة:</label><input type="text" id="n_grp" value="عام"></div>
-      <div class="form-grp"><label>الوزن:</label><input type="text" id="n_weight" value="-"></div>
+      <div class="form-grp">
+        <label>المجموعة (اختر من القائمة أو اكتب جديد):</label>
+        <input type="text" id="n_grp" list="groupsDataList" placeholder="اختر أو اكتب اسم المجموعة" value="عام">
+        <datalist id="groupsDataList"></datalist>
+      </div>
+      <div class="form-grp"><label>الوزن / الحجم:</label><input type="text" id="n_weight" value="-"></div>
     </div>
     <div class="form-row">
-      <div class="form-grp"><label>الشد:</label><input type="text" id="n_pack" value="1"></div>
-      <div class="form-grp"><label>المخزون:</label><input type="number" id="n_stock" value="0"></div>
+      <div class="form-grp"><label>الشد بالكرتون (حبة):</label><input type="text" id="n_pack" value="1"></div>
+      <div class="form-grp"><label>كمية المخزون (كرتون):</label><input type="number" id="n_stock" value="10"></div>
     </div>
     <div class="form-row">
-      <div class="form-grp"><label>السعر:</label><input type="number" step="0.01" id="n_price" value="0"></div>
+      <div class="form-grp"><label>السعر شامل الضريبة:</label><input type="number" step="0.01" id="n_price" value="0"></div>
       <div class="form-grp"><label>الباركود:</label><input type="text" id="n_barcode" value="-"></div>
+    </div>
+    <div class="form-grp">
+      <label>مسار / رابط صورة المنتج:</label>
+      <input type="text" id="n_img" placeholder="مثلاً: images/image1.jpeg أو رابط إنترنت للصورة" value="images/image1.jpeg">
     </div>
     <button class="btn-gold" style="margin-top:10px;" onclick="saveNewP()"><i class="fa-solid fa-check"></i> حفظ الصنف سحابياً</button>
   </div>
@@ -409,7 +421,7 @@ const SUPABASE_URL = 'https://ksfrxwdilxmltxckgwad.supabase.co';
 const SUPABASE_KEY = 'Sb_publishable_sPUbi23HorQWkwqP_zEBJQ_GcCp_ttf';
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-var prods=[], ordersList=[], repsList=[], alertsList=[], customersList=[], offersList=[], shippingMethods=[], paymentMethods=[], appUsersList=[];
+var prods=[], ordersList=[], repsList=[], alertsList=[], customersList=[], offersList=[], shippingMethods=[], paymentMethods=[];
 
 var DEFAULT_APP_USERS = [
   { id: 'root', user: 'magedsamir', pass: '101090', role: 'المدير العام', perms: { add: true, price: true, stock: true, reset: true, del: true, offers: true, xl: true, mgr: true } },
@@ -574,22 +586,24 @@ function openEdit(idx){
   document.getElementById('e_price').value = p.price || 0;
   document.getElementById('e_barcode').value = p.barcode || '';
   document.getElementById('e_img').value = p.image || '';
+  popDropdowns();
   document.getElementById('dlgEdit').showModal();
 }
 
 async function saveP(){
   var i = document.getElementById('e_idx').value, p = prods[i]; if(!p) return;
   p.name = document.getElementById('e_name').value.trim();
-  p.group = document.getElementById('e_grp').value.trim();
+  p.group = document.getElementById('e_grp').value.trim() || 'عام';
   p.weight = document.getElementById('e_weight').value.trim();
   p.pack = document.getElementById('e_pack').value.trim();
   p.barcode = document.getElementById('e_barcode').value.trim();
-  p.image = document.getElementById('e_img').value.trim();
+  p.image = document.getElementById('e_img').value.trim() || 'images/image1.jpeg';
   p.price = parseFloat(document.getElementById('e_price').value) || 0;
   p.stock = parseInt(document.getElementById('e_stock').value) || 0;
   
   renderTable(prods);
   updateStats();
+  popDropdowns();
   document.getElementById('dlgEdit').close();
 
   if (p.id) {
@@ -607,25 +621,37 @@ async function delP(){
     prods.splice(i, 1);
     renderTable(prods);
     updateStats();
+    popDropdowns();
     document.getElementById('dlgEdit').close();
     alert('تم الحذف بنجاح!');
   }
 }
 
-function openNewP(){ document.getElementById('dlgNewP').showModal(); }
+function openNewP(){ 
+  popDropdowns();
+  document.getElementById('n_name').value = '';
+  document.getElementById('n_weight').value = '-';
+  document.getElementById('n_pack').value = '1';
+  document.getElementById('n_stock').value = '10';
+  document.getElementById('n_price').value = '0';
+  document.getElementById('n_barcode').value = '-';
+  document.getElementById('n_img').value = 'images/image1.jpeg';
+  document.getElementById('dlgNewP').showModal(); 
+}
 
 async function saveNewP(){
   var n = document.getElementById('n_name').value.trim();
-  if(!n) return alert('اكتب اسم الصنف');
+  if(!n) return alert('يرجى كتابة اسم الصنف');
   
   var newProd = {
-    name: n, group: document.getElementById('n_grp').value.trim() || 'عام',
+    name: n, 
+    group: document.getElementById('n_grp').value.trim() || 'عام',
     weight: document.getElementById('n_weight').value.trim() || '-',
     pack: document.getElementById('n_pack').value.trim() || '1',
     stock: parseInt(document.getElementById('n_stock').value) || 0,
     price: parseFloat(document.getElementById('n_price').value) || 0,
     barcode: document.getElementById('n_barcode').value.trim() || '-',
-    image: 'images/image1.jpeg'
+    image: document.getElementById('n_img').value.trim() || 'images/image1.jpeg'
   };
 
   const { data } = await db.from('products').insert([newProd]).select();
@@ -636,7 +662,7 @@ async function saveNewP(){
   updateStats();
   popDropdowns();
   document.getElementById('dlgNewP').close();
-  alert('تمت إضافة الصنف بنجاح!');
+  alert('تمت إضافة الصنف وحفظ الصورة والمجموعة سحابياً بنجاح!');
 }
 
 /* الطلبيات والمانيفست */
@@ -928,7 +954,7 @@ async function saveNewCustomerManually() {
   loadCustomers();
 }
 
-/* المستخدمين الصلاحيات */
+/* المستخدمين والصلاحيات */
 function loadUsers() {
   const tb = document.getElementById('tbodyUsers');
   if (!tb) return;
@@ -1027,9 +1053,12 @@ function switchSec(id, btn){
 }
 
 function popDropdowns(){
-  var grpSel = document.getElementById('discGroup'); if(!grpSel) return;
-  var grps = [...new Set(prods.map(p => p.group || 'عام'))];
-  grpSel.innerHTML = grps.map(g => `<option value="${g}">${g}</option>`).join('');
+  var grpSel = document.getElementById('discGroup');
+  var grpDataList = document.getElementById('groupsDataList');
+  var grps = [...new Set(prods.map(p => (p.group && p.group.trim() !== '') ? p.group.trim() : 'عام'))];
+  
+  if(grpSel) grpSel.innerHTML = grps.map(g => `<option value="${g}">${g}</option>`).join('');
+  if(grpDataList) grpDataList.innerHTML = grps.map(g => `<option value="${g}">`).join('');
 }
 
 async function importXLSX(e){
