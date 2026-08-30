@@ -38,7 +38,6 @@
     .brand-text h1 { font-size: 18px; font-weight: 900; color: var(--primary); }
     .brand-text span { font-size: 10px; color: var(--text-muted); }
 
-    /* استغلال منتصف الهيدر بشريط البحث الاحترافي */
     .header-center-search {
       flex: 1; max-width: 480px; position: relative; margin: 0 10px;
     }
@@ -73,7 +72,6 @@
     }
     .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
-    /* القائمة المنسدلة للتصنيفات */
     .dropdown { position: relative; display: inline-block; }
     .dropdown-btn {
       background: #fff; border: 1px solid #dcdfe6; color: var(--text-dark); padding: 8px 15px;
@@ -131,13 +129,11 @@
     .add-btn:hover { background: var(--primary); }
     .btn-notify-stock { background: #ea580c; color: #fff; border: none; border-radius: 8px; font-size: 11.5px; font-weight: bold; width: 100%; padding: 6px; cursor: pointer; }
 
-    /* شيت الطلب السريع */
     .quick-sheet-table { width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; }
     .quick-sheet-table th { background: var(--primary); color: #fff; padding: 8px; font-weight: 800; }
     .quick-sheet-table td { padding: 8px; border-bottom: 1px solid #eee; vertical-align: middle; }
     .quick-sheet-input { width: 60px; padding: 5px; text-align: center; border: 1.5px solid #ccc; border-radius: 6px; font-weight: bold; }
 
-    /* قالب الفاتورة الضريبية ZATCA */
     #pdfInvoiceTemplate {
       display: none; background: #ffffff; width: 210mm; min-height: 297mm; padding: 15mm;
       color: #111111; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right;
@@ -149,7 +145,6 @@
     .inv-table th { background: #4a1d75; color: #ffffff; padding: 9px 8px; font-weight: 800; border: 1px solid #4a1d75; text-align: center; }
     .inv-table td { padding: 8px; border: 1.5px solid #dcdfe6; text-align: center; }
 
-    /* فوتر المتجر المتكامل والشامل */
     footer {
       background: linear-gradient(135deg, #1f0b35, #2b0f47); color: #e2e8f0; padding: 40px 15px 20px;
       border-top: 3px solid var(--accent); margin-top: 40px;
@@ -188,7 +183,6 @@
       </div>
     </div>
 
-    <!-- شريط البحث في منتصف الهيدر لاستغلال المساحة -->
     <div class="header-center-search">
       <span class="search-icon">🔍</span>
       <input type="text" id="searchInput" placeholder="ابحث باسم الصنف، الباركود، أو القسم..." onkeyup="handleSearch()" />
@@ -208,7 +202,6 @@
       <button id="btnBestseller" class="filter-btn" onclick="setFilter('bestseller')">🔥 الأكثر مبيعاً</button>
       <button id="btnOffers" class="filter-btn" onclick="setFilter('offers')">🏷️ العروض والتخفيضات</button>
       
-      <!-- قائمة التصنيفات المنسدلة -->
       <div class="dropdown" id="categoryDropdown">
         <button class="dropdown-btn" onclick="toggleDropdown(event)">📂 التصنيفات <span style="font-size: 9px;">▼</span></button>
         <div class="dropdown-menu" id="dropdownMenuList"></div>
@@ -218,7 +211,6 @@
     <div class="products-grid" id="productsGrid"></div>
   </div>
 
-  <!-- قالب الفاتورة الضريبية ZATCA -->
   <div id="pdfInvoiceTemplate">
     <div class="inv-header">
       <div class="inv-company-info">
@@ -269,7 +261,6 @@
     </div>
   </div>
 
-  <!-- الفوتر المتكامل والشامل -->
   <footer>
     <div class="footer-container">
       <div class="footer-col">
@@ -334,9 +325,19 @@
 
     window.onload = async function() {
       try {
-        const { data } = await db.from('products').select('*').order('id', { ascending: true });
-        if (data && data.length) allItems = data.map(item => ({ ...item, price: parseFloat(item.price)||0, stock: parseInt(item.stock)||0 }));
-      } catch (e) {}
+        const { data, error } = await db.from('products').select('*').order('id', { ascending: true });
+        if (!error && data && data.length > 0) {
+          allItems = data.map(item => ({
+            ...item,
+            price: parseFloat(item.price) || 0,
+            stock: parseInt(item.stock) || 0
+          }));
+        } else {
+          loadFallbackProducts();
+        }
+      } catch (e) {
+        loadFallbackProducts();
+      }
 
       try {
         const { data: oData } = await db.from('offers').select('*').eq('is_active', true);
@@ -353,13 +354,19 @@
         if (pData) dbPaymentMethods = pData;
       } catch (e) {}
 
-      if (allItems.length === 0 && typeof window.STORE_PRODUCTS !== 'undefined') allItems = window.STORE_PRODUCTS;
-      
       document.getElementById('totalItemsCount').innerText = `(${allItems.length})`;
       buildCategoriesMenu();
       renderProducts();
       updateCartBadge();
     };
+
+    function loadFallbackProducts() {
+      if (typeof window.STORE_PRODUCTS !== 'undefined' && window.STORE_PRODUCTS.length) {
+        allItems = window.STORE_PRODUCTS.map(p => ({ ...p, stock: p.stock !== undefined ? parseInt(p.stock) : 0 }));
+      } else if (typeof products !== 'undefined' && products.length) {
+        allItems = products.map(p => ({ ...p, stock: p.stock !== undefined ? parseInt(p.stock) : 0 }));
+      }
+    }
 
     function toggleDropdown(e) { e.stopPropagation(); document.getElementById('categoryDropdown').classList.toggle('show'); }
     window.onclick = function() { document.getElementById('categoryDropdown').classList.remove('show'); };
@@ -733,6 +740,9 @@
         if (item.id) {
           const current = parseInt(item.stock) || 0;
           await db.from('products').update({ stock: Math.max(0, current - (item.qty || 1)) }).eq('id', item.id);
+        } else {
+          const current = parseInt(item.stock) || 0;
+          await db.from('products').update({ stock: Math.max(0, current - (item.qty || 1)) }).eq('name', item.name);
         }
       }
 
