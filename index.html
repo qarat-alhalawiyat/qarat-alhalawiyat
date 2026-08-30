@@ -506,19 +506,17 @@
       document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
     }
 
-    /* بطاقة الصنف الشاملة (المكونات، المميزات، وحاسبة الأرباح) */
+    /* بطاقة الصنف الشاملة (المكونات، المميزات، وحاسبة الأرباح بهامش 25%) */
     function openProductDetailsModal(idx) {
       const item = allItems[idx]; if (!item) return;
       const offerInfo = getProductOffer(item);
       const cartonPrice = offerInfo.hasDiscount ? offerInfo.finalPrice : (parseFloat(item.price) || 0);
       const packCount = parseInt(item.pack) || 12;
       const costPerPiece = (cartonPrice / packCount);
-      const suggestedSellPrice = (costPerPiece * 1.45);
+      const suggestedSellPrice = (costPerPiece * 1.25); // تطبيق نسبة هامش الربح 25%
       const expectedProfit = (suggestedSellPrice * packCount) - cartonPrice;
       const isOutOfStock = (parseInt(item.stock) || 0) <= 0;
 
-      // توليد وصف ومكونات ذكية متناسبة مع نوع الصنف
-      let categoryDesc = 'منتج عالي الجودة مستورد ومطابق لأعلى المواصفات القياسية.';
       let ingredientsText = 'مكونات فاخرة مختارة بعناية تضمن المذاق المميز والقوام المثالي.';
       if ((item.group && item.group.includes('بروتين')) || item.name.includes('بروتين')) {
         ingredientsText = 'مزيج بروتين مصل اللبن عالي النقاء (Whey Protein)، كاكاو طبيعي، ألياف غذائية، خالي من السكر المضاف ومناسب للرياضيين.';
@@ -546,7 +544,6 @@
             🏷️ <b>القسم:</b> ${item.group || 'عام'} | 📦 <b>الباركود:</b> <code>${item.barcode || '—'}</code> | ⚖️ <b>الوزن:</b> ${item.weight || '—'}
           </p>
 
-          <!-- قسم بطاقة المكونات والوصف -->
           <div style="background: #faf5ff; border: 1.5px solid #e9d5ff; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px;">
             <div style="color: #6b21a8; font-weight: 900; font-size: 12px; margin-bottom: 4px;">
               📋 نبذة ومكونات المنتج:
@@ -561,7 +558,6 @@
             </div>
           </div>
 
-          <!-- صندوق حاسبة أرباح التاجر -->
           <div style="background: #f0fdf4; border: 1.5px solid #86efac; border-radius: 10px; padding: 12px; margin-bottom: 15px;">
             <div style="color: #166534; font-weight: 900; font-size: 12.5px; margin-bottom: 8px;">
               📊 حاسبة أرباح التاجر التقديرية (B2B):
@@ -573,11 +569,10 @@
               <div>💰 <b>سعر البيع المقترح:</b> ${suggestedSellPrice.toFixed(2)} ر.س</div>
             </div>
             <div style="margin-top: 8px; padding-top: 6px; border-top: 1px dashed #86efac; color: #15803d; font-weight: 800; font-size: 12px;">
-              ✨ صافي ربحك المتوقع بالكرتون: +${expectedProfit.toFixed(2)} ر.س (~45%)
+              ✨ صافي ربحك المتوقع بالكرتون: +${expectedProfit.toFixed(2)} ر.س (~25%)
             </div>
           </div>
 
-          <!-- شريط الإجراءات والسعر -->
           <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 12px;">
             <div>
               <span style="font-size: 11px; color: #777;">سعر الكرتون شامل الضريبة:</span>
